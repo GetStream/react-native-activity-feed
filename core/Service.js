@@ -40,13 +40,6 @@ export class StreamService {
   }
 
   getFeed(feedSlug:string, userId:string) {
-
-    console.log("\collection:food\n");
-    console.log(this.getCollection("food"));
-    // console.log(this.getCollection("food").items().then(r => {console.log(r)}))
-    console.log("\nreactions\n");
-    console.log(this.reactions);
-
     return new StreamFeed(this, this.client.feed(feedSlug, userId, this.token));
   }
 
