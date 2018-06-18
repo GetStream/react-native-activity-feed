@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, StatusBar} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Dimensions, Platform} from 'react-native';
+import { SafeAreaView } from 'react-navigation';
+
 
 import Count from "../../components/Count";
 import Button from "../../components/Button";
@@ -7,7 +9,7 @@ import Avatar from "../../components/Avatar";
 import CoverImage from "../../components/CoverImage";
 
 
-export const isIphoneX = () => {
+const isIphoneX = () => {
   let d = Dimensions.get("window");
   const { height, width } = d;
 
@@ -28,7 +30,7 @@ class ProfileHeader extends React.Component {
     coverImage ? StatusBar.setBarStyle('light-content', true) : null;
 
     return (
-      <View style={[styles.profileHeader]}>
+      <SafeAreaView style={[styles.profileHeader]}>
         { coverImage ?
         <CoverImage source={coverImage} /> : null}
 
@@ -54,7 +56,7 @@ class ProfileHeader extends React.Component {
           <Count num={counts.followers}>Followers</Count>
           <Count num={counts.following}>Following</Count>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -62,7 +64,7 @@ class ProfileHeader extends React.Component {
 const margin = 15;
 
 const styles = StyleSheet.create({
-  profileHeader: { backgroundColor: "#fff", paddingBottom: margin },
+  profileHeader: { backgroundColor: "#fff", paddingBottom: margin, width: 100 + '%' },
   profileHeaderShadow: {
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
@@ -71,7 +73,6 @@ const styles = StyleSheet.create({
   },
 
   topSection: {
-    height: isIphoneX ? 88 : 65,
     width: 100 + "%",
     backgroundColor: "transparent",
     flexDirection: "row",

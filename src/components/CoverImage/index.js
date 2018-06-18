@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   profileCoverImage: {
     height: 200,
     width: 100 + "%",
-    position: "absolute"
+    position: "absolute",
   }
 });
 

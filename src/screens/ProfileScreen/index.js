@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ProfileHeader from '../../components/ProfileHeader';
 
 
@@ -24,7 +23,7 @@ export default class ProfileScreen extends React.Component {
   }
   render() {
     return (
-      <ProfileHeader user={this.state.user} navigation={this.props.navigation}/>
+        <ProfileHeader user={this.state.user} navigation={this.props.navigation}/>
     );
   }
 }
