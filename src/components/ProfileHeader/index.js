@@ -35,9 +35,7 @@ class ProfileHeader extends React.Component {
         <CoverImage source={coverImage} /> : null}
 
         <View style={styles.topSection}>
-          <Button pressed={() => goBack()}>
-            Back
-          </Button>
+          <Button pressed={() => goBack()}>Back</Button>
           <Button pressed={() => console.log('navigate to edit profile')}>Edit Profile</Button>
         </View>
 
@@ -45,9 +43,7 @@ class ProfileHeader extends React.Component {
           <View style={styles.userDetails}>
             <Text style={styles.userName}>{name}</Text>
             <Text style={styles.userUrl}>{url}</Text>
-            <Text style={styles.userDesc}>
-              {desc}
-            </Text>
+            <Text style={styles.userDesc}>{desc}</Text>
           </View>
           <Avatar source={profileImage} size={150} style={styles.avatar} />
         </View>

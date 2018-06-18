@@ -8,9 +8,12 @@ import ProfileScreen from './screens/ProfileScreen';
 
 
 class HomeScreen extends React.Component {
-  com
+  componentDidMount() {
+    this._navListener = this.props.navigation.addListener('didFocus', () => {
+      StatusBar.setBarStyle('dark-content');
+    });
+  }
   render() {
-    StatusBar.setBarStyle('dark-content', true);
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Home !</Text>
@@ -20,9 +23,12 @@ class HomeScreen extends React.Component {
 }
 
 class SearchScreen extends React.Component {
-  com;
+  componentDidMount() {
+    this._navListener = this.props.navigation.addListener('didFocus', () => {
+      StatusBar.setBarStyle('dark-content');
+    });
+  }
   render() {
-    StatusBar.setBarStyle("dark-content", true);
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Search !</Text>
@@ -32,9 +38,12 @@ class SearchScreen extends React.Component {
 }
 
 class NotificationsScreen extends React.Component {
-  com;
+  componentDidMount() {
+    this._navListener = this.props.navigation.addListener('didFocus', () => {
+      StatusBar.setBarStyle('dark-content');
+    });
+  }
   render() {
-    StatusBar.setBarStyle("dark-content", true);
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Notifications !</Text>
@@ -78,7 +87,7 @@ const App = createBottomTabNavigator(
           return (
             <Avatar
               source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
-              size={25}
+              size={25} noShadow
             />
           );
         }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native'
 import ProfileHeader from '../../components/ProfileHeader';
 
 
@@ -21,6 +22,13 @@ export default class ProfileScreen extends React.Component {
       }
     }
   }
+
+  componentDidMount() {
+    this._navListener = this.props.navigation.addListener('didFocus', () => {
+      StatusBar.setBarStyle('light-content');
+    });
+  }
+
   render() {
     return (
         <ProfileHeader user={this.state.user} navigation={this.props.navigation}/>
