@@ -4,7 +4,7 @@ import numeral from 'numeral';
 
 const Count = ({num, children}) => {
   return <View style={styles.count}>
-      <Text style={styles.num}>{numeral(num).format('0a')}</Text>
+      <Text style={styles.num}>{numeral(num).format('0a').toUpperCase()}</Text>
       <Text style={styles.name}>{children}</Text>
     </View>;
 }

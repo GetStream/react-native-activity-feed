@@ -35,11 +35,6 @@ class ProfileHeader extends React.Component {
         { coverImage ?
         <CoverImage source={coverImage} /> : null}
 
-        {/* <View style={styles.topSection}>
-          <BackButton pressed={() => goBack('Home')} />
-          <Button pressed={() => this.props.navigation.navigate('EditProfile')}>Edit Profile</Button>
-        </View> */}
-
         <View style={[styles.mainSection]}>
           <View style={styles.userDetails}>
             <Text style={styles.userName}>{name}</Text>

@@ -1,29 +1,14 @@
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text, StatusBar, ActionSheetIOS } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import Icon from "./components/Icon";
 import Avatar from './components/Avatar';
+import HomeScreen from "./screens/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import EditProfileScreen from './screens/EditProfileScreen';
 
-import Header from './components/Header';
 
-
-class HomeScreen extends React.Component {
-  componentDidMount() {
-    this._navListener = this.props.navigation.addListener('didFocus', () => {
-      StatusBar.setBarStyle('dark-content');
-    });
-  }
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Home !</Text>
-      </View>
-    );
-  }
-}
 
 class SearchScreen extends React.Component {
   componentDidMount() {

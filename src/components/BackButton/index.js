@@ -18,7 +18,7 @@ const BackButton = ({color, pressed}) => {
 }
 
 const styles = StyleSheet.create({
-  backButton: { width: 50, padding: 6 },
+  backButton: { width: 50, paddingRight: 6, paddingTop: 6, paddingBottom: 6, },
   backArrow: { height: 22, width: 12 },
 })
 
