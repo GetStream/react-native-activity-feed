@@ -1,13 +1,11 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native'
-import ProfileHeader from "../../components/ProfileHeader";
-import Button from "../../components/Button";
-import BackButton from '../../components/BackButton';
+import { StatusBar, View, Text } from 'react-native'
+import ProfileHeader from '../../components/ProfileHeader';
 
 
 
 
-export default class ProfileScreen extends React.Component {
+export default class EditProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,26 +24,20 @@ export default class ProfileScreen extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    headerStyle: {
-      backgroundColor: "transparent",
-      // opacity: 0.8
-      borderBottomColor: 'transparent',
-      paddingLeft: 10,
-      paddingRight: 10,
-    },
-    // headerLeft: <BackButton />,
-    headerRight: <Button pressed={() => navigation.navigate('EditProfile') }>Edit Profile</Button>
+    title: 'Edit Profile'
   });
 
   componentDidMount() {
     this._navListener = this.props.navigation.addListener('didFocus', () => {
-      StatusBar.setBarStyle('light-content');
+      StatusBar.setBarStyle('dark-content');
     });
   }
 
   render() {
     return (
-        <View><ProfileHeader user={this.state.user} navigation={this.props.navigation}/></View>
+      <View>
+        <Text>Edit Profile</Text>
+      </View>
     );
   }
 }

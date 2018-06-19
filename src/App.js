@@ -4,7 +4,10 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import Icon from "./components/Icon";
 import Avatar from './components/Avatar';
-import ProfileScreen from './screens/ProfileScreen';
+import ProfileScreen from "./screens/ProfileScreen";
+import EditProfileScreen from './screens/EditProfileScreen';
+
+import Header from './components/Header';
 
 
 class HomeScreen extends React.Component {
@@ -38,15 +41,31 @@ class SearchScreen extends React.Component {
 }
 
 class NotificationsScreen extends React.Component {
+  static navigationOptions = {
+    title: "Notifications",
+    headerStyle: {
+      backgroundColor: "#f8f8f8"
+      // opacity: 0.8
+    },
+    headerTintColor: "#000",
+
+    headerTitleStyle: {
+      fontWeight: "bold",
+    }
+  };
+
   componentDidMount() {
-    this._navListener = this.props.navigation.addListener('didFocus', () => {
-      StatusBar.setBarStyle('dark-content');
+    this._navListener = this.props.navigation.addListener("didFocus", () => {
+      StatusBar.setBarStyle("dark-content");
     });
   }
+
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Notifications !</Text>
+      <View style={{ flex: 1 }}>
+        <Text onPress={() => this.props.navigation.goBack()}>
+          Notifications !
+        </Text>
       </View>
     );
   }
@@ -56,7 +75,13 @@ const App = createBottomTabNavigator(
   {
     Home: HomeScreen,
     Search: SearchScreen,
-    Notifications: NotificationsScreen,
+    Notifications: createStackNavigator({
+      Notifications: {
+        screen: NotificationsScreen,
+      },
+    }, {
+      initialRouteName: 'Notifications'
+    }),
     Profile: createStackNavigator(
       {
         Profile: {
@@ -65,10 +90,13 @@ const App = createBottomTabNavigator(
             headerTransparent: true,
             headerBackTitle: null
           })
+        },
+        EditProfile: {
+          screen: EditProfileScreen
         }
       },
       {
-        headerMode: "none",
+        // headerMode: "none",
         initialRouteName: "Profile"
       }
     )

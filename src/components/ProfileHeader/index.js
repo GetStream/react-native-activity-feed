@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, StatusBar, Dimensions, Platform} from 'react-native';
+import {View, Text, Image, StyleSheet, StatusBar, Dimensions, Platform, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
 
@@ -7,6 +7,7 @@ import Count from "../../components/Count";
 import Button from "../../components/Button";
 import Avatar from "../../components/Avatar";
 import CoverImage from "../../components/CoverImage";
+import BackButton from "../../components/BackButton";
 
 
 const isIphoneX = () => {
@@ -34,10 +35,10 @@ class ProfileHeader extends React.Component {
         { coverImage ?
         <CoverImage source={coverImage} /> : null}
 
-        <View style={styles.topSection}>
-          <Button pressed={() => goBack()}>Back</Button>
-          <Button pressed={() => console.log('navigate to edit profile')}>Edit Profile</Button>
-        </View>
+        {/* <View style={styles.topSection}>
+          <BackButton pressed={() => goBack('Home')} />
+          <Button pressed={() => this.props.navigation.navigate('EditProfile')}>Edit Profile</Button>
+        </View> */}
 
         <View style={[styles.mainSection]}>
           <View style={styles.userDetails}>
@@ -72,14 +73,17 @@ const styles = StyleSheet.create({
     width: 100 + "%",
     backgroundColor: "transparent",
     flexDirection: "row",
-    alignItems: "flex-end",
+    alignItems: "center",
     justifyContent: "space-between",
-    padding: 11
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5
   },
   mainSection: {
     width: 100 + "%",
     height: 150,
-    marginTop: 30,
+    marginTop: 90,
     marginBottom: 30,
     paddingRight: 20,
     paddingLeft: 20,
