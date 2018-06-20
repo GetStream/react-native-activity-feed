@@ -1,5 +1,7 @@
 import React from 'react';
-import { StatusBar, View, ListView } from 'react-native'
+import { StatusBar, ScrollView, FlatList } from 'react-native'
+
+import Notification from '../../components/Notification';
 
 export default class EditProfileScreen extends React.Component {
   constructor(props) {
@@ -25,9 +27,11 @@ export default class EditProfileScreen extends React.Component {
   }
 
   render() {
-    return (
-      <View></View>
-    );
+    return <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <FlatList
+          data={[{ key: '1' }, { key: '2' }, { key: '3' },]}
+          renderItem={({item}) => <Notification />}
+        />
+      </ScrollView>;
   }
 }
-
