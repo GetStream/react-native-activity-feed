@@ -2,10 +2,6 @@ import React from 'react';
 import { View, StatusBar } from 'react-native'
 import ProfileHeader from "../../components/ProfileHeader";
 import Button from "../../components/Button";
-import BackButton from '../../components/BackButton';
-
-
-
 
 export default class ProfileScreen extends React.Component {
   constructor(props) {
@@ -28,12 +24,10 @@ export default class ProfileScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
     headerStyle: {
       backgroundColor: "transparent",
-      // opacity: 0.8
       borderBottomColor: 'transparent',
       paddingLeft: 10,
       paddingRight: 10,
     },
-    // headerLeft: <BackButton />,
     headerRight: <Button pressed={() => navigation.navigate('EditProfile') }>Edit Profile</Button>
   });
 
@@ -45,7 +39,9 @@ export default class ProfileScreen extends React.Component {
 
   render() {
     return (
-        <View><ProfileHeader user={this.state.user} navigation={this.props.navigation}/></View>
+      <View>
+        <ProfileHeader user={this.state.user} navigation={this.props.navigation}/>
+      </View>
     );
   }
 }

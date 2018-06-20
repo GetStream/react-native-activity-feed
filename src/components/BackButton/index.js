@@ -4,7 +4,7 @@ import { Image, TouchableOpacity, StyleSheet } from 'react-native';
 const BackButton = ({color, pressed}) => {
   if (color ==='blue') {
     return (
-      <TouchableOpacity style={styles.backButton}>
+      <TouchableOpacity style={styles.backButton} onPress={pressed}>
         <Image source={require('../../images/icons/backarrow-blue.png')} style={styles.backArrow} />
       </TouchableOpacity>
     )

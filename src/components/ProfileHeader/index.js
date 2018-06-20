@@ -1,31 +1,14 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, StatusBar, Dimensions, Platform, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-
 import Count from "../../components/Count";
-import Button from "../../components/Button";
 import Avatar from "../../components/Avatar";
 import CoverImage from "../../components/CoverImage";
-import BackButton from "../../components/BackButton";
-
-
-const isIphoneX = () => {
-  let d = Dimensions.get("window");
-  const { height, width } = d;
-
-  return (
-    // This has to be iOS duh
-    Platform.OS === "ios" &&
-    // Accounting for the height in either orientation
-    (height === 812 || width === 812)
-  );
-};
 
 class ProfileHeader extends React.Component {
 
   render() {
-    const { goBack } = this.props.navigation;
     const { name, url, desc, counts, profileImage, coverImage } = this.props.user;
 
     coverImage ? StatusBar.setBarStyle('light-content', true) : null;
@@ -64,17 +47,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4
   },
 
-  topSection: {
-    width: 100 + "%",
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingTop: 5,
-    paddingBottom: 5
-  },
   mainSection: {
     width: 100 + "%",
     height: 150,

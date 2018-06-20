@@ -1,8 +1,9 @@
 import React from 'react';
-import { StatusBar, View, ScrollView, Text, TextInput } from 'react-native'
+import { StatusBar, View, Text, TextInput } from 'react-native'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CoverImage from "../../components/CoverImage";
 import Avatar from "../../components/Avatar";
+import BackButton from "../../components/BackButton";
 import UploadImage from '../../components/UploadImage';
 
 
@@ -29,9 +30,10 @@ export default class EditProfileScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
     title: 'Edit Profile'.toUpperCase(),
     headerRight: <Text>Save</Text>,
+    headerLeft: <BackButton pressed={() => navigation.goBack() } color="blue" />,
     headerStyle: {
-      paddingLeft: 10,
-      paddingRight: 10,
+      paddingLeft: 15,
+      paddingRight: 15,
     },
     headerTitleStyle: {
       fontWeight: '500',
