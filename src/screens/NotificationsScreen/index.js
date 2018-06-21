@@ -69,8 +69,8 @@ export default class EditProfileScreen extends React.Component {
     headerLeft: <Image source={require('../../images/icons/categories.png')} style={{ width: 23, height: 23 }} />,
     headerRight: <Image source={require('../../images/icons/post.png')} style={{width:23, height: 23 }} />,
     headerStyle: {
-      paddingLeft: 10,
-      paddingRight: 10,
+      paddingLeft: 15,
+      paddingRight: 15,
     },
     headerTitleStyle: {
       fontWeight: '500',
