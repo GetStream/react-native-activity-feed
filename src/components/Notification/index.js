@@ -1,15 +1,29 @@
 import React from "react";
-import {View, Text, StyleSheet } from "react-native";
+import {View, Text, StyleSheet, Image } from "react-native";
 
 import Avatar from "../Avatar";
 
-const Notification = () => {
+const Notification = ({item}) => {
   return (
     <View style={styles.item}>
       <Avatar source="https://i.kinja-img.com/gawker-media/image/upload/s--PUQWGzrn--/c_scale,f_auto,fl_progressive,q_80,w_800/yktaqmkm7ninzswgkirs.jpg" size={48} noShadow />
       <View style={{ flex: 1, paddingLeft: 15 }}>
         <Text style={styles.itemHeader}>TheBatman and 3 others</Text>
-        <Text style={styles.itemSubheader}>liked your repost:</Text>
+        {/* <Text style={styles.itemSubheader}>{ item.type === 'like' && 'liked'} your {item.object.type}:</Text> */}
+
+
+        { item.type === 'like' ?
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            <Image
+              style={{ width: 24, height: 24}}
+              source={require('../../images/icons/heart.png')} />
+            <Text style={styles.itemSubheader}>
+              liked your {item.object.type}
+            </Text>
+          </View>
+        : null }
+
+
         <View style={styles.object}>
           <Text style={styles.objectText}>Great podcast with @getstream and @feeds! Thanks guys!</Text>
           <View style={styles.objectFooter}>

@@ -6,7 +6,7 @@ const UploadImage = () => {
     <View
       style={{
         backgroundColor: '#fff',
-        borderRadius: 25,
+        borderRadius: 22,
         padding: 5,
         opacity: 0.8,
         shadowColor: "#000",

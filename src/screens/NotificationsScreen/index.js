@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, ScrollView, FlatList, SafeAreaView } from 'react-native'
+import { StatusBar, ScrollView, FlatList, SafeAreaView, Image } from 'react-native'
 
 import Notification from "../../components/Notification";
 import Follows from '../../components/Follows';
@@ -10,7 +10,11 @@ export default class EditProfileScreen extends React.Component {
     this.state = {
       notifications: [
         {
-          id: '1'
+          id: '1',
+          type: 'like',
+          object: {
+            type: 'repost'
+          }
         },
         {
           id: '2',
@@ -19,7 +23,7 @@ export default class EditProfileScreen extends React.Component {
             {
               user_id: 123,
               user_image: 'https://randomuser.me/api/portraits/women/44.jpg',
-              user_name: 'Wonderwoman'
+              user_name: 'Beyonce'
             },
             {
               user_id: 234,
@@ -29,14 +33,41 @@ export default class EditProfileScreen extends React.Component {
           ]
         },
         {
-          id: '3'
+          id: '3',
+          type: 'like',
+          object: {
+            type: 'comment'
+          }
+        },
+        {
+          id: '4',
+          type: 'like',
+          object: {
+            type: 'repost'
+          }
+        },
+        {
+          id: '5',
+          type: 'like',
+          object: {
+            type: 'comment'
+          }
+        },
+        {
+          id: '6',
+          type: 'like',
+          object: {
+            type: 'comment'
+          }
         }
       ]
     }
   }
 
   static navigationOptions = ({ navigation }) => ({
-    title: 'Notifications'.toUpperCase(),
+    title: 'NOTIFICATIONS',
+    headerLeft: <Image source={require('../../images/icons/categories.png')} style={{ width: 23, height: 23 }} />,
+    headerRight: <Image source={require('../../images/icons/post.png')} style={{width:23, height: 23 }} />,
     headerStyle: {
       paddingLeft: 10,
       paddingRight: 10,
@@ -59,7 +90,7 @@ export default class EditProfileScreen extends React.Component {
     if (item.type === 'follow') {
       return <Follows items={item.follows} />;
     }
-    return <Notification />;
+    return <Notification item={item} />;
   }
 
   render() {

@@ -28,7 +28,7 @@ export default class EditProfileScreen extends React.Component {
   }
 
   static navigationOptions = ({navigation}) => ({
-    title: 'Edit Profile'.toUpperCase(),
+    title: 'EDIT PROFILE',
     headerRight: <Text>Save</Text>,
     headerLeft: <BackButton pressed={() => navigation.goBack() } color="blue" />,
     headerStyle: {

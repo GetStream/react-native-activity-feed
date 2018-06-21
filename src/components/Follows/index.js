@@ -18,7 +18,7 @@ const Follows = ({items}) => {
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-          <Text style={styles.footerTextBold}>@Wonderwoman</Text>
+          <Text style={styles.footerTextBold}>@{items[0].user_name}</Text>
           { items.length > 1 ? ' and ' + (items.length - 1) +  ' others' : null } followed you
           </Text>
         </View>
