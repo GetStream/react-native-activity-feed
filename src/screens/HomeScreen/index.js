@@ -43,12 +43,31 @@ class HomeScreen extends React.Component {
   render() {
   return <View style={{ flex: 1, backgroundColor: "#fff", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 10 }}>
       <UserBar data={{ handle: '@flow', time: '3 hours', username: 'Wonderwoman', type: 'reply' }} />
-      <PostControlBar data={{ repost: 123, heart: 663, reply: 1}}/>
+
       <UserBar data={{ handle: '@flow', time: '3 hours', username: 'Wonderwoman', type: 'repost' }} />
-      <PostControlBar data={{ repost: 0, heart: 0, reply: 0 }} />
+      <PostControlBar data={{
+        repost: {
+          'icon-outline': require('../../images/icons/repost.png'),
+          'icon-filled': require('../../images/icons/repost.png'),
+          value: 13,
+          style: 'icon-outline'
+        },
+        heart: {
+          'icon-outline': require('../../images/icons/heart-outline.png'),
+          'icon-filled': require('../../images/icons/heart.png'),
+          value: 22,
+          style: 'icon-filled'
+        },
+        reply: {
+          'icon-outline': require('../../images/icons/reply.png'),
+          'icon-filled': require('../../images/icons/reply.png'),
+          value: 3,
+          style: 'icon-outline'
+        }
+      }} />
+
 
       <UserBar data={{ time: '3 hours', username: 'Wonderwoman', handle: '@wonderwoman' }} />
-      <PostControlBar data={{ repost: 33, heart: 12 }} />
 
       <UserBar data={{ time:'3 hours', username: 'Wonderwoman', }} />
 

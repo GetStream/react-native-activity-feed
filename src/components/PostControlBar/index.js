@@ -7,7 +7,7 @@ const PostControlBar = ({data}) => {
 
   let list = Object
     .keys(data)
-    .map((item, index) => <PostControl key={index} type={item} num={data[item]} />);
+    .map((item, index) => <PostControl key={index} type={item} icon={data[item][data[item].style]} num={data[item].value} />);
 
 
   return <View style={styles.container}>

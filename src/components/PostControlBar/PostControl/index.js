@@ -3,18 +3,10 @@ import { View, Image, StyleSheet, Text } from 'react-native';
 
 
 
-const PostControl = ({type, num}) => {
-  const icons = {
-    reply: require("../../../images/icons/reply.png"),
-    'reply-outline': require("../../../images/icons/reply.png"),
-    repost: require("../../../images/icons/repost.png"),
-    'repost-outline': require("../../../images/icons/repost.png"),
-    heart: require("../../../images/icons/heart.png"),
-    'heart-outline': require("../../../images/icons/heart-outline.png"),
-  }
+const PostControl = ({num, icon}) => {
   return (
     <View style={styles.container}>
-      <Image source={icons[type + '-outline']} style={styles.controlImage} />
+      <Image source={icon} style={styles.controlImage} />
       <Text style={styles.text}>{num}</Text>
     </View>
   );
