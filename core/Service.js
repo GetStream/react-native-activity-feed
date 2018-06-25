@@ -8,7 +8,7 @@ export class StreamService {
   appId: string;
   apiKey: string;
   token: string;
-  _userInfos: ?any;
+  _client: ?any;
 
   constructor(appId: string, apiKey: string, token: string) {
     this.appId = appId;
@@ -17,30 +17,26 @@ export class StreamService {
   }
 
   get client() {
-    return Stream.connect(this.apiKey, null, this.appId);
+    if (!this._client) {
+      this._client = Stream.connect(this.apiKey, null, this.appId);
+    }
+    return this._client;
   }
 
   get reactions() {
     return this.client.reactions(this.token)
   }
 
-  get userInfos() {
-    if (!this._userInfos) {
-      this._userInfos = this.client.collection(name, this.token);
-    }
-    return this._userInfos;
-  }
-
-  getUserInfo(userId: string) {
-    return new StreamUser(this, userId);
+  getUser(userId: string) {
+    return new StreamUser(userId, this.getCollection("users"));
   }
 
   getCollection(name: string) {
-    return new StreamCollection(this, this.client.collection(name, this.token))
+    return new StreamCollection(this.client.collection(name, this.token), this)
   }
 
   getFeed(feedSlug:string, userId:string) {
-    return new StreamFeed(this, this.client.feed(feedSlug, userId, this.token));
+    return new StreamFeed(this.client.feed(feedSlug, userId, this.token), this);
   }
 
 }

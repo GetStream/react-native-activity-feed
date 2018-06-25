@@ -2,12 +2,12 @@
 
 import type {StreamService} from './Service';
 
-export function StreamCollection(service: StreamService, collection:any) {
+export function StreamCollection(collection:any, service: StreamService) {
   collection.__service__ = service;
   return new Proxy(collection, {});
 }
 
-export function StreamFeed(service: StreamService, feed:any) {
+export function StreamFeed(feed:any, service: StreamService) {
   let handler = {
       get: (obj, prop) => {
         switch (prop) {
@@ -33,7 +33,7 @@ export function StreamFeed(service: StreamService, feed:any) {
 export class StreamActivity {
   id: any;
   data: any;
-  feed: any;
+  feed: StreamFeed;
   origin: any;
 
   constructor(data: any, feed?: any) {
@@ -44,16 +44,16 @@ export class StreamActivity {
   }
 
   reaction(kind: string, data: any, callback:any) {
-    return this.feed.service.client.reaction.add(this.id, kind, data, callback)
+    return this.feed.__service__.client.reaction.add(this.id, kind, data, callback)
   }
 }
 
 export class StreamUser {
   id: string;
-  service: StreamService;
+  userCollection: StreamCollection;
 
-  constructor(service: StreamService, id: string) {
-    this.service = service;
+  constructor(id: string, userCollection: StreamCollection) {
+    this.userCollection = userCollection;
     this.id = id;
   }
 }
