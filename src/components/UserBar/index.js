@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     width: 100 + "%",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 15
   },
   content: {
     marginLeft: 10,

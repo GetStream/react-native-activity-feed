@@ -2,7 +2,9 @@ import React from 'react';
 import { StatusBar, ScrollView, FlatList, SafeAreaView, Image } from 'react-native'
 
 import Notification from "../../components/Notification";
-import Follows from '../../components/Follows';
+import Like from "../../components/Notifications/Like";
+import Repost from "../../components/Notifications/Repost";
+import Follow from '../../components/Notifications/Follow';
 
 export default class EditProfileScreen extends React.Component {
   constructor(props) {
@@ -12,8 +14,16 @@ export default class EditProfileScreen extends React.Component {
         {
           id: '1',
           type: 'like',
+          actors: [
+            { user_id: 1234, user_name: 'Frit Sissing', user_image: 'https://randomuser.me/api/portraits/men/12.jpg' },
+            { user_id: 1235, user_name: 'Robbert ten Brink', user_image: 'https://randomuser.me/api/portraits/men/13.jpg' },
+            { user_id: 1236, user_name: 'Sybrand Niessen', user_image: 'https://randomuser.me/api/portraits/men/44.jpg' }
+          ],
           object: {
-            type: 'repost'
+            type: 'repost',
+            content: 'Great podcast with @getstream and @feeds! Thanks guys!',
+            author: '@wonderwoman',
+            timestamp: '2 mins'
           }
         },
         {
@@ -34,28 +44,49 @@ export default class EditProfileScreen extends React.Component {
         },
         {
           id: '3',
-          type: 'like',
+          type: 'repost',
+          actors: [
+            { user_id: 1234, user_name: 'Sacha de Boer', user_image: 'https://randomuser.me/api/portraits/men/12.jpg' },
+          ],
           object: {
-            type: 'comment'
+            type: 'link',
+            title: 'Tree House at the Shire - Treehouses for Rent in Conway',
+            description: 'This quaint little cabin in the trees was designed for a true get away'
           }
         },
         {
           id: '4',
           type: 'like',
+          actors: [
+            { user_id: 1234, user_name: 'Sacha de Boer', user_image: 'https://randomuser.me/api/portraits/women/12.jpg' },
+            { user_id: 1235, user_name: 'Robbert ten Brink', user_image: 'https://randomuser.me/api/portraits/men/13.jpg' },
+            { user_id: 1236, user_name: 'Sybrand Niessen', user_image: 'https://randomuser.me/api/portraits/men/44.jpg' },
+            { user_id: 1236, user_name: 'Sybrand Niessen', user_image: 'https://randomuser.me/api/portraits/men/44.jpg' }
+          ],
           object: {
-            type: 'repost'
+            type: 'repost',
+            content: 'Great podcast with @getstream and @feeds! Thanks guys!',
+            author: '@wonderwoman',
+            timestamp: '2 months'
           }
         },
         {
           id: '5',
-          type: 'like',
+          type: 'repost',
+          actors: [
+            { user_id: 1234, user_name: 'Dirk Kuijt', user_image: 'https://randomuser.me/api/portraits/men/12.jpg' },
+          ],
           object: {
-            type: 'comment'
+            type: 'post'
           }
         },
         {
           id: '6',
-          type: 'like',
+          type: 'repost',
+          actors: [
+            { user_id: 1234, user_name: 'Derk Bolt', user_image: 'https://randomuser.me/api/portraits/men/12.jpg' },
+            { user_id: 1235, user_name: 'Robbert ten Brink', user_image: 'https://randomuser.me/api/portraits/men/13.jpg' },
+          ],
           object: {
             type: 'comment'
           }
@@ -88,7 +119,13 @@ export default class EditProfileScreen extends React.Component {
 
   _renderItem = ({ item }) => {
     if (item.type === 'follow') {
-      return <Follows items={item.follows} />;
+      return <Follow items={item.follows} />;
+    }
+    if (item.type === 'like') {
+      return <Like item={item} />
+    }
+    if (item.type === 'repost') {
+      return <Repost item={item} />
     }
     return <Notification item={item} />;
   }

@@ -45,6 +45,7 @@ class HomeScreen extends React.Component {
       <UserBar data={{ handle: '@flow', time: '3 hours', username: 'Wonderwoman', type: 'reply' }} />
 
       <UserBar data={{ handle: '@flow', time: '3 hours', username: 'Wonderwoman', type: 'repost' }} />
+
       <PostControlBar data={{
         repost: {
           'icon-outline': require('../../images/icons/repost.png'),
@@ -65,7 +66,6 @@ class HomeScreen extends React.Component {
           style: 'icon-outline'
         }
       }} />
-
 
       <UserBar data={{ time: '3 hours', username: 'Wonderwoman', handle: '@wonderwoman' }} />
 

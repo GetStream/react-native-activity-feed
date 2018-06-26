@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-import Avatar from "../Avatar";
+import Avatar from "../../Avatar";
 
-const Follows = ({items}) => {
+const Follow = ({items}) => {
   return (
     <View style={styles.item}>
-      <Image style={styles.icon} source={require('../../images/icons/followers.png')} />
+      <Image style={styles.icon} source={require('../../../images/icons/followers.png')} />
       <View style={{ flex: 1, paddingLeft: 15 }}>
         <View style={{flexDirection: 'row'}}>
 
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Follows;
+export default Follow;

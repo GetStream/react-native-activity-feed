@@ -68,8 +68,10 @@ const App = createBottomTabNavigator(
           );
         }
       }
-    })
-  }
+    }),
+    initialRouteName: 'Notifications'
+  },
+
 );
 
 

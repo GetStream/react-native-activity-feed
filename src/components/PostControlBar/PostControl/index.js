@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginTop: 12,
-    marginBottom: 12,
     marginRight: 40,
   },
   controlImage: {
