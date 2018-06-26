@@ -20,7 +20,9 @@ export default class EditProfileScreen extends React.Component {
             { user_id: 1236, user_name: 'Sybrand Niessen', user_image: 'https://randomuser.me/api/portraits/men/44.jpg' }
           ],
           object: {
-            type: 'repost',
+            type: 'link',
+            title: 'title',
+            description: 'description',
             content: 'Great podcast with @getstream and @feeds! Thanks guys!',
             author: '@wonderwoman',
             timestamp: '2 mins'
@@ -120,14 +122,9 @@ export default class EditProfileScreen extends React.Component {
   _renderItem = ({ item }) => {
     if (item.type === 'follow') {
       return <Follow items={item.follows} />;
+    } else {
+      return <Notification item={item} />;
     }
-    if (item.type === 'like') {
-      return <Like item={item} />
-    }
-    if (item.type === 'repost') {
-      return <Repost item={item} />
-    }
-    return <Notification item={item} />;
   }
 
   render() {

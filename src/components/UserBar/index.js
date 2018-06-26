@@ -13,7 +13,7 @@ const UserBar = ({data}) => {
       return (
         <View style={{flexDirection: 'row'}}>
           { type === 'reply' && <Text style={styles.handle}><Image source={require('../../images/icons/reply.png')} style={{ width: 24, height: 13,}}/> reply to {handle}</Text> }
-          {type === 'repost' && <Text style={styles.handle}><Image source={require('../../images/icons/repost.png')} style={{ width: 24, height: 14, }} /> by {handle}</Text> }
+          { type === 'repost' && <Text style={styles.handle}><Image source={require('../../images/icons/repost.png')} style={{ width: 24, height: 14, }} /> {handle}</Text> }
         </View>
       );
     } else {

@@ -17,15 +17,15 @@ const Repost = ({ item }) => {
 
       { item.object.type === 'post' ?
         <View style={{marginLeft: 58, marginTop: 15}}>
-          <Text>hello</Text>
+          <Text>post</Text>
         </View>
       : null }
 
-        { item.object.type === 'comment' ?
-        <View style={{ marginLeft: 58, marginTop: 15 }}>
-          <Text>hello</Text>
-        </View>
-        : null}
+      { item.object.type === 'comment' ?
+      <View style={{ marginLeft: 58, marginTop: 15 }}>
+        <Text>comment</Text>
+      </View>
+      : null}
 
     </View>
   );

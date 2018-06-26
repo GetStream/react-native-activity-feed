@@ -2,13 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
 import Avatar from "../../Avatar";
+import AttachedObject from '../../AttachedObject';
 
 const Like = ({ item }) => {
   let headerText
   if (Array.isArray(item.actors)) {
     headerText = `${item.actors[0].user_name} and ${item.actors.length - 1} others `;
   } else {
-    headerText = item.actor.username;
+    headerText = item.actors[0].user_name;
   }
   return (
     <View style={styles.item}>
@@ -25,14 +26,8 @@ const Like = ({ item }) => {
           </Text>
         </View>
 
+        <AttachedObject item={item.object} />
 
-        <View style={styles.object}>
-          <Text style={styles.objectText}>{item.object.content}</Text>
-          <View style={styles.objectFooter}>
-            <Text style={styles.objectFooterAuthor}>{item.object.author}</Text>
-            <Text style={styles.objectFooterTimestamp}>{item.object.timestamp}</Text>
-          </View>
-        </View>
       </View>
     </View>
   );
@@ -59,29 +54,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     opacity: 0.7
   },
-  object: {
-    paddingTop: 10,
-    paddingBottom: 10
-  },
-  objectText: {
-    fontSize: 14,
-    lineHeight: 24,
-    color: "#364047"
-  },
-  objectFooter: {
-    marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  objectFooterAuthor: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#535B61"
-  },
-  objectFooterTimestamp: {
-    fontSize: 13,
-    color: "#535B61"
-  }
+
 });
 
 export default Like;
