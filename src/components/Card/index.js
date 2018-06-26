@@ -4,18 +4,15 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 const Card = ({item}) => {
   let {title, description, image} = item;
 
-  if (!image) {
-    image = require('../../images/placeholder.png');
-  }
 
   return (
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={ image }/>
+        source={image ? {uri: image} : require('../../images/placeholder.png')}/>
       <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
+        <Text style={styles.title}>{title.slice(0,60)}...</Text>
+        <Text style={styles.description}>{description.slice(0,60)}...</Text>
       </View>
     </View>
   );

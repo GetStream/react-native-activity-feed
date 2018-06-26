@@ -5,7 +5,7 @@ import UserBar from "../UserBar";
 
 
 const Notification = ({item}) => {
-  let headerText, headerSubtext;
+  let headerText, headerSubtext, icon;
   if (item.actors.length > 1) {
     headerText = `${item.actors[0].user_name} and ${item.actors.length - 1} others `;
   } else {
@@ -14,16 +14,18 @@ const Notification = ({item}) => {
 
   if (item.type === 'like') {
     headerSubtext = `liked your ${item.object.type}`
+    icon = require("../../images/icons/heart.png");
   }
 
   if (item.type === "repost") {
     headerSubtext = `reposted your ${item.object.type}`;
+    icon = require('../../images/icons/repost.png');
   }
 
 
   return (
     <View style={styles.item}>
-      <UserBar data={{username: headerText, handle: headerSubtext, type: item.type}}/>
+      <UserBar data={{username: headerText, handle: headerSubtext, type: item.type, image: item.actors[0].user_image, icon: icon }}/>
       <View style={{marginLeft: item.object.type !== 'link' ? 58 : 0}}>
         <AttachedObject item={item.object}/>
       </View>

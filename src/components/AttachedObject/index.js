@@ -20,7 +20,11 @@ const AttachedObject = ({item}) => {
   if (item.type === 'post') {
     return (
       <View style={styles.attachedObject}>
-        <Text style={styles.attachedObjectText}>post</Text>
+        <Text style={styles.attachedObjectText}>{item.content}</Text>
+        <View style={styles.attachedObjectFooter}>
+          <Text style={styles.attachedObjectFooterAuthor}>{item.author}</Text>
+          <Text style={styles.attachedObjectFooterTimestamp}>{item.timestamp}</Text>
+        </View>
       </View>
     );
   }

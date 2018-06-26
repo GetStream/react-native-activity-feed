@@ -4,31 +4,23 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import Avatar from '../Avatar';
 
 const UserBar = ({data}) => {
-  const { handle, time, username, type } = data;
+  const { handle, time, username, type, image, icon } = data;
 
-  const createSubline = () => {
-    if ( !type && !handle ) {
-      return;
-    } else if (type === 'reply' || type === 'repost') {
-      return (
+  return (
+    <View style={styles.container}>
+        <Avatar source={image} size={48} noShadow />
+        <View style={styles.content}>
+          <Text style={styles.username}>{username}</Text>
         <View style={{flexDirection: 'row'}}>
-          { type === 'reply' && <Text style={styles.handle}><Image source={require('../../images/icons/reply.png')} style={{ width: 24, height: 13,}}/> reply to {handle}</Text> }
-          { type === 'repost' && <Text style={styles.handle}><Image source={require('../../images/icons/repost.png')} style={{ width: 24, height: 14, }} /> {handle}</Text> }
+          {icon !== undefined ?
+            <Image source={icon} style={{ width: 24, height: 24, top: -2, marginRight: 5 }} />
+          : null}
+          <Text style={styles.handle}>{handle}</Text>
         </View>
-      );
-    } else {
-      return <Text style={styles.handle}>{handle && handle}</Text>;
-    }
-  }
-
-  return <View style={styles.container}>
-      <Avatar source="https://randomuser.me/api/portraits/women/43.jpg" size={48} noShadow />
-      <View style={styles.content}>
-        <Text style={styles.username}>{username}</Text>
-        {createSubline()}
+        </View>
+        { time && <View><Text style={styles.timestamp}>{time}</Text></View> }
       </View>
-      { time && <View><Text style={styles.timestamp}>{time}</Text></View> }
-    </View>;
+    );
 }
 
 const styles = StyleSheet.create({

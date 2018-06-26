@@ -2,8 +2,6 @@ import React from 'react';
 import { StatusBar, ScrollView, FlatList, SafeAreaView, Image } from 'react-native'
 
 import Notification from "../../components/Notification";
-import Like from "../../components/Notifications/Like";
-import Repost from "../../components/Notifications/Repost";
 import Follow from '../../components/Notifications/Follow';
 
 export default class EditProfileScreen extends React.Component {
@@ -21,8 +19,8 @@ export default class EditProfileScreen extends React.Component {
           ],
           object: {
             type: 'link',
-            title: 'title',
-            description: 'description',
+            title: 'Stream | API for building activity streams and news feeds',
+            description: 'Stream, scalable news feeds and activity streams as a service. iOS, Android and web.',
             content: 'Great podcast with @getstream and @feeds! Thanks guys!',
             author: '@wonderwoman',
             timestamp: '2 mins'
@@ -41,6 +39,16 @@ export default class EditProfileScreen extends React.Component {
               user_id: 234,
               user_image: 'https://randomuser.me/api/portraits/women/43.jpg',
               user_name: 'Wonderwoman'
+            },
+            {
+              user_id: 345,
+              user_image: 'https://randomuser.me/api/portraits/women/23.jpg',
+              user_name: 'Wonderwoman'
+            },
+            {
+              user_id: 456,
+              user_image: 'https://randomuser.me/api/portraits/women/47.jpg',
+              user_name: 'Wonderwoman'
             }
           ]
         },
@@ -48,11 +56,12 @@ export default class EditProfileScreen extends React.Component {
           id: '3',
           type: 'repost',
           actors: [
-            { user_id: 1234, user_name: 'Sacha de Boer', user_image: 'https://randomuser.me/api/portraits/men/12.jpg' },
+            { user_id: 1234, user_name: 'Sacha de Boer', user_image: 'https://randomuser.me/api/portraits/women/12.jpg' },
           ],
           object: {
             type: 'link',
             title: 'Tree House at the Shire - Treehouses for Rent in Conway',
+            image: 'http://freepost.me/wp-content/uploads/2018/01/cabin-fresh-in-best-fire-pit-area-pits.jpg',
             description: 'This quaint little cabin in the trees was designed for a true get away'
           }
         },
@@ -76,17 +85,20 @@ export default class EditProfileScreen extends React.Component {
           id: '5',
           type: 'repost',
           actors: [
-            { user_id: 1234, user_name: 'Dirk Kuijt', user_image: 'https://randomuser.me/api/portraits/men/12.jpg' },
+            { user_id: 1234, user_name: 'Dirk Kuijt', user_image: 'https://randomuser.me/api/portraits/men/64.jpg' },
           ],
           object: {
-            type: 'post'
+            type: 'post',
+            content: 'Donec gravida risus dui, sed imperdiet odio tincidunt id. Nam egestas malesuada metus sit amet pretium.',
+            timestamp: '2 weeks',
+
           }
         },
         {
           id: '6',
           type: 'repost',
           actors: [
-            { user_id: 1234, user_name: 'Derk Bolt', user_image: 'https://randomuser.me/api/portraits/men/12.jpg' },
+            { user_id: 1234, user_name: 'Derk Bolt', user_image: 'https://randomuser.me/api/portraits/men/22.jpg' },
             { user_id: 1235, user_name: 'Robbert ten Brink', user_image: 'https://randomuser.me/api/portraits/men/13.jpg' },
           ],
           object: {
