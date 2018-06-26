@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import Icon from "./components/Icon";

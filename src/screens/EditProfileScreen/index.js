@@ -5,6 +5,7 @@ import CoverImage from "../../components/CoverImage";
 import Avatar from "../../components/Avatar";
 import BackButton from "../../components/BackButton";
 import UploadImage from '../../components/UploadImage';
+import FormField from '../../components/FormField';
 
 
 
@@ -58,18 +59,9 @@ export default class EditProfileScreen extends React.Component {
           </View>
         </View>
         <View style={{padding: 15}}>
-          <View style={{borderBottomWidth: 1, borderBottomColor: '#dcdcdc', marginBottom: 15}}>
-            <Text style={{ marginBottom: 12, fontSize: 14, color: '#C5C5C5'}}>Name</Text>
-            <TextInput value={this.state.user.name} style={{ fontSize: 16, fontWeight: '500' , color: '#364047', paddingBottom:10}}/>
-          </View>
-          <View style={{ borderBottomWidth: 1, borderBottomColor: '#dcdcdc', marginBottom: 15 }}>
-            <Text style={{ marginBottom: 12, fontSize: 14, color: '#C5C5C5' }}>Website</Text>
-            <TextInput value={this.state.user.url} style={{ fontSize: 16, fontWeight: '500' , color: '#364047', paddingBottom:10 }} />
-          </View>
-          <View style={{ borderBottomWidth: 1, borderBottomColor: '#dcdcdc', marginBottom: 15 }}>
-            <Text style={{ marginBottom: 12, fontSize: 14, color: '#C5C5C5' }}>Description</Text>
-            <TextInput value={this.state.user.desc} style={{ fontSize: 16, fontWeight: '500' , color: '#364047', paddingBottom: 10 }} multiline={true} />
-          </View>
+          <FormField value={this.state.user.name} label={'Name'}/>
+          <FormField value={this.state.user.url} label={'Website'}/>
+          <FormField value={this.state.user.desc} label={'Description'} multiline/>
         </View>
       </KeyboardAwareScrollView>
     );
