@@ -17,7 +17,7 @@ const Avatar = ({source ,size, noShadow, editButton }) => {
           height: size ? size : 200,
           borderRadius: size/2 ? size/2 : 200/2,
         }]}
-        source={{ uri: source }} />
+        source={ source ? { uri: source } : require('../../images/placeholder.png') } />
       { editButton ?
         <UploadImage /> : null }
     </View>

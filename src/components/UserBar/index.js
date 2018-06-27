@@ -2,8 +2,9 @@ import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 
 import Avatar from '../Avatar';
+import FollowButton from '../FollowButton';
 
-const UserBar = ({data}) => {
+const UserBar = ({data, follow}) => {
   const { handle, time, username, type, image, icon } = data;
 
   return (
@@ -15,10 +16,11 @@ const UserBar = ({data}) => {
           {icon !== undefined ?
             <Image source={icon} style={{ width: 24, height: 24, top: -2, marginRight: 5 }} />
           : null}
-          <Text style={styles.handle}>{handle}</Text>
+          { handle && <Text style={styles.handle}>{handle}</Text> }
         </View>
         </View>
         { time && <View><Text style={styles.timestamp}>{time}</Text></View> }
+        { follow && <View><FollowButton /></View>}
       </View>
     );
 }

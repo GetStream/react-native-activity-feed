@@ -1,11 +1,47 @@
 import React from 'react';
-import { View, Text, StatusBar, Image, StyleSheet, ScrollView, TextInput } from 'react-native'
+import { View, StatusBar, Image, StyleSheet, ScrollView, FlatList, TextInput } from 'react-native'
 
 import LargeHeading from "../../components/LargeHeading";
 import HorizontalScrollFeed from '../../components/HorizontalScrollFeed';
-import Avatar from '../../components/Avatar';
+import Avatar from "../../components/Avatar";
+import GroupCard from "../../components/GroupCard";
+import UserBar from "../../components/UserBar";
+import SearchBox from '../../components/SearchBox';
+
 
 class SearchScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      interestingUsers: [
+        { id: 1235, user_image: 'https://randomuser.me/api/portraits/women/65.jpg' },
+        { id: 2345, user_image: 'https://randomuser.me/api/portraits/men/24.jpg' },
+        { id: 3456, user_image: 'https://randomuser.me/api/portraits/women/45.jpg' },
+        { id: 4567, user_image: 'https://randomuser.me/api/portraits/men/45.jpg' },
+        { id: 6789, user_image: 'https://randomuser.me/api/portraits/women/23.jpg' },
+        { id: 7890, user_image: 'https://randomuser.me/api/portraits/men/67.jpg' },
+        { id: 2456, user_image: 'https://randomuser.me/api/portraits/women/12.jpg'},
+      ],
+      trendingGroups: [
+        { id: 1234, name: 'Beer', image: 'https://cdn.britannica.com/700x450/72/186972-049-26ACDCBE.jpg', icon: '' },
+        { id: 2345, name: 'Arcade', image: 'http://www.thebasementarcade.com/gameroom/0516/1.jpg', icon: '' },
+        { id: 3456, name: 'Nature', image: 'https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&h=350', icon: '' },
+        { id: 4567, image: '', icon: '' },
+        { id: 6789, image: '', icon: '' },
+        { id: 7890, image: '', icon: '' },
+        { id: 8909, image: '', icon: '' },
+      ],
+      users: [
+        { id: 1235, user_image: 'https://randomuser.me/api/portraits/women/65.jpg', followed: false },
+        { id: 2345, user_image: 'https://randomuser.me/api/portraits/men/24.jpg', followed: true },
+        { id: 3456, user_image: 'https://randomuser.me/api/portraits/women/45.jpg', followed: false },
+        { id: 4567, user_image: 'https://randomuser.me/api/portraits/men/45.jpg', followed: false },
+        { id: 6789, user_image: 'https://randomuser.me/api/portraits/women/23.jpg', followed: false },
+        { id: 7890, user_image: 'https://randomuser.me/api/portraits/men/67.jpg', followed: false },
+        { id: 2456, user_image: 'https://randomuser.me/api/portraits/women/12.jpg', followed: false },
+      ],
+    }
+  }
 
   static navigationOptions = ({ navigation }) => ({
     title: 'DISCOVER',
@@ -31,58 +67,31 @@ class SearchScreen extends React.Component {
     return (
       <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
 
+        <SearchBox />
+
         <LargeHeading>Trending Groups</LargeHeading>
         <HorizontalScrollFeed
-          data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 },]}
-          renderItem={({ item }) => <View style={styles.block} key={item.id}></View>}
+          data={this.state.trendingGroups}
+          renderItem={({ item }) => <View style={{ marginRight: 6 }}><GroupCard item={item} /></View>}
           keyExtractor={(item) => `item-${item.id}`} />
 
         <LargeHeading>Interesting Users</LargeHeading>
         <HorizontalScrollFeed
-          data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }, { id: 9 },]}
-          renderItem={({ item }) => <View style={{marginRight: 6}}><Avatar size={60} noShadow source={'https://placehold.it/200x200'} /></View>}
+          data={this.state.interestingUsers}
+          renderItem={({ item }) => <View style={{marginRight: 6}}><Avatar size={60} noShadow source={item.user_image} /></View>}
           keyExtractor={(item) => `item-${item.id}`} />
 
+        <LargeHeading>People you may know</LargeHeading>
+        <FlatList
+          style={{marginTop: 15}}
+          data={this.state.users}
+          renderItem={({ item }) => <View style={{ marginLeft: 15, marginRight: 15, marginBottom: 15}}><UserBar data={{username: 'Username', handle: '@handle'}} follow/></View>}
+          keyExtractor={(item) => `item-${item.id}`}
+        />
       </ScrollView>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 15,
-    paddingLeft: 15,
-    paddingRight: 15
-  },
-  searchbox: {
-    backgroundColor: "rgba(0,0,0,0.1)",
-    height: 28,
-    borderRadius: 4,
-    margin: 15
-  },
-  header: {
-    color: "#535B61",
-    fontSize: 18,
-    fontWeight: "300"
-  },
-  innerScroll: {
-    padding: 15,
-    flexDirection: "row"
-  },
-  block: {
-    width: 110,
-    height: 110,
-    borderRadius: 6,
-    backgroundColor: "#ccc",
-    marginRight: 6
-  },
-  circle: {
-    height: 60,
-    width: 60,
-    borderRadius: 30,
-    backgroundColor: "#cccccc",
-    marginRight: 6
-  }
-});
 
 export default SearchScreen;
