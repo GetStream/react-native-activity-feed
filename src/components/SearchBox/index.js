@@ -13,7 +13,7 @@ class SearchBox extends React.Component {
       this.state.fadeAnim,
       {
         toValue: 0,
-        duration: 300,
+        duration: 200,
       }
     ).start();
   }
@@ -23,7 +23,7 @@ class SearchBox extends React.Component {
         this.state.fadeAnim,
         {
           toValue: 1,
-          duration: 300,
+          duration: 200,
         }
       ).start();
     }
@@ -46,7 +46,8 @@ class SearchBox extends React.Component {
           onBlur={this._fadeInPlaceholder}
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}
-          style={styles.textInput}/>
+          style={styles.textInput}
+          clearButtonMode="while-editing"/>
       </View>
     );
   }
