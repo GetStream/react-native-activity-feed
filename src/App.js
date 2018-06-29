@@ -68,7 +68,7 @@ const App = createBottomTabNavigator(
         }
       }
     }),
-    initialRouteName: 'Search'
+    initialRouteName: 'Home'
   },
 
 );

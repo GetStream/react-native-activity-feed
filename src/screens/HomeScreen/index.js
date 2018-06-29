@@ -1,12 +1,9 @@
 import React from 'react';
-import { View, StatusBar, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import { LinearGradient } from 'expo';
-
+import { ScrollView, StatusBar, Image, StyleSheet, RefreshControl} from 'react-native';
 
 import Avatar from '../../components/Avatar';
 
-import UserBar from "../../components/UserBar";
-import PostControlBar from '../../components/PostControlBar'
+import Activity from '../../components/Activity';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -41,61 +38,59 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-  return <View style={{ flex: 1, backgroundColor: "#fff", justifyContent: "center", alignItems: "center", flexDirection: "column", padding: 10 }}>
-      <UserBar data={{ handle: '@flow', time: '3 hours', username: 'Wonderwoman', type: 'reply' }} />
+  return (
+      <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
 
-      <UserBar data={{ handle: '@flow', time: '3 hours', username: 'Wonderwoman', type: 'repost' }} />
+        <Activity
+          author={{
+            name: 'Fluff',
+            handle: '@fluff',
+            user_image: 'https://mylittleamerica.com/988-large_default/durkee-marshmallow-fluff-strawberry.jpg'
+          }}
+          type={'reply'}
+          to={'fluff'}
+          time={'2 mins'}
+          content="Great podcast with @getstream and @feeds! Thanks guys!"
+          />
 
-      <PostControlBar data={{
-        repost: {
-          'icon-outline': require('../../images/icons/repost.png'),
-          'icon-filled': require('../../images/icons/repost.png'),
-          value: 13,
-          style: 'icon-outline'
-        },
-        heart: {
-          'icon-outline': require('../../images/icons/heart-outline.png'),
-          'icon-filled': require('../../images/icons/heart.png'),
-          value: 22,
-          style: 'icon-filled'
-        },
-        reply: {
-          'icon-outline': require('../../images/icons/reply.png'),
-          'icon-filled': require('../../images/icons/reply.png'),
-          value: 3,
-          style: 'icon-outline'
-        }
-      }} />
+        <Activity
+          author={{
+            name: 'Justice League',
+            handle: '@justiceleague',
+            user_image: 'http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg'
+          }}
+          time={'3 mins'}
+          content="Wonder Woman is going to be great!"
+          image="http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg"/>
 
-      <UserBar data={{ time: '3 hours', username: 'Wonderwoman', handle: '@wonderwoman' }} />
+        <Activity
+          author={{
+            name: 'David Bowie',
+            handle: '@davidbowie',
+            user_image: 'http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?'
+          }}
+          content="Great podcast with @getstream and @feeds! Thanks guys!"
+          time={'3 mins'}
+          link={true}
+          item={{title: 'Hello World', description: 'This is ground control for mayor Tom'}} />
 
-      <UserBar data={{ time:'3 hours', username: 'Wonderwoman', }} />
+        <Activity
+          author={{
+            name: 'Lou Reed',
+            handle: '@loureed',
+            user_image: 'https://static.spin.com/files/131027-lou-reed-6-640x426.jpg'
+          }}
+          content="Great podcast with @getstream and @feeds! Thanks guys!"
+          />
 
-      <TouchableOpacity>
-        <LinearGradient colors={["#008DFF", "#0079FF"]} style={styles.buttonGradient}>
-          <Text style={styles.buttonText}>
-            Follow
-          </Text>
-        </LinearGradient>
-      </TouchableOpacity>
-    </View>;
+
+      </ScrollView>
+    );
   }
 }
 
 const styles = StyleSheet.create({
-  buttonGradient: {
-    borderRadius: 6,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 7,
-    paddingBottom: 7,
-    borderRadius: 6,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1
-  },
-  buttonText: { color: "white", fontSize: 10, fontWeight: "bold" }
+
 });
 
 
