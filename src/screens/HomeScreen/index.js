@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StatusBar, Image, StyleSheet, RefreshControl} from 'react-native';
+import { ScrollView, StatusBar, Image, StyleSheet, FlatList} from 'react-native';
 
 import Avatar from '../../components/Avatar';
 
@@ -24,12 +24,60 @@ class HomeScreen extends React.Component {
       />
     ),
     headerRight: (
-      <Image
-        source={require("../../images/icons/post.png")}
-        style={{ width: 23, height: 23 }}
-      />
+      <Image source={require("../../images/icons/post.png")} style={{ width: 23, height: 23 }} />
     )
   });
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: [
+        {
+          id: "1",
+          author: {
+            name: 'Fluff',
+            handle: '@fluff',
+            user_image: "https://mylittleamerica.com/988-large_default/durkee-marshmallow-fluff-strawberry.jpg"
+          },
+          type: 'reply',
+          to: 'Fluff',
+          content:"Great podcast with @getstream and @feeds! Thanks guys!",
+          timestamp: '2mins'
+        },
+        {
+          id: "2",
+          author: {
+            name: 'Justice League',
+            handle: '@justiceleague',
+            user_image: "http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg"
+          },
+          content: "Wonder Woman is going to be great!",
+          timestamp: '4 mins',
+          image: 'http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg'
+        },
+        {
+          id: "3",
+          author: {
+            name: "David Bowie",
+            handle: "@davidbowie",
+            user_image: "http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?"
+          },
+          content: "Great podcast with @getstream and @feeds! Thanks guys!",
+          timestamp: '6 mins',
+          link: true,
+          object: {
+            type: 'link',
+            title: "Hello World",
+            description: "This is ground control for mayor Tom"
+          }
+        },
+      ],
+      counter: 0,
+      selected: ''
+    };
+
+  }
+
 
   componentDidMount() {
     this._navListener = this.props.navigation.addListener("didFocus", () => {
@@ -37,53 +85,72 @@ class HomeScreen extends React.Component {
     });
   }
 
+  _onItemPress = (item) => {
+    console.log('changing to single post with post id: ' + item.id )
+    this.props.navigation.navigate('SinglePost', {item: item})
+  };
+
+  _renderItem = ({ item }) => {
+    return (
+      <Activity
+        id={item.id}
+        author={item.author}
+        type={item.type}
+        to={item.to}
+        time={item.timestamp}
+        content={item.content}
+        image={item.image}
+        link={item.link}
+        object={item.object}
+        onItemPress={() => this._onItemPress(item)}
+      />
+    );
+  }
+
   render() {
-  return (
+    return (
       <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <FlatList
+          data={this.state.data}
+          keyExtractor={item => item.id}
+          renderItem={this._renderItem}
+        />
 
-        <Activity
+        {/* <Activity
+          id="123123123"
           author={{
-            name: 'Fluff',
-            handle: '@fluff',
-            user_image: 'https://mylittleamerica.com/988-large_default/durkee-marshmallow-fluff-strawberry.jpg'
+            name: "Justice League",
+            handle: "@justiceleague",
+            user_image:
+              "http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg"
           }}
-          type={'reply'}
-          to={'fluff'}
-          time={'2 mins'}
-          content="Great podcast with @getstream and @feeds! Thanks guys!"
-          />
-
-        <Activity
-          author={{
-            name: 'Justice League',
-            handle: '@justiceleague',
-            user_image: 'http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg'
-          }}
-          time={'3 mins'}
+          time={"3 mins"}
           content="Wonder Woman is going to be great!"
-          image="http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg"/>
+          image="http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg"
+        />
 
         <Activity
+          id="123123123"
           author={{
-            name: 'David Bowie',
-            handle: '@davidbowie',
-            user_image: 'http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?'
+            name: "David Bowie",
+            handle: "@davidbowie",
+            user_image: "http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?"
           }}
           content="Great podcast with @getstream and @feeds! Thanks guys!"
-          time={'3 mins'}
+          time={"3 mins"}
           link={true}
-          item={{title: 'Hello World', description: 'This is ground control for mayor Tom'}} />
+          item={{ title: "Hello World", description: "This is ground control for mayor Tom" }}
+        />
 
         <Activity
+          id="123123123"
           author={{
-            name: 'Lou Reed',
-            handle: '@loureed',
-            user_image: 'https://static.spin.com/files/131027-lou-reed-6-640x426.jpg'
+            name: "Lou Reed",
+            handle: "@loureed",
+            user_image: "https://static.spin.com/files/131027-lou-reed-6-640x426.jpg"
           }}
           content="Great podcast with @getstream and @feeds! Thanks guys!"
-          />
-
-
+        /> */}
       </ScrollView>
     );
   }

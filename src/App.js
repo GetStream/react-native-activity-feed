@@ -8,45 +8,29 @@ import SearchScreen from "./screens/SearchScreen";
 import NotificationsScreen from "./screens/NotificationsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import EditProfileScreen from './screens/EditProfileScreen';
+import SinglePostScreen from './screens/SinglePostScreen';
 
+const NotificationsStack = createStackNavigator({
+    Notifications: { screen: NotificationsScreen }
+});
 
-const App = createBottomTabNavigator(
-  {
-    Home: createStackNavigator({
-      Home: {
-        screen: HomeScreen,
-      }
-    }),
-    Search: createStackNavigator({
-      Search: {
-        screen: SearchScreen,
-      }
-    }),
-    Notifications: createStackNavigator({
-      Notifications: {
-        screen: NotificationsScreen,
-      },
-    }, {
-      initialRouteName: 'Notifications'
-    }),
-    Profile: createStackNavigator(
-      {
-        Profile: {
-          screen: ProfileScreen,
-          navigationOptions: ({ navigator }) => ({
-            headerTransparent: true,
-            headerBackTitle: null
-          })
-        },
-        EditProfile: {
-          screen: EditProfileScreen,
-        }
-      },
-      {
-        // headerMode: "none",
-        initialRouteName: "Profile"
-      }
-    )
+const ProfileStack = createStackNavigator({
+  Profile: { screen: ProfileScreen, },
+});
+
+const SearchStack = createStackNavigator({
+  Search: { screen: SearchScreen }
+});
+
+const HomeStack = createStackNavigator({
+  Home: { screen: HomeScreen },
+});
+
+const TabNavigator = createBottomTabNavigator({
+    Home: HomeStack,
+    Search: SearchStack,
+    Notifications: NotificationsStack,
+    Profile: ProfileStack
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -54,7 +38,7 @@ const App = createBottomTabNavigator(
         const { routeName } = navigation.state;
         if (routeName === "Home") {
           return <Icon name="home" />;
-        } else if(routeName === "Search") {
+        } else if (routeName === "Search") {
           return <Icon name="search" />;
         } else if (routeName === "Notifications") {
           return <Icon name="notifications" />;
@@ -62,16 +46,28 @@ const App = createBottomTabNavigator(
           return (
             <Avatar
               source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
-              size={25} noShadow
+              size={25}
+              noShadow
             />
           );
         }
-      }
-    }),
-    initialRouteName: 'Home'
-  },
+      },
 
+    }),
+    initialRouteName: "Home"
+  }
 );
 
+const doNotShowHeaderOption = {
+  navigationOptions: {
+    header: null
+  }
+};
+
+const App = createStackNavigator({
+  Tabs: {screen: TabNavigator, ...doNotShowHeaderOption},
+  SinglePost: SinglePostScreen,
+  EditProfile: EditProfileScreen
+});
 
 export default App;

@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 
 
 const PostControl = ({num, icon}) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <Image source={icon} style={styles.controlImage} />
       <Text style={styles.text}>{num}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

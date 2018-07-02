@@ -28,7 +28,9 @@ export default class ProfileScreen extends React.Component {
       paddingLeft: 10,
       paddingRight: 10,
     },
-    headerRight: <Button pressed={() => navigation.navigate('EditProfile') }>Edit Profile</Button>
+    headerRight: <Button pressed={() => navigation.navigate('EditProfile') }>Edit Profile</Button>,
+    headerTransparent: true,
+    headerBackTitle: null
   });
 
   componentDidMount() {
