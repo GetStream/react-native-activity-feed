@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet}  from 'react-native';
+import { View, Text, ScrollView, StyleSheet, SafeAreaView}  from 'react-native';
 
 import BackButton from '../../components/BackButton';
 import Activity from '../../components/Activity';
+import Avatar from '../../components/Avatar';
 
 class SinglePostScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -22,19 +23,24 @@ class SinglePostScreen extends React.Component {
     const {navigation} = this.props;
     const item = navigation.getParam('item', 'no item found');
     return (
-      <ScrollView style={styles.container} >
-        <Activity
-          id={item.id}
-          author={item.author}
-          type={item.type}
-          to={item.to}
-          time={item.timestamp}
-          content={item.content}
-          image={item.image}
-          link={item.link}
-          object={item.object}
-          static />
-      </ScrollView>
+      <View style={styles.container}>
+        <ScrollView style={styles.scrollContainer}>
+          <Activity
+            id={item.id}
+            author={item.author}
+            type={item.type}
+            to={item.to}
+            time={item.timestamp}
+            content={item.content}
+            image={item.image}
+            link={item.link}
+            object={item.object}
+            static />
+        </ScrollView>
+        <View style={styles.replyContainer}>
+          <Avatar source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg" size={48}/>
+        </View>
+      </View>
     );
   }
 }
@@ -42,8 +48,21 @@ class SinglePostScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff'
+    backgroundColor: "#ffffff"
+  },
+  scrollContainer: {
+    flex: 1
+  },
+  replyContainer: {
+    height: 78,
+    shadowOffset: { width: 0, height: -3, },
+    shadowColor: 'black',
+    shadowOpacity: .1,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15
   }
-})
+});
 
 export default SinglePostScreen;

@@ -31,7 +31,8 @@ class Activity extends React.Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={!this.props.static ? this._onPress.bind(this): null}>
+        onPress={this._onPress.bind(this)}
+        disabled={this.props.static}>
         <View style={{ padding: 15 }}>
           <UserBar
             data={{

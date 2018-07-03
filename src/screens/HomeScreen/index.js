@@ -115,42 +115,6 @@ class HomeScreen extends React.Component {
           keyExtractor={item => item.id}
           renderItem={this._renderItem}
         />
-
-        {/* <Activity
-          id="123123123"
-          author={{
-            name: "Justice League",
-            handle: "@justiceleague",
-            user_image:
-              "http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg"
-          }}
-          time={"3 mins"}
-          content="Wonder Woman is going to be great!"
-          image="http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg"
-        />
-
-        <Activity
-          id="123123123"
-          author={{
-            name: "David Bowie",
-            handle: "@davidbowie",
-            user_image: "http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?"
-          }}
-          content="Great podcast with @getstream and @feeds! Thanks guys!"
-          time={"3 mins"}
-          link={true}
-          item={{ title: "Hello World", description: "This is ground control for mayor Tom" }}
-        />
-
-        <Activity
-          id="123123123"
-          author={{
-            name: "Lou Reed",
-            handle: "@loureed",
-            user_image: "https://static.spin.com/files/131027-lou-reed-6-640x426.jpg"
-          }}
-          content="Great podcast with @getstream and @feeds! Thanks guys!"
-        /> */}
       </ScrollView>
     );
   }
