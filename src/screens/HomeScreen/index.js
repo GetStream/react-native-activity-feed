@@ -86,7 +86,6 @@ class HomeScreen extends React.Component {
   }
 
   _onItemPress = (item) => {
-    console.log('changing to single post with post id: ' + item.id )
     this.props.navigation.navigate('SinglePost', {item: item})
   };
 
