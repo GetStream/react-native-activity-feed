@@ -10,3 +10,6 @@ all=warn
 [options]
 
 [strict]
+
+[untyped]
+.*/node_modules/react-native/Libraries/react-native/react-native-implementation.js
