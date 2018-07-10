@@ -3,13 +3,26 @@
 import * as React from 'react';
 import {StreamService} from './Service';
 
-const StreamServiceContext = React.createContext();
+const StreamServiceContext = React.createContext({service: new StreamService("", "", "")});
 
 type AppCtx = {
   service: StreamService
 }
 
-export class StreamApp extends React.Component {
+type ReactChildren = React.Element<*>;
+
+type BaseReactProps = {
+    children?: ReactChildren,
+    className?: string,
+};
+
+type StreamCredentialProps = {
+    appId: string,
+    apiKey: string,
+    token: string,
+} & BaseReactProps
+
+export class StreamApp extends React.Component<StreamCredentialProps> {
 
   render() {
     let appCtx:AppCtx = {
@@ -32,7 +45,13 @@ export class StreamApp extends React.Component {
 
 const StreamFeedContext = React.createContext();
 
-export class StreamCurrentFeed extends React.Component {
+type StreamFeedProps = {
+    feedSlug: string,
+    userId: string,
+} & BaseReactProps
+
+
+export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
 
   render() {
     return (
@@ -57,13 +76,18 @@ export class StreamCurrentFeed extends React.Component {
 
 const StreamUserContext = React.createContext();
 
-export class StreamCurrentUser extends React.Component {
+type StreamUserProps = {
+    userId: string,
+} & BaseReactProps
+
+
+export class StreamCurrentUser extends React.Component<StreamUserProps> {
 
     render() {
         return (
             <StreamApp.Consumer>
                 {appCtx => {
-                    const currentUser = appCtx.service.getUserInfo(this.props.userId);
+                    const currentUser = appCtx.service.getUser(this.props.userId);
                     return (
                         <StreamUserContext.Provider value={currentUser}>
                             {this.props.children}

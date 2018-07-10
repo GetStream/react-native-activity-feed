@@ -36,7 +36,7 @@ export class StreamActivity {
   feed: StreamFeed;
   origin: any;
 
-  constructor(data: any, feed?: any) {
+  constructor(data: any, feed: any) {
     this.data = data;
     this.id = data['id'] || '';
     this.feed = feed;
