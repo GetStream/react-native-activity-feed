@@ -1,12 +1,13 @@
 // @flow
 
 import * as React from 'react';
-import {StreamService} from './Service';
+import stream from 'getstream/src/getstream-enrich';
 
-const StreamServiceContext = React.createContext({service: new StreamService("", "", "")});
+const StreamSessionContext = React.createContext(stream.connect().createUserSession());
 
 type AppCtx = {
-  service: StreamService
+  session: stream.StreamUserSession,
+  user: stream.StreamUser,
 }
 
 type ReactChildren = React.Element<*>;
@@ -20,26 +21,29 @@ type StreamCredentialProps = {
     appId: string,
     apiKey: string,
     token: string,
+    userId: string,
 } & BaseReactProps
 
 export class StreamApp extends React.Component<StreamCredentialProps> {
 
   render() {
-    let appCtx:AppCtx = {
-      service: new StreamService(
-        this.props.appId,
-        this.props.apiKey,
-        this.props.token)
-    };
+    let client = stream.connect(this.props.apiKey, null, this.props.appId)
+
+    let session = client.createUserSession(this.props.userId, this.props.token)
+    let appCtx = {
+        session: session,
+        user: session.user,
+    }
+
     return (
-      <StreamServiceContext.Provider value={appCtx}>
+      <StreamSessionContext.Provider value={appCtx}>
         {this.props.children}
-      </StreamServiceContext.Provider>
+      </StreamSessionContext.Provider>
     )
   }
 
   static get Consumer() {
-    return StreamServiceContext.Consumer
+    return StreamSessionContext.Consumer
   }
 }
 
@@ -47,7 +51,7 @@ const StreamFeedContext = React.createContext();
 
 type StreamFeedProps = {
     feedSlug: string,
-    userId: string,
+    userId: ?string,
 } & BaseReactProps
 
 
@@ -57,7 +61,7 @@ export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
     return (
       <StreamApp.Consumer>
         {appCtx => {
-          const currentFeed = appCtx.service.getFeed(this.props.feedSlug, this.props.userId);
+          const currentFeed = appCtx.session.feed(this.props.feedSlug, this.props.userId);
           return (
             <StreamFeedContext.Provider value={currentFeed}>
               {this.props.children}
@@ -72,34 +76,4 @@ export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
   static get Consumer() {
     return StreamFeedContext.Consumer
   }
-}
-
-const StreamUserContext = React.createContext();
-
-type StreamUserProps = {
-    userId: string,
-} & BaseReactProps
-
-
-export class StreamCurrentUser extends React.Component<StreamUserProps> {
-
-    render() {
-        return (
-            <StreamApp.Consumer>
-                {appCtx => {
-                    const currentUser = appCtx.service.getUser(this.props.userId);
-                    return (
-                        <StreamUserContext.Provider value={currentUser}>
-                            {this.props.children}
-                        </StreamUserContext.Provider>
-                    )
-                }
-                }
-            </StreamApp.Consumer>
-        )
-    }
-
-    static get Consumer() {
-        return StreamUserContext.Consumer
-    }
 }

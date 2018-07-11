@@ -1,21 +1,23 @@
-import React from 'react';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import React from "react";
+import { createStackNavigator, createBottomTabNavigator } from "react-navigation";
 
 import Icon from "./components/Icon";
-import Avatar from './components/Avatar';
+import Avatar from "./components/Avatar";
 import HomeScreen from "./screens/HomeScreen";
 import SearchScreen from "./screens/SearchScreen";
 import NotificationsScreen from "./screens/NotificationsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import EditProfileScreen from './screens/EditProfileScreen';
-import SinglePostScreen from './screens/SinglePostScreen';
+import EditProfileScreen from "./screens/EditProfileScreen";
+import SinglePostScreen from "./screens/SinglePostScreen";
+
+import { StreamApp } from "../core/Context";
 
 const NotificationsStack = createStackNavigator({
-    Notifications: { screen: NotificationsScreen }
+  Notifications: { screen: NotificationsScreen }
 });
 
 const ProfileStack = createStackNavigator({
-  Profile: { screen: ProfileScreen, },
+  Profile: { screen: ProfileScreen }
 });
 
 const SearchStack = createStackNavigator({
@@ -23,10 +25,11 @@ const SearchStack = createStackNavigator({
 });
 
 const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen },
+  Home: { screen: HomeScreen }
 });
 
-const TabNavigator = createBottomTabNavigator({
+const TabNavigator = createBottomTabNavigator(
+  {
     Home: HomeStack,
     Search: SearchStack,
     Notifications: NotificationsStack,
@@ -51,8 +54,7 @@ const TabNavigator = createBottomTabNavigator({
             />
           );
         }
-      },
-
+      }
     }),
     initialRouteName: "Home"
   }
@@ -64,10 +66,16 @@ const doNotShowHeaderOption = {
   }
 };
 
-const App = createStackNavigator({
-  Tabs: {screen: TabNavigator, ...doNotShowHeaderOption},
-  SinglePost: SinglePostScreen,
-  EditProfile: EditProfileScreen
-});
+const Navigation = createStackNavigator({
+      Tabs: { screen: TabNavigator, ...doNotShowHeaderOption },
+      SinglePost: SinglePostScreen,
+      EditProfile: EditProfileScreen
+    })
+
+const App = (props) => (
+  <StreamApp>
+      <Navigation></Navigation>
+  </StreamApp>
+);
 
 export default App;
