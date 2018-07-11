@@ -72,8 +72,18 @@ const Navigation = createStackNavigator({
       EditProfile: EditProfileScreen
     })
 
-const App = (props) => (
-  <StreamApp>
+const App = () => (
+  <StreamApp
+    apiKey='key'
+    appId=''
+    userId='batman'
+    token='token'
+    options={{
+      urlOverride: {
+        api: 'http://10.0.2.2:8000/api/',
+      },
+    }}
+>
       <Navigation></Navigation>
   </StreamApp>
 );
