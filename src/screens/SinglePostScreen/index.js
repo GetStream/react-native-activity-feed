@@ -1,9 +1,24 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, FlatList, TextInput, KeyboardAvoidingView}  from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  ActivityIndicator
+
+}  from 'react-native';
 
 import BackButton from '../../components/BackButton';
 import Activity from '../../components/Activity';
 import Avatar from '../../components/Avatar';
+
+import RepostItem from "../../components/RepostItem";
+import CommentItem from '../../components/CommentItem';
+
+import LikesList from '../../components/LikesList';
 
 class SinglePostScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -19,9 +34,67 @@ class SinglePostScreen extends React.Component {
     },
     tabBarVisible: false
   });
+
+  state = {
+    loading: {
+      comments: true,
+      reposts: true,
+      likes: true
+    },
+    comments: [],
+    reposts: [],
+    likes: []
+  }
+
+  componentDidMount () {
+    console.log("enrichment of activity?");
+    setTimeout(() => {
+      console.log("getting comments, likes and reposts");
+      this.setState({
+        loading: {
+          comments: false,
+          reposts: false,
+          likes: false,
+        },
+        comments: [
+          { id: 1, },
+          { id: 2, },
+          { id: 3, },
+        ],
+        reposts: [
+          { id: 1, },
+          { id: 2, },
+        ],
+        likes: [
+          { id: 1, },
+          { id: 2, },
+          { id: 3, },
+          { id: 4, },
+          { id: 5, },
+        ]
+      })
+    }, 3000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout();
+  }
+
+  _onPressLike(id) {
+    console.log("liked with id: " + id);
+  }
+
+  _onPressReply(id) {
+    console.log("reply to id: " + id);
+  }
+
+  _onPressAvatar() {
+    console.log('pressed <Avatar id="' + this.children.props.id + '" />')
+  }
+
   render() {
-    const {navigation} = this.props;
-    const item = navigation.getParam('item', 'no item found');
+    const { navigation } = this.props;
+    const item = navigation.getParam("item", "no item found");
     return (
       <KeyboardAvoidingView style={styles.container} behaviour="height" enabled>
         <ScrollView style={styles.scrollContainer}>
@@ -35,95 +108,63 @@ class SinglePostScreen extends React.Component {
             image={item.image}
             link={item.link}
             object={item.object}
-            static />
+            static
+          />
 
-
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionLabel}>Comments</Text>
-        </View>
-
-        <View style={styles.commentsContainer}>
-          <View style={styles.commentItem}>
-            <Avatar source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg" size={25} noShadow />
-            <View style={styles.commentText}>
-              <Text>
-                <Text style={styles.commentAuthor}>TheBat </Text>
-                <Text style={styles.commentContent}>LOL! I bet he thinks this is great. </Text>
-                <Text style={styles.commentTime}>2 mins</Text>
-              </Text>
-            </View>
-            <View style={styles.commentActions}>
-              <Image
-                source={require('../../images/icons/reply.png')}
-                style={styles.commentIcon} />
-              <Image
-                source={require('../../images/icons/heart-outline.png')}
-                style={styles.commentIcon} />
-            </View>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionLabel}>Comments</Text>
           </View>
 
-          <View style={styles.commentItem}>
-            <Avatar source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg" size={25} noShadow />
-            <View style={styles.commentText}>
-              <Text>
-                <Text style={styles.commentAuthor}>TheBat </Text>
-                  <Text style={styles.commentContent}>I am glad people are finally starting to see this! </Text>
-                <Text style={styles.commentTime}>2 mins</Text>
-              </Text>
-            </View>
-            <View style={styles.commentActions}>
-              <Image
-                source={require('../../images/icons/reply.png')}
-                style={styles.commentIcon} />
-              <Image
-                source={require('../../images/icons/heart-outline.png')}
-                style={styles.commentIcon} />
-            </View>
+          <View style={styles.commentsContainer}>
+            {this.state.loading.comments
+              ? <ActivityIndicator
+                style={{margin: 12}}
+                size="small" color="rgba(0,0,0,0.2)" />
+              : this.state.comments.map(item => {
+                return <CommentItem
+                  key={item.id}
+                  item={item}
+                  onPressLike={this._onPressLike}
+                  onPressReply={this._onPressReply} />
+              })}
           </View>
-        </View>
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionLabel}>Reposts</Text>
-        </View>
-
-        <View style={styles.repostsContainer}>
-          <View style={styles.repostItem}>
-            <View style={styles.repostAvatar}>
-              <Avatar
-                source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
-                size={25}
-                noShadow />
-            </View>
-            <Image source={require('../../images/icons/repost.png')} style={styles.repostIcon}/>
-            <View style={styles.commentText}>
-              <Text>
-                <Text style={styles.commentAuthor}>TheBat </Text>
-                <Text style={styles.commentContent}>So Smart!!! </Text>
-                <Text style={styles.commentTime}>2 mins</Text>
-              </Text>
-            </View>
-            <View style={styles.commentActions}>
-              <Image
-                source={require('../../images/icons/heart-outline.png')}
-                style={styles.commentIcon} />
-            </View>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionLabel}>Reposts</Text>
           </View>
-        </View>
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionLabel}>Liked</Text>
-        </View>
-        <View style={styles.likesContainer}>
-          <FlatList
-            horizontal
-            data={[{ id: 1 }, { id: 3 }, { id: 2 }, { id: 4 }, ]}
-            keyExtractor={item => `${item.id}` }
-            renderItem={({item}) => <View style={{marginRight: 10}}><Avatar source="https://placehold.it/100x100" size={25} noShadow/></View> }
-           />
-        </View>
+          <View style={styles.repostsContainer}>
+            {this.state.loading.reposts
+              ? <ActivityIndicator
+                style={{ margin: 12 }}
+                size="small" color="rgba(0,0,0,0.2)" />
+              : this.state.reposts.map(item => {
+                return <RepostItem
+                  key={item.id}
+                  item={item}
+                  onPressLike={this._onPressLike} />
+              })}
+          </View>
+
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionLabel}>Liked</Text>
+          </View>
+          <View style={styles.likesContainer}>
+            { this.state.loading.likes ?
+              <ActivityIndicator
+                style={{ margin: 12 }}
+                size="small" color="rgba(0,0,0,0.2)" />
+            : <LikesList
+                onPressAvatar={this._onPressAvatar}
+                likes={this.state.likes} /> }
+
+          </View>
         </ScrollView>
         <View style={styles.replyContainer}>
-          <Avatar source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg" size={48}/>
+          <Avatar
+            source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
+            size={48}
+          />
           <TextInput style={styles.textInput} placeholder="Share something..." />
         </View>
       </KeyboardAvoidingView>
@@ -169,64 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#69747A"
   },
-  commentsContainer: {},
-  commentItem: {
-    flexDirection: "row",
-    flex: 1,
-    alignItems: "flex-start",
-    paddingTop: 12,
-    paddingBottom: 12,
-    paddingRight: 15,
-    paddingLeft: 15,
-    borderBottomColor: "#DADFE3",
-    borderBottomWidth: 1
-  },
-  commentText: {
-    flex: 1,
-    marginLeft: 5,
-    flexDirection: "row",
-    flexWrap: "wrap"
-  },
-  commentAuthor: {
-    fontWeight: "700",
-    fontSize: 14
-  },
-  commentContent: {
-    fontSize: 14
-  },
-  commentTime: {
-    fontSize: 14,
-    color: "#95A4AD"
-  },
-  commentActions: {
-    flexDirection: "row",
-    marginLeft: 5
-  },
-  commentIcon: { width: 24, height: 24 },
-  repostsContainer: {},
-  repostItem: {
-    flexDirection: "row",
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingBottom: 12,
-    paddingTop: 12,
-    alignItems: "center",
-    borderBottomColor: "#DADFE3",
-    borderBottomWidth: 1
-  },
-  repostAvatar: {
-    marginRight: 5
-  },
-  repostIcon: {
-    width: 20,
-    height: 20
-  },
-  likesContainer: {
-    paddingTop: 12,
-    paddingBottom: 12,
-    paddingRight: 15,
-    paddingLeft: 15
-  }
+
 });
 
 export default SinglePostScreen;
