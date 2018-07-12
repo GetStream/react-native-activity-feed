@@ -17,7 +17,7 @@ const LikesList = ({
         <TouchableOpacity
           onPress={onPressAvatar}
           style={{ marginRight: 10 }}>
-          <Avatar id={item.id} source="https://placehold.it/100x100" size={25} noShadow />
+          <Avatar id={item.id} source={item.author.avatar} size={25} noShadow />
         </TouchableOpacity>
       )}
     />

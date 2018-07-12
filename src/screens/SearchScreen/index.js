@@ -45,16 +45,12 @@ class SearchScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: 'DISCOVER',
-    headerStyle: {
-      paddingLeft: 15,
-      paddingRight: 15,
-    },
     headerTitleStyle: {
       fontWeight: '500',
       fontSize: 13
     },
-    headerLeft: <Image source={require('../../images/icons/categories.png')} style={{ width: 23, height: 23 }} />,
-    headerRight: <Image source={require('../../images/icons/post.png')} style={{ width: 23, height: 23 }} />,
+    headerLeft: <View style={{paddingLeft: 15}}><Image source={require('../../images/icons/categories.png')} style={{ width: 23, height: 23 }} /></View>,
+    headerRight: <View style={{paddingRight: 15}}><Image source={require('../../images/icons/post.png')} style={{ width: 23, height: 23 }} /></View>,
   })
 
   componentDidMount() {

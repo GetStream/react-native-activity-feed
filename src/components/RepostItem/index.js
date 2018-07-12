@@ -5,25 +5,26 @@ import Avatar from '../Avatar';
 
 const RepostItem = ({
   onPressLike,
+  item
 }) => {
   return (
     <View style={styles.repostItem}>
       <View style={styles.repostAvatar}>
         <Avatar
-          source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
+          source={item.author.avatar}
           size={25}
           noShadow />
       </View>
       <Image source={require('../../images/icons/repost.png')} style={styles.repostIcon} />
       <View style={styles.repostText}>
         <Text>
-          <Text style={styles.repostAuthor}>TheBat </Text>
-          <Text style={styles.repostContent}>So Smart!!! </Text>
-          <Text style={styles.repostTime}>2 mins</Text>
+          <Text style={styles.repostAuthor}>{item.author.name} </Text>
+          <Text style={styles.repostContent}>{item.content} </Text>
+          <Text style={styles.repostTime}>{item.timestamp}</Text>
         </Text>
       </View>
       <View style={styles.repostActions}>
-        <TouchableOpacity onPress={onPressLike}>
+        <TouchableOpacity onPress={() => onPressLike(item.id)}>
           <Image
             source={require('../../images/icons/heart-outline.png')}
             style={styles.heartIcon} />

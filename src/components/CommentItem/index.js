@@ -6,12 +6,12 @@ import Avatar from '../Avatar';
 const CommentItem = ({onPressLike, onPressReply, item}) => {
   return (
     <View style={styles.commentItem}>
-      <Avatar source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg" size={25} noShadow />
+      <Avatar source={item.author.avatar} size={25} noShadow />
       <View style={styles.commentText}>
         <Text>
-          <Text style={styles.commentAuthor}>TheBat </Text>
-          <Text style={styles.commentContent}>I am glad people are finally starting to see this! </Text>
-          <Text style={styles.commentTime}>2 mins</Text>
+          <Text style={styles.commentAuthor}>{item.author.name} </Text>
+          <Text style={styles.commentContent}>{item.content} </Text>
+          <Text style={styles.commentTime}>{item.timestamp}</Text>
         </Text>
       </View>
       <View style={styles.commentActions}>

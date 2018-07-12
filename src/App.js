@@ -1,4 +1,5 @@
 import React from "react";
+import {Text} from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from "react-navigation";
 
 import Icon from "./components/Icon";
@@ -25,7 +26,7 @@ const SearchStack = createStackNavigator({
 });
 
 const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen }
+  Home: { screen: HomeScreen, }
 });
 
 const TabNavigator = createBottomTabNavigator(
@@ -67,15 +68,19 @@ const doNotShowHeaderOption = {
 };
 
 const Navigation = createStackNavigator({
-      Tabs: { screen: TabNavigator, ...doNotShowHeaderOption },
-      SinglePost: SinglePostScreen,
-      EditProfile: EditProfileScreen
-    })
+  Tabs: { screen: TabNavigator, ...doNotShowHeaderOption },
+  SinglePost: { screen: SinglePostScreen, },
+  EditProfile: { screen: EditProfileScreen }
+})
 
-const App = (props) => (
-  <StreamApp>
-      <Navigation></Navigation>
-  </StreamApp>
-);
+class App extends React.Component {
+  render() {
+    return (
+      <StreamApp>
+        <Navigation></Navigation>
+      </StreamApp>
+    );
+  }
+}
 
 export default App;
