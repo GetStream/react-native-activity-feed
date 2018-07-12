@@ -35,6 +35,7 @@ class Activity extends React.Component {
         disabled={this.props.static}>
         <View style={{ padding: 15 }}>
           <UserBar
+            onPressAvatar={() => this.props.onAvatarPress(this.props.id)}
             data={{
                 username: this.props.author.name,
                 image: this.props.author.user_image,

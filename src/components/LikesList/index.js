@@ -15,7 +15,7 @@ const LikesList = ({
       keyExtractor={item => `${item.id}`}
       renderItem={({ item }) => (
         <TouchableOpacity
-          onPress={onPressAvatar}
+          onPress={() => onPressAvatar(item.id)}
           style={{ marginRight: 10 }}>
           <Avatar id={item.id} source={item.author.avatar} size={25} noShadow />
         </TouchableOpacity>

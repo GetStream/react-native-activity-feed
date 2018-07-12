@@ -31,14 +31,17 @@ class NotificationScreen extends React.Component {
 
   _renderItem = ({ item }) => {
     if (item.type === 'follow') {
-      return <Follow items={item.follows} />;
+      return <Follow onPressAvatar={this._onPressAvatar} items={item.follows} />;
     } else {
       return <Notification item={item} />;
     }
   }
 
+  _onPressAvatar(id) {
+    console.log('hello ', id);
+  }
+
   render() {
-    console.log(notifications)
     return <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
         <SafeAreaView>
           <FlatList

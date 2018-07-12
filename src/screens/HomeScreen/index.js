@@ -38,7 +38,6 @@ class HomeScreen extends React.Component {
 
   }
 
-
   componentDidMount() {
     this._navListener = this.props.navigation.addListener("didFocus", () => {
       StatusBar.setBarStyle("dark-content");
@@ -47,6 +46,10 @@ class HomeScreen extends React.Component {
 
   _onItemPress = (item) => {
     this.props.navigation.navigate('SinglePost', {item: item})
+  };
+
+  _onAvatarPress = (id) => {
+    console.log('user id: ', id)
   };
 
   _renderItem = ({ item }) => {
@@ -62,6 +65,7 @@ class HomeScreen extends React.Component {
         link={item.link}
         object={item.object}
         onItemPress={() => this._onItemPress(item)}
+        onAvatarPress={() => this._onAvatarPress(item.id)}
       />
     );
   }

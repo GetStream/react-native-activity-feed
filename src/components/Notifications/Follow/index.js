@@ -1,18 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 import Avatar from "../../Avatar";
 
-const Follow = ({items}) => {
+const Follow = ({items, onPressAvatar}) => {
   return (
     <View style={styles.item}>
-      <Image style={styles.icon} source={require('../../../images/icons/followers.png')} />
+      { items.length !== 1
+      ? <Image style={styles.icon} source={require('../../../images/icons/followers.png')} />
+      : <TouchableOpacity onPress={() => onPressAvatar(items[0].user_id)}><Avatar source={items[0].user_image} size={48} noShadow /></TouchableOpacity> }
+
       <View style={{ flex: 1, paddingLeft: 15 }}>
         <View style={{flexDirection: 'row'}}>
 
-          { items.map(item => {
-            return <View style={styles.follow} key={item.user_id}><Avatar source={item.user_image} size={29} noShadow /></View>
-          })}
+          { items.length > 1 ? items.map(item => {
+            return <TouchableOpacity onPress={() => onPressAvatar(item.user_id)} style={styles.follow} key={item.user_id}><Avatar source={item.user_image} size={29} noShadow /></TouchableOpacity>
+          }) : null }
 
         </View>
 

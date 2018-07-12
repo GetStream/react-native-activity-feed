@@ -2,12 +2,12 @@ import React from 'react';
 import {
   View,
   Text,
-  FlatList,
   ScrollView,
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
-  ActivityIndicator
+  ActivityIndicator,
+  InputAccessoryView
 
 }  from 'react-native';
 
@@ -72,15 +72,16 @@ class SinglePostScreen extends React.Component {
     console.log("reply to id: " + id);
   }
 
-  _onPressAvatar() {
-    console.log('pressed <Avatar id="' + this.children.props.id + '" />')
+  _onPressAvatar(id) {
+    console.log('user id: ', id)
   }
 
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam("item", "no item found");
+    const inputAccessoryViewID = "inputAccessoryView1";
     return (
-      <KeyboardAvoidingView style={styles.container} behaviour="height" enabled>
+      <View style={styles.container} behaviour="height" enabled>
         <ScrollView style={styles.scrollContainer}>
           <Activity
             id={item.id}
@@ -92,6 +93,7 @@ class SinglePostScreen extends React.Component {
             image={item.image}
             link={item.link}
             object={item.object}
+            onAvatarPress={() => this._onPressAvatar}
             static
           />
 
@@ -139,7 +141,7 @@ class SinglePostScreen extends React.Component {
                 style={{ margin: 12 }}
                 size="small" color="rgba(0,0,0,0.2)" />
             : <LikesList
-                onPressAvatar={this._onPressAvatar}
+                onPressAvatar={() => this._onPressAvatar}
                 likes={this.state.likes} /> }
 
           </View>
@@ -151,7 +153,7 @@ class SinglePostScreen extends React.Component {
           />
           <TextInput style={styles.textInput} placeholder="Share something..." />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
