@@ -72,7 +72,7 @@ class SinglePostScreen extends React.Component {
     console.log("reply to id: " + id);
   }
 
-  _onPressAvatar(id) {
+  _onAvatarPress(id) {
     console.log('user id: ', id)
   }
 
@@ -93,7 +93,7 @@ class SinglePostScreen extends React.Component {
             image={item.image}
             link={item.link}
             object={item.object}
-            onAvatarPress={() => this._onPressAvatar}
+            onAvatarPress={() => this._onAvatarPress(item.id)}
             static
           />
 
@@ -141,7 +141,7 @@ class SinglePostScreen extends React.Component {
                 style={{ margin: 12 }}
                 size="small" color="rgba(0,0,0,0.2)" />
             : <LikesList
-                onPressAvatar={() => this._onPressAvatar}
+                onAvatarPress={(id) => this._onAvatarPress(id)}
                 likes={this.state.likes} /> }
 
           </View>
