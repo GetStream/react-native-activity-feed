@@ -10,6 +10,7 @@ import NotificationsScreen from "./screens/NotificationsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import SinglePostScreen from "./screens/SinglePostScreen";
+import NewPostScreen from "./screens/NewPostScreen";
 
 import { StreamApp } from "../core/Context";
 
@@ -69,9 +70,10 @@ const doNotShowHeaderOption = {
 
 const Navigation = createStackNavigator({
   Tabs: { screen: TabNavigator, ...doNotShowHeaderOption },
-  SinglePost: { screen: SinglePostScreen, },
+  SinglePost: { screen: SinglePostScreen },
+  NewPost: { screen: NewPostScreen },
   EditProfile: { screen: EditProfileScreen }
-})
+});
 
 class App extends React.Component {
   render() {
