@@ -4,7 +4,8 @@
     "extends": [
         "eslint:recommended",
         "plugin:flowtype/recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:jest/recommended"
     ],
     "rules": {
         "no-console": 0,
