@@ -3,9 +3,12 @@
 import * as React from 'react';
 import stream from 'getstream/src/getstream-enrich';
 
-export const StreamContext = React.createContext(
-  stream.connect().createUserSession(),
-);
+const emptySession = stream.connect().createUserSession();
+
+export const StreamContext = React.createContext({
+  session: emptySession,
+  user: emptySession.user,
+});
 
 type AppCtx = {
   session: stream.StreamUserSession,
@@ -65,7 +68,7 @@ export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
   render() {
     return (
       <StreamContext.Consumer>
-        {(appCtx) => {
+        {(appCtx: AppCtx) => {
           const currentFeed = appCtx.session.feed(
             this.props.feedSlug,
             this.props.userId,
