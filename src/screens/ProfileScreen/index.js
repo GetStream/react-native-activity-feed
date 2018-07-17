@@ -30,13 +30,10 @@ export default class ProfileScreen extends React.Component {
   render() {
     return (
       <StreamContext.Consumer>
-        {({user}) => {
+        {({ user }) => {
           return (
             <View>
-              <ProfileHeader
-                user={user}
-                navigation={this.props.navigation}
-              />
+              <ProfileHeader user={user} navigation={this.props.navigation} />
             </View>
           );
         }}

@@ -1,24 +1,45 @@
 import React from 'react';
-import { StatusBar, ScrollView, FlatList, SafeAreaView, Image, View } from 'react-native'
+import {
+  StatusBar,
+  ScrollView,
+  FlatList,
+  SafeAreaView,
+  Image,
+  View,
+} from 'react-native';
 
-import { notifications } from "../../mock/data";
+import { notifications } from '../../mock/data';
 
-import Notification from "../../components/Notification";
+import Notification from '../../components/Notification';
 import Follow from '../../components/Notifications/Follow';
 
 class NotificationScreen extends React.Component {
   state = {
-    notifications: notifications
-  }
+    notifications: notifications,
+  };
 
   static navigationOptions = ({ navigation }) => ({
     title: 'NOTIFICATIONS',
-    headerLeft: <View style={{ paddingLeft: 15 }}><Image source={require('../../images/icons/categories.png')} style={{ width: 23, height: 23 }} /></View>,
-    headerRight: <View style={{ paddingRight: 15 }}><Image source={require('../../images/icons/post.png')} style={{width:23, height: 23 }} /></View>,
+    headerLeft: (
+      <View style={{ paddingLeft: 15 }}>
+        <Image
+          source={require('../../images/icons/categories.png')}
+          style={{ width: 23, height: 23 }}
+        />
+      </View>
+    ),
+    headerRight: (
+      <View style={{ paddingRight: 15 }}>
+        <Image
+          source={require('../../images/icons/post.png')}
+          style={{ width: 23, height: 23 }}
+        />
+      </View>
+    ),
     headerTitleStyle: {
       fontWeight: '500',
-      fontSize: 13
-    }
+      fontSize: 13,
+    },
   });
 
   componentDidMount() {
@@ -31,18 +52,21 @@ class NotificationScreen extends React.Component {
 
   _renderItem = ({ item }) => {
     if (item.type === 'follow') {
-      return <Follow onPressAvatar={this._onPressAvatar} items={item.follows} />;
+      return (
+        <Follow onPressAvatar={this._onPressAvatar} items={item.follows} />
+      );
     } else {
       return <Notification item={item} />;
     }
-  }
+  };
 
   _onPressAvatar(id) {
     console.log('hello ', id);
   }
 
   render() {
-    return <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
+    return (
+      <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
         <SafeAreaView>
           <FlatList
             data={this.state.notifications}
@@ -50,7 +74,8 @@ class NotificationScreen extends React.Component {
             keyExtractor={this._keyExtractor}
           />
         </SafeAreaView>
-      </ScrollView>;
+      </ScrollView>
+    );
   }
 }
 

@@ -1,33 +1,36 @@
-import React from "react";
-import {Text} from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from "react-navigation";
+import React from 'react';
+import { Text } from 'react-native';
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
 
-import Icon from "./components/Icon";
-import Avatar from "./components/Avatar";
-import HomeScreen from "./screens/HomeScreen";
-import SearchScreen from "./screens/SearchScreen";
-import NotificationsScreen from "./screens/NotificationsScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import EditProfileScreen from "./screens/EditProfileScreen";
-import SinglePostScreen from "./screens/SinglePostScreen";
-import NewPostScreen from "./screens/NewPostScreen";
+import Icon from './components/Icon';
+import Avatar from './components/Avatar';
+import HomeScreen from './screens/HomeScreen';
+import SearchScreen from './screens/SearchScreen';
+import NotificationsScreen from './screens/NotificationsScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import EditProfileScreen from './screens/EditProfileScreen';
+import SinglePostScreen from './screens/SinglePostScreen';
+import NewPostScreen from './screens/NewPostScreen';
 
-import { StreamApp } from "../core/Context";
+import { StreamApp } from '../core/Context';
 
 const NotificationsStack = createStackNavigator({
-  Notifications: { screen: NotificationsScreen }
+  Notifications: { screen: NotificationsScreen },
 });
 
 const ProfileStack = createStackNavigator({
-  Profile: { screen: ProfileScreen }
+  Profile: { screen: ProfileScreen },
 });
 
 const SearchStack = createStackNavigator({
-  Search: { screen: SearchScreen }
+  Search: { screen: SearchScreen },
 });
 
 const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen, }
+  Home: { screen: HomeScreen },
 });
 
 const TabNavigator = createBottomTabNavigator(
@@ -35,19 +38,19 @@ const TabNavigator = createBottomTabNavigator(
     Home: HomeStack,
     Search: SearchStack,
     Notifications: NotificationsStack,
-    Profile: ProfileStack
+    Profile: ProfileStack,
   },
   {
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
-        if (routeName === "Home") {
+        if (routeName === 'Home') {
           return <Icon name="home" />;
-        } else if (routeName === "Search") {
+        } else if (routeName === 'Search') {
           return <Icon name="search" />;
-        } else if (routeName === "Notifications") {
+        } else if (routeName === 'Notifications') {
           return <Icon name="notifications" />;
-        } else if (routeName === "Profile") {
+        } else if (routeName === 'Profile') {
           return (
             <Avatar
               source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
@@ -56,38 +59,38 @@ const TabNavigator = createBottomTabNavigator(
             />
           );
         }
-      }
+      },
     }),
-    initialRouteName: "Home"
-  }
+    initialRouteName: 'Home',
+  },
 );
 
 const doNotShowHeaderOption = {
   navigationOptions: {
-    header: null
-  }
+    header: null,
+  },
 };
 
 const Navigation = createStackNavigator({
   Tabs: { screen: TabNavigator, ...doNotShowHeaderOption },
   SinglePost: { screen: SinglePostScreen },
   NewPost: { screen: NewPostScreen },
-  EditProfile: { screen: EditProfileScreen }
+  EditProfile: { screen: EditProfileScreen },
 });
 
 const App = () => (
   <StreamApp
     apiKey={process.env['STREAM_API_KEY']}
     appId={process.env['STREAM_APP_ID']}
-    userId='batman'
+    userId="batman"
     token={process.env['STREAM_TOKEN']}
     options={{
       urlOverride: {
         api: process.env['STREAM_API_URL'],
-      }
+      },
     }}
->
-      <Navigation/>
+  >
+    <Navigation />
   </StreamApp>
 );
 
