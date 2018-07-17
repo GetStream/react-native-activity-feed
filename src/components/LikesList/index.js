@@ -5,7 +5,7 @@ import Avatar from '../Avatar';
 
 const LikesList = ({
   likes,
-  onPressAvatar
+  onAvatarPress
 }) => {
   return (
     <FlatList
@@ -15,7 +15,7 @@ const LikesList = ({
       keyExtractor={item => `${item.id}`}
       renderItem={({ item }) => (
         <TouchableOpacity
-          onPress={() => onPressAvatar(item.id)}
+          onPress={() => onAvatarPress(item.id)}
           style={{ marginRight: 10 }}>
           <Avatar id={item.id} source={item.author.avatar} size={25} noShadow />
         </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StatusBar, Image, StyleSheet, FlatList} from 'react-native';
+import { View, ScrollView, StatusBar, Image, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 
 import { activities } from '../../mock/data';
 
@@ -15,16 +15,22 @@ class HomeScreen extends React.Component {
       fontSize: 13
     },
     headerLeft: (
-      <View style={{paddingLeft: 15}}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Profile')}
+        style={{paddingLeft: 15}}>
         <Avatar
           source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
           size={23}
           noShadow
         />
-      </View>
+      </TouchableOpacity>
     ),
     headerRight: (
-      <View style={{paddingRight: 15}}><Image source={require("../../images/icons/post.png")} style={{ width: 23, height: 23 }} /></View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('NewPost')}
+        style={{ paddingRight: 15 }}>
+        <Image source={require("../../images/icons/post.png")} style={{ width: 23, height: 23 }} />
+      </TouchableOpacity>
     )
   });
 
