@@ -71,21 +71,21 @@ const Navigation = createStackNavigator({
   Tabs: { screen: TabNavigator, ...doNotShowHeaderOption },
   SinglePost: { screen: SinglePostScreen, },
   EditProfile: { screen: EditProfileScreen }
-})
+});
 
 const App = () => (
   <StreamApp
-    apiKey='key'
-    appId=''
+    apiKey={process.env['STREAM_API_KEY']}
+    appId={process.env['STREAM_APP_ID']}
     userId='batman'
-    token='token'
+    token={process.env['STREAM_TOKEN']}
     options={{
       urlOverride: {
-        api: 'http://10.0.2.2:8000/api/',
-      },
+        api: process.env['STREAM_API_URL'],
+      }
     }}
 >
-      <Navigation></Navigation>
+      <Navigation/>
   </StreamApp>
 );
 

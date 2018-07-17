@@ -11,21 +11,15 @@ class ProfileHeader extends React.Component {
     super(props);
     this.state = {
       user: {
-        counts: {},
+        data: {
+          counts: {},
+        },
       },
     };
   }
 
   async componentDidMount() {
-    let data;
-    // try {
-    //   response = await fetch('http://10.0.2.2:8100/api/');
-    //   console.error(response)
-    // } catch (err) {
-    //   console.error(err.message);
-    // }
-    try {
-      data = await this.props.user.getOrCreate({
+    let data = await this.props.user.getOrCreate({
         name: 'Batman',
         url: 'batsignal.com',
         desc: 'Smart, violent and brutally tough solutions to crime.',
@@ -38,14 +32,11 @@ class ProfileHeader extends React.Component {
           followers: 1200000,
         },
       });
-    } catch(err) {
-      console.error(err.message)
-    }
-    this.setState({user: data});
+    this.setState({ user: data });
   }
 
   render() {
-    let { name, url, desc, counts, profileImage, coverImage } = this.state.user;
+    let { data: {name, url, desc, counts, profileImage, coverImage }} = this.state.user;
 
     coverImage ? StatusBar.setBarStyle('light-content', true) : null;
 

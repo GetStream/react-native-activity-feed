@@ -24,6 +24,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "expo": "^27.0.1",
     "getstream": "git+ssh://git@github.com/GetStream/stream-js-frontend-fork.git",
     "numeral": "^2.0.6",
