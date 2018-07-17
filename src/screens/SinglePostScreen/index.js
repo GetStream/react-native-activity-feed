@@ -2,14 +2,16 @@ import React from 'react';
 import {
   View,
   Text,
-  FlatList,
   ScrollView,
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
-  ActivityIndicator
+  ActivityIndicator,
+  InputAccessoryView
 
 }  from 'react-native';
+
+import {comments, likes, reposts} from '../../mock/data';
 
 import BackButton from '../../components/BackButton';
 import Activity from '../../components/Activity';
@@ -23,16 +25,11 @@ import LikesList from '../../components/LikesList';
 class SinglePostScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: "POST DETAIL",
-    headerLeft: <BackButton pressed={() => navigation.goBack()} color="blue" />,
-    headerStyle: {
-      paddingLeft: 15,
-      paddingRight: 15
-    },
+    headerLeft: <View style={{paddingLeft: 15}}><BackButton pressed={() => navigation.goBack()} color="blue" /></View>,
     headerTitleStyle: {
       fontWeight: "500",
       fontSize: 13
     },
-    tabBarVisible: false
   });
 
   state = {
@@ -56,24 +53,11 @@ class SinglePostScreen extends React.Component {
           reposts: false,
           likes: false,
         },
-        comments: [
-          { id: 1, },
-          { id: 2, },
-          { id: 3, },
-        ],
-        reposts: [
-          { id: 1, },
-          { id: 2, },
-        ],
-        likes: [
-          { id: 1, },
-          { id: 2, },
-          { id: 3, },
-          { id: 4, },
-          { id: 5, },
-        ]
+        comments: comments,
+        reposts: reposts,
+        likes: likes
       })
-    }, 3000);
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -88,15 +72,16 @@ class SinglePostScreen extends React.Component {
     console.log("reply to id: " + id);
   }
 
-  _onPressAvatar() {
-    console.log('pressed <Avatar id="' + this.children.props.id + '" />')
+  _onPressAvatar(id) {
+    console.log('user id: ', id)
   }
 
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam("item", "no item found");
+    const inputAccessoryViewID = "inputAccessoryView1";
     return (
-      <KeyboardAvoidingView style={styles.container} behaviour="height" enabled>
+      <View style={styles.container} behaviour="height" enabled>
         <ScrollView style={styles.scrollContainer}>
           <Activity
             id={item.id}
@@ -108,6 +93,7 @@ class SinglePostScreen extends React.Component {
             image={item.image}
             link={item.link}
             object={item.object}
+            onAvatarPress={() => this._onPressAvatar}
             static
           />
 
@@ -155,7 +141,7 @@ class SinglePostScreen extends React.Component {
                 style={{ margin: 12 }}
                 size="small" color="rgba(0,0,0,0.2)" />
             : <LikesList
-                onPressAvatar={this._onPressAvatar}
+                onPressAvatar={() => this._onPressAvatar}
                 likes={this.state.likes} /> }
 
           </View>
@@ -167,7 +153,7 @@ class SinglePostScreen extends React.Component {
           />
           <TextInput style={styles.textInput} placeholder="Share something..." />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }

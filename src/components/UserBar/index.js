@@ -1,15 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 import Avatar from '../Avatar';
 import FollowButton from '../FollowButton';
 
-const UserBar = ({data, follow}) => {
-  const { handle, time, username, type, image, icon } = data;
+const UserBar = ({ data, follow, onPressAvatar}) => {
+  const { handle, time, username, type, image, icon,  } = data;
 
   return (
     <View style={styles.container}>
-        <Avatar source={image} size={48} noShadow />
+        <TouchableOpacity onPress={onPressAvatar}>
+          <Avatar source={image} size={48} noShadow />
+        </TouchableOpacity>
         <View style={styles.content}>
           <Text style={styles.username}>{username}</Text>
         <View style={{flexDirection: 'row'}}>
