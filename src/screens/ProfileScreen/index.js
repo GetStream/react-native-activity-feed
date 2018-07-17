@@ -1,11 +1,17 @@
+// @flow
+
 import React from 'react';
 import { View, StatusBar } from 'react-native';
-import ProfileHeader from '../../components/ProfileHeader';
-import Button from '../../components/Button';
-import { StreamContext } from '../../../core/Context';
+import ProfileHeader from '~/components/ProfileHeader';
+import Button from '~/components/Button';
+import { StreamContext } from '~/Context';
+import type {NavigationProps} from '~/types';
 
-export default class ProfileScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
+type Props = NavigationProps
+
+export default class ProfileScreen extends React.Component<Props> {
+  _navListener: any
+  static navigationOptions = ({ navigation }: Props ) => ({
     headerStyle: {
       backgroundColor: 'transparent',
       borderBottomColor: 'transparent',

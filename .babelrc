@@ -1,8 +1,16 @@
 {
   "presets": ["babel-preset-expo", "flow", "react-native"],
+  "plugins": [
+    ["babel-plugin-root-import", {
+      "rootPathSuffix": "src"
+    }]
+  ],
   "env": {
     "development": {
       "plugins": [
+        ["babel-plugin-root-import", {
+          "rootPathSuffix": "src"
+        }],
         "transform-react-jsx-source",
         "transform-inline-environment-variables"
       ]

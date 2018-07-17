@@ -14,7 +14,7 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import SinglePostScreen from './screens/SinglePostScreen';
 import NewPostScreen from './screens/NewPostScreen';
 
-import { StreamApp } from '../core/Context';
+import { StreamApp } from './Context';
 
 const NotificationsStack = createStackNavigator({
   Notifications: { screen: NotificationsScreen },

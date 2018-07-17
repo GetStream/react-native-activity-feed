@@ -3,11 +3,13 @@
 [include]
 
 [libs]
+./custom-definitions/
 
 [lints]
 all=warn
 
 [options]
+module.name_mapper='^~/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 
 [strict]
 

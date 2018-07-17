@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
@@ -5,9 +7,30 @@ import { SafeAreaView } from 'react-navigation';
 import Count from '../../components/Count';
 import Avatar from '../../components/Avatar';
 import CoverImage from '../../components/CoverImage';
+import type { StreamUser } from 'getstream';
 
-class ProfileHeader extends React.Component {
-  constructor(props) {
+type Props = {
+  user: StreamUser,
+};
+
+type State = {
+  user: {
+    data: {
+      name?: string,
+      url?: string,
+      desc?: string,
+      profileImage?: string,
+      coverImage?: string,
+      counts: {
+        following?: number,
+        followers?: number,
+      },
+    },
+  },
+}
+
+class ProfileHeader extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       user: {
