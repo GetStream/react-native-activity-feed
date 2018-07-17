@@ -18,7 +18,7 @@ class NotificationScreen extends React.Component {
     notifications: notifications,
   };
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = () => ({
     title: 'NOTIFICATIONS',
     headerLeft: (
       <View style={{ paddingLeft: 15 }}>
@@ -48,7 +48,7 @@ class NotificationScreen extends React.Component {
     });
   }
 
-  _keyExtractor = (item, index) => item.id;
+  _keyExtractor = (item) => item.id;
 
   _renderItem = ({ item }) => {
     if (item.type === 'follow') {

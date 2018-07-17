@@ -22,7 +22,7 @@ class Activity extends React.Component {
   };
 
   render() {
-    const { height, width } = Dimensions.get('window');
+    const { width } = Dimensions.get('window');
     let icon, sub;
     if (this.props.type === 'like') {
       icon = require('../../images/icons/heart.png');

@@ -3,7 +3,6 @@ import {
   ScrollView,
   StatusBar,
   Image,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
@@ -99,7 +98,5 @@ class HomeScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({});
 
 export default HomeScreen;

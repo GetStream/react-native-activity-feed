@@ -108,7 +108,7 @@ class SearchScreen extends React.Component {
     };
   }
 
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = () => ({
     title: 'DISCOVER',
     headerTitleStyle: {
       fontWeight: '500',
@@ -172,6 +172,7 @@ class SearchScreen extends React.Component {
           renderItem={({ item }) => (
             <View style={{ marginLeft: 15, marginRight: 15, marginBottom: 15 }}>
               <UserBar
+                item={item}
                 data={{ username: 'Username', handle: '@handle' }}
                 follow
               />

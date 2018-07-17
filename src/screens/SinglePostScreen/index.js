@@ -80,7 +80,6 @@ class SinglePostScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'no item found');
-    const inputAccessoryViewID = 'inputAccessoryView1';
     return (
       <View style={styles.container} behaviour="height" enabled>
         <ScrollView style={styles.scrollContainer}>

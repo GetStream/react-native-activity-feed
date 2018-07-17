@@ -5,7 +5,7 @@ import Avatar from '../Avatar';
 import FollowButton from '../FollowButton';
 
 const UserBar = ({ data, follow, onPressAvatar }) => {
-  const { handle, time, username, type, image, icon } = data;
+  const { handle, time, username, image, icon } = data;
 
   return (
     <View style={styles.container}>

@@ -36,12 +36,17 @@ class NewPostScreen extends React.Component {
     },
   });
 
+  constructor(props) {
+    super(props);
+    this.TextInput = React.createRef();
+  }
+
   state = {
     image: null,
   };
 
   _pickImage = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
@@ -54,11 +59,11 @@ class NewPostScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.refs.TextInput.focus();
+    this.TextInput.focus();
   }
 
   componentWillUnmount() {
-    this.refs.TextInput.blur();
+    this.TextInput.blur();
   }
 
   render() {
@@ -69,7 +74,7 @@ class NewPostScreen extends React.Component {
           <View style={styles.textInput}>
             <TextInput
               multiline
-              ref="TextInput"
+              ref={this.TextInput}
               placeholder="Share something..."
             />
           </View>
