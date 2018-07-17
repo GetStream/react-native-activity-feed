@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text } from 'react-native';
+import { Image } from 'react-native';
 
 const Icon = ({ name }) => {
   if (name === 'home') {

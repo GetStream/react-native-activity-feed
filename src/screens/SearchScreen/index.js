@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StatusBar,
-  Image,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  TextInput,
-} from 'react-native';
+import { View, StatusBar, Image, ScrollView, FlatList } from 'react-native';
 
 import LargeHeading from '../../components/LargeHeading';
 import HorizontalScrollFeed from '../../components/HorizontalScrollFeed';

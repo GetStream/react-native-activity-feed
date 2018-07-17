@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  Text,
-  TextInput,
-  StyleSheet,
-  Animated,
-} from 'react-native';
+import { View, Image, TextInput, StyleSheet, Animated } from 'react-native';
 
 class SearchBox extends React.Component {
   state = {

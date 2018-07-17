@@ -5,9 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
-  KeyboardAvoidingView,
   ActivityIndicator,
-  InputAccessoryView,
 } from 'react-native';
 
 import { comments, likes, reposts } from '../../mock/data';

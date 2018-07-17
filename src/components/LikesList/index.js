@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 
 import Avatar from '../Avatar';
 

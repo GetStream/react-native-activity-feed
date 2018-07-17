@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import UserBar from '../../UserBar';
 import Card from '../../Card';
-import PostControlBar from '../../PostControlBar';
 
 const Repost = ({ item }) => {
   return (

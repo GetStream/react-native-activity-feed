@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, View, Text, TextInput } from 'react-native';
+import { StatusBar, View, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CoverImage from '../../components/CoverImage';
 import Avatar from '../../components/Avatar';

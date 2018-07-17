@@ -19,7 +19,6 @@ const FollowButton = ({ followed, clicked }) => {
 
 const styles = StyleSheet.create({
   buttonGradient: {
-    borderRadius: 6,
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 7,
