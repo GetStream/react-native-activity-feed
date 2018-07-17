@@ -1,7 +1,7 @@
 **/*{.,-}min.js
-test/integration/utils/kjur.js
 dist
 bin
 .git
 docs
+flow-typed
 **/*.sh

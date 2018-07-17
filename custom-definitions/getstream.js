@@ -1,8 +1,8 @@
 // @flow
-declare module "getstream" {
+declare module 'getstream' {
   declare type TimestampedResponse = {
     created_at: string,
-    updated_at: string
+    updated_at: string,
   };
 
   declare type UserResponse = {
@@ -11,7 +11,6 @@ declare module "getstream" {
   } & TimestampedResponse;
 
   declare class StreamUser {
-    getOrCreate({}): Promise<UserResponse>
+    getOrCreate({}): Promise<UserResponse>;
   }
 }
-

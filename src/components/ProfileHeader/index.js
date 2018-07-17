@@ -27,7 +27,7 @@ type State = {
       },
     },
   },
-}
+};
 
 class ProfileHeader extends React.Component<Props, State> {
   constructor(props: Props) {

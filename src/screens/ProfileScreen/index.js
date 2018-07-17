@@ -5,13 +5,13 @@ import { View, StatusBar } from 'react-native';
 import ProfileHeader from '~/components/ProfileHeader';
 import Button from '~/components/Button';
 import { StreamContext } from '~/Context';
-import type {NavigationProps} from '~/types';
+import type { NavigationProps } from '~/types';
 
-type Props = NavigationProps
+type Props = NavigationProps;
 
 export default class ProfileScreen extends React.Component<Props> {
-  _navListener: any
-  static navigationOptions = ({ navigation }: Props ) => ({
+  _navListener: any;
+  static navigationOptions = ({ navigation }: Props) => ({
     headerStyle: {
       backgroundColor: 'transparent',
       borderBottomColor: 'transparent',
