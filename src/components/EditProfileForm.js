@@ -7,12 +7,12 @@ import CoverImage from './CoverImage';
 import Avatar from './Avatar';
 import UploadImage from './UploadImage';
 import FormField from './FormField';
-import type { User, UserData } from '~/types';
+import type { UserData } from '~/types';
+import type { AppCtx } from '~/Context';
 
 type Props = {
-  user: User,
-  registerSave: (saveFunc: () => void) => void,
-};
+  registerSave: (saveFunc: () => any) => void,
+} & AppCtx;
 
 type State = UserData;
 
@@ -23,8 +23,9 @@ export class EditProfileForm extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.registerSave(() => {
-      this.props.user.update(this.state);
+    this.props.registerSave(async () => {
+      await this.props.user.update(this.state);
+      this.props.changedUserData();
     });
   }
 

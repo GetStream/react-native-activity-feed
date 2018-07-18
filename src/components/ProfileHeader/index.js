@@ -8,16 +8,12 @@ import Count from '../../components/Count';
 import Avatar from '../../components/Avatar';
 import CoverImage from '../../components/CoverImage';
 import type { FollowCounts } from 'getstream';
-import type { User, UserData } from '~/types';
+import type { AppCtx } from '~/Context';
 
-type Props = {
-  user: User,
-};
+type Props = AppCtx;
 
 type State = {
-  user: FollowCounts & {
-    data: UserData,
-  },
+  user: FollowCounts,
 };
 
 class ProfileHeader extends React.Component<Props, State> {
@@ -25,11 +21,8 @@ class ProfileHeader extends React.Component<Props, State> {
     super(props);
     this.state = {
       user: {
-        data: {
-          counts: {},
-        },
-        following_count: 0,
-        followers_count: 0,
+        following_count: 100,
+        followers_count: 1100,
       },
     };
   }
@@ -47,15 +40,14 @@ class ProfileHeader extends React.Component<Props, State> {
         'https://i0.wp.com/photos.smugmug.com/Portfolio/Full/i-mwrhZK2/0/ea7f1268/X2/GothamCity-X2.jpg?resize=1280%2C743&ssl=1',
     });
     let data = await this.props.user.profile();
+    this.props.changedUserData();
     this.setState({ user: data });
   }
 
   render() {
-    let {
-      data: { name, url, desc, profileImage, coverImage },
-      following_count,
-      followers_count,
-    } = this.state.user;
+    let { following_count, followers_count } = this.state.user;
+    let { name, url, desc, profileImage, coverImage } =
+      this.props.userData || {};
 
     coverImage ? StatusBar.setBarStyle('light-content', true) : null;
 

@@ -2,17 +2,25 @@
 
 import * as React from 'react';
 import stream from 'getstream/src/getstream-enrich';
+import type { User, UserData } from '~/types';
 
 const emptySession = stream.connect().createUserSession();
 
 export const StreamContext = React.createContext({
   session: emptySession,
   user: emptySession.user,
+  userData: undefined,
+  changedUserData: () => {},
 });
 
-type AppCtx = {
+export type AppCtx = {
   session: stream.StreamUserSession,
-  user: stream.StreamUser,
+  user: User,
+  // We cannot simply take userData from user.data, since the reference to user
+  // will stay the same all the time. Because of this react won't notice that
+  // the internal fields changed so it thinks it doesn't need to rerender.
+  userData: ?UserData,
+  changedUserData: () => void,
 };
 
 type ReactChildren = React.Element<*>;
@@ -30,8 +38,14 @@ type StreamCredentialProps = {
   options: ?{},
 } & BaseReactProps;
 
-export class StreamApp extends React.Component<StreamCredentialProps> {
-  render() {
+type StreamAppState = AppCtx;
+
+export class StreamApp extends React.Component<
+  StreamCredentialProps,
+  StreamAppState,
+> {
+  constructor(props: StreamCredentialProps) {
+    super(props);
     let client = stream.connect(
       this.props.apiKey,
       null,
@@ -40,13 +54,19 @@ export class StreamApp extends React.Component<StreamCredentialProps> {
     );
 
     let session = client.createUserSession(this.props.userId, this.props.token);
-    let appCtx = {
+    this.state = {
       session: session,
       user: session.user,
+      userData: session.user.data,
+      changedUserData: () => {
+        this.setState({ userData: this.state.user.data });
+      },
     };
+  }
 
+  render() {
     return (
-      <StreamContext.Provider value={appCtx}>
+      <StreamContext.Provider value={{ ...this.state }}>
         {this.props.children}
       </StreamContext.Provider>
     );
