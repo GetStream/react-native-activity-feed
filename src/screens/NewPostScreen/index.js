@@ -9,6 +9,8 @@ import {
   TextInput,
 } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
+import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
+
 import Avatar from '../../components/Avatar';
 
 class NewPostScreen extends React.Component {
@@ -59,16 +61,16 @@ class NewPostScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.TextInput.focus();
+    this.TextInput.current.focus();
   }
 
   componentWillUnmount() {
-    this.TextInput.blur();
+    this.TextInput.current.blur();
   }
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.screenContainer}>
+      <View style={styles.screenContainer}>
         <View style={styles.newPostContainer}>
           <Avatar source="https://placehold.it/100x100" size={48} />
           <View style={styles.textInput}>
@@ -80,27 +82,29 @@ class NewPostScreen extends React.Component {
           </View>
         </View>
 
-        {this.state.image ? (
-          <View>
-            <Image
-              source={{ uri: this.state.image }}
-              style={{ width: 100, height: 100, margin: 15 }}
-            />
-          </View>
-        ) : null}
 
-        <View style={styles.accessory}>
-          <TouchableOpacity
-            title="Pick an image from camera roll"
-            onPress={this._pickImage}
-          >
-            <Image
-              source={require('../../images/icons/gallery.png')}
-              style={{ width: 24, height: 24 }}
-            />
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+        <KeyboardAccessoryView>
+          {this.state.image ? (
+            <View>
+              <Image
+                source={{ uri: this.state.image }}
+                style={{ width: 100, height: 100, margin: 15 }}
+              />
+            </View>
+          ) : null}
+          <View style={styles.accessory}>
+            <TouchableOpacity
+              title="Pick an image from camera roll"
+              onPress={this._pickImage}
+            >
+              <Image
+                source={require('../../images/icons/gallery.png')}
+                style={{ width: 24, height: 24 }}
+              />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAccessoryView>
+      </View>
     );
   }
 }
