@@ -7,24 +7,20 @@ import { SafeAreaView } from 'react-navigation';
 import Count from '../../components/Count';
 import Avatar from '../../components/Avatar';
 import CoverImage from '../../components/CoverImage';
-import type { StreamUser } from 'getstream';
+import type { StreamUser, FollowCounts } from 'getstream';
 
 type Props = {
   user: StreamUser,
 };
 
 type State = {
-  user: {
+  user: FollowCounts & {
     data: {
       name?: string,
       url?: string,
       desc?: string,
       profileImage?: string,
       coverImage?: string,
-      counts: {
-        following?: number,
-        followers?: number,
-      },
     },
   },
 };
@@ -37,12 +33,16 @@ class ProfileHeader extends React.Component<Props, State> {
         data: {
           counts: {},
         },
+        following_count: 0,
+        followers_count: 0,
       },
     };
   }
 
   async componentDidMount() {
-    let data = await this.props.user.getOrCreate({
+    // TODO: Move this getOrCreate some place else, probably to app
+    // initialization so only the profile request is needed
+    await this.props.user.getOrCreate({
       name: 'Batman',
       url: 'batsignal.com',
       desc: 'Smart, violent and brutally tough solutions to crime.',
@@ -55,12 +55,15 @@ class ProfileHeader extends React.Component<Props, State> {
         followers: 1200000,
       },
     });
+    let data = await this.props.user.profile();
     this.setState({ user: data });
   }
 
   render() {
     let {
-      data: { name, url, desc, counts, profileImage, coverImage },
+      data: { name, url, desc, profileImage, coverImage },
+      following_count,
+      followers_count,
     } = this.state.user;
 
     coverImage ? StatusBar.setBarStyle('light-content', true) : null;
@@ -79,8 +82,8 @@ class ProfileHeader extends React.Component<Props, State> {
         </View>
 
         <View style={styles.statSection}>
-          <Count num={counts.followers}>Followers</Count>
-          <Count num={counts.following}>Following</Count>
+          <Count num={following_count}>Followers</Count>
+          <Count num={followers_count}>Following</Count>
         </View>
       </SafeAreaView>
     );
