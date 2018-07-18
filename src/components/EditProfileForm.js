@@ -11,6 +11,7 @@ import type { User, UserData } from '~/types';
 
 type Props = {
   user: User,
+  registerSave: (saveFunc: () => void) => void,
 };
 
 type State = UserData;
@@ -19,6 +20,12 @@ export class EditProfileForm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { ...props.user.data };
+  }
+
+  componentDidMount() {
+    this.props.registerSave(() => {
+      this.props.user.update(this.state);
+    });
   }
 
   render() {
