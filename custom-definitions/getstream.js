@@ -13,7 +13,7 @@ declare module 'getstream' {
   declare type FollowCounts = {
     following_count: number,
     followers_count: number,
-  }
+  };
 
   declare type ProfileResponse = FollowCounts & UserResponse;
 
