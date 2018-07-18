@@ -5,9 +5,9 @@ declare module 'getstream' {
     updated_at: string,
   };
 
-  declare type UserResponse = {
+  declare type UserResponse<Data> = {
     id: string,
-    data: Object,
+    data: Data,
   } & TimestampedResponse;
 
   declare type FollowCounts = {
@@ -15,10 +15,16 @@ declare module 'getstream' {
     followers_count: number,
   };
 
-  declare type ProfileResponse = FollowCounts & UserResponse;
+  declare type ProfileResponse<Data> = FollowCounts & UserResponse<Data>;
 
-  declare class StreamUser {
-    getOrCreate({}): Promise<UserResponse>;
-    profile(): Promise<ProfileResponse>;
+  declare class StreamUser<Data> {
+    id: string;
+    full: UserResponse<Data>;
+    data: Data;
+    get(): Promise<UserResponse<Data>>;
+    getOrCreate(Data): Promise<UserResponse<Data>>;
+    create(Data): Promise<UserResponse<Data>>;
+    update(Data): Promise<UserResponse<Data>>;
+    profile(): Promise<ProfileResponse<Data>>;
   }
 }

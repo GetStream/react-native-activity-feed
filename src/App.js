@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import {
   createStackNavigator,
@@ -20,6 +21,7 @@ const NotificationsStack = createStackNavigator({
   Notifications: { screen: NotificationsScreen },
 });
 
+// $FlowFixMe
 const ProfileStack = createStackNavigator({
   Profile: { screen: ProfileScreen },
 });
@@ -79,10 +81,10 @@ const Navigation = createStackNavigator({
 
 const App = () => (
   <StreamApp
-    apiKey={process.env['STREAM_API_KEY']}
-    appId={process.env['STREAM_APP_ID']}
+    apiKey={process.env['STREAM_API_KEY'] || ''}
+    appId={process.env['STREAM_APP_ID'] || ''}
     userId="batman"
-    token={process.env['STREAM_TOKEN']}
+    token={process.env['STREAM_TOKEN'] || ''}
     options={{
       urlOverride: {
         api: process.env['STREAM_API_URL'],

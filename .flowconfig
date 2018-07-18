@@ -16,5 +16,6 @@ module.name_mapper='^~/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 [untyped]
 .*/node_modules/react-native/Libraries/react-native/react-native-implementation.js
 .*/node_modules/xdl/build/detach/AndroidShellApp.js.flow
+.*/node_modules/react-native-keyboard-aware-scroll-view/lib/KeyboardAwareHOC.js
 
 [declarations]

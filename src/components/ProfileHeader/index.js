@@ -7,21 +7,16 @@ import { SafeAreaView } from 'react-navigation';
 import Count from '../../components/Count';
 import Avatar from '../../components/Avatar';
 import CoverImage from '../../components/CoverImage';
-import type { StreamUser, FollowCounts } from 'getstream';
+import type { FollowCounts } from 'getstream';
+import type { User, UserData } from '~/types';
 
 type Props = {
-  user: StreamUser,
+  user: User,
 };
 
 type State = {
   user: FollowCounts & {
-    data: {
-      name?: string,
-      url?: string,
-      desc?: string,
-      profileImage?: string,
-      coverImage?: string,
-    },
+    data: UserData,
   },
 };
 
@@ -50,10 +45,6 @@ class ProfileHeader extends React.Component<Props, State> {
         'https://i.kinja-img.com/gawker-media/image/upload/s--PUQWGzrn--/c_scale,f_auto,fl_progressive,q_80,w_800/yktaqmkm7ninzswgkirs.jpg',
       coverImage:
         'https://i0.wp.com/photos.smugmug.com/Portfolio/Full/i-mwrhZK2/0/ea7f1268/X2/GothamCity-X2.jpg?resize=1280%2C743&ssl=1',
-      counts: {
-        following: 3000,
-        followers: 1200000,
-      },
     });
     let data = await this.props.user.profile();
     this.setState({ user: data });

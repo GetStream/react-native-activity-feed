@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput, Text } from 'react-native';
 
-const FormField = ({ label, value, multiline }) => {
+const FormField = ({ label, value, multiline, onChangeText }) => {
   return (
     <View
       style={{
@@ -22,6 +22,7 @@ const FormField = ({ label, value, multiline }) => {
           paddingBottom: 10,
         }}
         multiline={multiline}
+        onChangeText={onChangeText}
       />
     </View>
   );

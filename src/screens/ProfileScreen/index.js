@@ -6,11 +6,12 @@ import ProfileHeader from '~/components/ProfileHeader';
 import Button from '~/components/Button';
 import { StreamContext } from '~/Context';
 import type { NavigationProps } from '~/types';
+import type { NavigationEventSubscription } from 'react-navigation';
 
 type Props = NavigationProps;
 
 export default class ProfileScreen extends React.Component<Props> {
-  _navListener: any;
+  _navListener: NavigationEventSubscription;
   static navigationOptions = ({ navigation }: Props) => ({
     headerStyle: {
       backgroundColor: 'transparent',
