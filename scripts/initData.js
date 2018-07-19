@@ -66,7 +66,7 @@ async function main() {
     profileImage:
       'http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?',
   });
-  console.log(await batman.followUser(fluff.user));
+  await batman.followUser(fluff.user);
   await batman.followUser(bowie.user);
   await batman.followUser(league.user);
   await league.followUser(batman.user);
@@ -94,11 +94,16 @@ async function main() {
     image:
       'http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg',
   });
+  let response;
 
-  let response = await bowie.storage('podcast').add('hello-world-podcast', {
-    title: 'Hello World',
-    description: 'This is ground control for mayor Tom',
-  });
+  try {
+    response = await bowie.storage('podcast').add('hello-world-podcast', {
+      title: 'Hello World',
+      description: 'This is ground control for mayor Tom',
+    });
+  } catch (e) {
+    response = await bowie.storage('podcast').get('hello-world-podcast');
+  }
 
   let podcast = bowie.objectFromResponse(response);
 

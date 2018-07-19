@@ -50,6 +50,7 @@ declare module 'getstream' {
   declare class StreamObjectStore<ObjectData> {
     collection: string;
     object(id: ?string, data: ObjectData): StreamObject<ObjectData>;
+    get(id: string): Promise<ObjectResponse<ObjectData>>;
     add(id: ?string, data: ObjectData): Promise<ObjectResponse<ObjectData>>;
   }
 
