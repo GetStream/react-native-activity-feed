@@ -4,6 +4,7 @@ declare module 'getstream' {
     created_at: string,
     updated_at: string,
   };
+
   declare type DurationResponse = {
     duration: string,
   };
