@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { StatusBar, Text } from 'react-native';
+import { StatusBar, Text, TouchableOpacity } from 'react-native';
 import { EditProfileForm } from '~/components/EditProfileForm';
 import { StreamContext } from '~/Context';
 import BackButton from '~/components/BackButton';
@@ -16,7 +16,11 @@ export default class EditProfileScreen extends React.Component<Props> {
     title: 'EDIT PROFILE',
     // TODO @Jaap: Probably Text is not the correct component here, probably
     // also good to go back to the profile page after pressing save
-    headerRight: <Text onPress={navigation.getParam('saveFunc')}>Save</Text>,
+    headerRight: (
+      <TouchableOpacity onPress={navigation.getParam('saveFunc')}>
+        <Text>Save</Text>
+      </TouchableOpacity>
+    ),
     headerLeft: <BackButton pressed={() => navigation.goBack()} color="blue" />,
     headerStyle: {
       paddingLeft: 15,

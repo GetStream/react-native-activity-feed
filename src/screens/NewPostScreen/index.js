@@ -92,13 +92,22 @@ class NewPostScreen extends React.Component {
         </View>
 
         <View>
-          <KeyboardAccessory>
+
+          <KeyboardAccessory backgroundColor="#fff">
             {this.state.image ? (
-              <View>
+              <View style={styles.imageContainer}>
                 <Image
                   source={{ uri: this.state.image }}
-                  style={{ width: 100, height: 100, margin: 15 }}
+                  style={styles.image}
                 />
+                <View style={styles.imageOverlay}>
+                  <TouchableOpacity>
+                    <Image
+                      source={require('../../images/icons/close-white.png')}
+                      style={{ width: 24, height: 24 }}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
             ) : null}
             <View style={styles.accessory}>
@@ -138,9 +147,30 @@ const styles = StyleSheet.create({
   },
   accessory: {
     borderTopColor: '#DADFE3',
+    backgroundColor: '#f6f6f6',
     borderTopWidth: 1,
     width: 100 + '%',
     padding: 15,
+  },
+  imageContainer: {
+    position: 'relative',
+    width: 100,
+    height: 100,
+    margin: 15,
+  },
+  imageOverlay: {
+    position: 'absolute',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    width: 100,
+    height: 100,
+    padding: 8,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+  image: {
+    position: 'absolute',
+    width: 100,
+    height: 100,
   },
 });
 
