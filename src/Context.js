@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import stream from 'getstream/src/getstream-enrich';
-import type { User, UserData } from '~/types';
+import type { User, UserData, UserSession } from '~/types';
+import type { StreamClient } from 'getstream';
 
 const emptySession = stream.connect().createUserSession();
 
@@ -14,7 +15,7 @@ export const StreamContext = React.createContext({
 });
 
 export type AppCtx = {
-  session: stream.StreamUserSession,
+  session: UserSession,
   user: User,
   // We cannot simply take userData from user.data, since the reference to user
   // will stay the same all the time. Because of this react won't notice that
@@ -46,7 +47,7 @@ export class StreamApp extends React.Component<
 > {
   constructor(props: StreamCredentialProps) {
     super(props);
-    let client = stream.connect(
+    let client: StreamClient = stream.connect(
       this.props.apiKey,
       null,
       this.props.appId,
@@ -96,8 +97,8 @@ export class StreamApp extends React.Component<
 export const StreamFeedContext = React.createContext();
 
 type StreamFeedProps = {
-  feedSlug: string,
-  userId: ?string,
+  feedGroup: string,
+  userId?: string,
 } & BaseReactProps;
 
 export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
@@ -106,7 +107,7 @@ export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
       <StreamContext.Consumer>
         {(appCtx: AppCtx) => {
           const currentFeed = appCtx.session.feed(
-            this.props.feedSlug,
+            this.props.feedGroup,
             this.props.userId,
           );
           return (
