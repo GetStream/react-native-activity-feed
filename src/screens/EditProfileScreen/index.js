@@ -14,7 +14,9 @@ export default class EditProfileScreen extends React.Component<Props> {
 
   static navigationOptions = ({ navigation }: Props) => ({
     title: 'EDIT PROFILE',
-    headerRight: <Text>Save</Text>,
+    // TODO @Jaap: Probably Text is not the correct component here, probably
+    // also good to go back to the profile page after pressing save
+    headerRight: <Text onPress={navigation.getParam('saveFunc')}>Save</Text>,
     headerLeft: <BackButton pressed={() => navigation.goBack()} color="blue" />,
     headerStyle: {
       paddingLeft: 15,
@@ -35,8 +37,15 @@ export default class EditProfileScreen extends React.Component<Props> {
   render() {
     return (
       <StreamContext.Consumer>
-        {({ user }) => {
-          return <EditProfileForm user={user} />;
+        {(appCtx) => {
+          return (
+            <EditProfileForm
+              registerSave={(saveFunc) => {
+                this.props.navigation.setParams({ saveFunc });
+              }}
+              {...appCtx}
+            />
+          );
         }}
       </StreamContext.Consumer>
     );

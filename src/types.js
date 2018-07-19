@@ -1,7 +1,7 @@
 // @flow
 
 import type { NavigationScreenProp } from 'react-navigation';
-import type { StreamUser } from 'getstream';
+import type { StreamUser, StreamUserSession } from 'getstream';
 
 export type NavigationProps = {
   navigation: NavigationScreenProp<{}>,
@@ -14,5 +14,7 @@ export type UserData = {
   profileImage?: string,
   coverImage?: string,
 };
+
+export type UserSession = StreamUserSession<UserData>;
 
 export type User = StreamUser<UserData>;

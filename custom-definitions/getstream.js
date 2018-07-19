@@ -20,11 +20,25 @@ declare module 'getstream' {
   declare class StreamUser<Data> {
     id: string;
     full: UserResponse<Data>;
-    data: Data;
+    data: ?Data;
     get(): Promise<UserResponse<Data>>;
     getOrCreate(Data): Promise<UserResponse<Data>>;
     create(Data): Promise<UserResponse<Data>>;
     update(Data): Promise<UserResponse<Data>>;
     profile(): Promise<ProfileResponse<Data>>;
+  }
+
+  declare class StreamUserSession<UserData> {
+    user: StreamUser<UserData>;
+    feed(feedGroup: string, userId?: string): StreamFeed;
+  }
+
+  declare class StreamFeed {}
+
+  declare class StreamClient {
+    createUserSession<UserData>(
+      userId: string,
+      token: string,
+    ): StreamUserSession<UserData>;
   }
 }
