@@ -13,6 +13,9 @@ const Card = ({ item }) => {
         }
       />
       <View style={styles.content}>
+        {
+          //TODO: Only put ... when the title or description are too long
+        }
         <Text style={styles.title}>{title.slice(0, 60)}...</Text>
         <Text style={styles.description}>{description.slice(0, 60)}...</Text>
       </View>

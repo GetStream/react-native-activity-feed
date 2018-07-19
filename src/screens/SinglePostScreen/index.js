@@ -87,17 +87,8 @@ class SinglePostScreen extends React.Component {
       <SafeAreaView style={styles.container} behaviour="height" enabled>
         <ScrollView style={styles.scrollContainer}>
           <Activity
-            id={item.id}
-            author={item.author}
-            type={item.type}
-            to={item.to}
-            time={item.timestamp}
-            content={item.content}
-            image={item.image}
-            link={item.link}
-            object={item.object}
+            activity={item}
             onAvatarPress={() => this._onAvatarPress(item.id)}
-            static
           />
 
           <View style={styles.sectionHeader}>
@@ -190,7 +181,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-
   },
   scrollContainer: {
     flex: 1,

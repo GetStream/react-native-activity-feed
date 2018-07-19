@@ -11,7 +11,6 @@ import {
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
-
 import Avatar from '../../components/Avatar';
 
 class NewPostScreen extends React.Component {
@@ -33,11 +32,12 @@ class NewPostScreen extends React.Component {
         style={{ paddingRight: 15 }}
         onPress={() => {
           console.log('saving...');
-          setTimeout(()=> {
+          setTimeout(() => {
             console.log('saved.');
-            navigation.navigate('Home')
-          },1000);
-        }}>
+            navigation.navigate('Home');
+          }, 1000);
+        }}
+      >
         <Text style={{ color: '#007AFF', fontSize: 17 }}>Send</Text>
       </TouchableOpacity>
     ),
@@ -91,36 +91,30 @@ class NewPostScreen extends React.Component {
           </View>
         </View>
 
-
-
-
-
-
-
-          <View>
-            <KeyboardAccessory>
-              {this.state.image ? (
-                <View>
-                  <Image
-                    source={{ uri: this.state.image }}
-                    style={{ width: 100, height: 100, margin: 15 }}
-                  />
-                </View>
-              ) : null}
-              <View style={styles.accessory}>
-                <TouchableOpacity
-                  title="Pick an image from camera roll"
-                  onPress={this._pickImage}
-                >
-                  <Image
-                    source={require('../../images/icons/gallery.png')}
-                    style={{ width: 24, height: 24 }}
-                  />
-                </TouchableOpacity>
+        <View>
+          <KeyboardAccessory>
+            {this.state.image ? (
+              <View>
+                <Image
+                  source={{ uri: this.state.image }}
+                  style={{ width: 100, height: 100, margin: 15 }}
+                />
               </View>
-            </KeyboardAccessory>
-          </View>
-        </SafeAreaView>
+            ) : null}
+            <View style={styles.accessory}>
+              <TouchableOpacity
+                title="Pick an image from camera roll"
+                onPress={this._pickImage}
+              >
+                <Image
+                  source={require('../../images/icons/gallery.png')}
+                  style={{ width: 24, height: 24 }}
+                />
+              </TouchableOpacity>
+            </View>
+          </KeyboardAccessory>
+        </View>
+      </SafeAreaView>
     );
   }
 }
@@ -129,7 +123,7 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: 'white',
-    backgroundColor: '#f6f6f6'
+    backgroundColor: '#f6f6f6',
   },
   newPostContainer: {
     backgroundColor: '#ffffff',

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import {
   View,
@@ -11,62 +12,84 @@ import {
 import UserBar from '../UserBar';
 import PostControlBar from '../PostControlBar';
 import Card from '../Card';
+import type { ActivityData } from '~/types';
 
-class Activity extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import HeartIcon from '../../images/icons/heart.png';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import HeartIconOutline from '../../images/icons/heart-outline.png';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import RepostIcon from '../../images/icons/repost.png';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import ReplyIcon from '../../images/icons/repost.png';
 
+type Props = {
+  activity: ActivityData,
+  onItemPress?: () => any,
+  onAvatarPress?: (id: string) => any,
+};
+
+class Activity extends React.Component<Props> {
   _onPress = () => {
-    this.props.onItemPress();
+    if (this.props.onItemPress) {
+      this.props.onItemPress();
+    }
+  };
+  _onAvatarPress = () => {
+    if (this.props.onAvatarPress) {
+      this.props.onAvatarPress(this.props.activity.actor.id);
+    }
   };
 
   render() {
     const { width } = Dimensions.get('window');
     let icon, sub;
-    if (this.props.type === 'like') {
-      icon = require('../../images/icons/heart.png');
+    let { time, actor, verb, object, content, image } = this.props.activity;
+    if (verb === 'like') {
+      icon = HeartIcon;
     }
-    if (this.props.type === 'repost') {
-      icon = require('../../images/icons/repost.png');
+    if (verb === 'repost') {
+      icon = RepostIcon;
     }
-    if (this.props.type === 'reply') {
-      icon = require('../../images/icons/reply.png');
-      sub = `reply to ${this.props.to}`;
+    if (verb === 'reply') {
+      icon = ReplyIcon;
+      sub = `reply to ${actor.data.name || 'Unknown'}`;
     }
 
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={this._onPress.bind(this)}
-        disabled={this.props.static}
+        onPress={this._onPress}
+        disabled={this.props.onItemPress === undefined}
       >
         <View style={{ padding: 15 }}>
           <UserBar
-            onPressAvatar={() => this.props.onAvatarPress(this.props.id)}
+            onPressAvatar={this._onAvatarPress}
             data={{
-              username: this.props.author.name,
-              image: this.props.author.user_image,
+              username: actor.data.name,
+              image: actor.data.profileImage,
               handle: sub,
-              time: this.props.time ? this.props.time : '',
+              // TODO: make this a nice time (e.g. 5m ago)
+              time: time ? time : '',
               icon: icon,
             }}
           />
         </View>
         <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
-          <Text>{this.props.content}</Text>
+          <Text>{content}</Text>
         </View>
 
-        {this.props.link && (
-          <View style={{ paddingLeft: 15, paddingRight: 15 }}>
-            <Card item={this.props.object} />
-          </View>
-        )}
+        {verb == 'repost' &&
+          object instanceof Object && (
+            <View style={{ paddingLeft: 15, paddingRight: 15 }}>
+              <Card item={object.data} />
+            </View>
+          )}
 
-        {this.props.image && (
+        {image && (
           <Image
             style={{ width: width, height: width }}
-            source={{ uri: this.props.image }}
+            source={{ uri: image }}
           />
         )}
 
@@ -74,20 +97,20 @@ class Activity extends React.Component {
           <PostControlBar
             data={{
               repost: {
-                'icon-outline': require('../../images/icons/repost.png'),
-                'icon-filled': require('../../images/icons/repost.png'),
+                'icon-outline': RepostIcon,
+                'icon-filled': RepostIcon,
                 value: 13,
                 style: 'icon-outline',
               },
               heart: {
-                'icon-outline': require('../../images/icons/heart-outline.png'),
-                'icon-filled': require('../../images/icons/heart.png'),
+                'icon-outline': HeartIconOutline,
+                'icon-filled': HeartIcon,
                 value: 22,
                 style: 'icon-filled',
               },
               reply: {
-                'icon-outline': require('../../images/icons/reply.png'),
-                'icon-filled': require('../../images/icons/reply.png'),
+                'icon-outline': ReplyIcon,
+                'icon-filled': ReplyIcon,
                 value: 3,
                 style: 'icon-outline',
               },

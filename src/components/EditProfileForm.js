@@ -29,8 +29,8 @@ export class EditProfileForm extends React.Component<Props, State> {
     });
   }
 
-  _onUploadButtonPress(){
-    console.log('onUploadButtonPress')
+  _onUploadButtonPress() {
+    console.log('onUploadButtonPress');
   }
 
   render() {
@@ -55,10 +55,12 @@ export class EditProfileForm extends React.Component<Props, State> {
             }}
           >
             <Avatar
-              source={this.state.profileImage} size={100} editButton
-              onUploadButtonPress={this._onUploadButtonPress} />
-            <UploadImage
-              onUploadButtonPress={this._onUploadButtonPress}/>
+              source={this.state.profileImage}
+              size={100}
+              editButton
+              onUploadButtonPress={this._onUploadButtonPress}
+            />
+            <UploadImage onUploadButtonPress={this._onUploadButtonPress} />
           </View>
         </View>
         <View style={{ padding: 15 }}>

@@ -3509,12 +3509,13 @@ getpass@^0.1.1:
 
 "getstream@git+ssh://git@github.com/GetStream/stream-js-frontend-fork.git":
   version "3.18.0"
-  resolved "git+ssh://git@github.com/GetStream/stream-js-frontend-fork.git#aa3fc36f753f8093ea2b3cfbc4559543c2a989ee"
+  resolved "git+ssh://git@github.com/GetStream/stream-js-frontend-fork.git#3bd7e89880cb4f039ed46911f77deea450fa5429"
   dependencies:
     Base64 "^1.0.1"
     faye "^1.2.4"
     http-signature "~1.2.0"
     jsonwebtoken "^8.3.0"
+    lodash "^4.17.10"
     qs "^6.5.1"
     request "^2.86.0"
     xmlhttp-request "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
@@ -5263,13 +5264,23 @@ mime-db@~1.33.0:
   version "1.33.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.33.0.tgz#a3492050a5cb9b63450541e39d9788d2272783db"
 
+mime-db@~1.35.0:
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.35.0.tgz#0569d657466491283709663ad379a99b90d9ab47"
+
 mime-types@2.1.11:
   version "2.1.11"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.11.tgz#c259c471bda808a85d6cd193b430a5fae4473b3c"
   dependencies:
     mime-db "~1.23.0"
 
-mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.18:
+mime-types@^2.1.12, mime-types@~2.1.17:
+  version "2.1.19"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.19.tgz#71e464537a7ef81c15f2db9d97e913fc0ff606f0"
+  dependencies:
+    mime-db "~1.35.0"
+
+mime-types@~2.1.18:
   version "2.1.18"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.18.tgz#6f323f60a83d11146f831ff11fd66e2fe5503bb8"
   dependencies:

@@ -53,6 +53,7 @@ const TabNavigator = createBottomTabNavigator(
           return <Icon name="notifications" />;
         } else if (routeName === 'Profile') {
           return (
+            // TODO: Link this to the current user
             <Avatar
               source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
               size={25}

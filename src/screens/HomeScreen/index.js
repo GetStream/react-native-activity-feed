@@ -1,20 +1,21 @@
+// @flow
 import React from 'react';
-import {
-  ScrollView,
-  StatusBar,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import { StatusBar, Image, TouchableOpacity } from 'react-native';
 
-import { activities } from '../../mock/data';
+import Avatar from '~/components/Avatar';
 
-import Avatar from '../../components/Avatar';
+import FlatFeed from '~/components/FlatFeed';
+import { StreamContext } from '~/Context';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import PostIcon from '../../images/icons/post.png';
 
-import Activity from '../../components/Activity';
+import type { NavigationProps } from '~/types';
+import type { NavigationEventSubscription } from 'react-navigation';
+type Props = NavigationProps;
 
-class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
+class HomeScreen extends React.Component<Props> {
+  _navListener: NavigationEventSubscription;
+  static navigationOptions = ({ navigation }: Props) => ({
     title: 'HOME',
     headerTitleStyle: {
       fontWeight: '500',
@@ -37,22 +38,10 @@ class HomeScreen extends React.Component {
         onPress={() => navigation.navigate('NewPost')}
         style={{ paddingRight: 15 }}
       >
-        <Image
-          source={require('../../images/icons/post.png')}
-          style={{ width: 23, height: 23 }}
-        />
+        <Image source={PostIcon} style={{ width: 23, height: 23 }} />
       </TouchableOpacity>
     ),
   });
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: activities,
-      counter: 0,
-      selected: '',
-    };
-  }
 
   componentDidMount() {
     this._navListener = this.props.navigation.addListener('didFocus', () => {
@@ -60,41 +49,17 @@ class HomeScreen extends React.Component {
     });
   }
 
-  _onItemPress = (item) => {
-    this.props.navigation.navigate('SinglePost', { item: item });
-  };
-
-  _onAvatarPress = (id) => {
-    console.log('user id: ', id);
-  };
-
-  _renderItem = ({ item }) => {
-    return (
-      <Activity
-        id={item.id}
-        author={item.author}
-        type={item.type}
-        to={item.to}
-        time={item.timestamp}
-        content={item.content}
-        image={item.image}
-        link={item.link}
-        object={item.object}
-        onItemPress={() => this._onItemPress(item)}
-        onAvatarPress={() => this._onAvatarPress(item.id)}
-      />
-    );
-  };
-
   render() {
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
-        <FlatList
-          data={this.state.data}
-          keyExtractor={(item) => item.id}
-          renderItem={this._renderItem}
-        />
-      </ScrollView>
+      <StreamContext.Consumer>
+        {(appCtx) => (
+          <FlatFeed
+            feedGroup="timeline"
+            navigation={this.props.navigation}
+            {...appCtx}
+          />
+        )}
+      </StreamContext.Consumer>
     );
   }
 }
