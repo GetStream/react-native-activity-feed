@@ -6200,13 +6200,9 @@ react-native-gesture-handler@1.0.0-alpha.41:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-iphone-x-helper@^1.0.1:
+react-native-iphone-x-helper@^1.0.1, react-native-iphone-x-helper@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.3.tgz#7a2f1e0574e899a0f1d426e6167fd98990083214"
-
-react-native-keyboard-accessory@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-accessory/-/react-native-keyboard-accessory-0.1.2.tgz#1f25a71e34c2992559ec664bad3627c2fe34e7d5"
 
 react-native-keyboard-aware-scroll-view@^0.5.0:
   version "0.5.0"
@@ -6265,6 +6261,12 @@ react-native-scripts@1.14.0:
     qrcode-terminal "^0.11.0"
     rimraf "^2.6.1"
     xdl "48.1.4"
+
+react-native-sticky-keyboard-accessory@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-sticky-keyboard-accessory/-/react-native-sticky-keyboard-accessory-0.1.1.tgz#176c29932a7e929b6af142c2d5651e6b9ceb547e"
+  dependencies:
+    react-native-iphone-x-helper "^1.0.2"
 
 react-native-svg-web@^1.0.1:
   version "1.0.1"

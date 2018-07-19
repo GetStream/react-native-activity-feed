@@ -1,12 +1,15 @@
 import React from 'react';
 import {
   View,
+  SafeAreaView,
   Text,
   ScrollView,
   StyleSheet,
   TextInput,
   ActivityIndicator,
 } from 'react-native';
+
+import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
 import { comments, likes, reposts } from '../../mock/data';
 
@@ -81,7 +84,7 @@ class SinglePostScreen extends React.Component {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'no item found');
     return (
-      <View style={styles.container} behaviour="height" enabled>
+      <SafeAreaView style={styles.container} behaviour="height" enabled>
         <ScrollView style={styles.scrollContainer}>
           <Activity
             id={item.id}
@@ -164,17 +167,21 @@ class SinglePostScreen extends React.Component {
             )}
           </View>
         </ScrollView>
-        <View style={styles.replyContainer}>
-          <Avatar
-            source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
-            size={48}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Share something..."
-          />
+        <View>
+          <KeyboardAccessory>
+            <View style={styles.replyContainer}>
+              <Avatar
+                source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
+                size={48}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Share something..."
+              />
+            </View>
+          </KeyboardAccessory>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -183,6 +190,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+
   },
   scrollContainer: {
     flex: 1,
