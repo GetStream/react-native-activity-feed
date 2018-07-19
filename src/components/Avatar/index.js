@@ -3,7 +3,7 @@ import { View, Image, StyleSheet } from 'react-native';
 
 import UploadImage from '../UploadImage';
 
-const Avatar = ({ source, size, noShadow, editButton }) => {
+const Avatar = ({ source, size, noShadow, editButton, onUploadButtonPress }) => {
   return (
     <View
       style={[
@@ -28,7 +28,7 @@ const Avatar = ({ source, size, noShadow, editButton }) => {
           source ? { uri: source } : require('../../images/placeholder.png')
         }
       />
-      {editButton ? <UploadImage /> : null}
+      {editButton ? <UploadImage onUploadButtonPress={onUploadButtonPress} /> : null}
     </View>
   );
 };

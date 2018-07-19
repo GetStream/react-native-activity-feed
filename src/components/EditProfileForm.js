@@ -29,6 +29,10 @@ export class EditProfileForm extends React.Component<Props, State> {
     });
   }
 
+  _onUploadButtonPress(){
+    console.log('onUploadButtonPress')
+  }
+
   render() {
     return (
       <KeyboardAwareScrollView style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -50,8 +54,11 @@ export class EditProfileForm extends React.Component<Props, State> {
               width: 100 + '%',
             }}
           >
-            <Avatar source={this.state.profileImage} size={100} editButton />
-            <UploadImage />
+            <Avatar
+              source={this.state.profileImage} size={100} editButton
+              onUploadButtonPress={this._onUploadButtonPress} />
+            <UploadImage
+              onUploadButtonPress={this._onUploadButtonPress}/>
           </View>
         </View>
         <View style={{ padding: 15 }}>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 
-const UploadImage = () => {
+const UploadImage = ({onUploadButtonPress}) => {
   return (
     <View
       style={{
@@ -15,10 +15,13 @@ const UploadImage = () => {
         shadowRadius: 5,
       }}
     >
-      <Image
-        source={require('../../images/icons/pickphoto.png')}
-        style={{ width: 35, height: 35 }}
-      />
+      <TouchableOpacity
+        onPress={onUploadButtonPress}>
+        <Image
+          source={require('../../images/icons/pickphoto.png')}
+          style={{ width: 35, height: 35 }}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
