@@ -1,11 +1,24 @@
+// @flow
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import Avatar from '../Avatar';
 import FollowButton from '../FollowButton';
 
-const UserBar = ({ data, follow, onPressAvatar }) => {
-  const { handle, time, username, image, icon } = data;
+type Props = {
+  onPressAvatar?: () => any,
+  data: {
+    username: ?string,
+    image: ?string,
+    handle?: string,
+    time: string,
+    icon?: string,
+  },
+  follow?: boolean,
+};
+
+const UserBar = ({ data, follow, onPressAvatar }: Props) => {
+  const { handle, time, username = 'Unknown', image, icon } = data;
 
   return (
     <View style={styles.container}>

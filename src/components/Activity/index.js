@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import moment from 'moment';
 
 import UserBar from '../UserBar';
 import ReactionCounterBar from '../ReactionCounterBar';
@@ -66,6 +67,11 @@ class Activity extends React.Component<Props> {
       sub = `reply to ${actor.data.name || 'Unknown'}`;
     }
 
+    time = moment.utc(time); // parse time as UTC
+    let now = moment();
+    // Not in future humanized time
+    let humanTime = moment.min(time, now).from(now);
+
     return (
       <TouchableOpacity
         style={styles.container}
@@ -80,7 +86,7 @@ class Activity extends React.Component<Props> {
               image: actor.data.profileImage,
               handle: sub,
               // TODO: make this a nice time (e.g. 5m ago)
-              time: time ? time : '',
+              time: humanTime,
               icon: icon,
             }}
           />
