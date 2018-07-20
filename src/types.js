@@ -1,5 +1,6 @@
 // @flow
 
+import * as React from 'react';
 import type { NavigationScreenProp } from 'react-navigation';
 import type {
   StreamUser,
@@ -10,6 +11,10 @@ import type {
 
 export type NavigationProps = {
   navigation: NavigationScreenProp<{}>,
+};
+
+export type ChildrenProps = {
+  children?: React.Node,
 };
 
 export type UserData = {

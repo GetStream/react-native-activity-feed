@@ -1,14 +1,20 @@
+// @flow
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const PostControl = ({ num, icon }) => {
+type Props = {
+  value: number,
+  icon: string,
+};
+
+export default function ReactionCounter({ value, icon }: Props) {
   return (
     <TouchableOpacity style={styles.container}>
       <Image source={icon} style={styles.controlImage} />
-      <Text style={styles.text}>{num}</Text>
+      <Text style={styles.text}>{value}</Text>
     </TouchableOpacity>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -28,5 +34,3 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
-
-export default PostControl;

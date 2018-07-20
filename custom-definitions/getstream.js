@@ -45,6 +45,15 @@ declare module 'getstream' {
     objectFromResponse<ObjectData>(
       response: ObjectResponse<ObjectData>,
     ): StreamObject<ObjectData>;
+    react<ReactionData>(
+      kind: string,
+      activity: string | ActivityResponse<*>, // allows activityId and ActivityResponse
+      data: {
+        id?: string,
+        data?: ReactionData,
+        targetFeeds?: Array<StreamFeed<*, *> | string>, // allows feeds and feed ids
+      },
+    ): Promise<ReactionResponse<ReactionData>>;
   }
 
   declare class StreamObjectStore<ObjectData> {
@@ -76,8 +85,23 @@ declare module 'getstream' {
     target?: string,
   };
 
+  declare type FeedRequestOptions = {
+    withReactionCounts?: boolean,
+    withOwnReactions?: boolean,
+    withOwnReactions?: boolean,
+    limit?: number,
+    offset?: number,
+    id_lt?: string,
+    id_lte?: string,
+    id_gt?: string,
+    id_gte?: string,
+    ranging?: string,
+  };
+
   declare class StreamFeed<UserData, CustomActivityData> {
-    get(): Promise<FeedResponse<UserData, CustomActivityData>>;
+    get(
+      options?: FeedRequestOptions,
+    ): Promise<FeedResponse<UserData, CustomActivityData>>;
     addActivity(
       ActivityArgData<UserData, CustomActivityData>,
     ): Promise<ActivityResponse<UserData, CustomActivityData>>;
@@ -95,6 +119,9 @@ declare module 'getstream' {
 
     origin: null | string,
     to: Array<string>,
+
+    reaction_counts?: { [string]: number },
+    own_reactions?: { [string]: {} },
   } & CustomActivityData;
 
   declare type FeedResponse<UserData, CustomActivityData> = {
@@ -102,6 +129,14 @@ declare module 'getstream' {
     next: string,
     duration: string,
   };
+
+  declare type ReactionResponse<ReactionData> = {
+    id: string,
+    kind: string,
+    user_id: string,
+    activity_id: string,
+    data: ReactionData,
+  } & TimestampedResponse;
 
   declare class StreamClient {
     createUserSession<UserData>(

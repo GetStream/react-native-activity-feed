@@ -2,6 +2,7 @@
 
 import stream from 'getstream/src/getstream-enrich';
 import type { StreamClient } from 'getstream';
+import faker from 'faker';
 
 async function main() {
   let apiKey = process.env['STREAM_API_KEY'] || '';
@@ -66,12 +67,26 @@ async function main() {
     profileImage:
       'http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?',
   });
-  await batman.followUser(fluff.user);
-  await batman.followUser(bowie.user);
-  await batman.followUser(league.user);
-  await league.followUser(batman.user);
 
-  await fluff.feed('user').addActivity({
+  let randomUsers = [];
+  for (let i = 0; i < 30; i++) {
+    let session = createUserSession(`random-${i}`);
+    randomUsers.push(session);
+    session.user.getOrCreate({
+      name: faker.name.findName(),
+      profileImage: faker.internet.avatar(),
+      desc: faker.lorem.sentence(),
+    });
+  }
+
+  await Promise.all([
+    batman.followUser(fluff.user),
+    batman.followUser(bowie.user),
+    batman.followUser(league.user),
+    league.followUser(batman.user),
+  ]);
+
+  let fluffActivity = await fluff.feed('user').addActivity({
     foreign_id: 'fluff-2',
     time: '2018-07-19T13:23:47',
 
@@ -82,7 +97,7 @@ async function main() {
     content: 'Great podcast with @getstream and @feeds! Thanks guys!',
   });
 
-  await league.feed('user').addActivity({
+  let wonderWomenActivity = await league.feed('user').addActivity({
     foreign_id: 'league-2',
     time: '2018-07-19T13:15:12',
 
@@ -117,5 +132,74 @@ async function main() {
 
     content: 'Great podcast with @getstream and @feeds! Thanks guys!',
   });
+  response = await batman
+    .feed('timeline')
+    .get({ withReactionCounts: true, withOwnReactions: true });
+  console.log(response.results[0].reaction_counts);
+  console.log(response.results[0].own_reactions);
+
+  ignore409(() =>
+    Promise.all(
+      randomUsers
+        .slice(1, 20)
+        .map((user, i) =>
+          user.react('heart', fluffActivity, { id: `random-heart-fluff-${i}` }),
+        ),
+    ),
+  );
+
+  ignore409(() =>
+    Promise.all(
+      randomUsers.slice(1, 5).map((user, i) =>
+        user.react('repost', fluffActivity, {
+          id: `random-repost-fluff-${i}`,
+        }),
+      ),
+    ),
+  );
+
+  ignore409(() =>
+    Promise.all(
+      randomUsers
+        .slice(7, 9)
+        .map((user, i) =>
+          user.react('reply', fluffActivity, { id: `random-reply-fluff-${i}` }),
+        ),
+    ),
+  );
+
+  ignore409(() =>
+    Promise.all(
+      randomUsers.slice(22, 26).map((user, i) =>
+        user.react('heart', wonderWomenActivity, {
+          id: `random-heart-wonderwomen-${i}`,
+        }),
+      ),
+    ),
+  );
+
+  ignore409(() =>
+    Promise.all(
+      randomUsers.slice(22, 26).map((user, i) =>
+        user.react('heart', wonderWomenActivity, {
+          id: `random-heart-wonderwomen-${i}`,
+        }),
+      ),
+    ),
+  );
+  batman.react('heart', fluffActivity, { id: `batman-heart-fluff` });
 }
 main();
+
+async function ignore409(asyncfn) {
+  try {
+    await asyncfn();
+  } catch (e) {
+    if (
+      !(e instanceof stream.errors.StreamApiError) ||
+      e.response.statusCode != 409
+    ) {
+      throw e;
+    }
+  }
+}

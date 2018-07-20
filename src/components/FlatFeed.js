@@ -37,7 +37,10 @@ export default class FlatFeed extends React.Component<Props, State> {
       this.props.feedGroup,
       this.props.userId,
     );
-    let response = await feed.get();
+    let response = await feed.get({
+      withReactionCounts: true,
+      withOwnReactions: true,
+    });
     this.setState({ activities: response.results });
   }
 

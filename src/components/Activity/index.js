@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 
 import UserBar from '../UserBar';
-import PostControlBar from '../PostControlBar';
+import ReactionCounterBar from '../ReactionCounterBar';
+import ReactionCounter from '../ReactionCounter';
 import Card from '../Card';
 import type { ActivityData } from '~/types';
 
@@ -21,7 +22,7 @@ import HeartIconOutline from '../../images/icons/heart-outline.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import RepostIcon from '../../images/icons/repost.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
-import ReplyIcon from '../../images/icons/repost.png';
+import ReplyIcon from '../../images/icons/reply.png';
 
 type Props = {
   activity: ActivityData,
@@ -44,7 +45,16 @@ class Activity extends React.Component<Props> {
   render() {
     const { width } = Dimensions.get('window');
     let icon, sub;
-    let { time, actor, verb, object, content, image } = this.props.activity;
+    let {
+      time,
+      actor,
+      verb,
+      object,
+      content,
+      image,
+      reaction_counts,
+      own_reactions,
+    } = this.props.activity;
     if (verb === 'like') {
       icon = HeartIcon;
     }
@@ -93,30 +103,30 @@ class Activity extends React.Component<Props> {
           />
         )}
 
-        <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
-          <PostControlBar
-            data={{
-              repost: {
-                'icon-outline': RepostIcon,
-                'icon-filled': RepostIcon,
-                value: 13,
-                style: 'icon-outline',
-              },
-              heart: {
-                'icon-outline': HeartIconOutline,
-                'icon-filled': HeartIcon,
-                value: 22,
-                style: 'icon-filled',
-              },
-              reply: {
-                'icon-outline': ReplyIcon,
-                'icon-filled': ReplyIcon,
-                value: 3,
-                style: 'icon-outline',
-              },
-            }}
-          />
-        </View>
+        {reaction_counts && (
+          <View
+            style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}
+          >
+            <ReactionCounterBar>
+              <ReactionCounter
+                value={reaction_counts.repost || 0}
+                icon={RepostIcon}
+              />
+              <ReactionCounter
+                value={reaction_counts.heart || 0}
+                icon={
+                  own_reactions && own_reactions.heart
+                    ? HeartIcon
+                    : HeartIconOutline
+                }
+              />
+              <ReactionCounter
+                value={reaction_counts.reply || 0}
+                icon={ReplyIcon}
+              />
+            </ReactionCounterBar>
+          </View>
+        )}
       </TouchableOpacity>
     );
   }
