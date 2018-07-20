@@ -92,7 +92,6 @@ class NewPostScreen extends React.Component {
         </View>
 
         <View>
-
           <KeyboardAccessory backgroundColor="#fff">
             {this.state.image ? (
               <View style={styles.imageContainer}>
@@ -131,7 +130,6 @@ class NewPostScreen extends React.Component {
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: 'white',
     backgroundColor: '#f6f6f6',
   },
   newPostContainer: {
