@@ -76,7 +76,7 @@ class Activity extends React.Component<Props> {
       actor = notFound;
     }
 
-    if (verb === 'like') {
+    if (verb === 'heart') {
       icon = HeartIcon;
     }
     if (verb === 'repost') {
