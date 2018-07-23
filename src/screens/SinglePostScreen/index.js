@@ -168,6 +168,7 @@ class SinglePostScreen extends React.Component {
               <TextInput
                 style={styles.textInput}
                 placeholder="Share something..."
+                underlineColorAndroid="transparent"
               />
             </View>
           </KeyboardAccessory>

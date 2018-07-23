@@ -87,6 +87,7 @@ class NewPostScreen extends React.Component {
               multiline
               ref={this.TextInput}
               placeholder="Share something..."
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>

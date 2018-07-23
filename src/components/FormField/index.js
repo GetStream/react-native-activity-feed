@@ -23,6 +23,7 @@ const FormField = ({ label, value, multiline, onChangeText }) => {
         }}
         multiline={multiline}
         onChangeText={onChangeText}
+        underlineColorAndroid="transparent"
       />
     </View>
   );
