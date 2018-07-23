@@ -45,6 +45,7 @@ declare module 'getstream' {
     objectFromResponse<ObjectData>(
       response: ObjectResponse<ObjectData>,
     ): StreamObject<ObjectData>;
+    reactions: StreamReaction<*>;
     react<ReactionData>(
       kind: string,
       activity: string | ActivityResponse<*, *>, // allows activityId and ActivityResponse
@@ -61,6 +62,19 @@ declare module 'getstream' {
     object(id: ?string, data: ObjectData): StreamObject<ObjectData>;
     get(id: string): Promise<ObjectResponse<ObjectData>>;
     add(id: ?string, data: ObjectData): Promise<ObjectResponse<ObjectData>>;
+  }
+
+  declare class StreamReaction<ReactionData> {
+    add(
+      kind: string,
+      activity: string | ActivityResponse<*, *>, // allows activityId and ActivityResponse
+      data?: {
+        id?: string,
+        data?: ReactionData,
+        targetFeeds?: Array<StreamFeed<*, *> | string>, // allows feeds and feed ids
+      },
+    ): Promise<ReactionResponse<ReactionData>>;
+    delete(id: string): Promise<{}>;
   }
 
   declare type ObjectResponse<Data> = {
@@ -121,7 +135,7 @@ declare module 'getstream' {
     to: Array<string>,
 
     reaction_counts?: { [string]: number },
-    own_reactions?: { [string]: {} },
+    own_reactions?: { [string]: [] },
   } & CustomActivityData;
 
   declare type FeedResponse<UserData, CustomActivityData> = {

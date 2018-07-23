@@ -3517,7 +3517,7 @@ getpass@^0.1.1:
 
 "getstream@git+ssh://git@github.com/GetStream/stream-js-frontend-fork.git":
   version "3.18.0"
-  resolved "git+ssh://git@github.com/GetStream/stream-js-frontend-fork.git#cd9c3ed687417fb83b0813ff0caf9f6ec304eb30"
+  resolved "git+ssh://git@github.com/GetStream/stream-js-frontend-fork.git#f6c4e7644294801b643d8299d0b29a5716d73b7e"
   dependencies:
     Base64 "^1.0.1"
     faye "^1.2.4"

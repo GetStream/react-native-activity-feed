@@ -142,7 +142,9 @@ class Activity extends React.Component<Props> {
               <ReactionCounter
                 value={reaction_counts.heart || 0}
                 icon={
-                  own_reactions && own_reactions.heart
+                  own_reactions &&
+                  own_reactions.heart &&
+                  own_reactions.heart.length
                     ? HeartIcon
                     : HeartIconOutline
                 }

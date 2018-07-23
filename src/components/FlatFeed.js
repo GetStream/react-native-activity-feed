@@ -39,16 +39,37 @@ export default class FlatFeed extends React.Component<Props, State> {
     if (kind !== 'heart') {
       return;
     }
-    let reaction = await this.props.session.react(kind, activity);
-    this.setState((prevState) => {
-      let activities = prevState.activities
-        .updateIn([activity.id, 'reaction_counts', kind], (v) => v + 1)
-        .updateIn(
-          [activity.id, 'own_reactions', kind],
-          (v) => (v ? v.push(reaction) : immutable.List([reaction])),
-        );
-      return { activities };
-    });
+
+    let currentReactions = this.state.activities.getIn(
+      [activity.id, 'own_reactions', kind],
+      immutable.List(),
+    );
+
+    if (currentReactions.size) {
+      await this.props.session.reactions.delete(
+        currentReactions.last().get('id'),
+      );
+
+      this.setState((prevState) => {
+        let activities = prevState.activities
+          .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v - 1)
+          .updateIn([activity.id, 'own_reactions', kind], (v) => v.pop());
+        return { activities };
+      });
+    } else {
+      let reaction = await this.props.session.react(kind, activity);
+
+      this.setState((prevState) => {
+        let activities = prevState.activities
+          .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v + 1)
+          .setIn(
+            [activity.id, 'own_reactions', kind],
+            immutable.fromJS([reaction]),
+          );
+
+        return { activities };
+      });
+    }
   };
 
   async componentDidMount() {
