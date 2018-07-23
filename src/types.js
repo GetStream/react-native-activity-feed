@@ -7,6 +7,7 @@ import type {
   StreamUserSession,
   ActivityResponse,
   StreamFeed,
+  UserResponse as StreamUserResponse,
 } from 'getstream';
 
 export type NavigationProps = {
@@ -28,6 +29,7 @@ export type UserData = {
 export type UserSession = StreamUserSession<UserData>;
 
 export type User = StreamUser<UserData>;
+export type UserResponse = StreamUserResponse<UserData>;
 
 export type CustomActivityData = {
   content: string,

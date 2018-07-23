@@ -5,13 +5,14 @@ import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 type Props = {
   value: number,
   icon: string,
+  onPress?: () => any,
 };
 
-export default function ReactionCounter({ value, icon }: Props) {
+export default function ReactionCounter(props: Props) {
   return (
-    <TouchableOpacity style={styles.container}>
-      <Image source={icon} style={styles.controlImage} />
-      <Text style={styles.text}>{value}</Text>
+    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+      <Image source={props.icon} style={styles.controlImage} />
+      <Text style={styles.text}>{props.value}</Text>
     </TouchableOpacity>
   );
 }

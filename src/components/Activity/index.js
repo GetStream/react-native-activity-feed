@@ -14,7 +14,7 @@ import UserBar from '../UserBar';
 import ReactionCounterBar from '../ReactionCounterBar';
 import ReactionCounter from '../ReactionCounter';
 import Card from '../Card';
-import type { ActivityData } from '~/types';
+import type { ActivityData, UserResponse } from '~/types';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import HeartIcon from '../../images/icons/heart.png';
@@ -29,6 +29,7 @@ type Props = {
   activity: ActivityData,
   onItemPress?: () => any,
   onAvatarPress?: (id: string) => any,
+  onReactionCounterPress?: (kind: string, activity: ActivityData) => any,
 };
 
 class Activity extends React.Component<Props> {
@@ -38,8 +39,13 @@ class Activity extends React.Component<Props> {
     }
   };
   _onAvatarPress = () => {
-    if (this.props.onAvatarPress) {
+    if (this.props.onAvatarPress && this.props.activity.actor !== 'NotFound') {
       this.props.onAvatarPress(this.props.activity.actor.id);
+    }
+  };
+  _onReactionCounterPress = (kind: string) => {
+    if (this.props.onReactionCounterPress) {
+      this.props.onReactionCounterPress(kind, this.props.activity);
     }
   };
 
@@ -56,6 +62,20 @@ class Activity extends React.Component<Props> {
       reaction_counts,
       own_reactions,
     } = this.props.activity;
+
+    let notFound: UserResponse = {
+      id: '!not-found',
+      created_at: '',
+      updated_at: '',
+      data: {
+        name: 'Unknown',
+      },
+    };
+
+    if (actor === 'NotFound') {
+      actor = notFound;
+    }
+
     if (verb === 'like') {
       icon = HeartIcon;
     }
@@ -64,6 +84,7 @@ class Activity extends React.Component<Props> {
     }
     if (verb === 'reply') {
       icon = ReplyIcon;
+      // TODO: This is wrong. Should take name from object.
       sub = `reply to ${actor.data.name || 'Unknown'}`;
     }
 
@@ -85,7 +106,6 @@ class Activity extends React.Component<Props> {
               username: actor.data.name,
               image: actor.data.profileImage,
               handle: sub,
-              // TODO: make this a nice time (e.g. 5m ago)
               time: humanTime,
               icon: icon,
             }}
@@ -117,6 +137,7 @@ class Activity extends React.Component<Props> {
               <ReactionCounter
                 value={reaction_counts.repost || 0}
                 icon={RepostIcon}
+                onPress={() => this._onReactionCounterPress('repost')}
               />
               <ReactionCounter
                 value={reaction_counts.heart || 0}
@@ -125,10 +146,12 @@ class Activity extends React.Component<Props> {
                     ? HeartIcon
                     : HeartIconOutline
                 }
+                onPress={() => this._onReactionCounterPress('heart')}
               />
               <ReactionCounter
                 value={reaction_counts.reply || 0}
                 icon={ReplyIcon}
+                onPress={() => this._onReactionCounterPress('reply')}
               />
             </ReactionCounterBar>
           </View>

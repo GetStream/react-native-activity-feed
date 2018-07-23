@@ -47,8 +47,8 @@ declare module 'getstream' {
     ): StreamObject<ObjectData>;
     react<ReactionData>(
       kind: string,
-      activity: string | ActivityResponse<*>, // allows activityId and ActivityResponse
-      data: {
+      activity: string | ActivityResponse<*, *>, // allows activityId and ActivityResponse
+      data?: {
         id?: string,
         data?: ReactionData,
         targetFeeds?: Array<StreamFeed<*, *> | string>, // allows feeds and feed ids
@@ -112,7 +112,7 @@ declare module 'getstream' {
     foreign_id: string,
     time: string,
 
-    actor: UserResponse<UserData>,
+    actor: UserResponse<UserData> | 'NotFound',
     verb: string,
     object: string | Object, // Limit this type more
     target: string,

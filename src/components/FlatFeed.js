@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
 import { ScrollView, FlatList } from 'react-native';
+import immutable from 'immutable';
 
 import Activity from './Activity';
 import type { AppCtx } from '~/Context';
-import type { Activities, ActivityData, Feed, NavigationProps } from '~/types';
+import type { ActivityData, Feed, NavigationProps } from '~/types';
 
 type Props = {
   feedGroup: string,
@@ -13,14 +14,16 @@ type Props = {
   NavigationProps;
 
 type State = {
-  activities: Activities,
+  activityOrder: Array<string>,
+  activities: any,
 };
 
 export default class FlatFeed extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      activities: [],
+      activityOrder: [],
+      activities: immutable.Map(),
     };
   }
 
@@ -32,6 +35,22 @@ export default class FlatFeed extends React.Component<Props, State> {
     console.log('user id: ', id);
   };
 
+  _onReactionCounterPress = async (kind: string, activity: ActivityData) => {
+    if (kind !== 'heart') {
+      return;
+    }
+    let reaction = await this.props.session.react(kind, activity);
+    this.setState((prevState) => {
+      let activities = prevState.activities
+        .updateIn([activity.id, 'reaction_counts', kind], (v) => v + 1)
+        .updateIn(
+          [activity.id, 'own_reactions', kind],
+          (v) => (v ? v.push(reaction) : immutable.List([reaction])),
+        );
+      return { activities };
+    });
+  };
+
   async componentDidMount() {
     let feed: Feed = this.props.session.feed(
       this.props.feedGroup,
@@ -41,7 +60,15 @@ export default class FlatFeed extends React.Component<Props, State> {
       withReactionCounts: true,
       withOwnReactions: true,
     });
-    this.setState({ activities: response.results });
+
+    let activityMap = response.results.reduce((map, a) => {
+      map[a.id] = a;
+      return map;
+    }, {});
+    this.setState({
+      activityOrder: response.results.map((a) => a.id),
+      activities: immutable.fromJS(activityMap),
+    });
   }
 
   _renderActivity = ({ item }: { item: ActivityData }) => {
@@ -50,6 +77,7 @@ export default class FlatFeed extends React.Component<Props, State> {
         activity={item}
         onItemPress={() => this._onItemPress(item)}
         onAvatarPress={() => this._onAvatarPress(item.id)}
+        onReactionCounterPress={this._onReactionCounterPress}
         clickable
       />
     );
@@ -59,7 +87,9 @@ export default class FlatFeed extends React.Component<Props, State> {
     return (
       <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
         <FlatList
-          data={this.state.activities}
+          data={this.state.activityOrder.map((id) =>
+            this.state.activities.get(id).toJS(),
+          )}
           keyExtractor={(item) => item.id}
           renderItem={this._renderActivity}
         />
