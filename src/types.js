@@ -8,6 +8,7 @@ import type {
   ActivityResponse,
   StreamFeed,
   UserResponse as StreamUserResponse,
+  EnrichedReactionResponse,
 } from 'getstream';
 
 export type NavigationProps = {
@@ -42,3 +43,9 @@ export type ActivityData = ActivityResponse<UserData, CustomActivityData>;
 export type Activities = Array<ActivityData>;
 
 export type Feed = StreamFeed<UserData, CustomActivityData>;
+
+export type CommentData = {
+  text: string,
+};
+
+export type Comment = EnrichedReactionResponse<UserData, CommentData>;

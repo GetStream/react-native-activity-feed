@@ -85,6 +85,7 @@ export default class FlatFeed extends React.Component<Props, State> {
     let response = await feed.get({
       withReactionCounts: true,
       withOwnReactions: true,
+      withRecentReactions: true,
     });
 
     let activityMap = response.results.reduce((map, a) => {
@@ -105,13 +106,15 @@ export default class FlatFeed extends React.Component<Props, State> {
 
   _renderActivity = ({ item }: { item: ActivityData }) => {
     return (
-      <Activity
-        activity={item}
-        onItemPress={() => this._onItemPress(item)}
-        onAvatarPress={() => this._onAvatarPress(item.id)}
-        onReactionCounterPress={this._onReactionCounterPress}
-        clickable
-      />
+      <React.Fragment>
+        <Activity
+          activity={item}
+          onItemPress={() => this._onItemPress(item)}
+          onAvatarPress={() => this._onAvatarPress(item.id)}
+          onReactionCounterPress={this._onReactionCounterPress}
+          clickable
+        />
+      </React.Fragment>
     );
   };
 

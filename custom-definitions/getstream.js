@@ -68,7 +68,7 @@ declare module 'getstream' {
     add(
       kind: string,
       activity: string | ActivityResponse<*, *>, // allows activityId and ActivityResponse
-      data?: {
+      optionalArgs?: {
         id?: string,
         data?: ReactionData,
         targetFeeds?: Array<StreamFeed<*, *> | string>, // allows feeds and feed ids
@@ -121,6 +121,10 @@ declare module 'getstream' {
     ): Promise<ActivityResponse<UserData, CustomActivityData>>;
   }
 
+  declare type ReactionKindMap<UserData, ReactionData> = {
+    [string]: Array<EnrichedReactionResponse<UserData, ReactionData>>,
+  };
+
   declare type ActivityResponse<UserData, CustomActivityData> = {
     id: string,
     foreign_id: string,
@@ -135,7 +139,8 @@ declare module 'getstream' {
     to: Array<string>,
 
     reaction_counts?: { [string]: number },
-    own_reactions?: { [string]: [] },
+    own_reactions?: ReactionKindMap<UserData, Object>,
+    latest_reactions?: ReactionKindMap<UserData, Object>,
   } & CustomActivityData;
 
   declare type FeedResponse<UserData, CustomActivityData> = {
@@ -144,13 +149,20 @@ declare module 'getstream' {
     duration: string,
   };
 
-  declare type ReactionResponse<ReactionData> = {
+  declare type BaseReactionResponse<ReactionData> = {
     id: string,
     kind: string,
-    user_id: string,
     activity_id: string,
     data: ReactionData,
   } & TimestampedResponse;
+
+  declare type ReactionResponse<ReactionData> = {
+    user_id: string,
+  } & BaseReactionResponse<ReactionData>;
+
+  declare type EnrichedReactionResponse<UserData, ReactionData> = {
+    user: UserResponse<UserData>,
+  } & BaseReactionResponse<ReactionData>;
 
   declare class StreamClient {
     createUserSession<UserData>(

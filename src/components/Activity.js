@@ -8,22 +8,23 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import moment from 'moment';
+import { humanizeTimestamp } from '~/utils';
 
-import UserBar from '../UserBar';
-import ReactionCounterBar from '../ReactionCounterBar';
-import ReactionCounter from '../ReactionCounter';
-import Card from '../Card';
+import UserBar from './UserBar';
+import ReactionCounterBar from './ReactionCounterBar';
+import ReactionCounter from './ReactionCounter';
+import CommentList from './CommentList';
+import Card from './Card';
 import type { ActivityData, UserResponse } from '~/types';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
-import HeartIcon from '../../images/icons/heart.png';
+import HeartIcon from '../images/icons/heart.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
-import HeartIconOutline from '../../images/icons/heart-outline.png';
+import HeartIconOutline from '../images/icons/heart-outline.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
-import RepostIcon from '../../images/icons/repost.png';
+import RepostIcon from '../images/icons/repost.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
-import ReplyIcon from '../../images/icons/reply.png';
+import ReplyIcon from '../images/icons/reply.png';
 
 type Props = {
   activity: ActivityData,
@@ -61,6 +62,7 @@ class Activity extends React.Component<Props> {
       image,
       reaction_counts,
       own_reactions,
+      latest_reactions,
     } = this.props.activity;
 
     let notFound: UserResponse = {
@@ -82,16 +84,11 @@ class Activity extends React.Component<Props> {
     if (verb === 'repost') {
       icon = RepostIcon;
     }
-    if (verb === 'reply') {
+    if (verb === 'comment') {
       icon = ReplyIcon;
       // TODO: This is wrong. Should take name from object.
       sub = `reply to ${actor.data.name || 'Unknown'}`;
     }
-
-    time = moment.utc(time); // parse time as UTC
-    let now = moment();
-    // Not in future humanized time
-    let humanTime = moment.min(time, now).from(now);
 
     return (
       <TouchableOpacity
@@ -106,7 +103,7 @@ class Activity extends React.Component<Props> {
               username: actor.data.name,
               image: actor.data.profileImage,
               handle: sub,
-              time: humanTime,
+              time: humanizeTimestamp(time),
               icon: icon,
             }}
           />
@@ -151,12 +148,19 @@ class Activity extends React.Component<Props> {
                 onPress={() => this._onReactionCounterPress('heart')}
               />
               <ReactionCounter
-                value={reaction_counts.reply || 0}
+                value={reaction_counts.comment || 0}
                 icon={ReplyIcon}
-                onPress={() => this._onReactionCounterPress('reply')}
+                onPress={() => this._onReactionCounterPress('comment')}
               />
             </ReactionCounterBar>
           </View>
+        )}
+        {latest_reactions &&
+        latest_reactions.comment &&
+        latest_reactions.comment.length ? (
+          <CommentList comments={latest_reactions.comment} />
+        ) : (
+          false
         )}
       </TouchableOpacity>
     );

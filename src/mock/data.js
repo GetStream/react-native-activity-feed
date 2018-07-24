@@ -1,30 +1,45 @@
 const comments = [
   {
     id: 1,
-    author: {
-      name: 'Janis Joplin',
-      avatar: 'https://randomuser.me/api/portraits/women/21.jpg',
+    user: {
+      id: 1,
+      data: {
+        name: 'Janis Joplin',
+        profileImage: 'https://randomuser.me/api/portraits/women/21.jpg',
+      },
     },
-    content: 'I agree!',
-    timestamp: '2mins',
+    data: {
+      text: 'I agree!',
+    },
+    created_at: '2018-07-24T11:05:21Z',
   },
   {
     id: 2,
-    author: {
-      name: 'David Bowie',
-      avatar: 'https://randomuser.me/api/portraits/men/20.jpg',
+    user: {
+      id: 2,
+      data: {
+        name: 'David Bowie',
+        profileImage: 'https://randomuser.me/api/portraits/men/20.jpg',
+      },
     },
-    content: 'This is just the best',
-    timestamp: '4mins',
+    data: {
+      text: 'This is just the best',
+    },
+    created_at: '2018-07-24T10:25:21Z',
   },
   {
     id: 3,
-    author: {
-      name: 'Wonder Woman',
-      avatar: 'https://randomuser.me/api/portraits/women/19.jpg',
+    user: {
+      id: 3,
+      data: {
+        name: 'Wonder Woman',
+        profileImage: 'https://randomuser.me/api/portraits/women/19.jpg',
+      },
     },
-    content: 'I am glad people are finally starting to see this!',
-    timestamp: '6mins',
+    data: {
+      text: 'I am glad people are finally starting to see this!',
+    },
+    created_at: '2018-07-24T05:13:52Z',
   },
 ];
 

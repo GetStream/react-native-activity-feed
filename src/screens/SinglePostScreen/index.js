@@ -18,7 +18,6 @@ import Activity from '../../components/Activity';
 import Avatar from '../../components/Avatar';
 
 import RepostItem from '../../components/RepostItem';
-import CommentItem from '../../components/CommentItem';
 
 import LikesList from '../../components/LikesList';
 
@@ -90,31 +89,6 @@ class SinglePostScreen extends React.Component {
             activity={item}
             onAvatarPress={() => this._onAvatarPress(item.id)}
           />
-
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionLabel}>Comments</Text>
-          </View>
-
-          <View style={styles.commentsContainer}>
-            {this.state.loading.comments ? (
-              <ActivityIndicator
-                style={{ margin: 12 }}
-                size="small"
-                color="rgba(0,0,0,0.2)"
-              />
-            ) : (
-              this.state.comments.map((item) => {
-                return (
-                  <CommentItem
-                    key={item.id}
-                    item={item}
-                    onPressLike={this._onPressLike}
-                    onPressReply={this._onPressReply}
-                  />
-                );
-              })
-            )}
-          </View>
 
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionLabel}>Reposts</Text>

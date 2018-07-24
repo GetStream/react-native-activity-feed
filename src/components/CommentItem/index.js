@@ -1,36 +1,62 @@
+// @flow
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-import Avatar from '../Avatar';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import HeartIconOutline from '../../images/icons/heart-outline.png';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import ReplyIcon from '../../images/icons/reply.png';
 
-const CommentItem = ({ onPressLike, onPressReply, item }) => {
-  return (
-    <View style={styles.commentItem}>
-      <Avatar source={item.author.avatar} size={25} noShadow />
-      <View style={styles.commentText}>
-        <Text>
-          <Text style={styles.commentAuthor}>{item.author.name} </Text>
-          <Text style={styles.commentContent}>{item.content} </Text>
-          <Text style={styles.commentTime}>{item.timestamp}</Text>
-        </Text>
-      </View>
-      <View style={styles.commentActions}>
-        <TouchableOpacity onPress={() => onPressReply(item.id)}>
-          <Image
-            source={require('../../images/icons/reply.png')}
-            style={styles.replyIcon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => onPressLike(item.id)}>
-          <Image
-            source={require('../../images/icons/heart-outline.png')}
-            style={styles.heartIcon}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+import { humanizeTimestamp } from '~/utils';
+
+import Avatar from '../Avatar';
+import type { Comment } from '~/types';
+
+type Props = {
+  onPressLike?: (id: string) => any,
+  onPressReply?: (id: string) => any,
+  comment: Comment,
 };
+
+export default class CommentItem extends React.Component<Props> {
+  _onPressReply = () => {
+    if (this.props.onPressReply) {
+      this.props.onPressReply(this.props.comment.id);
+    }
+  };
+  _onPressLike = () => {
+    if (this.props.onPressLike) {
+      this.props.onPressLike(this.props.comment.id);
+    }
+  };
+
+  render() {
+    let { comment } = this.props;
+
+    return (
+      <View style={styles.commentItem}>
+        <Avatar source={comment.user.data.profileImage} size={25} noShadow />
+        <View style={styles.commentText}>
+          <Text>
+            <Text style={styles.commentAuthor}>{comment.user.data.name} </Text>
+            <Text style={styles.commentContent}>{comment.data.text} </Text>
+            <Text style={styles.commentTime}>
+              {humanizeTimestamp(comment.created_at)}
+            </Text>
+          </Text>
+        </View>
+        <View style={styles.commentActions}>
+          <TouchableOpacity onPress={this._onPressReply}>
+            <Image source={ReplyIcon} style={styles.replyIcon} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._onPressLike}>
+            <Image source={HeartIconOutline} style={styles.heartIcon} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   commentItem: {
@@ -68,5 +94,3 @@ const styles = StyleSheet.create({
   replyIcon: { width: 24, height: 24 },
   heartIcon: { width: 24, height: 24 },
 });
-
-export default CommentItem;

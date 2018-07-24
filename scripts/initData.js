@@ -3,6 +3,7 @@
 import stream from 'getstream/src/getstream-enrich';
 import type { StreamClient } from 'getstream';
 import faker from 'faker';
+import type { UserSession } from '~/types';
 
 async function main() {
   let apiKey = process.env['STREAM_API_KEY'] || '';
@@ -23,7 +24,7 @@ async function main() {
     },
   );
 
-  function createUserSession(userId) {
+  function createUserSession(userId): UserSession {
     return client.createUserSession(
       userId,
       stream.signing.JWTScopeToken(apiSecret, '', '', {
@@ -91,7 +92,7 @@ async function main() {
     time: '2018-07-19T13:23:47',
 
     actor: fluff.user,
-    verb: 'reply',
+    verb: 'comment',
     object: fluff.user,
 
     content: 'Great podcast with @getstream and @feeds! Thanks guys!',
@@ -122,7 +123,7 @@ async function main() {
 
   let podcast = bowie.objectFromResponse(response);
 
-  await bowie.feed('user').addActivity({
+  let bowieActivity = await bowie.feed('user').addActivity({
     foreign_id: 'bowie-2',
     time: '2018-07-19T13:12:29',
 
@@ -132,11 +133,14 @@ async function main() {
 
     content: 'Great podcast with @getstream and @feeds! Thanks guys!',
   });
-  response = await batman
-    .feed('timeline')
-    .get({ withReactionCounts: true, withOwnReactions: true });
+  response = await batman.feed('timeline').get({
+    withReactionCounts: true,
+    withOwnReactions: true,
+    withRecentReactions: true,
+  });
   console.log(response.results[0].reaction_counts);
   console.log(response.results[0].own_reactions);
+  console.log(response.results[0].latest_reactions);
 
   ignore409(() =>
     Promise.all(
@@ -160,11 +164,25 @@ async function main() {
 
   ignore409(() =>
     Promise.all(
-      randomUsers
-        .slice(7, 9)
-        .map((user, i) =>
-          user.react('reply', fluffActivity, { id: `random-reply-fluff-${i}` }),
-        ),
+      randomUsers.slice(7, 9).map((user, i) =>
+        user.react('comment', fluffActivity, {
+          id: `random-comment-fluff-${i}`,
+          data: {
+            text: `Oh yeah! ${(user.user.data || {}).name ||
+              'Unknown'} loves this!`,
+          },
+        }),
+      ),
+    ),
+  );
+
+  ignore409(() =>
+    Promise.all(
+      randomUsers.slice(22, 26).map((user, i) =>
+        user.react('heart', wonderWomenActivity, {
+          id: `random-heart-wonderwomen-${i}`,
+        }),
+      ),
     ),
   );
 
@@ -180,13 +198,18 @@ async function main() {
 
   ignore409(() =>
     Promise.all(
-      randomUsers.slice(22, 26).map((user, i) =>
-        user.react('heart', wonderWomenActivity, {
-          id: `random-heart-wonderwomen-${i}`,
+      randomUsers.slice(12, 19).map((user, i) =>
+        user.react('comment', bowieActivity, {
+          id: `random-comment-bowie-${i}`,
+          data: {
+            text: `${(user.user.data || {}).name ||
+              'Unknown'} thinks this is the best podcast ever!`,
+          },
         }),
       ),
     ),
   );
+
   batman.react('heart', fluffActivity, { id: `batman-heart-fluff` });
 }
 main();
