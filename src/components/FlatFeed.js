@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { ScrollView, FlatList } from 'react-native';
+import { ScrollView, FlatList, RefreshControl } from 'react-native';
 import immutable from 'immutable';
 
 import Activity from './Activity';
@@ -16,6 +16,7 @@ type Props = {
 type State = {
   activityOrder: Array<string>,
   activities: any,
+  refreshing: boolean,
 };
 
 export default class FlatFeed extends React.Component<Props, State> {
@@ -24,6 +25,7 @@ export default class FlatFeed extends React.Component<Props, State> {
     this.state = {
       activityOrder: [],
       activities: immutable.Map(),
+      refreshing: false,
     };
   }
 
@@ -72,11 +74,14 @@ export default class FlatFeed extends React.Component<Props, State> {
     }
   };
 
-  async componentDidMount() {
+  _refresh = async () => {
+    this.setState({ refreshing: true });
+
     let feed: Feed = this.props.session.feed(
       this.props.feedGroup,
       this.props.userId,
     );
+
     let response = await feed.get({
       withReactionCounts: true,
       withOwnReactions: true,
@@ -86,10 +91,16 @@ export default class FlatFeed extends React.Component<Props, State> {
       map[a.id] = a;
       return map;
     }, {});
+
     this.setState({
       activityOrder: response.results.map((a) => a.id),
       activities: immutable.fromJS(activityMap),
+      refreshing: false,
     });
+  };
+
+  async componentDidMount() {
+    await this._refresh();
   }
 
   _renderActivity = ({ item }: { item: ActivityData }) => {
@@ -106,7 +117,15 @@ export default class FlatFeed extends React.Component<Props, State> {
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <ScrollView
+        style={{ flex: 1, backgroundColor: '#fff' }}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._refresh}
+          />
+        }
+      >
         <FlatList
           data={this.state.activityOrder.map((id) =>
             this.state.activities.get(id).toJS(),
