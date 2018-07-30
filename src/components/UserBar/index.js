@@ -7,26 +7,48 @@ import FollowButton from '../FollowButton';
 
 type Props = {
   onPressAvatar?: () => any,
+  style?: any,
   data: {
     username: ?string,
     image: ?string,
-    handle?: string,
+    subtitle?: string,
     time: string,
     icon?: string,
+  },
+  extraStyle?: {
+    fontWeightAuthor?: string,
   },
   follow?: boolean,
 };
 
-const UserBar = ({ data, follow, onPressAvatar }: Props) => {
-  const { handle, time, username = 'Unknown', image, icon } = data;
+const UserBar = ({
+  style,
+  data,
+  follow,
+  onPressAvatar,
+  extraStyle = {},
+}: Props) => {
+  const { subtitle, time, username = 'Unknown', image, icon } = data;
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={onPressAvatar}>
-        <Avatar source={image} size={48} noShadow />
-      </TouchableOpacity>
+    <View style={[styles.container, { ...style }]}>
+      {image ? (
+        <TouchableOpacity onPress={onPressAvatar}>
+          <Avatar
+            source={image}
+            size={48}
+            noShadow
+            style={{ marginRight: 10 }}
+          />
+        </TouchableOpacity>
+      ) : null}
+
       <View style={styles.content}>
-        <Text style={styles.username}>{username}</Text>
+        <Text
+          style={[styles.username, { fontWeight: extraStyle.fontWeightAuthor }]}
+        >
+          {username}
+        </Text>
         <View style={{ flexDirection: 'row' }}>
           {icon !== undefined ? (
             <Image
@@ -34,7 +56,7 @@ const UserBar = ({ data, follow, onPressAvatar }: Props) => {
               style={{ width: 24, height: 24, top: -2, marginRight: 5 }}
             />
           ) : null}
-          {handle && <Text style={styles.handle}>{handle}</Text>}
+          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </View>
       </View>
       {time && (
@@ -58,7 +80,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    marginLeft: 10,
     flex: 1,
   },
   username: {
@@ -66,7 +87,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     marginBottom: 4,
   },
-  handle: {
+  subtitle: {
     fontSize: 15,
     opacity: 0.8,
     fontWeight: '300',

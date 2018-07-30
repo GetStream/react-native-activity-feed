@@ -10,7 +10,7 @@ const Repost = ({ item }) => {
       <UserBar
         data={{
           username: 'Wonderwoman',
-          handle: 'reposted your ' + item.object.type,
+          subtitle: 'reposted your ' + item.object.type,
         }}
       />
 

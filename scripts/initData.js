@@ -80,12 +80,10 @@ async function main() {
     });
   }
 
-  await Promise.all([
-    batman.followUser(fluff.user),
-    batman.followUser(bowie.user),
-    batman.followUser(league.user),
-    league.followUser(batman.user),
-  ]);
+  await batman.followUser(fluff.user);
+  await batman.followUser(bowie.user);
+  await batman.followUser(league.user);
+  await league.followUser(batman.user);
 
   let fluffActivity = await fluff.feed('user').addActivity({
     foreign_id: 'fluff-2',

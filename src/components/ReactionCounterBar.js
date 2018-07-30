@@ -3,10 +3,15 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import type { ChildrenProps } from '~/types';
 
-type Props = ChildrenProps;
+type Props = {
+  ...ChildrenProps,
+  style?: any,
+};
 
 export default function ReactionCounterBar(props: Props) {
-  return <View style={styles.container}>{props.children}</View>;
+  return (
+    <View style={[styles.container, { ...props.style }]}>{props.children}</View>
+  );
 }
 
 const styles = StyleSheet.create({

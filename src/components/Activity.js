@@ -28,6 +28,7 @@ import ReplyIcon from '../images/icons/reply.png';
 
 type Props = {
   activity: ActivityData,
+  style?: any,
   onItemPress?: () => any,
   onAvatarPress?: (id: string) => any,
   onReactionCounterPress?: (kind: string, activity: ActivityData) => any,
@@ -92,7 +93,7 @@ class Activity extends React.Component<Props> {
 
     return (
       <TouchableOpacity
-        style={styles.container}
+        style={[{ ...this.props.style }, styles.container]}
         onPress={this._onPress}
         disabled={this.props.onItemPress === undefined}
       >
@@ -102,7 +103,7 @@ class Activity extends React.Component<Props> {
             data={{
               username: actor.data.name,
               image: actor.data.profileImage,
-              handle: sub,
+              subtitle: sub,
               time: humanizeTimestamp(time),
               icon: icon,
             }}
@@ -133,7 +134,7 @@ class Activity extends React.Component<Props> {
             <ReactionCounterBar>
               <ReactionCounter
                 value={reaction_counts.repost || 0}
-                icon={RepostIcon}
+                icon={{ source: RepostIcon, width: 24, height: 24 }}
                 onPress={() => this._onReactionCounterPress('repost')}
               />
               <ReactionCounter
@@ -142,14 +143,14 @@ class Activity extends React.Component<Props> {
                   own_reactions &&
                   own_reactions.heart &&
                   own_reactions.heart.length
-                    ? HeartIcon
-                    : HeartIconOutline
+                    ? { source: HeartIcon, width: 24, height: 24 }
+                    : { source: HeartIconOutline, width: 24, height: 24 }
                 }
                 onPress={() => this._onReactionCounterPress('heart')}
               />
               <ReactionCounter
                 value={reaction_counts.comment || 0}
-                icon={ReplyIcon}
+                icon={{ source: ReplyIcon, width: 24, height: 24 }}
                 onPress={() => this._onReactionCounterPress('comment')}
               />
             </ReactionCounterBar>

@@ -27,7 +27,7 @@ const Notification = ({ item }) => {
       <UserBar
         data={{
           username: headerText,
-          handle: headerSubtext,
+          subtitle: headerSubtext,
           type: item.type,
           image: item.actors[0].user_image,
           icon: icon,

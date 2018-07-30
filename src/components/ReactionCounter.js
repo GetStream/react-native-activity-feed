@@ -3,16 +3,22 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 type Props = {
-  value: number,
-  icon: string,
+  value?: number,
+  icon: any,
   onPress?: () => any,
 };
 
 export default function ReactionCounter(props: Props) {
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
-      <Image source={props.icon} style={styles.controlImage} />
-      <Text style={styles.text}>{props.value}</Text>
+      <Image
+        source={props.icon.source}
+        style={[
+          styles.controlImage,
+          { width: props.icon.width, height: props.icon.height },
+        ]}
+      />
+      {props.value ? <Text style={styles.text}>{props.value}</Text> : null}
     </TouchableOpacity>
   );
 }
@@ -21,7 +27,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginTop: 12,
-    marginRight: 40,
   },
   controlImage: {
     height: 24,
