@@ -3,6 +3,7 @@
 import * as React from 'react';
 import type { NavigationScreenProp } from 'react-navigation';
 import type {
+  StreamCloudClient,
   StreamUser,
   StreamUserSession,
   ActivityResponse,
@@ -26,6 +27,8 @@ export type UserData = {
   profileImage?: string,
   coverImage?: string,
 };
+
+export type CloudClient = StreamCloudClient<UserData>;
 
 export type UserSession = StreamUserSession<UserData>;
 

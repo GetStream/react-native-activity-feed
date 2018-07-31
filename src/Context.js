@@ -1,11 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import stream from 'getstream/src/getstream-enrich';
-import type { User, UserData, UserSession } from '~/types';
-import type { StreamClient } from 'getstream';
+import stream from 'getstream-web';
+import type { User, UserData, UserSession, CloudClient } from '~/types';
 
-const emptySession = stream.connect().createUserSession();
+const emptySession = stream.connectCloud('', '').createUserSession('', '');
 
 export const StreamContext = React.createContext({
   session: emptySession,
@@ -47,9 +46,8 @@ export class StreamApp extends React.Component<
 > {
   constructor(props: StreamCredentialProps) {
     super(props);
-    let client: StreamClient = stream.connect(
+    let client: CloudClient = stream.connectCloud(
       this.props.apiKey,
-      null,
       this.props.appId,
       this.props.options || {},
     );
@@ -88,10 +86,6 @@ export class StreamApp extends React.Component<
       </StreamContext.Provider>
     );
   }
-
-  static get Consumer() {
-    return StreamContext.Consumer;
-  }
 }
 
 export const StreamFeedContext = React.createContext();
@@ -118,9 +112,5 @@ export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
         }}
       </StreamContext.Consumer>
     );
-  }
-
-  static get Consumer() {
-    return StreamFeedContext.Consumer;
   }
 }

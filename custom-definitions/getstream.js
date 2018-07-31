@@ -164,10 +164,36 @@ declare module 'getstream' {
     user: UserResponse<UserData>,
   } & BaseReactionResponse<ReactionData>;
 
-  declare class StreamClient {
+  declare class StreamCloudClient<UserData> {
     createUserSession<UserData>(
       userId: string,
       token: string,
     ): StreamUserSession<UserData>;
   }
+
+  declare type ConnectOptions = {
+    location?: string,
+    urlOverride?: {
+      api?: string,
+    },
+    keepAlive?: boolean,
+  };
+
+  declare function connectCloud<UserData>(
+    apiKey: any,
+    appId: any,
+    options?: Object,
+  ): StreamCloudClient<UserData>;
+
+  declare var signing: {
+    JWTUserSessionToken(
+      apiSecret: string,
+      userId: string,
+      jwtOptions?: {},
+    ): string,
+  };
+
+  declare var errors: {
+    StreamApiError: Error,
+  };
 }

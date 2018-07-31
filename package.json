@@ -8,6 +8,7 @@
     "babel-plugin-root-import": "^6.1.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "eslint": "^5.1.0",
     "eslint-plugin-flowtype": "^2.29.1",
     "eslint-plugin-jest": "^21.17.0",
@@ -35,10 +36,9 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "expo": "^27.0.1",
     "faker": "^4.1.0",
-    "getstream": "git+ssh://git@github.com/GetStream/stream-js-frontend-fork.git",
+    "getstream-web": "^3.20.0-beta.2",
     "immutable": "^4.0.0-rc.9",
     "moment": "^2.22.2",
     "numeral": "^2.0.6",

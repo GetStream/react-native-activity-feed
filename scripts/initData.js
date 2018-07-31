@@ -1,9 +1,8 @@
 // @flow
 
-import stream from 'getstream/src/getstream-enrich';
-import type { StreamClient } from 'getstream';
+import stream from 'getstream';
 import faker from 'faker';
-import type { UserSession } from '~/types';
+import type { UserSession, CloudClient } from '~/types';
 
 async function main() {
   let apiKey = process.env['STREAM_API_KEY'] || '';
@@ -12,24 +11,17 @@ async function main() {
   let apiUrl = process.env['STREAM_API_URL'];
 
   console.log(apiKey, apiSecret, apiUrl);
-  let client: StreamClient = stream.connect(
-    apiKey,
-    null,
-    appId,
-    {
-      urlOverride: {
-        api: apiUrl,
-      },
-      browser: true,
+  let client: CloudClient = stream.connectCloud(apiKey, appId, {
+    urlOverride: {
+      api: apiUrl,
     },
-  );
+    keepAlive: false,
+  });
 
   function createUserSession(userId): UserSession {
     return client.createUserSession(
       userId,
-      stream.signing.JWTScopeToken(apiSecret, '', '', {
-        userId: userId,
-      }),
+      stream.signing.JWTUserSessionToken(apiSecret, userId),
     );
   }
 
