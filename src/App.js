@@ -86,11 +86,6 @@ const App = () => (
     appId={process.env['STREAM_APP_ID'] || ''}
     userId="batman"
     token={process.env['STREAM_TOKEN'] || ''}
-    options={{
-      urlOverride: {
-        api: process.env['STREAM_API_URL'],
-      },
-    }}
   >
     <Navigation />
   </StreamApp>

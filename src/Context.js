@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import stream from 'getstream-web';
+import stream from 'getstream';
 import type { User, UserData, UserSession, CloudClient } from '~/types';
 
 const emptySession = stream.connectCloud('', '').createUserSession('', '');
@@ -35,7 +35,7 @@ type StreamCredentialProps = {
   apiKey: string,
   token: string,
   userId: string,
-  options: ?{},
+  options?: {},
 } & BaseReactProps;
 
 type StreamAppState = AppCtx;
