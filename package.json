@@ -25,7 +25,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "build": "rm -rf lib && babel src --out-dir lib && cp -R src/{images/,fonts/} lib/ && flow-copy-source src lib",
+    "build": "rm -rf lib && babel src --out-dir lib && cp -R src/images/ lib/ && flow-copy-source src lib",
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
@@ -35,7 +35,8 @@
     "prettier": "prettier --list-different '**/*.{js,ts}'",
     "lint": "prettier --list-different '**/*.{js,ts}' && eslint '**/*.js' --max-warnings 0 && flow",
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
-    "test": "jest"
+    "test": "jest",
+    "preversion": "yarn build"
   },
   "jest": {
     "preset": "jest-expo"
