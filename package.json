@@ -1,7 +1,10 @@
 {
-  "name": "BasedReactNative",
+  "name": "@stream-io/react-native",
   "version": "0.1.0",
-  "private": true,
+  "license": "BSD-3-Clause",
+  "author": {
+    "company": "Stream.io Inc"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.5",
