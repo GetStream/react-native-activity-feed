@@ -36,7 +36,7 @@
     "lint": "prettier --list-different '**/*.{js,ts}' && eslint '**/*.js' --max-warnings 0 && flow",
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
-    "preversion": "yarn build"
+    "prepack": "yarn build"
   },
   "jest": {
     "preset": "jest-expo"
