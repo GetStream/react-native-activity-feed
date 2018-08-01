@@ -1,17 +1,27 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { ScrollView, FlatList, RefreshControl } from 'react-native';
 import immutable from 'immutable';
 
 import Activity from './Activity';
-import type { AppCtx } from '~/Context';
-import type { ActivityData, Feed, NavigationProps } from '~/types';
+import type { AppCtx } from '../Context';
+import type {
+  ActivityData,
+  Feed,
+  NavigationProps,
+  ChildrenProps,
+  ReactElementCreator,
+} from '../types';
+import type { FeedRequestOptions } from 'getstream';
 
 type Props = {
   feedGroup: string,
   userId?: string,
+  options?: FeedRequestOptions,
+  ActivityComponent?: ReactElementCreator,
 } & AppCtx &
-  NavigationProps;
+  NavigationProps &
+  ChildrenProps;
 
 type State = {
   activityOrder: Array<string>,
@@ -81,12 +91,14 @@ export default class FlatFeed extends React.Component<Props, State> {
       this.props.feedGroup,
       this.props.userId,
     );
-
-    let response = await feed.get({
+    let options: FeedRequestOptions = {
       withReactionCounts: true,
       withOwnReactions: true,
       withRecentReactions: true,
-    });
+      ...this.props.options,
+    };
+
+    let response = await feed.get(options);
 
     let activityMap = response.results.reduce((map, a) => {
       map[a.id] = a;
@@ -105,16 +117,15 @@ export default class FlatFeed extends React.Component<Props, State> {
   }
 
   _renderActivity = ({ item }: { item: ActivityData }) => {
+    let ActivityComponent = this.props.ActivityComponent || Activity;
     return (
-      <React.Fragment>
-        <Activity
-          activity={item}
-          onItemPress={() => this._onItemPress(item)}
-          onAvatarPress={() => this._onAvatarPress(item.id)}
-          onReactionCounterPress={this._onReactionCounterPress}
-          clickable
-        />
-      </React.Fragment>
+      <ActivityComponent
+        activity={item}
+        onItemPress={() => this._onItemPress(item)}
+        onAvatarPress={() => this._onAvatarPress(item.id)}
+        onReactionCounterPress={this._onReactionCounterPress}
+        clickable
+      />
     );
   };
 
@@ -129,6 +140,7 @@ export default class FlatFeed extends React.Component<Props, State> {
           />
         }
       >
+        {this.props.children}
         <FlatList
           data={this.state.activityOrder.map((id) =>
             this.state.activities.get(id).toJS(),

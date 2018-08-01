@@ -8,7 +8,7 @@ import Count from '../../components/Count';
 import Avatar from '../../components/Avatar';
 import CoverImage from '../../components/CoverImage';
 import type { FollowCounts } from 'getstream';
-import type { AppCtx } from '~/Context';
+import type { AppCtx } from '../../Context';
 
 type Props = AppCtx;
 

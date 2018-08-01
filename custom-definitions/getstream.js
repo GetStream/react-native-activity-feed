@@ -109,7 +109,7 @@ declare module 'getstream' {
     id_lte?: string,
     id_gt?: string,
     id_gte?: string,
-    ranging?: string,
+    ranking?: string,
   };
 
   declare class StreamFeed<UserData, CustomActivityData> {

@@ -2,7 +2,8 @@
 
 import stream from 'getstream';
 import faker from 'faker';
-import type { UserSession, CloudClient } from '~/types';
+
+import type { UserSession, CloudClient } from '../src/types';
 
 async function main() {
   let apiKey = process.env['STREAM_API_KEY'] || '';

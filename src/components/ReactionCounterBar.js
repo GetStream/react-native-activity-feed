@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import type { ChildrenProps } from '~/types';
+import type { ChildrenProps } from '../types';
 
 type Props = {
   ...ChildrenProps,

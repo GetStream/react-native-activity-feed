@@ -2,7 +2,13 @@
 
 import * as React from 'react';
 import stream from 'getstream';
-import type { User, UserData, UserSession, CloudClient } from '~/types';
+import type {
+  User,
+  UserData,
+  UserSession,
+  CloudClient,
+  ChildrenProps,
+} from './types';
 
 const emptySession = stream.connectCloud('', '').createUserSession('', '');
 
@@ -23,20 +29,13 @@ export type AppCtx = {
   changedUserData: () => void,
 };
 
-type ReactChildren = React.Element<*>;
-
-type BaseReactProps = {
-  children?: ReactChildren,
-  className?: string,
-};
-
 type StreamCredentialProps = {
   appId: string,
   apiKey: string,
   token: string,
   userId: string,
   options?: {},
-} & BaseReactProps;
+} & ChildrenProps;
 
 type StreamAppState = AppCtx;
 
@@ -93,7 +92,7 @@ export const StreamFeedContext = React.createContext();
 type StreamFeedProps = {
   feedGroup: string,
   userId?: string,
-} & BaseReactProps;
+} & ChildrenProps;
 
 export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
   render() {

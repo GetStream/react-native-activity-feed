@@ -18,7 +18,9 @@ export default function ReactionCounter(props: Props) {
           { width: props.icon.width, height: props.icon.height },
         ]}
       />
-      {props.value ? <Text style={styles.text}>{props.value}</Text> : null}
+      {props.value == null ? (
+        <Text style={styles.text}>{props.value}</Text>
+      ) : null}
     </TouchableOpacity>
   );
 }

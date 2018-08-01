@@ -7,8 +7,8 @@ import CoverImage from './CoverImage';
 import Avatar from './Avatar';
 import UploadImage from './UploadImage';
 import FormField from './FormField';
-import type { UserData } from '~/types';
-import type { AppCtx } from '~/Context';
+import type { UserData } from '../types';
+import type { AppCtx } from '../Context';
 
 type Props = {
   registerSave: (saveFunc: () => any) => void,

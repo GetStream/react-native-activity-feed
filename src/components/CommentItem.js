@@ -3,14 +3,14 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
-import HeartIconOutline from '../../images/icons/heart-outline.png';
+import HeartIconOutline from '../images/icons/heart-outline.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
-import ReplyIcon from '../../images/icons/reply.png';
+import ReplyIcon from '../images/icons/reply.png';
 
-import { humanizeTimestamp } from '~/utils';
+import { humanizeTimestamp } from '../utils';
 
-import Avatar from '../Avatar';
-import type { Comment } from '~/types';
+import Avatar from './Avatar';
+import type { Comment } from '../types';
 
 type Props = {
   onPressLike?: (id: string) => any,

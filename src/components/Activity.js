@@ -8,14 +8,14 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { humanizeTimestamp } from '~/utils';
+import { humanizeTimestamp } from '../utils';
 
 import UserBar from './UserBar';
 import ReactionCounterBar from './ReactionCounterBar';
 import ReactionCounter from './ReactionCounter';
 import CommentList from './CommentList';
 import Card from './Card';
-import type { ActivityData, UserResponse } from '~/types';
+import type { ActivityData, UserResponse } from '../types';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import HeartIcon from '../images/icons/heart.png';

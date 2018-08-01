@@ -22,3 +22,7 @@ yarn-error.log*
 #ide
 .idea
 **/.tern-port
+
+
+
+/lib/

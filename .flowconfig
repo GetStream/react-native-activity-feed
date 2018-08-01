@@ -7,16 +7,21 @@
 
 [lints]
 all=warn
+untyped-type-import=error
+untyped-import=off
+unclear-type=off
+sketchy-null-string=off
+sketchy-null-bool=off
 
 [options]
 module.name_mapper.extension='\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)' -> 'RelativeImageStub'
-module.name_mapper='^~/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 
 [strict]
 
 [untyped]
-.*/node_modules/react-native/Libraries/react-native/react-native-implementation.js
-.*/node_modules/xdl/build/detach/AndroidShellApp.js.flow
-.*/node_modules/react-native-keyboard-aware-scroll-view/lib/KeyboardAwareHOC.js
+<PROJECT_ROOT>/node_modules/react-native/Libraries/react-native/react-native-implementation.js
+<PROJECT_ROOT>/node_modules/xdl/build/detach/AndroidShellApp.js.flow
+<PROJECT_ROOT>/node_modules/react-native-keyboard-aware-scroll-view/lib/KeyboardAwareHOC.js
+<PROJECT_ROOT>/lib/
 
 [declarations]

@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import CommentItem from './CommentItem';
 import SectionHeader from './SectionHeader';
 
-import type { Comment } from '~/types';
+import type { Comment } from '../types';
 
 type Props = {
   comments: Array<Comment>,

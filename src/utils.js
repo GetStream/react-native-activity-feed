@@ -1,6 +1,6 @@
 // @flow
 import moment from 'moment';
-export function humanizeTimestamp(timestamp: string): string {
+export function humanizeTimestamp(timestamp: string | number): string {
   let time = moment.utc(timestamp); // parse time as UTC
   let now = moment();
   // Not in future humanized time

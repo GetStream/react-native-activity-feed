@@ -10,7 +10,7 @@ type Props = {
   style?: any,
   data: {
     username: ?string,
-    image: ?string,
+    image?: string,
     subtitle?: string,
     time: string,
     icon?: string,

@@ -20,6 +20,10 @@ export type ChildrenProps = {
   children?: React.Node,
 };
 
+type ReactComponentClass = typeof React.Component;
+type ReactComponentFunction = (props: any) => ?React.Element<any>;
+export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
+
 export type UserData = {
   name?: string,
   url?: string,

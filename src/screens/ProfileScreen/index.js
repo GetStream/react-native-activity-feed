@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { View, StatusBar } from 'react-native';
-import ProfileHeader from '~/components/ProfileHeader';
-import Button from '~/components/Button';
-import { StreamContext } from '~/Context';
-import type { NavigationProps } from '~/types';
+import ProfileHeader from '../../components/ProfileHeader';
+import Button from '../../components/Button';
+import { StreamContext } from '../../Context';
+import type { NavigationProps } from '../../types';
 import type { NavigationEventSubscription } from 'react-navigation';
 
 type Props = NavigationProps;

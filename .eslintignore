@@ -1,7 +1,5 @@
 *.md
 **/*{.,-}min.js
-docs
-dist
-bin
-flow-typed
-.git
+/lib/
+/flow-typed/
+/.git/
