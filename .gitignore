@@ -1,3 +1,4 @@
+# IMPORTANT: If you add/remove a rule here, be sure to do the same in .npmignore
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 **/.DS_Store
@@ -25,4 +26,5 @@ yarn-error.log*
 
 
 
+# Ignore lib directory (this is not in npmignore because it should be published)
 /lib/
