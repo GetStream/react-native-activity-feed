@@ -63,15 +63,19 @@ async function main() {
   });
 
   let randomUsers = [];
+  let randomUsersPromises = [];
   for (let i = 0; i < 30; i++) {
     let session = createUserSession(`random-${i}`);
     randomUsers.push(session);
-    session.user.getOrCreate({
-      name: faker.name.findName(),
-      profileImage: faker.internet.avatar(),
-      desc: faker.lorem.sentence(),
-    });
+    randomUsersPromises.push(
+      session.user.getOrCreate({
+        name: faker.name.findName(),
+        profileImage: faker.internet.avatar(),
+        desc: faker.lorem.sentence(),
+      }),
+    );
   }
+  await Promise.all(randomUsersPromises);
 
   await batman.followUser(fluff.user);
   await batman.followUser(bowie.user);
@@ -133,7 +137,7 @@ async function main() {
   console.log(response.results[0].own_reactions);
   console.log(response.results[0].latest_reactions);
 
-  ignore409(() =>
+  await ignore409(() =>
     Promise.all(
       randomUsers
         .slice(1, 20)
@@ -143,7 +147,7 @@ async function main() {
     ),
   );
 
-  ignore409(() =>
+  await ignore409(() =>
     Promise.all(
       randomUsers.slice(1, 5).map((user, i) =>
         user.react('repost', fluffActivity, {
@@ -153,7 +157,7 @@ async function main() {
     ),
   );
 
-  ignore409(() =>
+  await ignore409(() =>
     Promise.all(
       randomUsers.slice(7, 9).map((user, i) =>
         user.react('comment', fluffActivity, {
@@ -167,7 +171,7 @@ async function main() {
     ),
   );
 
-  ignore409(() =>
+  await ignore409(() =>
     Promise.all(
       randomUsers.slice(22, 26).map((user, i) =>
         user.react('heart', wonderWomenActivity, {
@@ -177,7 +181,7 @@ async function main() {
     ),
   );
 
-  ignore409(() =>
+  await ignore409(() =>
     Promise.all(
       randomUsers.slice(22, 26).map((user, i) =>
         user.react('heart', wonderWomenActivity, {
@@ -187,7 +191,7 @@ async function main() {
     ),
   );
 
-  ignore409(() =>
+  await ignore409(() =>
     Promise.all(
       randomUsers.slice(12, 19).map((user, i) =>
         user.react('comment', bowieActivity, {
@@ -201,7 +205,9 @@ async function main() {
     ),
   );
 
-  batman.react('heart', fluffActivity, { id: `batman-heart-fluff` });
+  await ignore409(async () => {
+    await batman.react('heart', fluffActivity, { id: `batman-heart-fluff` });
+  });
 }
 main();
 
