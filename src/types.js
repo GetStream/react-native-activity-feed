@@ -20,7 +20,7 @@ export type ChildrenProps = {
   children?: React.Node,
 };
 
-type ReactComponentClass = typeof React.Component;
+type ReactComponentClass = Class<React.Component<any>>;
 type ReactComponentFunction = (props: any) => ?React.Element<any>;
 export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
 

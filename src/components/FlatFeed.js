@@ -47,40 +47,50 @@ export default class FlatFeed extends React.Component<Props, State> {
     console.log('user id: ', id);
   };
 
-  _onReactionCounterPress = async (kind: string, activity: ActivityData) => {
-    if (kind !== 'heart') {
-      return;
-    }
+  _onAddReaction = async (kind: string, activity: ActivityData) => {
+    let reaction = await this.props.session.react(kind, activity);
 
+    this.setState((prevState) => {
+      let activities = prevState.activities
+        .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v + 1)
+        .setIn(
+          [activity.id, 'own_reactions', kind],
+          immutable.fromJS([reaction]),
+        );
+
+      return { activities };
+    });
+  };
+
+  _onRemoveReaction = async (
+    kind: string,
+    activity: ActivityData,
+    id: string,
+  ) => {
+    await this.props.session.reactions.delete(id);
+
+    this.setState((prevState) => {
+      let activities = prevState.activities
+        .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v - 1)
+        .updateIn([activity.id, 'own_reactions', kind], (v) => v.pop());
+      return { activities };
+    });
+  };
+
+  _onToggleReaction = async (kind: string, activity: ActivityData) => {
     let currentReactions = this.state.activities.getIn(
       [activity.id, 'own_reactions', kind],
       immutable.List(),
     );
 
     if (currentReactions.size) {
-      await this.props.session.reactions.delete(
+      await this._onRemoveReaction(
+        kind,
+        activity,
         currentReactions.last().get('id'),
       );
-
-      this.setState((prevState) => {
-        let activities = prevState.activities
-          .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v - 1)
-          .updateIn([activity.id, 'own_reactions', kind], (v) => v.pop());
-        return { activities };
-      });
     } else {
-      let reaction = await this.props.session.react(kind, activity);
-
-      this.setState((prevState) => {
-        let activities = prevState.activities
-          .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v + 1)
-          .setIn(
-            [activity.id, 'own_reactions', kind],
-            immutable.fromJS([reaction]),
-          );
-
-        return { activities };
-      });
+      this._onAddReaction(kind, activity);
     }
   };
 
@@ -123,7 +133,9 @@ export default class FlatFeed extends React.Component<Props, State> {
         activity={item}
         onItemPress={() => this._onItemPress(item)}
         onAvatarPress={() => this._onAvatarPress(item.id)}
-        onReactionCounterPress={this._onReactionCounterPress}
+        onToggleReaction={this._onToggleReaction}
+        onAddReaction={this._onAddReaction}
+        onRemoveReaction={this._onRemoveReaction}
         clickable
       />
     );

@@ -29,25 +29,27 @@ import ReplyIcon from '../images/icons/reply.png';
 type Props = {
   activity: ActivityData,
   style?: any,
-  onItemPress?: () => any,
-  onAvatarPress?: (id: string) => any,
-  onReactionCounterPress?: (kind: string, activity: ActivityData) => any,
+  onItemPress?: () => mixed,
+  onAvatarPress?: (id: string) => mixed,
+  onToggleReaction?: (kind: string, activity: ActivityData) => mixed,
 };
 
-class Activity extends React.Component<Props> {
+export default class Activity extends React.Component<Props> {
   _onPress = () => {
     if (this.props.onItemPress) {
       this.props.onItemPress();
     }
   };
+
   _onAvatarPress = () => {
     if (this.props.onAvatarPress && this.props.activity.actor !== 'NotFound') {
       this.props.onAvatarPress(this.props.activity.actor.id);
     }
   };
-  _onReactionCounterPress = (kind: string) => {
-    if (this.props.onReactionCounterPress) {
-      this.props.onReactionCounterPress(kind, this.props.activity);
+
+  _onPressHeart = () => {
+    if (this.props.onToggleReaction) {
+      this.props.onToggleReaction('heart', this.props.activity);
     }
   };
 
@@ -135,7 +137,6 @@ class Activity extends React.Component<Props> {
               <ReactionCounter
                 value={reaction_counts.repost || 0}
                 icon={{ source: RepostIcon, width: 24, height: 24 }}
-                onPress={() => this._onReactionCounterPress('repost')}
               />
               <ReactionCounter
                 value={reaction_counts.heart || 0}
@@ -146,12 +147,11 @@ class Activity extends React.Component<Props> {
                     ? { source: HeartIcon, width: 24, height: 24 }
                     : { source: HeartIconOutline, width: 24, height: 24 }
                 }
-                onPress={() => this._onReactionCounterPress('heart')}
+                onPress={() => this._onPressHeart()}
               />
               <ReactionCounter
                 value={reaction_counts.comment || 0}
                 icon={{ source: ReplyIcon, width: 24, height: 24 }}
-                onPress={() => this._onReactionCounterPress('comment')}
               />
             </ReactionCounterBar>
           </View>
@@ -175,4 +175,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Activity;
