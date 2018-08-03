@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import stream from 'getstream';
+import StreamAnalytics from 'stream-analytics';
 import type {
   User,
   UserData,
@@ -27,6 +28,7 @@ export type AppCtx = {
   // the internal fields changed so it thinks it doesn't need to rerender.
   userData: ?UserData,
   changedUserData: () => void,
+  analyticsClient?: any,
 };
 
 type StreamCredentialProps = {
@@ -35,6 +37,7 @@ type StreamCredentialProps = {
   token: string,
   userId: string,
   options?: {},
+  analyticsToken?: string,
 } & ChildrenProps;
 
 type StreamAppState = AppCtx;
@@ -52,6 +55,16 @@ export class StreamApp extends React.Component<
     );
 
     let session = client.createUserSession(this.props.userId, this.props.token);
+
+    let analyticsClient;
+    if (this.props.analyticsToken) {
+      analyticsClient = new StreamAnalytics({
+        apiKey: this.props.apiKey,
+        token: this.props.analyticsToken,
+      });
+      analyticsClient.setUser(this.props.userId);
+    }
+
     this.state = {
       session: session,
       user: session.user,
@@ -59,6 +72,7 @@ export class StreamApp extends React.Component<
       changedUserData: () => {
         this.setState({ userData: this.state.user.data });
       },
+      analyticsClient: analyticsClient,
     };
   }
 

@@ -113,6 +113,9 @@ declare module 'getstream' {
   };
 
   declare class StreamFeed<UserData, CustomActivityData> {
+    id: string;
+    slug: string;
+    userId: string;
     get(
       options?: FeedRequestOptions,
     ): Promise<FeedResponse<UserData, CustomActivityData>>;

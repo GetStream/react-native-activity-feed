@@ -19,6 +19,7 @@ type Props = {
   userId?: string,
   options?: FeedRequestOptions,
   ActivityComponent?: ReactElementCreator,
+  analyticsLocation?: string,
 } & AppCtx &
   NavigationProps &
   ChildrenProps;
@@ -47,8 +48,32 @@ export default class FlatFeed extends React.Component<Props, State> {
     console.log('user id: ', id);
   };
 
-  _onAddReaction = async (kind: string, activity: ActivityData) => {
+  _trackAnalytics = (label: string, activity: ActivityData, track: ?boolean) => {
+    let analyticsClient = this.props.analyticsClient;
+
+    if (!track || !analyticsClient) {
+      return;
+    }
+
+    let feed = this.props.session.feed(this.props.feedGroup, this.props.userId);
+
+    analyticsClient.trackEngagement({
+      label: label,
+      feed_id: feed.id,
+      content: {
+        foreign_id: activity.foreign_id,
+      },
+      location: this.props.analyticsLocation,
+    });
+  };
+
+  _onAddReaction = async (
+    kind: string,
+    activity: ActivityData,
+    options: { trackAnalytics?: boolean } = {},
+  ) => {
     let reaction = await this.props.session.react(kind, activity);
+    this._trackAnalytics(kind, activity, options.trackAnalytics);
 
     this.setState((prevState) => {
       let activities = prevState.activities
@@ -66,8 +91,10 @@ export default class FlatFeed extends React.Component<Props, State> {
     kind: string,
     activity: ActivityData,
     id: string,
+    options: { trackAnalytics?: boolean } = {},
   ) => {
     await this.props.session.reactions.delete(id);
+    this._trackAnalytics('un'+kind, activity, options.trackAnalytics);
 
     this.setState((prevState) => {
       let activities = prevState.activities
@@ -77,7 +104,11 @@ export default class FlatFeed extends React.Component<Props, State> {
     });
   };
 
-  _onToggleReaction = async (kind: string, activity: ActivityData) => {
+  _onToggleReaction = async (
+    kind: string,
+    activity: ActivityData,
+    options: { trackAnalytics?: boolean } = {},
+  ) => {
     let currentReactions = this.state.activities.getIn(
       [activity.id, 'own_reactions', kind],
       immutable.List(),
@@ -88,9 +119,10 @@ export default class FlatFeed extends React.Component<Props, State> {
         kind,
         activity,
         currentReactions.last().get('id'),
+        options,
       );
     } else {
-      this._onAddReaction(kind, activity);
+      this._onAddReaction(kind, activity, options);
     }
   };
 
