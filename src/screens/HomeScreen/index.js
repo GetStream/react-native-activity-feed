@@ -5,7 +5,6 @@ import { StatusBar, Image, TouchableOpacity } from 'react-native';
 import Avatar from '../../components/Avatar';
 
 import FlatFeed from '../../components/FlatFeed';
-import { StreamContext } from '../../Context';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../../images/icons/post.png';
 
@@ -51,15 +50,10 @@ class HomeScreen extends React.Component<Props> {
 
   render() {
     return (
-      <StreamContext.Consumer>
-        {(appCtx) => (
           <FlatFeed
             feedGroup="timeline"
             navigation={this.props.navigation}
-            {...appCtx}
           />
-        )}
-      </StreamContext.Consumer>
     );
   }
 }

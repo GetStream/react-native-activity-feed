@@ -4,6 +4,7 @@ import { ScrollView, FlatList, RefreshControl } from 'react-native';
 import immutable from 'immutable';
 
 import Activity from './Activity';
+import { StreamContext } from '../Context';
 import type { AppCtx } from '../Context';
 import type {
   ActivityData,
@@ -20,18 +21,27 @@ type Props = {
   options?: FeedRequestOptions,
   ActivityComponent?: ReactElementCreator,
   analyticsLocation?: string,
-} & AppCtx &
-  NavigationProps &
+} & NavigationProps &
   ChildrenProps;
 
+export default function FlatFeed(props: Props) {
+  return (
+    <StreamContext.Consumer>
+      {(appCtx) => <FlatFeedInner {...props} {...appCtx} />}
+    </StreamContext.Consumer>
+  );
+}
+
+type PropsInner = Props & AppCtx
 type State = {
   activityOrder: Array<string>,
   activities: any,
   refreshing: boolean,
 };
 
-export default class FlatFeed extends React.Component<Props, State> {
-  constructor(props: Props) {
+
+class FlatFeedInner extends React.Component<PropsInner, State> {
+  constructor(props: PropsInner) {
     super(props);
     this.state = {
       activityOrder: [],
@@ -48,7 +58,11 @@ export default class FlatFeed extends React.Component<Props, State> {
     console.log('user id: ', id);
   };
 
-  _trackAnalytics = (label: string, activity: ActivityData, track: ?boolean) => {
+  _trackAnalytics = (
+    label: string,
+    activity: ActivityData,
+    track: ?boolean,
+  ) => {
     let analyticsClient = this.props.analyticsClient;
 
     if (!track || !analyticsClient) {
@@ -94,7 +108,7 @@ export default class FlatFeed extends React.Component<Props, State> {
     options: { trackAnalytics?: boolean } = {},
   ) => {
     await this.props.session.reactions.delete(id);
-    this._trackAnalytics('un'+kind, activity, options.trackAnalytics);
+    this._trackAnalytics('un' + kind, activity, options.trackAnalytics);
 
     this.setState((prevState) => {
       let activities = prevState.activities
@@ -163,11 +177,10 @@ export default class FlatFeed extends React.Component<Props, State> {
     return (
       <ActivityComponent
         activity={item}
-        onItemPress={() => this._onItemPress(item)}
-        onAvatarPress={() => this._onAvatarPress(item.id)}
         onToggleReaction={this._onToggleReaction}
         onAddReaction={this._onAddReaction}
         onRemoveReaction={this._onRemoveReaction}
+        navigation={this.props.navigation}
         clickable
       />
     );

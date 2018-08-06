@@ -15,7 +15,7 @@ import ReactionCounterBar from './ReactionCounterBar';
 import ReactionCounter from './ReactionCounter';
 import CommentList from './CommentList';
 import Card from './Card';
-import type { ActivityData, UserResponse } from '../types';
+import type { ActivityData, UserResponse, NavigationProps } from '../types';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import HeartIcon from '../images/icons/heart.png';
@@ -29,22 +29,19 @@ import ReplyIcon from '../images/icons/reply.png';
 type Props = {
   activity: ActivityData,
   style?: any,
-  onItemPress?: () => mixed,
-  onAvatarPress?: (id: string) => mixed,
   onToggleReaction?: (kind: string, activity: ActivityData) => mixed,
-};
+} & NavigationProps;
 
 export default class Activity extends React.Component<Props> {
   _onPress = () => {
-    if (this.props.onItemPress) {
-      this.props.onItemPress();
-    }
+    this.props.navigation.navigate('SinglePost', { item: this.props.activity });
   };
 
-  _onAvatarPress = () => {
-    if (this.props.onAvatarPress && this.props.activity.actor !== 'NotFound') {
-      this.props.onAvatarPress(this.props.activity.actor.id);
+  _onPressAvatar = () => {
+    if (this.props.activity.actor !== 'NotFound') {
+      return;
     }
+    // TODO: go to profile
   };
 
   _onPressHeart = () => {
@@ -97,11 +94,10 @@ export default class Activity extends React.Component<Props> {
       <TouchableOpacity
         style={[{ ...this.props.style }, styles.container]}
         onPress={this._onPress}
-        disabled={this.props.onItemPress === undefined}
       >
         <View style={{ padding: 15 }}>
           <UserBar
-            onPressAvatar={this._onAvatarPress}
+            onPressAvatar={this._onPressAvatar}
             data={{
               username: actor.data.name,
               image: actor.data.profileImage,

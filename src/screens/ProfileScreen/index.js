@@ -4,7 +4,6 @@ import React from 'react';
 import { View, StatusBar } from 'react-native';
 import ProfileHeader from '../../components/ProfileHeader';
 import Button from '../../components/Button';
-import { StreamContext } from '../../Context';
 import type { NavigationProps } from '../../types';
 import type { NavigationEventSubscription } from 'react-navigation';
 
@@ -36,15 +35,9 @@ export default class ProfileScreen extends React.Component<Props> {
 
   render() {
     return (
-      <StreamContext.Consumer>
-        {(appCtx) => {
-          return (
-            <View>
-              <ProfileHeader {...appCtx} />
-            </View>
-          );
-        }}
-      </StreamContext.Consumer>
+      <View>
+        <ProfileHeader />
+      </View>
     );
   }
 }

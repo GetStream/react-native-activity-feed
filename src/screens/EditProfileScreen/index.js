@@ -1,8 +1,7 @@
 // @flow
 import React from 'react';
 import { StatusBar, Text, TouchableOpacity } from 'react-native';
-import { EditProfileForm } from '../../components/EditProfileForm';
-import { StreamContext } from '../../Context';
+import EditProfileForm from '../../components/EditProfileForm';
 import BackButton from '../../components/BackButton';
 import type { NavigationProps } from '../../types';
 import type { NavigationEventSubscription } from 'react-navigation';
@@ -40,18 +39,11 @@ export default class EditProfileScreen extends React.Component<Props> {
 
   render() {
     return (
-      <StreamContext.Consumer>
-        {(appCtx) => {
-          return (
-            <EditProfileForm
-              registerSave={(saveFunc) => {
-                this.props.navigation.setParams({ saveFunc });
-              }}
-              {...appCtx}
-            />
-          );
+      <EditProfileForm
+        registerSave={(saveFunc) => {
+          this.props.navigation.setParams({ saveFunc });
         }}
-      </StreamContext.Consumer>
+      />
     );
   }
 }

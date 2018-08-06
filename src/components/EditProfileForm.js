@@ -7,17 +7,28 @@ import CoverImage from './CoverImage';
 import Avatar from './Avatar';
 import UploadImage from './UploadImage';
 import FormField from './FormField';
+import { StreamContext } from '../Context';
 import type { UserData } from '../types';
 import type { AppCtx } from '../Context';
 
 type Props = {
   registerSave: (saveFunc: () => any) => void,
-} & AppCtx;
+};
+
+export default function EditProfileForm(props: Props) {
+  return (
+    <StreamContext.Consumer>
+      {(appCtx) => <EditProfileFormInner {...props} {...appCtx} />}
+    </StreamContext.Consumer>
+  );
+}
+
+type PropsInner = Props & AppCtx;
 
 type State = UserData;
 
-export class EditProfileForm extends React.Component<Props, State> {
-  constructor(props: Props) {
+class EditProfileFormInner extends React.Component<PropsInner, State> {
+  constructor(props: PropsInner) {
     super(props);
     this.state = { ...props.user.data };
   }

@@ -4,25 +4,36 @@ import React from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-import Count from '../../components/Count';
-import Avatar from '../../components/Avatar';
-import CoverImage from '../../components/CoverImage';
+import { StreamContext } from '../Context';
+import Count from './Count';
+import Avatar from './Avatar';
+import CoverImage from './CoverImage';
 import type { FollowCounts } from 'getstream';
-import type { AppCtx } from '../../Context';
+import type { AppCtx } from '../Context';
 
-type Props = AppCtx;
+type Props = {};
+
+export default function ProfileHeader(props: Props) {
+  return (
+    <StreamContext.Consumer>
+      {(appCtx) => <ProfileHeaderInner {...props} {...appCtx} />}
+    </StreamContext.Consumer>
+  );
+}
+
+type PropsInner = Props & AppCtx;
 
 type State = {
   user: FollowCounts,
 };
 
-class ProfileHeader extends React.Component<Props, State> {
-  constructor(props: Props) {
+class ProfileHeaderInner extends React.Component<PropsInner, State> {
+  constructor(props: PropsInner) {
     super(props);
     this.state = {
       user: {
-        following_count: 100,
-        followers_count: 1100,
+        following_count: 0,
+        followers_count: 0,
       },
     };
   }
@@ -113,5 +124,3 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-
-export default ProfileHeader;
