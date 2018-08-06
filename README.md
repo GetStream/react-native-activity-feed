@@ -118,9 +118,7 @@ export default class Activity extends React.Component<Props> {
           activity.own_reactions.like &&
           activity.own_reactions.like.length
             ? LikedIcon
-            : LikeIcon,
-        width: 60,
-        height: 42,
+            : LikeIcon
       }}
       onPress={ () => {
         this.props.onToggleReaction('like', activity);
