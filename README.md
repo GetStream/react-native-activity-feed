@@ -50,13 +50,26 @@ var client = stream.connect(API_KEY, API_SECRET);
 var userToken = client.getAnalyticsToken();
 ```
 
+#### Navigation
+
+The components bundled in this library assume that you are using [react-navigation](https://facebook.github.io/react-native/docs/navigation#react-navigation) for navigation; when reading docs and examples you should expect `props.navigation` to refer it.
+
 #### Flat feed component
 
-**TODO**: explain how to add a flat feed and include parameters
+The `FlatFeed` component allows you to read a feed using Stream APIs and takes care of rendering the activities.
+
+```jsx
+<FlatFeed
+  feedGroup=feedGroup                 // the feed group to read (eg. "flat")
+  userId=userId                       // the ID of the user (optional, defaults to StreamApp's userId)
+  navigation={this.props.navigation}  // your navigation instance
+  ActivityComponent={Activity}        // the activity component to use (optional, defaults to Activity)
+/>
+```
 
 ##### Customizing Activities
 
-**TODO**: explain how to customize the rendering of an activity
+This library comes with an `Activity` component; in most cases you will have to make some changes to how activities are rendered. All components rendering activities have a `ActivityComponent` property.
 
 ##### Adding activities
 
