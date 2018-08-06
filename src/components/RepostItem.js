@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-import Avatar from '../Avatar';
+import Avatar from './Avatar';
 
 const RepostItem = ({ onPressLike, item }) => {
   return (
@@ -10,7 +10,7 @@ const RepostItem = ({ onPressLike, item }) => {
         <Avatar source={item.author.avatar} size={25} noShadow />
       </View>
       <Image
-        source={require('../../images/icons/repost.png')}
+        source={require('../images/icons/repost.png')}
         style={styles.repostIcon}
       />
       <View style={styles.repostText}>
@@ -23,7 +23,7 @@ const RepostItem = ({ onPressLike, item }) => {
       <View style={styles.repostActions}>
         <TouchableOpacity onPress={() => onPressLike(item.id)}>
           <Image
-            source={require('../../images/icons/heart-outline.png')}
+            source={require('../images/icons/heart-outline.png')}
             style={styles.heartIcon}
           />
         </TouchableOpacity>

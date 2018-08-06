@@ -2,13 +2,13 @@
 import React from 'react';
 import { StatusBar, Image, TouchableOpacity } from 'react-native';
 
-import Avatar from '../../components/Avatar';
+import Avatar from '../components/Avatar';
 
-import FlatFeed from '../../components/FlatFeed';
+import FlatFeed from '../components/FlatFeed';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
-import PostIcon from '../../images/icons/post.png';
+import PostIcon from '../images/icons/post.png';
 
-import type { NavigationProps } from '../../types';
+import type { NavigationProps } from '../types';
 import type { NavigationEventSubscription } from 'react-navigation';
 type Props = NavigationProps;
 

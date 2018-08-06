@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 
-import UploadImage from '../UploadImage';
+import UploadImage from './UploadImage';
 
 const Avatar = ({
   source,
@@ -30,9 +30,7 @@ const Avatar = ({
             borderRadius: size / 2 ? size / 2 : 200 / 2,
           },
         ]}
-        source={
-          source ? { uri: source } : require('../../images/placeholder.png')
-        }
+        source={source ? { uri: source } : require('../images/placeholder.png')}
       />
       {editButton ? (
         <UploadImage onUploadButtonPress={onUploadButtonPress} />

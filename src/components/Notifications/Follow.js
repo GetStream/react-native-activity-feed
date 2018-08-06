@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-import Avatar from '../../Avatar';
+import Avatar from '../Avatar';
 
 const Follow = ({ items, onPressAvatar }) => {
   return (
@@ -9,7 +9,7 @@ const Follow = ({ items, onPressAvatar }) => {
       {items.length !== 1 ? (
         <Image
           style={styles.icon}
-          source={require('../../../images/icons/followers.png')}
+          source={require('../../images/icons/followers.png')}
         />
       ) : (
         <TouchableOpacity onPress={() => onPressAvatar(items[0].user_id)}>

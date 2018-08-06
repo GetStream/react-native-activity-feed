@@ -8,10 +8,10 @@ import {
   View,
 } from 'react-native';
 
-import { notifications } from '../../mock/data';
+import { notifications } from '../mock/data';
 
-import Notification from '../../components/Notification';
-import Follow from '../../components/Notifications/Follow';
+import Notification from '../components/Notification';
+import Follow from '../components/Notifications/Follow';
 
 class NotificationScreen extends React.Component {
   state = {
@@ -23,7 +23,7 @@ class NotificationScreen extends React.Component {
     headerLeft: (
       <View style={{ paddingLeft: 15 }}>
         <Image
-          source={require('../../images/icons/categories.png')}
+          source={require('../images/icons/categories.png')}
           style={{ width: 23, height: 23 }}
         />
       </View>
@@ -31,7 +31,7 @@ class NotificationScreen extends React.Component {
     headerRight: (
       <View style={{ paddingRight: 15 }}>
         <Image
-          source={require('../../images/icons/post.png')}
+          source={require('../images/icons/post.png')}
           style={{ width: 23, height: 23 }}
         />
       </View>

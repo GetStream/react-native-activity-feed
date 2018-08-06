@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, StatusBar, Image, ScrollView, FlatList } from 'react-native';
 
-import LargeHeading from '../../components/LargeHeading';
-import HorizontalScrollFeed from '../../components/HorizontalScrollFeed';
-import Avatar from '../../components/Avatar';
-import GroupCard from '../../components/GroupCard';
-import UserBar from '../../components/UserBar';
-import SearchBox from '../../components/SearchBox';
+import LargeHeading from '../components/LargeHeading';
+import HorizontalScrollFeed from '../components/HorizontalScrollFeed';
+import Avatar from '../components/Avatar';
+import GroupCard from '../components/GroupCard';
+import UserBar from '../components/UserBar';
+import SearchBox from '../components/SearchBox';
 
 class SearchScreen extends React.Component {
   constructor(props) {
@@ -117,7 +117,7 @@ class SearchScreen extends React.Component {
     headerLeft: (
       <View style={{ paddingLeft: 15 }}>
         <Image
-          source={require('../../images/icons/categories.png')}
+          source={require('../images/icons/categories.png')}
           style={{ width: 23, height: 23 }}
         />
       </View>
@@ -125,7 +125,7 @@ class SearchScreen extends React.Component {
     headerRight: (
       <View style={{ paddingRight: 15 }}>
         <Image
-          source={require('../../images/icons/post.png')}
+          source={require('../images/icons/post.png')}
           style={{ width: 23, height: 23 }}
         />
       </View>

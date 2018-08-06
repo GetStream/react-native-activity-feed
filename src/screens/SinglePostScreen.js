@@ -11,15 +11,15 @@ import {
 
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
-import { comments, likes, reposts } from '../../mock/data';
+import { comments, likes, reposts } from '../mock/data';
 
-import BackButton from '../../components/BackButton';
-import Activity from '../../components/Activity';
-import Avatar from '../../components/Avatar';
+import BackButton from '../components/BackButton';
+import Activity from '../components/Activity';
+import Avatar from '../components/Avatar';
 
-import RepostItem from '../../components/RepostItem';
+import RepostItem from '../components/RepostItem';
 
-import LikesList from '../../components/LikesList';
+import LikesList from '../components/LikesList';
 
 class SinglePostScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

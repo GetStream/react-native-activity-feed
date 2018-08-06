@@ -29,7 +29,7 @@ class SearchBox extends React.Component {
       <View style={styles.searchbox}>
         <Animated.Text style={[styles.placeholder, { opacity: fadeAnim }]}>
           <Image
-            source={require('../../images/icons/ios-search.png')}
+            source={require('../images/icons/ios-search.png')}
             style={{ width: 14, height: 14, top: 4 }}
           />{' '}
           Search

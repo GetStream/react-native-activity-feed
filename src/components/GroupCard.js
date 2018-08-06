@@ -6,18 +6,14 @@ const GroupCard = ({ item }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={
-          image ? { uri: image } : require('../../images/placeholder.png')
-        }
+        source={image ? { uri: image } : require('../images/placeholder.png')}
         style={styles.background}
         resizeMode="cover"
       />
       <View style={styles.overlay} />
       <Image
         source={
-          icon
-            ? { uri: icon }
-            : require('../../images/icons/icon_placeholder.png')
+          icon ? { uri: icon } : require('../images/icons/icon_placeholder.png')
         }
         style={styles.icon}
       />

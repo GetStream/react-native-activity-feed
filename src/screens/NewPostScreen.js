@@ -11,7 +11,7 @@ import {
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
-import Avatar from '../../components/Avatar';
+import Avatar from '../components/Avatar';
 
 class NewPostScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,7 +23,7 @@ class NewPostScreen extends React.Component {
       >
         <Image
           style={{ width: 24, height: 24 }}
-          source={require('../../images/icons/close.png')}
+          source={require('../images/icons/close.png')}
         />
       </TouchableOpacity>
     ),
@@ -103,7 +103,7 @@ class NewPostScreen extends React.Component {
                 <View style={styles.imageOverlay}>
                   <TouchableOpacity>
                     <Image
-                      source={require('../../images/icons/close-white.png')}
+                      source={require('../images/icons/close-white.png')}
                       style={{ width: 24, height: 24 }}
                     />
                   </TouchableOpacity>
@@ -116,7 +116,7 @@ class NewPostScreen extends React.Component {
                 onPress={this._pickImage}
               >
                 <Image
-                  source={require('../../images/icons/gallery.png')}
+                  source={require('../images/icons/gallery.png')}
                   style={{ width: 24, height: 24 }}
                 />
               </TouchableOpacity>

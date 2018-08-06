@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import AttachedObject from '../AttachedObject';
-import UserBar from '../UserBar';
+import AttachedObject from './AttachedObject';
+import UserBar from './UserBar';
 
 const Notification = ({ item }) => {
   let headerText, headerSubtext, icon;
@@ -14,12 +14,12 @@ const Notification = ({ item }) => {
 
   if (item.type === 'like') {
     headerSubtext = `liked your ${item.object.type}`;
-    icon = require('../../images/icons/heart.png');
+    icon = require('../images/icons/heart.png');
   }
 
   if (item.type === 'repost') {
     headerSubtext = `reposted your ${item.object.type}`;
-    icon = require('../../images/icons/repost.png');
+    icon = require('../images/icons/repost.png');
   }
 
   return (

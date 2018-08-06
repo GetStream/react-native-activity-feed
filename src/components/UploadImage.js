@@ -17,7 +17,7 @@ const UploadImage = ({ onUploadButtonPress }) => {
     >
       <TouchableOpacity onPress={onUploadButtonPress}>
         <Image
-          source={require('../../images/icons/pickphoto.png')}
+          source={require('../images/icons/pickphoto.png')}
           style={{ width: 35, height: 35 }}
         />
       </TouchableOpacity>

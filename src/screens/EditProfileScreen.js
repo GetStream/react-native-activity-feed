@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import { StatusBar, Text, TouchableOpacity } from 'react-native';
-import EditProfileForm from '../../components/EditProfileForm';
-import BackButton from '../../components/BackButton';
-import type { NavigationProps } from '../../types';
+import EditProfileForm from '../components/EditProfileForm';
+import BackButton from '../components/BackButton';
+import type { NavigationProps } from '../types';
 import type { NavigationEventSubscription } from 'react-navigation';
 
 type Props = NavigationProps;

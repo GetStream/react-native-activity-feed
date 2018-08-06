@@ -8,9 +8,7 @@ const Card = ({ item }) => {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={
-          image ? { uri: image } : require('../../images/placeholder.png')
-        }
+        source={image ? { uri: image } : require('../images/placeholder.png')}
       />
       <View style={styles.content}>
         {

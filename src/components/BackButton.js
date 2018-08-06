@@ -6,7 +6,7 @@ const BackButton = ({ color, pressed }) => {
     return (
       <TouchableOpacity style={styles.backButton} onPress={pressed}>
         <Image
-          source={require('../../images/icons/backarrow-blue.png')}
+          source={require('../images/icons/backarrow-blue.png')}
           style={styles.backArrow}
         />
       </TouchableOpacity>
@@ -15,7 +15,7 @@ const BackButton = ({ color, pressed }) => {
     return (
       <TouchableOpacity style={styles.backButton} onPress={pressed}>
         <Image
-          source={require('../../images/icons/backarrow.png')}
+          source={require('../images/icons/backarrow.png')}
           style={styles.backArrow}
         />
       </TouchableOpacity>
