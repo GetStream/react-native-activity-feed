@@ -6,7 +6,7 @@ The official React Native integration library for Stream, a web service for buil
 ## Installation
 
 ```bash
-npm i @stream-io/react-native
+npm i react-native-activity-feed
 ```
 
 ## Usage
