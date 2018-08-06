@@ -1,15 +1,15 @@
 Stream React Native Activity Feed Components
 ============================================
 
-### Installation
+## Installation
 
 ```bash
 npm i @stream-io/react-native
 ```
 
-### Usage
+## Usage
 
-#### Setup StreamApp component
+### Setup StreamApp component
 
 In order to use Stream React Components in your application, you first need to initialize the `StreamApp` component. `StreamApp` holds your application config and acts as a service/data provider.
 
@@ -32,7 +32,7 @@ In order to use Stream React Components in your application, you first need to i
 
 You can find your `API_KEY` and `APP_ID` on Stream's dashboard.
 
-##### Generating user token
+#### Generating user token
 
 The authentication user token cannot be generated client-side (that would require sharing your API secret). You should provision a user token as part of the sign-up / login flow to your application from your backend.
 
@@ -41,7 +41,7 @@ var client = stream.connect(API_KEY, API_SECRET);
 var userToken = client.createUserSessionToken(userId);
 ```
 
-##### Generating analytics token
+#### Generating analytics token
 
 React components have analytics instrumentation built-in, this simplifies the integration with Stream. In order to enable analytics tracking, you need to initialize `StreamApp` with a valid analytics token. You can generate this server-side as well.
 
@@ -50,11 +50,11 @@ var client = stream.connect(API_KEY, API_SECRET);
 var userToken = client.getAnalyticsToken();
 ```
 
-#### Navigation
+### Navigation
 
 The components bundled in this library assume that you are using [react-navigation](https://facebook.github.io/react-native/docs/navigation#react-navigation) for navigation; when reading docs and examples you should expect `props.navigation` to refer it.
 
-#### Flat feed component
+### Flat feed component
 
 The `FlatFeed` component allows you to read a feed using Stream APIs and takes care of rendering the activities.
 
@@ -67,36 +67,36 @@ The `FlatFeed` component allows you to read a feed using Stream APIs and takes c
 />
 ```
 
-##### Activities
+#### Activities
 
 
-##### Customizing Activities
+#### Customizing Activities
 
 This library comes with an `Activity` component; in most cases you will have to make some changes to how activities are rendered. All components rendering activities have a `ActivityComponent` property.
 
-##### Adding activities
+#### Adding activities
 
 **TODO**: explain how to add an activity to a feed
 
-#### Follow button component
+### Follow button component
 
 **TODO**: follow toggle button component
 
-#### Notification feeds
+### Notification feeds
 
-##### Notification status
+#### Notification status
 
 **TODO**: how to add the bell component
 
-##### Notification feed
+#### Notification feed
 
 **TODO**: how to render notification feeds
 
-#### Reactions
+### Reactions
 
 Both Stream API and the React Native library support adding related data to activities called reactions such as: likes, comments, upvotes...
 
-##### Likes
+#### Likes
 
 Likes can be added to your activities using composition. Here's an example `Activity` component that includes a like count and a toggle button to like/unlike.
 
@@ -148,11 +148,11 @@ render() {
 
 ```
 
-##### Comments
+#### Comments
 
 Comments are another use-case for activity reactions.
 
-###### Show last N comments
+##### Show last N comments
 
 ```jsx
 import ReactionCounter from '@stream-io/react-native/lib/components/ReactionCounter';
@@ -195,18 +195,18 @@ export default class Activity extends React.Component<Props> {
  }
 ```
 
-###### Post a new comment
+##### Post a new comment
 
 ```jsx
 ```
 
-#### Custom reactions
+### Custom reactions
 
 Likes and Comments are just a very common use case that come bundled with components; Stream APIs allows you to create any kind of reaction to users' activities (eg. share, clap, upvote, ...).
 
 More information about how Reaction APIs work is available [here](https://getstream.io/docs/#reactions_activities).
 
-### Copyright and License Information
+## Copyright and License Information
 
 Copyright (c) 2015-2018 Stream.io Inc, and individual contributors. All rights reserved.
 
