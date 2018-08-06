@@ -67,6 +67,9 @@ The `FlatFeed` component allows you to read a feed using Stream APIs and takes c
 />
 ```
 
+##### Activities
+
+
 ##### Customizing Activities
 
 This library comes with an `Activity` component; in most cases you will have to make some changes to how activities are rendered. All components rendering activities have a `ActivityComponent` property.
@@ -89,19 +92,45 @@ This library comes with an `Activity` component; in most cases you will have to 
 
 **TODO**: how to render notification feeds
 
-#### Likes
+#### Reactions
 
-Both Stream API and the React Native library support adding likes to your feeds. This is the functionality that comes out-of-the-box:
+Both Stream API and the React Native library support adding related data to activities called reactions such as: likes, comments, upvotes...
 
-1. Allow activities to be liked/unliked
-2. Show like count per activity
-3. Show the list of users that liked an activity
-4. Like button component is initialized according to current user's like state ("did I like this?")
+##### Likes
 
-Likes are added via composition to your `Activity` component.
+Likes can be added to your activities using composition. Here's an example `Activity` component that includes a like count and a toggle button to like/unlike.
 
 ```jsx
-/
+import ReactionCounter from '@stream-io/react-native/lib/components/ReactionCounter';
+
+import LikeIcon from './images/tlike.png';
+import LikedIcon from './images/tliked.png';
+
+export default class Activity extends React.Component<Props> {
+  render() {
+    let {activity} = this.props;
+
+    <Text>
+      {activity.reaction_counts.like || 0} likes
+    </Text>
+
+    <ReactionCounter
+      icon={{
+        source:
+          activity.own_reactions &&
+          activity.own_reactions.like &&
+          activity.own_reactions.like.length
+            ? LikedIcon
+            : LikeIcon,
+        width: 60,
+        height: 42,
+      }}
+      onPress={ () => {
+        this.props.onToggleReaction('like', activity);
+      }
+    />
+  }
+ }
 ```
 
 #### Comments
