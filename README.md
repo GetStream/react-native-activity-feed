@@ -110,11 +110,8 @@ export default class Activity extends React.Component<Props> {
   render() {
     let {activity} = this.props;
 
-    <Text>
-      {activity.reaction_counts.like || 0} likes
-    </Text>
-
     <ReactionCounter
+      value={activity.reaction_counts.like || 0},
       icon={{
         source:
           activity.own_reactions &&
