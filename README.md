@@ -72,9 +72,9 @@ The `FlatFeed` component allows you to read a feed using Stream APIs and takes c
 
 #### Customizing Activities
 
-This library comes with an `Activity` component; in most cases you will have to make some changes to how activities are rendered. All components rendering activities have a `ActivityComponent` property.
+This library comes with an `Activity` component; in most cases you will have to make some changes to how activities are rendered. All components rendering activities have a `ActivityComponent` property that allows you to overwrite how activities should look like in your application.
 
-#### Adding activities
+#### Adding activities to feeds
 
 **TODO**: explain how to add an activity to a feed
 
