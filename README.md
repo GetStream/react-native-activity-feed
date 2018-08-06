@@ -11,6 +11,8 @@ npm i @stream-io/react-native
 
 #### Setup StreamApp component
 
+In order to use Stream React Components in your application, you first need to initialize the `StreamApp` component. `StreamApp` holds your application config and acts as a service/data provider.
+
 ```jsx
 <StreamApp
   apiKey="{API_KEY}"
