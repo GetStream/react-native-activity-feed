@@ -60,10 +60,10 @@ The `FlatFeed` component allows you to read a feed using Stream APIs and takes c
 
 ```jsx
 <FlatFeed
-  feedGroup=feedGroup                 // the feed group to read (eg. "flat")
-  userId=userId                       // the ID of the user (optional, defaults to StreamApp's userId)
-  navigation={this.props.navigation}  // your navigation instance
-  ActivityComponent={Activity}        // the activity component to use (optional, defaults to Activity)
+  feedGroup=feedGroup                 {/* the feed group to read (eg. "flat") */}
+  userId=userId                       {/* the ID of the user (optional, defaults to StreamApp's userId)  */}
+  navigation={this.props.navigation}  {/* your navigation instance */}
+  ActivityComponent={Activity}        {/* the activity component to use (optional, defaults to Activity) */}
 />
 ```
 
