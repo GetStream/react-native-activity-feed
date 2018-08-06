@@ -50,6 +50,46 @@ var client = stream.connect(API_KEY, API_SECRET);
 var userToken = client.getAnalyticsToken();
 ```
 
+#### Flat feed component
+
+**TODO**: explain how to add a flat feed and include parameters
+
+##### Customizing Activities
+
+**TODO**: explain how to customize the rendering of an activity
+
+##### Adding activities
+
+**TODO**: explain how to add an activity to a feed
+
+#### Follow button component
+
+**TODO**: follow toggle button component
+
+#### Notification feeds
+
+##### Notification status
+
+**TODO**: how to add the bell component
+
+##### Notification feed
+
+**TODO**: how to render notification feeds
+
+#### Likes
+
+**TODO**: how to add a like button to activities
+
+#### Comments
+
+**TODO**: render comments with activities
+
+#### Custom reactions
+
+Likes and Comments are just a very common use case that come bundled with components; Stream APIs allows you to create any kind of reaction to users' activities (eg. share, clap, upvote, ...).
+
+More information about how Reaction APIs work is available [here](https://getstream.io/docs/#reactions_activities).
+
 ### Copyright and License Information
 
 Copyright (c) 2015-2018 Stream.io Inc, and individual contributors. All rights reserved.
