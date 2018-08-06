@@ -91,7 +91,18 @@ This library comes with an `Activity` component; in most cases you will have to 
 
 #### Likes
 
-**TODO**: how to add a like button to activities
+Both Stream API and the React Native library support adding likes to your feeds. This is the functionality that comes out-of-the-box:
+
+1. Allow activities to be liked/unliked
+2. Show like count per activity
+3. Show the list of users that liked an activity
+4. Like button component is initialized according to current user's like state ("did I like this?")
+
+Likes are added via composition to your `Activity` component.
+
+```jsx
+/
+```
 
 #### Comments
 
