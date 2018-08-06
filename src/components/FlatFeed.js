@@ -32,13 +32,12 @@ export default function FlatFeed(props: Props) {
   );
 }
 
-type PropsInner = Props & AppCtx
+type PropsInner = Props & AppCtx;
 type State = {
   activityOrder: Array<string>,
   activities: any,
   refreshing: boolean,
 };
-
 
 class FlatFeedInner extends React.Component<PropsInner, State> {
   constructor(props: PropsInner) {

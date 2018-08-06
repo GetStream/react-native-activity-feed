@@ -49,12 +49,7 @@ class HomeScreen extends React.Component<Props> {
   }
 
   render() {
-    return (
-          <FlatFeed
-            feedGroup="timeline"
-            navigation={this.props.navigation}
-          />
-    );
+    return <FlatFeed feedGroup="timeline" navigation={this.props.navigation} />;
   }
 }
 
