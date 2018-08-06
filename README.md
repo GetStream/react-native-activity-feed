@@ -150,7 +150,55 @@ render() {
 
 ##### Comments
 
-**TODO**: render comments with activities
+Comments are another use-case for activity reactions.
+
+###### Show last N comments
+
+```jsx
+import ReactionCounter from '@stream-io/react-native/lib/components/ReactionCounter';
+
+export default class Activity extends React.Component<Props> {
+  render() {
+    let {activity} = this.props;
+
+    <CommentsContainer
+      data={
+          activity.latest_reactions &&
+          activity.latest_reactions.comment
+            ? activity.latest_reactions.comment
+            : []
+      }
+      maxComments={3}
+      renderComment={(item, i) => {
+          return (
+            <Text
+              key={`item-${i}`}
+            >
+              <Text>
+                {item.actor.data.Name}
+              </Text>{' '}
+              <Text>{item.content}</Text>
+            </Text>
+          );
+      }}
+      renderMoreLink={() => {
+        return (
+          <TouchableOpacity>
+            <View>
+              <Text>More Comments</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      }}
+    />
+  }
+ }
+```
+
+###### Post a new comment
+
+```jsx
+```
 
 #### Custom reactions
 
