@@ -128,7 +128,27 @@ export default class Activity extends React.Component<Props> {
  }
 ```
 
-#### Comments
+You can also include the list of users that liked an activity using the `LikesList` component.
+
+```jsx
+import LikesList from '@stream-io/react-native/lib/components/LikesList';
+
+//...
+
+render() {
+  let {activity} = this.props;
+
+  <LikesList
+    onAvatarPress={(id) => this._onAvatarPress(id)}
+    likes={activity.likes}
+  />
+}
+
+//...
+
+```
+
+##### Comments
 
 **TODO**: render comments with activities
 
