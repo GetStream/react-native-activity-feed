@@ -1,9 +1,10 @@
 // @flow
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { humanizeTimestamp } from '../utils';
 
-import Avatar from '../Avatar';
-import FollowButton from '../FollowButton';
+import Avatar from './Avatar';
+import FollowButton from './FollowButton';
 
 type Props = {
   onPressAvatar?: () => any,
@@ -12,7 +13,8 @@ type Props = {
     username: ?string,
     image?: string,
     subtitle?: string,
-    time: string,
+    time?: string, // text that should be displayed as the time
+    timestamp?: string | number, // a timestamp that should be humanized
     icon?: string,
   },
   extraStyle?: {
@@ -28,7 +30,11 @@ const UserBar = ({
   onPressAvatar,
   extraStyle = {},
 }: Props) => {
-  const { subtitle, time, username = 'Unknown', image, icon } = data;
+  const { subtitle, username = 'Unknown', image, icon } = data;
+  let time = data.time;
+  if (time === undefined && data.timestamp != null) {
+    time = humanizeTimestamp(data.timestamp);
+  }
 
   return (
     <View style={[styles.container, { ...style }]}>

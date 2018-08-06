@@ -8,7 +8,6 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { humanizeTimestamp } from '../utils';
 
 import UserBar from './UserBar';
 import ReactionCounterBar from './ReactionCounterBar';
@@ -102,7 +101,7 @@ export default class Activity extends React.Component<Props> {
               username: actor.data.name,
               image: actor.data.profileImage,
               subtitle: sub,
-              time: humanizeTimestamp(time),
+              timestamp: time,
               icon: icon,
             }}
           />
