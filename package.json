@@ -5,6 +5,13 @@
   "author": {
     "company": "Stream.io Inc"
   },
+  "keywords": [
+    "feed",
+    "newsfeed",
+    "activity stream",
+    "react native",
+    "notification feed"
+  ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.5",
