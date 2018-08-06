@@ -21,7 +21,7 @@ In order to use Stream React Components in your application, you first need to i
   token="{TOKEN}"
   analyticsToken="{ANALYTICS_TOKEN}"
 >
-// everything from your application interacting with Stream should be nested here
+{/* everything from your application interacting with Stream should be nested here */}
 </StreamApp>
 ```
 1. **API_KEY** your Stream application API_KEY
