@@ -1,5 +1,6 @@
 **/*{.,-}min.js
 /lib/
+/example/lib/
 /flow-typed/
 /.git/
 **/*.sh

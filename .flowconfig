@@ -1,4 +1,7 @@
 [ignore]
+<PROJECT_ROOT>/example/
+<PROJECT_ROOT>/node_modules/react-native/Libraries/.*.ios.js
+<PROJECT_ROOT>/node_modules/react-native/Libraries/vendor/emitter/
 
 [include]
 

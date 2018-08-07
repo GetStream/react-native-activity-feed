@@ -1,5 +1,7 @@
 *.md
 **/*{.,-}min.js
+node_modules/
 /lib/
+/example/lib/
 /flow-typed/
 /.git/
