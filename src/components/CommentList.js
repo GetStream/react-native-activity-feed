@@ -5,24 +5,38 @@ import { View } from 'react-native';
 import CommentItem from './CommentItem';
 import SectionHeader from './SectionHeader';
 
-import type { Comment } from '../types';
+import type { ReactionMap } from '../types';
 
 type Props = {
-  comments: Array<Comment>,
+  reactions: ?ReactionMap,
+  reactionKind?: string,
 };
 
-export default class CommentList extends React.Component<Props> {
-  render() {
-    return (
-      <React.Fragment>
-        <SectionHeader>Comments</SectionHeader>
-
-        <View>
-          {this.props.comments.map((item) => {
-            return <CommentItem key={item.id} comment={item} />;
-          })}
-        </View>
-      </React.Fragment>
-    );
+const CommentList = ({ reactions, reactionKind }: Props) => {
+  if (!reactions) {
+    return null;
   }
-}
+
+  if (reactionKind === undefined) {
+    reactionKind = 'comment';
+  }
+
+  let comments = reactions[reactionKind] || [];
+  if (!comments.length) {
+    return null;
+  }
+
+  return (
+    <React.Fragment>
+      <SectionHeader>Comments</SectionHeader>
+
+      <View>
+        {comments.map((item) => {
+          return <CommentItem key={item.id} comment={item} />;
+        })}
+      </View>
+    </React.Fragment>
+  );
+};
+
+export default CommentList;

@@ -56,3 +56,12 @@ export type CommentData = {
 };
 
 export type Comment = EnrichedReactionResponse<UserData, CommentData>;
+
+export type Heart = EnrichedReactionResponse<UserData, {}>;
+export type Reply = EnrichedReactionResponse<UserData, {}>;
+
+export type ReactionMap = {
+  comment?: Array<Comment>,
+  heart?: Array<Heart>,
+  reply?: Array<Reply>,
+};

@@ -151,13 +151,7 @@ export default class Activity extends React.Component<Props> {
             </ReactionCounterBar>
           </View>
         )}
-        {latest_reactions &&
-        latest_reactions.comment &&
-        latest_reactions.comment.length ? (
-          <CommentList comments={latest_reactions.comment} />
-        ) : (
-          false
-        )}
+        <CommentList reactions={latest_reactions} />
       </TouchableOpacity>
     );
   }
