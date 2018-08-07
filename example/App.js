@@ -100,10 +100,10 @@ const App = () => {
 
   return (
     <StreamApp
-      apiKey={process.env['STREAM_API_KEY'] || ''}
-      appId={process.env['STREAM_APP_ID'] || ''}
+      apiKey={apiKey}
+      appId={appId}
       userId="batman"
-      token={process.env['STREAM_TOKEN'] || ''}
+      token={token}
       defaultUserData={{
         name: 'Batman',
         url: 'batsignal.com',

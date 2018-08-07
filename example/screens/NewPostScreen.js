@@ -11,7 +11,7 @@ import {
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
-import { Avatar } from 'react-native-activity-feed';
+import Avatar from '../components/Avatar';
 
 class NewPostScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
