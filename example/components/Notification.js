@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import AttachedObject from './AttachedObject';
-import UserBar from './UserBar';
+import { UserBar } from 'react-native-activity-feed';
 
 const Notification = ({ item }) => {
   let headerText, headerSubtext, icon;

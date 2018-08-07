@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { humanizeTimestamp } from '../utils';
 
-import { Avatar } from 'react-native-activity-feed';
+import Avatar from './Avatar';
 import FollowButton from './FollowButton';
 
 type Props = {
