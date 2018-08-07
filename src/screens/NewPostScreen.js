@@ -10,50 +10,29 @@ import {
 } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
-
+import { StreamContext } from '../Context';
 import Avatar from '../components/Avatar';
 
-class NewPostScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'NEW POST',
-    headerLeft: (
-      <TouchableOpacity
-        style={{ paddingLeft: 15 }}
-        onPress={() => navigation.goBack()}
-      >
-        <Image
-          style={{ width: 24, height: 24 }}
-          source={require('../images/icons/close.png')}
-        />
-      </TouchableOpacity>
-    ),
-    headerRight: (
-      <TouchableOpacity
-        style={{ paddingRight: 15 }}
-        onPress={() => {
-          console.log('saving...');
-          setTimeout(() => {
-            console.log('saved.');
-            navigation.navigate('Home');
-          }, 1000);
-        }}
-      >
-        <Text style={{ color: '#007AFF', fontSize: 17 }}>Send</Text>
-      </TouchableOpacity>
-    ),
-    headerTitleStyle: {
-      fontWeight: '500',
-      fontSize: 13,
-    },
-  });
+const ImageState = Object.freeze({
+    NO_IMAGE:      Symbol("no_image"),
+    UPLOADING:     Symbol("uploading"),
+    UPLOADED:      Symbol("uploaded"),
+    UPLOAD_FAILED: Symbol("upload_failed")
+});
 
+class NewPostForm  extends React.Component {
   constructor(props) {
     super(props);
     this.TextInput = React.createRef();
   }
 
+  static defaultProps = {
+      activity_verb: 'post',
+  }
+
   state = {
     image: null,
+    image_state: ImageState.NO_IMAGE
   };
 
   _pickImage = async () => {
@@ -64,17 +43,49 @@ class NewPostScreen extends React.Component {
       aspect: [4, 3],
     });
 
-    if (!result.cancelled) {
-      this.setState({ image: result.uri });
+    if (result.cancelled) {
+      return
     }
+
+    this.setState({
+      image: result.uri,
+      image_state: ImageState.UPLOADING,
+    });
+
+    response = await this.props.session.images.upload(result.uri);
+
+    this.setState({
+      image_state: ImageState.UPLOADED,
+    });
   };
 
   componentDidMount() {
     this.TextInput.current.focus();
+    this.props.registerSubmit(async () => {
+      this.buildActivity();
+    });
   }
 
   componentWillUnmount() {
     this.TextInput.current.blur();
+  }
+
+  buildActivity() {
+    let attachments = {
+      images: this.image_url ? [this.image_url] : [],
+    };
+    const activity = {
+      actor: this.props.session.user,
+      verb: this.props.activity_verb,
+      object: this.props.TextInput,
+      attachments
+    };
+    console.log(activity);
+    return buildActivity;
+  }
+
+  handleOG(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
   }
 
   render() {
@@ -85,6 +96,7 @@ class NewPostScreen extends React.Component {
           <View style={styles.textInput}>
             <TextInput
               multiline
+              onChangeText={(text) => this.handleOG(text) }
               ref={this.TextInput}
               placeholder="Share something..."
               underlineColorAndroid="transparent"
@@ -98,7 +110,7 @@ class NewPostScreen extends React.Component {
               <View style={styles.imageContainer}>
                 <Image
                   source={{ uri: this.state.image }}
-                  style={styles.image}
+                  style={this.state.image_state === ImageState.UPLOADING ? styles.image_loading : styles.image}
                 />
                 <View style={styles.imageOverlay}>
                   <TouchableOpacity>
@@ -124,6 +136,50 @@ class NewPostScreen extends React.Component {
           </KeyboardAccessory>
         </View>
       </SafeAreaView>
+    );
+  }
+}
+
+class NewPostScreen extends React.Component {
+
+  static navigationOptions = ({ navigation }) => ({
+    title: 'NEW POST',
+    headerLeft: (
+      <TouchableOpacity
+        style={{ paddingLeft: 15 }}
+        onPress={() => navigation.goBack()}
+      >
+        <Image
+          style={{ width: 24, height: 24 }}
+          source={require('../images/icons/close.png')}
+        />
+      </TouchableOpacity>
+    ),
+    headerRight: (
+      <TouchableOpacity
+        style={{ paddingRight: 15 }}
+        onPress={navigation.getParam('submitFunc')}
+      >
+        <Text style={{ color: '#007AFF', fontSize: 17 }}>Send</Text>
+      </TouchableOpacity>
+    ),
+    headerTitleStyle: {
+      fontWeight: '500',
+      fontSize: 13,
+    },
+  });
+
+  render() {
+   return (
+      <StreamContext.Consumer>
+        {(appCtx) => <NewPostForm
+            {...this.props} {...appCtx}
+            registerSubmit={(submitFunc) => {
+              this.props.navigation.setParams({ submitFunc });
+            }}
+          />
+        }
+      </StreamContext.Consumer>
     );
   }
 }
@@ -170,6 +226,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 100,
     height: 100,
+  },
+  image_loading: {
+    position: 'absolute',
+    width: 100,
+    height: 100,
+    opacity: 0.5,
   },
 });
 
