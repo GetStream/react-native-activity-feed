@@ -4,12 +4,12 @@ import React from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CoverImage from './CoverImage';
-import Avatar from './Avatar';
+import { Avatar } from 'react-native-activity-feed';
 import UploadImage from './UploadImage';
 import FormField from './FormField';
-import { StreamContext } from '../Context';
+import { StreamContext } from 'react-native-activity-feed';
 import type { UserData } from '../types';
-import type { AppCtx } from '../Context';
+import type { AppCtx } from 'react-native-activity-feed';
 
 type Props = {
   registerSave: (saveFunc: () => any) => void,

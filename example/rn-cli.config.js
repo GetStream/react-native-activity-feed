@@ -10,8 +10,7 @@ module.exports = {
     return blacklist([
       new RegExp(repoDir + '/example/'),
       new RegExp(
-        repoDir +
-          '/node_modules/(react-native|react|react-native-paper|@expo/vector-icons)/(.*)',
+        repoDir + '/node_modules/(react-native|react|react-native-paper)/(.*)',
       ),
     ]);
   },

@@ -9,7 +9,7 @@ import ReplyIcon from '../images/icons/reply.png';
 
 import { humanizeTimestamp } from '../utils';
 
-import Avatar from './Avatar';
+import { Avatar } from 'react-native-activity-feed';
 import type { Comment } from '../types';
 
 type Props = {

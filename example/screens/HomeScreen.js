@@ -2,9 +2,8 @@
 import React from 'react';
 import { StatusBar, Image, TouchableOpacity } from 'react-native';
 
-import Avatar from '../components/Avatar';
+import { Avatar, FlatFeed } from 'react-native-activity-feed';
 
-import FlatFeed from '../components/FlatFeed';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
 

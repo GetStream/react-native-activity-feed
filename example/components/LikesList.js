@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 
-import Avatar from './Avatar';
+import { Avatar } from 'react-native-activity-feed';
 
 const LikesList = ({ likes, onAvatarPress }) => {
   return (

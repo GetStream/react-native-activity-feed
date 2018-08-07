@@ -6,7 +6,7 @@ import {
 } from 'react-navigation';
 
 import Icon from './components/Icon';
-import { Avatar } from 'react-native-activity-feed';
+import { Avatar, StreamApp } from 'react-native-activity-feed';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
@@ -14,8 +14,6 @@ import ProfileScreen from './screens/ProfileScreen';
 import EditProfileScreen from './screens/EditProfileScreen';
 import SinglePostScreen from './screens/SinglePostScreen';
 import NewPostScreen from './screens/NewPostScreen';
-
-import { StreamApp } from './Context';
 
 const NotificationsStack = createStackNavigator({
   Notifications: { screen: NotificationsScreen },

@@ -15,7 +15,7 @@ import { comments, likes, reposts } from '../mock/data';
 
 import BackButton from '../components/BackButton';
 import Activity from '../components/Activity';
-import Avatar from '../components/Avatar';
+import { Avatar } from 'react-native-activity-feed';
 
 import RepostItem from '../components/RepostItem';
 

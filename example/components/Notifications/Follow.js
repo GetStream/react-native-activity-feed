@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-import Avatar from '../Avatar';
+import { Avatar } from 'react-native-activity-feed';
 
 const Follow = ({ items, onPressAvatar }) => {
   return (

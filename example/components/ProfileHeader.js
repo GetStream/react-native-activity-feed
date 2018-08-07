@@ -4,12 +4,12 @@ import React from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-import { StreamContext } from '../Context';
+import { StreamContext } from 'react-native-activity-feed';
 import Count from './Count';
-import Avatar from './Avatar';
+import { Avatar } from 'react-native-activity-feed';
 import CoverImage from './CoverImage';
 import type { FollowCounts } from 'getstream';
-import type { AppCtx } from '../Context';
+import type { AppCtx } from 'react-native-activity-feed';
 
 type Props = {};
 
