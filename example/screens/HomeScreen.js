@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { StatusBar, Image, TouchableOpacity } from 'react-native';
+import Activity from '../components/Activity';
 
 import { Avatar, FlatFeed } from 'react-native-activity-feed';
 
@@ -48,7 +49,13 @@ class HomeScreen extends React.Component<Props> {
   }
 
   render() {
-    return <FlatFeed feedGroup="timeline" navigation={this.props.navigation} />;
+    return (
+      <FlatFeed
+        feedGroup="timeline"
+        navigation={this.props.navigation}
+        ActivityComponent={Activity}
+      />
+    );
   }
 }
 
