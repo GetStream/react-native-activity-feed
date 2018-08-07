@@ -3,7 +3,6 @@ import * as React from 'react';
 import { ScrollView, FlatList, RefreshControl } from 'react-native';
 import immutable from 'immutable';
 
-import Activity from './Activity';
 import { StreamContext } from '../Context';
 import type { AppCtx } from '../Context';
 import type {
@@ -19,7 +18,7 @@ type Props = {
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
-  ActivityComponent?: ReactElementCreator,
+  ActivityComponent: ReactElementCreator,
   analyticsLocation?: string,
 } & NavigationProps &
   ChildrenProps;
@@ -172,7 +171,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   }
 
   _renderActivity = ({ item }: { item: ActivityData }) => {
-    let ActivityComponent = this.props.ActivityComponent || Activity;
+    let ActivityComponent = this.props.ActivityComponent;
     return (
       <ActivityComponent
         activity={item}
