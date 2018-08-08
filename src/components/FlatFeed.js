@@ -6,13 +6,12 @@ import immutable from 'immutable';
 import { StreamContext } from '../Context';
 import type { AppCtx } from '../Context';
 import type {
-  ActivityData,
-  Feed,
   NavigationProps,
   ChildrenProps,
   ReactElementCreator,
+  BaseActivityResponse,
 } from '../types';
-import type { FeedRequestOptions } from 'getstream';
+import type { FeedRequestOptions, StreamFeed } from 'getstream';
 
 type Props = {
   feedGroup: string,
@@ -31,7 +30,7 @@ export default function FlatFeed(props: Props) {
   );
 }
 
-type PropsInner = Props & AppCtx;
+type PropsInner = Props & AppCtx<{}>;
 type State = {
   activityOrder: Array<string>,
   activities: any,
@@ -48,17 +47,9 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     };
   }
 
-  _onItemPress = (item: ActivityData) => {
-    this.props.navigation.navigate('SinglePost', { item: item });
-  };
-
-  _onAvatarPress = (id: string) => {
-    console.log('user id: ', id);
-  };
-
   _trackAnalytics = (
     label: string,
-    activity: ActivityData,
+    activity: BaseActivityResponse,
     track: ?boolean,
   ) => {
     let analyticsClient = this.props.analyticsClient;
@@ -81,7 +72,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   _onAddReaction = async (
     kind: string,
-    activity: ActivityData,
+    activity: BaseActivityResponse,
     options: { trackAnalytics?: boolean } = {},
   ) => {
     let reaction = await this.props.session.react(kind, activity);
@@ -101,7 +92,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   _onRemoveReaction = async (
     kind: string,
-    activity: ActivityData,
+    activity: BaseActivityResponse,
     id: string,
     options: { trackAnalytics?: boolean } = {},
   ) => {
@@ -118,7 +109,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   _onToggleReaction = async (
     kind: string,
-    activity: ActivityData,
+    activity: BaseActivityResponse,
     options: { trackAnalytics?: boolean } = {},
   ) => {
     let currentReactions = this.state.activities.getIn(
@@ -141,7 +132,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   _refresh = async () => {
     this.setState({ refreshing: true });
 
-    let feed: Feed = this.props.session.feed(
+    let feed: StreamFeed<{}, {}> = this.props.session.feed(
       this.props.feedGroup,
       this.props.userId,
     );
@@ -170,7 +161,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     await this._refresh();
   }
 
-  _renderActivity = ({ item }: { item: ActivityData }) => {
+  _renderActivity = ({ item }: { item: BaseActivityResponse }) => {
     let ActivityComponent = this.props.ActivityComponent;
     return (
       <ActivityComponent

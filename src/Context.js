@@ -3,13 +3,12 @@
 import * as React from 'react';
 import stream from 'getstream';
 import StreamAnalytics from 'stream-analytics';
+import type { ChildrenProps } from './types';
 import type {
-  User,
-  UserData,
-  UserSession,
-  CloudClient,
-  ChildrenProps,
-} from './types';
+  StreamCloudClient,
+  StreamUser,
+  StreamUserSession,
+} from 'getstream';
 
 const emptySession = stream.connectCloud('', '').createUserSession('', '');
 
@@ -20,9 +19,9 @@ export const StreamContext = React.createContext({
   changedUserData: () => {},
 });
 
-export type AppCtx = {
-  session: UserSession,
-  user: User,
+export type AppCtx<UserData> = {
+  session: StreamUserSession<UserData>,
+  user: StreamUser<UserData>,
   // We cannot simply take userData from user.data, since the reference to user
   // will stay the same all the time. Because of this react won't notice that
   // the internal fields changed so it thinks it doesn't need to rerender.
@@ -31,22 +30,25 @@ export type AppCtx = {
   analyticsClient?: any,
 };
 
-type StreamAppProps = {
+type StreamAppProps<UserData> = {
   appId: string,
   apiKey: string,
   token: string,
   userId: string,
   options?: {},
   analyticsToken?: string,
-  defaultUserData?: UserData,
+  defaultUserData: UserData,
 } & ChildrenProps;
 
-type StreamAppState = AppCtx;
+type StreamAppState<UserData> = AppCtx<UserData>;
 
-export class StreamApp extends React.Component<StreamAppProps, StreamAppState> {
-  constructor(props: StreamAppProps) {
+export class StreamApp<UserData> extends React.Component<
+  StreamAppProps<UserData>,
+  StreamAppState<UserData>,
+> {
+  constructor(props: StreamAppProps<UserData>) {
     super(props);
-    let client: CloudClient = stream.connectCloud(
+    let client: StreamCloudClient<UserData> = stream.connectCloud(
       this.props.apiKey,
       this.props.appId,
       this.props.options || {},
@@ -77,7 +79,7 @@ export class StreamApp extends React.Component<StreamAppProps, StreamAppState> {
   async componentDidMount() {
     // TODO: Change this to an empty object by default
     // TODO: Maybe move this somewhere else
-    await this.state.user.getOrCreate(this.props.defaultUserData || {});
+    await this.state.user.getOrCreate(this.props.defaultUserData);
 
     this.state.changedUserData();
   }
@@ -102,7 +104,7 @@ export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
   render() {
     return (
       <StreamContext.Consumer>
-        {(appCtx: AppCtx) => {
+        {(appCtx: AppCtx<any>) => {
           const currentFeed = appCtx.session.feed(
             this.props.feedGroup,
             this.props.userId,
