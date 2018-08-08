@@ -30,7 +30,7 @@
     "react-native-scripts": "1.14.0",
     "react-test-renderer": "16.3.1"
   },
-  "main": "./lib/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir lib && cp -R src/images/ lib/ && flow-copy-source src lib",
     "eslint": "eslint '**/*.js' --max-warnings 0",

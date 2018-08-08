@@ -4,23 +4,24 @@ import { ScrollView, FlatList, RefreshControl } from 'react-native';
 import immutable from 'immutable';
 
 import { StreamContext } from '../Context';
-import type { AppCtx } from '../Context';
 import type {
   NavigationProps,
   ChildrenProps,
   ReactElementCreator,
   BaseActivityResponse,
+  BaseAppCtx,
 } from '../types';
 import type { FeedRequestOptions, StreamFeed } from 'getstream';
 
-type Props = {
+type Props = {|
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
   ActivityComponent: ReactElementCreator,
   analyticsLocation?: string,
-} & NavigationProps &
-  ChildrenProps;
+  ...NavigationProps,
+  ...ChildrenProps,
+|};
 
 export default function FlatFeed(props: Props) {
   return (
@@ -30,7 +31,7 @@ export default function FlatFeed(props: Props) {
   );
 }
 
-type PropsInner = Props & AppCtx<{}>;
+type PropsInner = {| ...Props, ...BaseAppCtx |};
 type State = {
   activityOrder: Array<string>,
   activities: any,

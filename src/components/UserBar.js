@@ -6,7 +6,7 @@ import { humanizeTimestamp } from '../utils';
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
 
-type Props = {
+type Props = {|
   onPressAvatar?: () => any,
   style?: any,
   data: {
@@ -21,7 +21,7 @@ type Props = {
     fontWeightAuthor?: string,
   },
   follow?: boolean,
-};
+|};
 
 const UserBar = ({
   style,
