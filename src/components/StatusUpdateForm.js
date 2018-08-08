@@ -11,6 +11,7 @@ import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import { Avatar, OgBlock } from 'react-native-activity-feed';
 import _ from 'lodash';
+import Symbol from 'es6-symbol';
 
 const ImageState = Object.freeze({
   NO_IMAGE: Symbol('no_image'),

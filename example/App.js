@@ -5,7 +5,6 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation';
 
-import 'es6-symbol/implement';
 import Icon from './components/Icon';
 import { Avatar, StreamApp } from 'react-native-activity-feed';
 import HomeScreen from './screens/HomeScreen';
