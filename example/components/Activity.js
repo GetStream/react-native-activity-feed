@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import UserBar from './UserBar';
+import { UserBar } from 'react-native-activity-feed';
 import ReactionCounterBar from './ReactionCounterBar';
 import ReactionCounter from './ReactionCounter';
 import CommentList from './CommentList';
