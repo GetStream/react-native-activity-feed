@@ -15,7 +15,7 @@ type Props = {|
   timestamp?: string | number, // a timestamp that should be humanized
   icon?: string,
 
-  onPressAvatar?: () => any,
+  onPressAvatar?: () => mixed,
   follow?: boolean,
   ...StylesProps,
 |};
@@ -43,7 +43,7 @@ const UserBar = ({
             source={avatar}
             size={48}
             noShadow
-            style={{ marginRight: 10 }}
+            styles={{ container: { marginRight: 10 } }}
           />
         </TouchableOpacity>
       ) : null}
