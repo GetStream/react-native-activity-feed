@@ -7,16 +7,15 @@ import Avatar from './Avatar';
 import FollowButton from './FollowButton';
 
 type Props = {|
+  username: ?string,
+  avatar?: string,
+  subtitle?: string,
+  time?: string, // text that should be displayed as the time
+  timestamp?: string | number, // a timestamp that should be humanized
+  icon?: string,
+
   onPressAvatar?: () => any,
   style?: any,
-  data: {
-    username: ?string,
-    image?: string,
-    subtitle?: string,
-    time?: string, // text that should be displayed as the time
-    timestamp?: string | number, // a timestamp that should be humanized
-    icon?: string,
-  },
   extraStyle?: {
     fontWeightAuthor?: string,
   },
@@ -24,24 +23,28 @@ type Props = {|
 |};
 
 const UserBar = ({
+  username,
+  subtitle,
+  avatar,
   style,
-  data,
   follow,
   onPressAvatar,
+  icon,
   extraStyle = {},
+  ...props
 }: Props) => {
-  const { subtitle, username = 'Unknown', image, icon } = data;
-  let time = data.time;
-  if (time === undefined && data.timestamp != null) {
-    time = humanizeTimestamp(data.timestamp);
+  username = username || 'Unknown';
+  let time = props.time;
+  if (time === undefined && props.timestamp != null) {
+    time = humanizeTimestamp(props.timestamp);
   }
 
   return (
     <View style={[styles.container, { ...style }]}>
-      {image ? (
+      {avatar ? (
         <TouchableOpacity onPress={onPressAvatar}>
           <Avatar
-            source={image}
+            source={avatar}
             size={48}
             noShadow
             style={{ marginRight: 10 }}

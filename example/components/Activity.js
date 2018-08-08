@@ -99,14 +99,12 @@ export default class Activity extends React.Component<Props> {
       >
         <View style={{ padding: 15 }}>
           <UserBar
+            username={actor.data.name}
+            avatar={actor.data.profileImage}
+            subtitle={sub}
+            timestamp={time}
+            icon={icon}
             onPressAvatar={this._onPressAvatar}
-            data={{
-              username: actor.data.name,
-              image: actor.data.profileImage,
-              subtitle: sub,
-              timestamp: time,
-              icon: icon,
-            }}
           />
         </View>
         <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
