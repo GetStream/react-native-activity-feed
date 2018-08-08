@@ -13,7 +13,7 @@ import NotificationsScreen from './screens/NotificationsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import EditProfileScreen from './screens/EditProfileScreen';
 import SinglePostScreen from './screens/SinglePostScreen';
-import NewPostScreen from './screens/NewPostScreen';
+import StatusUpdateScreen from './screens/StatusUpdateScreen';
 
 const NotificationsStack = createStackNavigator({
   Notifications: { screen: NotificationsScreen },
@@ -74,7 +74,7 @@ const doNotShowHeaderOption = {
 const Navigation = createStackNavigator({
   Tabs: { screen: TabNavigator, ...doNotShowHeaderOption },
   SinglePost: { screen: SinglePostScreen },
-  NewPost: { screen: NewPostScreen },
+  NewPost: { screen: StatusUpdateScreen },
   EditProfile: { screen: EditProfileScreen },
 });
 

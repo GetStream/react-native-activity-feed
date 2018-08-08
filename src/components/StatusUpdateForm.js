@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SafeAreaView,
   View,
-  Text,
   Image,
   StyleSheet,
   TouchableOpacity,
@@ -10,29 +9,35 @@ import {
 } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
-import { StreamContext } from '../Context';
-import Avatar from '../components/Avatar';
+import { Avatar, OgBlock } from 'react-native-activity-feed';
+import _ from 'lodash';
 
 const ImageState = Object.freeze({
-    NO_IMAGE:      Symbol("no_image"),
-    UPLOADING:     Symbol("uploading"),
-    UPLOADED:      Symbol("uploaded"),
-    UPLOAD_FAILED: Symbol("upload_failed")
+  NO_IMAGE: Symbol('no_image'),
+  UPLOADING: Symbol('uploading'),
+  UPLOADED: Symbol('uploaded'),
+  UPLOAD_FAILED: Symbol('upload_failed'),
 });
 
-class NewPostForm  extends React.Component {
+const urlRegex = /(https?:\/\/[^\s]+)/gi;
+
+export default class StatusUpdateForm extends React.Component {
   constructor(props) {
     super(props);
+    this.onChangeTextDelayed = _.debounce(this.handleOG, 250);
     this.TextInput = React.createRef();
   }
 
   static defaultProps = {
-      activity_verb: 'post',
-  }
+    activity_verb: 'post',
+  };
 
   state = {
     image: null,
-    image_state: ImageState.NO_IMAGE
+    imageState: ImageState.NO_IMAGE,
+    og: null,
+    ogScraping: false,
+    ogLink: null,
   };
 
   _pickImage = async () => {
@@ -44,18 +49,20 @@ class NewPostForm  extends React.Component {
     });
 
     if (result.cancelled) {
-      return
+      return;
     }
 
     this.setState({
       image: result.uri,
-      image_state: ImageState.UPLOADING,
+      imageState: ImageState.UPLOADING,
     });
 
-    response = await this.props.session.images.upload(result.uri);
+    let response = await this.props.session.images.upload(result.uri);
+    console.log(response);
 
     this.setState({
-      image_state: ImageState.UPLOADED,
+      imageState: ImageState.UPLOADED,
+      image_url: response.file,
     });
   };
 
@@ -72,20 +79,51 @@ class NewPostForm  extends React.Component {
 
   buildActivity() {
     let attachments = {
-      images: this.image_url ? [this.image_url] : [],
+      images: this.state.image_url ? [this.state.image_url] : [],
+      og: this.state.og ? this.state.og : {},
     };
     const activity = {
       actor: this.props.session.user,
       verb: this.props.activity_verb,
       object: this.props.TextInput,
-      attachments
+      attachments,
     };
     console.log(activity);
-    return buildActivity;
+    return activity;
   }
 
   handleOG(text) {
-    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    if (this.state.ogScraping) {
+      return;
+    }
+    console.log('changed!');
+    const urls = text.match(urlRegex);
+    if (urls && urls.length > 0) {
+      const url = urls[0];
+      this.setState({
+        ogScraping: true,
+        ogLink: url,
+        og: url == this.state.ogLink ? this.state.ogLink : null,
+      });
+      this.props.session
+        .og(url)
+        .then((resp) => {
+          console.log(resp);
+          this.setState({
+            og: resp,
+            ogScraping: false,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.setState({
+            ogScraping: false,
+            og: null,
+          });
+        });
+    } else {
+      this.setState({ og: null });
+    }
   }
 
   render() {
@@ -96,7 +134,7 @@ class NewPostForm  extends React.Component {
           <View style={styles.textInput}>
             <TextInput
               multiline
-              onChangeText={(text) => this.handleOG(text) }
+              onChangeText={(text) => this.onChangeTextDelayed(text)}
               ref={this.TextInput}
               placeholder="Share something..."
               underlineColorAndroid="transparent"
@@ -104,13 +142,19 @@ class NewPostForm  extends React.Component {
           </View>
         </View>
 
+        {this.state.og ? <OgBlock og={this.state.og} /> : null}
+
         <View>
           <KeyboardAccessory backgroundColor="#fff">
             {this.state.image ? (
               <View style={styles.imageContainer}>
                 <Image
                   source={{ uri: this.state.image }}
-                  style={this.state.image_state === ImageState.UPLOADING ? styles.image_loading : styles.image}
+                  style={
+                    this.state.imageState === ImageState.UPLOADING
+                      ? styles.image_loading
+                      : styles.image
+                  }
                 />
                 <View style={styles.imageOverlay}>
                   <TouchableOpacity>
@@ -136,50 +180,6 @@ class NewPostForm  extends React.Component {
           </KeyboardAccessory>
         </View>
       </SafeAreaView>
-    );
-  }
-}
-
-class NewPostScreen extends React.Component {
-
-  static navigationOptions = ({ navigation }) => ({
-    title: 'NEW POST',
-    headerLeft: (
-      <TouchableOpacity
-        style={{ paddingLeft: 15 }}
-        onPress={() => navigation.goBack()}
-      >
-        <Image
-          style={{ width: 24, height: 24 }}
-          source={require('../images/icons/close.png')}
-        />
-      </TouchableOpacity>
-    ),
-    headerRight: (
-      <TouchableOpacity
-        style={{ paddingRight: 15 }}
-        onPress={navigation.getParam('submitFunc')}
-      >
-        <Text style={{ color: '#007AFF', fontSize: 17 }}>Send</Text>
-      </TouchableOpacity>
-    ),
-    headerTitleStyle: {
-      fontWeight: '500',
-      fontSize: 13,
-    },
-  });
-
-  render() {
-   return (
-      <StreamContext.Consumer>
-        {(appCtx) => <NewPostForm
-            {...this.props} {...appCtx}
-            registerSubmit={(submitFunc) => {
-              this.props.navigation.setParams({ submitFunc });
-            }}
-          />
-        }
-      </StreamContext.Consumer>
     );
   }
 }
@@ -234,5 +234,3 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 });
-
-export default NewPostScreen;
