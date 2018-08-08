@@ -9,3 +9,4 @@ export { default as OgBlock } from './components/OgBlock';
 export { default as StatusUpdateForm } from './components/StatusUpdateForm';
 export { default as UploadImage } from './components/UploadImage';
 export { default as UserBar } from './components/UserBar';
+export { default as ReactionCounter } from './components/ReactionCounter';
