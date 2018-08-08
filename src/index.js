@@ -11,3 +11,4 @@ export { default as UploadImage } from './components/UploadImage';
 export { default as UserBar } from './components/UserBar';
 export { default as ReactionCounter } from './components/ReactionCounter';
 export { default as ReactionCounterBar } from './components/ReactionCounterBar';
+export { default as CommentsContainer } from './components/CommentsContainer';
