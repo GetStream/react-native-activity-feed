@@ -1,26 +1,32 @@
 // @flow
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import type { ReactionCounts } from 'getstream';
 
-type Props = {
-  value?: number,
-  icon: any,
-  onPress?: () => any,
-};
+type Props = {|
+  icon: string,
+  counts?: ReactionCounts,
+  kind?: string,
+  height?: number,
+  width?: number,
+  onPress?: (kind: ?string) => any,
+|};
 
-export default function ReactionCounter(props: Props) {
+export default function ReactionIcon(props: Props) {
+  let count = null;
+  if (props.counts && props.kind) {
+    count = props.counts[props.kind];
+  }
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <Image
-        source={props.icon.source}
+        source={props.icon}
         style={[
           styles.controlImage,
-          { width: props.icon.width, height: props.icon.height },
+          { width: props.width, height: props.height },
         ]}
       />
-      {props.value != null ? (
-        <Text style={styles.text}>{props.value}</Text>
-      ) : null}
+      {count != null ? <Text style={styles.text}>{count}</Text> : null}
     </TouchableOpacity>
   );
 }

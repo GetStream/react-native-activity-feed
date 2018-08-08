@@ -9,3 +9,7 @@ export { default as OgBlock } from './components/OgBlock';
 export { default as StatusUpdateForm } from './components/StatusUpdateForm';
 export { default as UploadImage } from './components/UploadImage';
 export { default as UserBar } from './components/UserBar';
+export { default as ReactionIcon } from './components/ReactionIcon';
+export { default as ReactionToggleIcon } from './components/ReactionToggleIcon';
+export { default as ReactionIconBar } from './components/ReactionIconBar';
+export { default as CommentsContainer } from './components/CommentsContainer';

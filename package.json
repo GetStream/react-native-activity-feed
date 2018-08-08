@@ -36,7 +36,7 @@
     "eslint": "eslint '**/*.js' --max-warnings 0",
     "flow": "flow && cd example && flow",
     "prettier": "prettier --list-different '**/*.{js,ts}'",
-    "lint": "prettier --list-different '**/*.{js,ts}' && eslint '**/*.js' --max-warnings 0 && flow",
+    "lint": "yarn prettier && yarn eslint && yarn flow",
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
     "preversion": "yarn && yarn lint",
@@ -46,6 +46,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "es6-symbol": "^3.1.1",
     "expo": "^27.0.1",
     "faker": "^4.1.0",
     "getstream": "3.20.0-beta.5",

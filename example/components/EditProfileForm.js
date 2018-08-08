@@ -7,12 +7,11 @@ import CoverImage from './CoverImage';
 import { Avatar, UploadImage } from 'react-native-activity-feed';
 import FormField from './FormField';
 import { StreamContext } from 'react-native-activity-feed';
-import type { UserData } from '../types';
-import type { AppCtx } from 'react-native-activity-feed';
+import type { UserData, StreamAppCtx } from '../types';
 
-type Props = {
+type Props = {|
   registerSave: (saveFunc: () => any) => void,
-};
+|};
 
 export default function EditProfileForm(props: Props) {
   return (
@@ -22,7 +21,7 @@ export default function EditProfileForm(props: Props) {
   );
 }
 
-type PropsInner = Props & AppCtx<UserData>;
+type PropsInner = {| ...Props, ...StreamAppCtx |};
 
 type State = UserData;
 

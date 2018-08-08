@@ -19,7 +19,7 @@ export const StreamContext = React.createContext({
   changedUserData: () => {},
 });
 
-export type AppCtx<UserData> = {
+export type AppCtx<UserData> = {|
   session: StreamUserSession<UserData>,
   user: StreamUser<UserData>,
   // We cannot simply take userData from user.data, since the reference to user
@@ -28,9 +28,9 @@ export type AppCtx<UserData> = {
   userData: ?UserData,
   changedUserData: () => void,
   analyticsClient?: any,
-};
+|};
 
-type StreamAppProps<UserData> = {
+type StreamAppProps<UserData> = {|
   appId: string,
   apiKey: string,
   token: string,
@@ -38,7 +38,8 @@ type StreamAppProps<UserData> = {
   options?: {},
   analyticsToken?: string,
   defaultUserData: UserData,
-} & ChildrenProps;
+  ...ChildrenProps,
+|};
 
 type StreamAppState<UserData> = AppCtx<UserData>;
 

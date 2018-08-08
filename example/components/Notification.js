@@ -25,13 +25,11 @@ const Notification = ({ item }) => {
   return (
     <View style={styles.item}>
       <UserBar
-        data={{
-          username: headerText,
-          subtitle: headerSubtext,
-          type: item.type,
-          image: item.actors[0].user_image,
-          icon: icon,
-        }}
+        username={headerText}
+        avatar={item.actors[0].user_image}
+        subtitle={headerSubtext}
+        type={item.type}
+        icon={icon}
       />
       <View style={{ marginLeft: item.object.type !== 'link' ? 58 : 0 }}>
         <AttachedObject item={item.object} />

@@ -9,9 +9,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { UserBar } from 'react-native-activity-feed';
-import ReactionCounterBar from './ReactionCounterBar';
-import ReactionCounter from './ReactionCounter';
+import {
+  UserBar,
+  ReactionIcon,
+  ReactionToggleIcon,
+  ReactionIconBar,
+} from 'react-native-activity-feed';
 import CommentList from './CommentList';
 import Card from './Card';
 import type { ActivityData, UserResponse, NavigationProps } from '../types';
@@ -96,14 +99,12 @@ export default class Activity extends React.Component<Props> {
       >
         <View style={{ padding: 15 }}>
           <UserBar
+            username={actor.data.name}
+            avatar={actor.data.profileImage}
+            subtitle={sub}
+            timestamp={time}
+            icon={icon}
             onPressAvatar={this._onPressAvatar}
-            data={{
-              username: actor.data.name,
-              image: actor.data.profileImage,
-              subtitle: sub,
-              timestamp: time,
-              icon: icon,
-            }}
           />
         </View>
         <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
@@ -128,27 +129,32 @@ export default class Activity extends React.Component<Props> {
           <View
             style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}
           >
-            <ReactionCounterBar>
-              <ReactionCounter
-                value={reaction_counts.repost || 0}
-                icon={{ source: RepostIcon, width: 24, height: 24 }}
+            <ReactionIconBar>
+              <ReactionIcon
+                icon={RepostIcon}
+                counts={reaction_counts}
+                kind="repost"
+                width={24}
+                height={24}
               />
-              <ReactionCounter
-                value={reaction_counts.heart || 0}
-                icon={
-                  own_reactions &&
-                  own_reactions.heart &&
-                  own_reactions.heart.length
-                    ? { source: HeartIcon, width: 24, height: 24 }
-                    : { source: HeartIconOutline, width: 24, height: 24 }
-                }
+              <ReactionToggleIcon
+                activeIcon={HeartIcon}
+                inactiveIcon={HeartIconOutline}
+                kind={'heart'}
+                counts={reaction_counts}
+                own_reactions={own_reactions}
+                width={24}
+                height={24}
                 onPress={() => this._onPressHeart()}
               />
-              <ReactionCounter
-                value={reaction_counts.comment || 0}
-                icon={{ source: ReplyIcon, width: 24, height: 24 }}
+              <ReactionIcon
+                icon={ReplyIcon}
+                counts={reaction_counts}
+                kind="repost"
+                width={24}
+                height={24}
               />
-            </ReactionCounterBar>
+            </ReactionIconBar>
           </View>
         )}
         <CommentList reactions={latest_reactions} />
