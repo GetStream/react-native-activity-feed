@@ -1,24 +1,25 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { mergeStyles } from '../utils';
 
-const Card = ({ item }) => {
+const Card = ({ item, ...props }) => {
   let { title, description, image } = item;
 
   return (
-    <View style={styles.container}>
+    <View style={mergeStyles('container', styles, props)}>
       <Image
-        style={styles.image}
+        style={mergeStyles('image', styles, props)}
         source={image ? { uri: image } : require('../images/placeholder.png')}
       />
-      <View style={styles.content}>
+      <View style={mergeStyles('content', styles, props)}>
         {
           //TODO: Only put ... when the title or description are too long
         }
-        <Text style={styles.title}>
+        <Text style={mergeStyles('title', styles, props)}>
           {title.slice(0, 60)}
           ...
         </Text>
-        <Text style={styles.description}>
+        <Text style={mergeStyles('description', styles, props)}>
           {description.slice(0, 60)}
           ...
         </Text>

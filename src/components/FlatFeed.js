@@ -1,12 +1,14 @@
 // @flow
 import * as React from 'react';
-import { ScrollView, FlatList, RefreshControl } from 'react-native';
+import { ScrollView, FlatList, RefreshControl, StyleSheet } from 'react-native';
 import immutable from 'immutable';
 
 import { StreamContext } from '../Context';
+import { mergeStyles } from '../utils';
 import type {
   NavigationProps,
   ChildrenProps,
+  StylesProps,
   ReactElementCreator,
   BaseActivityResponse,
   BaseAppCtx,
@@ -21,6 +23,7 @@ type Props = {|
   analyticsLocation?: string,
   ...NavigationProps,
   ...ChildrenProps,
+  ...StylesProps,
 |};
 
 export default function FlatFeed(props: Props) {
@@ -179,7 +182,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   render() {
     return (
       <ScrollView
-        style={{ flex: 1, backgroundColor: '#fff' }}
+        style={mergeStyles('container', styles, this.props)}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
@@ -199,3 +202,6 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     );
   }
 }
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff' },
+});

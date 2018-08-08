@@ -10,6 +10,7 @@ import {
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import { Avatar, OgBlock } from 'react-native-activity-feed';
+import { mergeStyles } from '../utils';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
 
@@ -159,10 +160,10 @@ export default class StatusUpdateForm extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.screenContainer}>
-        <View style={styles.newPostContainer}>
+      <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
+        <View style={mergeStyles('newPostContainer', styles, this.props)}>
           <Avatar source="https://placehold.it/100x100" size={48} />
-          <View style={styles.textInput}>
+          <View style={mergeStyles('textInput', styles, this.props)}>
             <TextInput
               multiline
               onChangeText={(text) => {
@@ -183,7 +184,7 @@ export default class StatusUpdateForm extends React.Component {
         <View>
           <KeyboardAccessory backgroundColor="#fff">
             {this.state.image ? (
-              <View style={styles.imageContainer}>
+              <View style={mergeStyles('imageContainer', styles, this.props)}>
                 <Image
                   source={{ uri: this.state.image }}
                   style={
@@ -192,7 +193,7 @@ export default class StatusUpdateForm extends React.Component {
                       : styles.image
                   }
                 />
-                <View style={styles.imageOverlay}>
+                <View style={mergeStyles('imageOverlay', styles, this.props)}>
                   <TouchableOpacity>
                     <Image
                       source={require('../images/icons/close-white.png')}
@@ -202,7 +203,7 @@ export default class StatusUpdateForm extends React.Component {
                 </View>
               </View>
             ) : null}
-            <View style={styles.accessory}>
+            <View style={mergeStyles('accessory', styles, this.props)}>
               <TouchableOpacity
                 title="Pick an image from camera roll"
                 onPress={this._pickImage}

@@ -2,6 +2,8 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import type { ReactionCounts } from 'getstream';
+import { mergeStyles } from '../utils';
+import type { StylesProps } from '../types';
 
 type Props = {|
   icon: string,
@@ -10,6 +12,7 @@ type Props = {|
   height?: number,
   width?: number,
   onPress?: (kind: ?string) => any,
+  ...StylesProps,
 |};
 
 export default function ReactionIcon(props: Props) {
@@ -18,15 +21,20 @@ export default function ReactionIcon(props: Props) {
     count = props.counts[props.kind];
   }
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+    <TouchableOpacity
+      style={mergeStyles('container', styles, props)}
+      onPress={props.onPress}
+    >
       <Image
         source={props.icon}
-        style={[
-          styles.controlImage,
-          { width: props.width, height: props.height },
-        ]}
+        style={mergeStyles('image', styles, props, styles.image, {
+          width: props.width,
+          height: props.height,
+        })}
       />
-      {count != null ? <Text style={styles.text}>{count}</Text> : null}
+      {count != null ? (
+        <Text style={mergeStyles('text', styles, props)}>{count}</Text>
+      ) : null}
     </TouchableOpacity>
   );
 }
@@ -36,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 12,
   },
-  controlImage: {
+  image: {
     height: 24,
     width: 24,
   },

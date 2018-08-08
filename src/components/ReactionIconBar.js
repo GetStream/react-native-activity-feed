@@ -1,16 +1,19 @@
 // @flow
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import type { ChildrenProps } from '../types';
+import { mergeStyles } from '../utils';
+import type { ChildrenProps, StylesProps } from '../types';
 
 type Props = {
   ...ChildrenProps,
-  style?: any,
+  ...StylesProps,
 };
 
 export default function ReactionIconBar(props: Props) {
   return (
-    <View style={[styles.container, { ...props.style }]}>{props.children}</View>
+    <View style={mergeStyles('container', styles, props)}>
+      {props.children}
+    </View>
   );
 }
 

@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactionIcon from './ReactionIcon';
 import type { ReactionCounts, ReactionKindMap } from 'getstream';
+import type { StylesProps } from '../types';
 
 type Props = {|
   activeIcon: string,
@@ -12,6 +13,7 @@ type Props = {|
   height?: number,
   width?: number,
   onPress?: (kind: ?string) => any,
+  ...StylesProps,
 |};
 
 export default function ReactionToggleIcon({
