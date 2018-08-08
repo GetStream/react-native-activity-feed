@@ -13,8 +13,14 @@ export type ChildrenProps = {|
   children?: React.Node,
 |};
 
+// Copied from react native source code
+type StyleSheetInternalStyleIdentifier = number;
+type StyleSheetInstance = { [string]: StyleSheetInternalStyleIdentifier };
+
+type StyleSheetLike = { [string]: {} } | StyleSheetInstance;
+
 export type StylesProps = {|
-  styles?: any,
+  styles?: StyleSheetLike,
 |};
 
 type ReactComponentClass = Class<React.Component<any>>;
