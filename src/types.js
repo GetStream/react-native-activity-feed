@@ -13,6 +13,10 @@ export type ChildrenProps = {|
   children?: React.Node,
 |};
 
+export type StylesProps = {|
+  styles?: any,
+|};
+
 type ReactComponentClass = Class<React.Component<any>>;
 type ReactComponentFunction = (props: any) => ?React.Element<any>;
 export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
