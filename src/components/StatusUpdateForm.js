@@ -10,7 +10,6 @@ import {
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import { Avatar, OgBlock } from 'react-native-activity-feed';
-import { mergeStyles } from '../utils';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
 import { ScrollView } from '../../node_modules/react-native-gesture-handler';
@@ -161,10 +160,11 @@ export default class StatusUpdateForm extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
-        <View style={mergeStyles('newPostContainer', styles, this.props)}>
+      <SafeAreaView style={styles.screenContainer}>
+
+        <View style={styles.newPostContainer}>
           <Avatar source="https://placehold.it/100x100" size={48} />
-          <View style={mergeStyles('textInput', styles, this.props)}>
+          <ScrollView style={styles.textInput}>
             <TextInput
               multiline
               onChangeText={(text) => {
@@ -184,18 +184,12 @@ export default class StatusUpdateForm extends React.Component {
 
         <View>
           <KeyboardAccessory backgroundColor="#fff">
-            {this.state.image ? (
-              <View style={mergeStyles('imageContainer', styles, this.props)}>
-                <Image
-                  source={{ uri: this.state.image }}
-                  style={
-                    this.state.imageState === ImageState.UPLOADING
-                      ? styles.image_loading
-                      : styles.image
-                  }
-                />
-                <View style={mergeStyles('imageOverlay', styles, this.props)}>
-                  <TouchableOpacity>
+            <View styles={{flexDirection: 'row'}}>
+
+
+              <View>
+                {this.state.image ? (
+                  <View style={styles.imageContainer}>
                     <Image
                       source={{ uri: this.state.image }}
                       style={
@@ -225,8 +219,9 @@ export default class StatusUpdateForm extends React.Component {
                     })
                   }} />: null}
               </View>
-            ) : null}
-            <View style={mergeStyles('accessory', styles, this.props)}>
+            </View>
+
+            <View style={styles.accessory}>
               <TouchableOpacity
                 title="Pick an image from camera roll"
                 onPress={this._pickImage}
