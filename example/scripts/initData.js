@@ -3,7 +3,7 @@
 import stream from 'getstream';
 import faker from 'faker';
 
-import type { UserSession, CloudClient } from 'react-native-activity-feed';
+import type { UserSession, CloudClient } from '../types';
 
 async function main() {
   let apiKey = process.env['STREAM_API_KEY'] || '';

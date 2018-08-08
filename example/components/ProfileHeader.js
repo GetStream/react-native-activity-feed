@@ -10,6 +10,7 @@ import { Avatar } from 'react-native-activity-feed';
 import CoverImage from './CoverImage';
 import type { FollowCounts } from 'getstream';
 import type { AppCtx } from 'react-native-activity-feed';
+import type { UserData } from '../types';
 
 type Props = {};
 
@@ -21,7 +22,7 @@ export default function ProfileHeader(props: Props) {
   );
 }
 
-type PropsInner = Props & AppCtx;
+type PropsInner = Props & AppCtx<UserData>;
 
 type State = {
   user: FollowCounts,

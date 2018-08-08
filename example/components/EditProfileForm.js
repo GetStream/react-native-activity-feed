@@ -22,7 +22,7 @@ export default function EditProfileForm(props: Props) {
   );
 }
 
-type PropsInner = Props & AppCtx;
+type PropsInner = Props & AppCtx<UserData>;
 
 type State = UserData;
 
