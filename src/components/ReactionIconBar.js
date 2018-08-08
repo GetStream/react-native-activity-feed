@@ -8,7 +8,7 @@ type Props = {
   style?: any,
 };
 
-export default function ReactionCounterBar(props: Props) {
+export default function ReactionIconBar(props: Props) {
   return (
     <View style={[styles.container, { ...props.style }]}>{props.children}</View>
   );
