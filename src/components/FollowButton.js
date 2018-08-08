@@ -1,15 +1,16 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo';
+import { mergeStyles } from '../utils';
 
-const FollowButton = ({ followed, clicked }) => {
+const FollowButton = ({ followed, clicked, ...props }) => {
   return (
     <TouchableOpacity onClick={clicked}>
       <LinearGradient
         colors={followed ? ['#ccc', '#ccc'] : ['#008DFF', '#0079FF']}
-        style={styles.buttonGradient}
+        style={mergeStyles('button', styles, props)}
       >
-        <Text style={styles.buttonText}>
+        <Text style={mergeStyles('buttonText', styles, props)}>
           {followed ? 'Following' : 'Follow'}
         </Text>
       </LinearGradient>
@@ -18,7 +19,7 @@ const FollowButton = ({ followed, clicked }) => {
 };
 
 const styles = StyleSheet.create({
-  buttonGradient: {
+  button: {
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 7,

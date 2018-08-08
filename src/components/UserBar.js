@@ -1,47 +1,46 @@
 // @flow
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { humanizeTimestamp } from '../utils';
+import { humanizeTimestamp, mergeStyles } from '../utils';
 
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
+import type { StylesProps } from '../types';
 
-type Props = {
+type Props = {|
+  username: ?string,
+  avatar?: string,
+  subtitle?: string,
+  time?: string, // text that should be displayed as the time
+  timestamp?: string | number, // a timestamp that should be humanized
+  icon?: string,
+
   onPressAvatar?: () => any,
-  style?: any,
-  data: {
-    username: ?string,
-    image?: string,
-    subtitle?: string,
-    time?: string, // text that should be displayed as the time
-    timestamp?: string | number, // a timestamp that should be humanized
-    icon?: string,
-  },
-  extraStyle?: {
-    fontWeightAuthor?: string,
-  },
   follow?: boolean,
-};
+  ...StylesProps,
+|};
 
 const UserBar = ({
-  style,
-  data,
+  username,
+  subtitle,
+  avatar,
   follow,
   onPressAvatar,
-  extraStyle = {},
+  icon,
+  ...props
 }: Props) => {
-  const { subtitle, username = 'Unknown', image, icon } = data;
-  let time = data.time;
-  if (time === undefined && data.timestamp != null) {
-    time = humanizeTimestamp(data.timestamp);
+  username = username || 'Unknown';
+  let time = props.time;
+  if (time === undefined && props.timestamp != null) {
+    time = humanizeTimestamp(props.timestamp);
   }
 
   return (
-    <View style={[styles.container, { ...style }]}>
-      {image ? (
+    <View style={mergeStyles('container', styles, props)}>
+      {avatar ? (
         <TouchableOpacity onPress={onPressAvatar}>
           <Avatar
-            source={image}
+            source={avatar}
             size={48}
             noShadow
             style={{ marginRight: 10 }}
@@ -49,12 +48,8 @@ const UserBar = ({
         </TouchableOpacity>
       ) : null}
 
-      <View style={styles.content}>
-        <Text
-          style={[styles.username, { fontWeight: extraStyle.fontWeightAuthor }]}
-        >
-          {username}
-        </Text>
+      <View style={mergeStyles('content', styles, props)}>
+        <Text style={mergeStyles('username', styles, props)}>{username}</Text>
         <View style={{ flexDirection: 'row' }}>
           {icon !== undefined ? (
             <Image
@@ -62,12 +57,16 @@ const UserBar = ({
               style={{ width: 24, height: 24, top: -2, marginRight: 5 }}
             />
           ) : null}
-          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+          {subtitle && (
+            <Text style={mergeStyles('subtitle', styles, props)}>
+              {subtitle}
+            </Text>
+          )}
         </View>
       </View>
       {time && (
         <View>
-          <Text style={styles.timestamp}>{time}</Text>
+          <Text style={mergeStyles('time', styles, props)}>{time}</Text>
         </View>
       )}
       {follow && (
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     fontWeight: '300',
   },
-  timestamp: {
+  time: {
     fontSize: 13,
     opacity: 0.8,
     fontWeight: '300',

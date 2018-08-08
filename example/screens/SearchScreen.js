@@ -171,8 +171,9 @@ class SearchScreen extends React.Component {
           renderItem={({ item }) => (
             <View style={{ marginLeft: 15, marginRight: 15, marginBottom: 15 }}>
               <UserBar
+                username={'UserName'}
+                subtitle={'@subtitle'}
                 item={item}
-                data={{ username: 'Username', subtitle: '@subtitle' }}
                 follow
               />
             </View>

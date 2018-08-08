@@ -8,10 +8,8 @@ const Repost = ({ item }) => {
   return (
     <View style={styles.item}>
       <UserBar
-        data={{
-          username: 'Wonderwoman',
-          subtitle: 'reposted your ' + item.object.type,
-        }}
+        username="Wonderwoman"
+        subtitle={'reposted your ' + item.object.type}
       />
 
       {item.object.type === 'link' ? (

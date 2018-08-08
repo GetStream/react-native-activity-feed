@@ -2,34 +2,39 @@ import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 
 import UploadImage from './UploadImage';
+import { mergeStyles } from '../utils';
 
 const Avatar = ({
   source,
   size,
   noShadow,
+  notRound,
   editButton,
   onUploadButtonPress,
+  ...props
 }) => {
+  size = size || 200;
+  let borderRadius = notRound ? undefined : size / 2;
+
   return (
     <View
-      style={[
-        styles.userAvatarView,
+      style={mergeStyles(
+        'container',
+        styles,
+        props,
         noShadow ? styles.noShadow : null,
         {
-          width: size ? size : 200,
-          height: size ? size : 200,
+          width: size,
+          height: size,
         },
-      ]}
+      )}
     >
       <Image
-        style={[
-          styles.userAvatar,
-          {
-            width: size ? size : 200,
-            height: size ? size : 200,
-            borderRadius: size / 2 ? size / 2 : 200 / 2,
-          },
-        ]}
+        style={mergeStyles('image', styles, props, {
+          width: size,
+          height: size,
+          borderRadius: borderRadius,
+        })}
         source={source ? { uri: source } : require('../images/placeholder.png')}
       />
       {editButton ? (
@@ -40,16 +45,16 @@ const Avatar = ({
 };
 
 const styles = StyleSheet.create({
-  userAvatar: {
-    position: 'absolute',
-  },
-  userAvatarView: {
+  container: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  image: {
+    position: 'absolute',
   },
   noShadow: {
     shadowOpacity: 0,

@@ -1,26 +1,30 @@
 // @flow
 import * as React from 'react';
-import { ScrollView, FlatList, RefreshControl } from 'react-native';
+import { ScrollView, FlatList, RefreshControl, StyleSheet } from 'react-native';
 import immutable from 'immutable';
 
 import { StreamContext } from '../Context';
-import type { AppCtx } from '../Context';
+import { mergeStyles } from '../utils';
 import type {
   NavigationProps,
   ChildrenProps,
+  StylesProps,
   ReactElementCreator,
   BaseActivityResponse,
+  BaseAppCtx,
 } from '../types';
 import type { FeedRequestOptions, StreamFeed } from 'getstream';
 
-type Props = {
+type Props = {|
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
   ActivityComponent: ReactElementCreator,
   analyticsLocation?: string,
-} & NavigationProps &
-  ChildrenProps;
+  ...NavigationProps,
+  ...ChildrenProps,
+  ...StylesProps,
+|};
 
 export default function FlatFeed(props: Props) {
   return (
@@ -30,7 +34,7 @@ export default function FlatFeed(props: Props) {
   );
 }
 
-type PropsInner = Props & AppCtx<{}>;
+type PropsInner = {| ...Props, ...BaseAppCtx |};
 type State = {
   activityOrder: Array<string>,
   activities: any,
@@ -178,7 +182,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   render() {
     return (
       <ScrollView
-        style={{ flex: 1, backgroundColor: '#fff' }}
+        style={mergeStyles('container', styles, this.props)}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
@@ -198,3 +202,6 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     );
   }
 }
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff' },
+});

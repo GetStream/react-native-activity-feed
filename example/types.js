@@ -12,13 +12,15 @@ import type {
   EnrichedReactionResponse,
 } from 'getstream';
 
-export type NavigationProps = {
-  navigation: NavigationScreenProp<{}>,
-};
+import type { AppCtx } from 'react-native-activity-feed';
 
-export type ChildrenProps = {
+export type NavigationProps = {|
+  navigation: NavigationScreenProp<{}>,
+|};
+
+export type ChildrenProps = {|
   children?: React.Node,
-};
+|};
 
 export type UserData = {
   name?: string,
@@ -31,6 +33,8 @@ export type UserData = {
 export type CloudClient = StreamCloudClient<UserData>;
 
 export type UserSession = StreamUserSession<UserData>;
+
+export type StreamAppCtx = AppCtx<UserData>;
 
 export type User = StreamUser<UserData>;
 export type UserResponse = StreamUserResponse<UserData>;

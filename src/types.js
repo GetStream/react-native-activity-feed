@@ -3,17 +3,23 @@
 import * as React from 'react';
 import type { NavigationScreenProp } from 'react-navigation';
 import type { ActivityResponse } from 'getstream';
+import type { AppCtx } from './Context';
 
-export type NavigationProps = {
+export type NavigationProps = {|
   navigation: NavigationScreenProp<{}>,
-};
+|};
 
-export type ChildrenProps = {
+export type ChildrenProps = {|
   children?: React.Node,
-};
+|};
+
+export type StylesProps = {|
+  styles?: any,
+|};
 
 type ReactComponentClass = Class<React.Component<any>>;
 type ReactComponentFunction = (props: any) => ?React.Element<any>;
 export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
 
 export type BaseActivityResponse = ActivityResponse<{}, {}>;
+export type BaseAppCtx = AppCtx<{}>;

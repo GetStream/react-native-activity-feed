@@ -128,6 +128,8 @@ declare module 'getstream' {
     [string]: Array<EnrichedReactionResponse<UserData, ReactionData>>,
   };
 
+  declare type ReactionCounts = { [string]: number };
+
   declare type ActivityResponse<UserData, CustomActivityData> = {
     id: string,
     foreign_id: string,
@@ -141,7 +143,7 @@ declare module 'getstream' {
     origin: null | string,
     to: Array<string>,
 
-    reaction_counts?: { [string]: number },
+    reaction_counts?: ReactionCounts,
     own_reactions?: ReactionKindMap<UserData, Object>,
     latest_reactions?: ReactionKindMap<UserData, Object>,
   } & CustomActivityData;

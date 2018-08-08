@@ -10,6 +10,7 @@ import {
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import { Avatar, OgBlock } from 'react-native-activity-feed';
+import { mergeStyles } from '../utils';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
 import { ScrollView } from '../../node_modules/react-native-gesture-handler';
@@ -160,11 +161,18 @@ export default class StatusUpdateForm extends React.Component {
 
   render() {
     return (
+<<<<<<< HEAD
       <SafeAreaView style={styles.screenContainer}>
 
         <View style={styles.newPostContainer}>
           <Avatar source="https://placehold.it/100x100" size={48} />
           <ScrollView style={styles.textInput}>
+=======
+      <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
+        <View style={mergeStyles('newPostContainer', styles, this.props)}>
+          <Avatar source="https://placehold.it/100x100" size={48} />
+          <View style={mergeStyles('textInput', styles, this.props)}>
+>>>>>>> e1c75b8e3ae3f8f53c0a66abf9cf3699ac8cb9fc
             <TextInput
               multiline
               onChangeText={(text) => {
@@ -184,12 +192,27 @@ export default class StatusUpdateForm extends React.Component {
 
         <View>
           <KeyboardAccessory backgroundColor="#fff">
+<<<<<<< HEAD
             <View styles={{flexDirection: 'row'}}>
 
 
               <View>
                 {this.state.image ? (
                   <View style={styles.imageContainer}>
+=======
+            {this.state.image ? (
+              <View style={mergeStyles('imageContainer', styles, this.props)}>
+                <Image
+                  source={{ uri: this.state.image }}
+                  style={
+                    this.state.imageState === ImageState.UPLOADING
+                      ? styles.image_loading
+                      : styles.image
+                  }
+                />
+                <View style={mergeStyles('imageOverlay', styles, this.props)}>
+                  <TouchableOpacity>
+>>>>>>> e1c75b8e3ae3f8f53c0a66abf9cf3699ac8cb9fc
                     <Image
                       source={{ uri: this.state.image }}
                       style={
@@ -219,9 +242,14 @@ export default class StatusUpdateForm extends React.Component {
                     })
                   }} />: null}
               </View>
+<<<<<<< HEAD
             </View>
 
             <View style={styles.accessory}>
+=======
+            ) : null}
+            <View style={mergeStyles('accessory', styles, this.props)}>
+>>>>>>> e1c75b8e3ae3f8f53c0a66abf9cf3699ac8cb9fc
               <TouchableOpacity
                 title="Pick an image from camera roll"
                 onPress={this._pickImage}

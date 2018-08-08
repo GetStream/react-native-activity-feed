@@ -1,15 +1,16 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { mergeStyles } from '../utils';
 
 const CommentsContainer = ({
   data,
   renderComment,
   renderMoreLink,
   maxComments,
-  style,
+  ...props
 }) => {
   return (
-    <View style={[{ ...style }]}>
+    <View style={mergeStyles('container', styles, props)}>
       {data.slice(0, maxComments).map(renderComment)}
 
       {data.length > 0 && data.length > maxComments ? renderMoreLink() : null}
@@ -18,3 +19,5 @@ const CommentsContainer = ({
 };
 
 export default CommentsContainer;
+
+const styles = StyleSheet.create({});
