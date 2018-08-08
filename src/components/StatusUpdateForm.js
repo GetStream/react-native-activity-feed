@@ -24,12 +24,14 @@ const urlRegex = /(https?:\/\/[^\s]+)/gi;
 export default class StatusUpdateForm extends React.Component {
   constructor(props) {
     super(props);
-    this.onChangeTextDelayed = _.debounce(this.handleOG, 250);
+    this.props.feedUserId = this.props.feedUserId || props.session.userId;
+    this._handleOgDebounced = _.debounce(this.handleOG, 250);
     this.TextInput = React.createRef();
   }
 
   static defaultProps = {
     activity_verb: 'post',
+    feedGroup: 'timeline',
   };
 
   state = {
@@ -38,13 +40,14 @@ export default class StatusUpdateForm extends React.Component {
     og: null,
     ogScraping: false,
     ogLink: null,
+    textInput: null,
   };
 
   _pickImage = async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
     let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 3],
     });
 
@@ -52,10 +55,16 @@ export default class StatusUpdateForm extends React.Component {
       return;
     }
 
+    console.log(result);
+
     this.setState({
       image: result.uri,
       imageState: ImageState.UPLOADING,
     });
+
+    console.log(this.props.session);
+    console.log(this.props.session.images);
+    console.log(this.props.session.images.upload);
 
     let response = await this.props.session.images.upload(result.uri);
     console.log(response);
@@ -75,6 +84,7 @@ export default class StatusUpdateForm extends React.Component {
 
   componentWillUnmount() {
     this.TextInput.current.blur();
+    // TODO: do we have to deregister the submit cb from navigation?
   }
 
   buildActivity() {
@@ -85,11 +95,23 @@ export default class StatusUpdateForm extends React.Component {
     const activity = {
       actor: this.props.session.user,
       verb: this.props.activity_verb,
-      object: this.props.TextInput,
+      object: this.state.textInput,
       attachments,
     };
+    console.log(
+      `adding actvity to feed ${this.props.feedGroup}:${this.props.feedUserId}`,
+    );
     console.log(activity);
-    return activity;
+
+    this.props.session
+      .feed(this.props.feedGroup, this.props.feedUserId)
+      .addActivity(activity)
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   handleOG(text) {
@@ -120,7 +142,7 @@ export default class StatusUpdateForm extends React.Component {
         .then((resp) => {
           console.log(resp);
           this.setState({
-            og: resp,
+            og: Object.keys(resp).length > 0 ? resp : null,
             ogScraping: false,
           });
         })
@@ -142,7 +164,12 @@ export default class StatusUpdateForm extends React.Component {
           <View style={styles.textInput}>
             <TextInput
               multiline
-              onChangeText={(text) => this.onChangeTextDelayed(text)}
+              onChangeText={(text) => {
+                this.setState({
+                  textInput: text,
+                });
+                this._handleOgDebounced(text);
+              }}
               ref={this.TextInput}
               placeholder="Share something..."
               underlineColorAndroid="transparent"
