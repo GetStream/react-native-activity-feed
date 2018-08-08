@@ -7,10 +7,15 @@ export default class OgBlock extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <View style={{ width: 50, height: 50, backgroundColor: 'powderblue' }}>
-          <Image
-            source={{ uri: this.props.og.images[0].image }}
-            style={{ width: 50, height: 50 }}
-          />
+          {this.props.og && this.props.og.images ? (
+            <Image
+              source={{
+                uri:
+                  this.props.og.images[0].image || 'https://placehold.it/50x50',
+              }}
+              style={{ width: 50, height: 50 }}
+            />
+          ) : null}
         </View>
         <View style={{ flex: 1, flexDirection: 'column' }}>
           <View style={{ width: '100%', height: 25 }}>

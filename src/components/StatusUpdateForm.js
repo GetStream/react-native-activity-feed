@@ -96,14 +96,24 @@ export default class StatusUpdateForm extends React.Component {
     if (this.state.ogScraping) {
       return;
     }
-    console.log('changed!');
+    console.log(`changed into ${text}`);
     const urls = text.match(urlRegex);
-    if (urls && urls.length > 0) {
+
+    if (!urls) {
+      this.setState({
+        og: null,
+        ogLink: null,
+      });
+      return;
+    }
+
+    if (urls[0] !== this.state.ogLink) {
       const url = urls[0];
+      console.log(`retrieving ${url} from OG API`);
       this.setState({
         ogScraping: true,
         ogLink: url,
-        og: url == this.state.ogLink ? this.state.ogLink : null,
+        og: url === this.state.ogLink ? this.state.og : null,
       });
       this.props.session
         .og(url)
@@ -121,8 +131,6 @@ export default class StatusUpdateForm extends React.Component {
             og: null,
           });
         });
-    } else {
-      this.setState({ og: null });
     }
   }
 
