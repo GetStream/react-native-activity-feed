@@ -9,8 +9,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { UserBar, ReactionCounter } from 'react-native-activity-feed';
-import ReactionCounterBar from './ReactionCounterBar';
+import {
+  UserBar,
+  ReactionCounter,
+  ReactionCounterBar,
+} from 'react-native-activity-feed';
 import CommentList from './CommentList';
 import Card from './Card';
 import type { ActivityData, UserResponse, NavigationProps } from '../types';
