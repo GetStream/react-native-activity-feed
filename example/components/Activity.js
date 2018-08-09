@@ -126,7 +126,7 @@ export default class Activity extends React.Component<Props> {
           />
         )}
 
-        {attachments && attachments.images && (
+        {attachments && attachments.images.length && (
           <Image
             style={{ width: width, height: width }}
             source={{ uri: attachments.images[0] }}
@@ -135,7 +135,7 @@ export default class Activity extends React.Component<Props> {
 
         {attachments && attachments.og && (
           <View style={{ paddingLeft: 15, paddingRight: 15 }}>
-            <Card item={{ title: attachments.og.title, description: attachments.og.description, image: attachments.og.images[0].image }} />
+            <Card item={{ title: attachments.og.title, description: attachments.og.description, image: attachments.og.images[0].image, url: attachments.og.url }} />
           </View>
         )}
 

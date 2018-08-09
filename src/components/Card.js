@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { mergeStyles } from '../utils';
 
 const Card = ({ item, ...props }) => {
-  let { title, description, image } = item;
+  let { title, description, image, url } = item;
 
   return (
-    <View style={mergeStyles('container', styles, props)}>
+    <TouchableOpacity
+      onPress={() => {
+        Linking.openURL(url)
+      }}
+      style={mergeStyles('container', styles, props)}>
       <Image
         style={mergeStyles('image', styles, props)}
         source={image ? { uri: image } : require('../images/placeholder.png')}
@@ -24,7 +28,7 @@ const Card = ({ item, ...props }) => {
           ...
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

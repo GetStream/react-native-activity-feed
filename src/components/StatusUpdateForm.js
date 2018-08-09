@@ -146,7 +146,7 @@ export default class StatusUpdateForm extends React.Component {
         .then((resp) => {
           console.log(resp);
           this.setState({
-            og: Object.keys(resp).length > 0 ? resp : null,
+            og: Object.keys(resp).length > 0 ? {...resp, url: url} : null, // Added url manually from the entered URL
             ogScraping: false,
           });
         })

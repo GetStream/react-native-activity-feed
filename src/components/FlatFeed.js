@@ -180,9 +180,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   };
 
   render() {
-    console.log(this.state.activities);
     return (
-
       <ScrollView
         style={mergeStyles('container', styles, this.props)}
         refreshControl={
