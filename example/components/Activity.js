@@ -16,7 +16,6 @@ import {
   ReactionIconBar,
   Card,
 } from 'react-native-activity-feed';
-import CommentList from './CommentList';
 import type { ActivityData, UserResponse, NavigationProps } from '../types';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
@@ -28,15 +27,25 @@ import RepostIcon from '../images/icons/repost.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import ReplyIcon from '../images/icons/reply.png';
 
-type Props = {
+type Props = {|
   activity: ActivityData,
   style?: any,
+  feedGroup: string,
+  userId?: string,
   onToggleReaction?: (kind: string, activity: ActivityData) => mixed,
-} & NavigationProps;
+  clickable?: boolean,
+  ...NavigationProps,
+|};
 
 export default class Activity extends React.Component<Props> {
   _onPress = () => {
-    this.props.navigation.navigate('SinglePost', { item: this.props.activity });
+    if (this.props.clickable) {
+      this.props.navigation.navigate('SinglePost', {
+        activity: this.props.activity,
+        userId: this.props.userId,
+        feedGroup: this.props.feedGroup,
+      });
+    }
   };
 
   _onPressAvatar = () => {
@@ -65,7 +74,6 @@ export default class Activity extends React.Component<Props> {
       reaction_counts,
       attachments,
       own_reactions,
-      latest_reactions,
     } = this.props.activity;
 
     let notFound: UserResponse = {
@@ -97,6 +105,7 @@ export default class Activity extends React.Component<Props> {
       <TouchableOpacity
         style={[{ ...this.props.style }, styles.container]}
         onPress={this._onPress}
+        disabled={!this.props.clickable}
       >
         <View style={{ padding: 15 }}>
           <UserBar
@@ -164,14 +173,13 @@ export default class Activity extends React.Component<Props> {
               <ReactionIcon
                 icon={ReplyIcon}
                 counts={reaction_counts}
-                kind="repost"
+                kind="comment"
                 width={24}
                 height={24}
               />
             </ReactionIconBar>
           </View>
         )}
-        <CommentList reactions={latest_reactions} />
       </TouchableOpacity>
     );
   }

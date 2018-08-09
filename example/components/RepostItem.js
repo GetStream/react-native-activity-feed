@@ -1,36 +1,54 @@
+// @flow
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { Avatar } from 'react-native-activity-feed';
+import { Avatar, humanizeTimestamp } from 'react-native-activity-feed';
 
-const RepostItem = ({ onPressLike, item }) => {
-  return (
-    <View style={styles.repostItem}>
-      <View style={styles.repostAvatar}>
-        <Avatar source={item.author.avatar} size={25} noShadow />
-      </View>
-      <Image
-        source={require('../images/icons/repost.png')}
-        style={styles.repostIcon}
-      />
-      <View style={styles.repostText}>
-        <Text>
-          <Text style={styles.repostAuthor}>{item.author.name} </Text>
-          <Text style={styles.repostContent}>{item.content} </Text>
-          <Text style={styles.repostTime}>{item.timestamp}</Text>
-        </Text>
-      </View>
-      <View style={styles.repostActions}>
-        <TouchableOpacity onPress={() => onPressLike(item.id)}>
-          <Image
-            source={require('../images/icons/heart-outline.png')}
-            style={styles.heartIcon}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import HeartIconOutline from '../images/icons/heart-outline.png';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import RepostIcon from '../images/icons/repost.png';
+
+import type { Repost } from '../types';
+
+type Props = {
+  onPressLike?: (id: string) => any,
+  repost: Repost,
 };
+
+export default class RepostItem extends React.Component<Props> {
+  _onPressLike = () => {
+    if (this.props.onPressLike) {
+      this.props.onPressLike(this.props.repost.id);
+    }
+  };
+
+  render() {
+    let { repost } = this.props;
+    return (
+      <View style={styles.repostItem}>
+        <View style={styles.repostAvatar}>
+          <Avatar source={repost.user.data.profileImage} size={25} noShadow />
+        </View>
+        <Image source={RepostIcon} style={styles.repostIcon} />
+        <View style={styles.repostText}>
+          <Text>
+            <Text style={styles.repostAuthor}>{repost.user.data.name} </Text>
+            <Text style={styles.repostContent}>{repost.data.text} </Text>
+            <Text style={styles.repostTime}>
+              {humanizeTimestamp(repost.created_at)}
+            </Text>
+          </Text>
+        </View>
+        <View style={styles.repostActions}>
+          <TouchableOpacity onPress={this._onPressLike}>
+            <Image source={HeartIconOutline} style={styles.heartIcon} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   repostItem: {
@@ -73,5 +91,3 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
 });
-
-export default RepostItem;

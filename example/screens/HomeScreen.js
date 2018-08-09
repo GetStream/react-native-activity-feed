@@ -53,7 +53,7 @@ class HomeScreen extends React.Component<Props> {
       <FlatFeed
         feedGroup="timeline"
         navigation={this.props.navigation}
-        ActivityComponent={Activity}
+        renderActivity={(props) => <Activity {...props} clickable />}
       />
     );
   }

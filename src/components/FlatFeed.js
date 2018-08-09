@@ -12,14 +12,22 @@ import type {
   ReactElementCreator,
   BaseActivityResponse,
   BaseAppCtx,
+  BaseUserSession,
 } from '../types';
-import type { FeedRequestOptions, StreamFeed } from 'getstream';
+import type { FeedRequestOptions, FeedResponse, StreamFeed } from 'getstream';
 
 type Props = {|
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
-  ActivityComponent: ReactElementCreator,
+  renderActivity?: (any) => React.Element<any>,
+  ActivityComponent?: ReactElementCreator,
+  doFeedRequest?: (
+    session: BaseUserSession,
+    feedGroup: string,
+    userId?: string,
+    options?: FeedRequestOptions,
+  ) => Promise<FeedResponse<{}, {}>>,
   analyticsLocation?: string,
   ...NavigationProps,
   ...ChildrenProps,
@@ -81,13 +89,21 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   ) => {
     let reaction = await this.props.session.react(kind, activity);
     this._trackAnalytics(kind, activity, options.trackAnalytics);
+    let enrichedReaction = immutable.fromJS({
+      ...reaction,
+      user: this.props.user.full,
+    });
 
     this.setState((prevState) => {
       let activities = prevState.activities
         .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v + 1)
-        .setIn(
+        .updateIn(
           [activity.id, 'own_reactions', kind],
-          immutable.fromJS([reaction]),
+          (v = immutable.List()) => v.unshift(enrichedReaction),
+        )
+        .updateIn(
+          [activity.id, 'latest_reactions', kind],
+          (v = immutable.List()) => v.unshift(enrichedReaction),
         );
 
       return { activities };
@@ -106,7 +122,16 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     this.setState((prevState) => {
       let activities = prevState.activities
         .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v - 1)
-        .updateIn([activity.id, 'own_reactions', kind], (v) => v.pop());
+        .updateIn(
+          [activity.id, 'own_reactions', kind],
+          (v = immutable.List()) =>
+            v.remove(v.findIndex((r) => r.get('id') === id)),
+        )
+        .updateIn(
+          [activity.id, 'latest_reactions', kind],
+          (v = immutable.List()) =>
+            v.remove(v.findIndex((r) => r.get('id') === id)),
+        );
       return { activities };
     });
   };
@@ -136,18 +161,27 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   _refresh = async () => {
     this.setState({ refreshing: true });
 
-    let feed: StreamFeed<{}, {}> = this.props.session.feed(
-      this.props.feedGroup,
-      this.props.userId,
-    );
     let options: FeedRequestOptions = {
       withReactionCounts: true,
       withOwnReactions: true,
-      withRecentReactions: true,
       ...this.props.options,
     };
 
-    let response = await feed.get(options);
+    let response;
+    if (this.props.doFeedRequest) {
+      response = await this.props.doFeedRequest(
+        this.props.session,
+        this.props.feedGroup,
+        this.props.userId,
+        options,
+      );
+    } else {
+      let feed: StreamFeed<{}, {}> = this.props.session.feed(
+        this.props.feedGroup,
+        this.props.userId,
+      );
+      response = await feed.get(options);
+    }
 
     let activityMap = response.results.reduce((map, a) => {
       map[a.id] = a;
@@ -166,17 +200,26 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   }
 
   _renderActivity = ({ item }: { item: BaseActivityResponse }) => {
-    let ActivityComponent = this.props.ActivityComponent;
-    return (
-      <ActivityComponent
-        activity={item}
-        onToggleReaction={this._onToggleReaction}
-        onAddReaction={this._onAddReaction}
-        onRemoveReaction={this._onRemoveReaction}
-        navigation={this.props.navigation}
-        clickable
-      />
-    );
+    let args = {
+      activity: item,
+      onToggleReaction: this._onToggleReaction,
+      onAddReaction: this._onAddReaction,
+      onRemoveReaction: this._onRemoveReaction,
+      navigation: this.props.navigation,
+      feedGroup: this.props.feedGroup,
+      userId: this.props.userId,
+    };
+
+    if (this.props.renderActivity) {
+      return this.props.renderActivity(args);
+    }
+
+    if (this.props.ActivityComponent) {
+      let ActivityComponent = this.props.ActivityComponent;
+      return <ActivityComponent {...args} />;
+    }
+
+    return null;
   };
 
   render() {

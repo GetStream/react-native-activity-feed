@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import type { NavigationScreenProp } from 'react-navigation';
-import type { ActivityResponse } from 'getstream';
+import type { ActivityResponse, StreamUserSession } from 'getstream';
 import type { AppCtx } from './Context';
 
 export type NavigationProps = {|
@@ -29,3 +29,4 @@ export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
 
 export type BaseActivityResponse = ActivityResponse<{}, {}>;
 export type BaseAppCtx = AppCtx<{}>;
+export type BaseUserSession = StreamUserSession<{}>;

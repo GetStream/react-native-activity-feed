@@ -14,3 +14,4 @@ export { default as ReactionToggleIcon } from './components/ReactionToggleIcon';
 export { default as ReactionIconBar } from './components/ReactionIconBar';
 export { default as CommentsContainer } from './components/CommentsContainer';
 export { default as Card } from './components/Card';
+export { humanizeTimestamp } from './utils';

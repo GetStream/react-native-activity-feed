@@ -55,13 +55,17 @@ export type CommentData = {
   text: string,
 };
 
+export type RepostData = {
+  text: string,
+};
+
 export type Comment = EnrichedReactionResponse<UserData, CommentData>;
 
 export type Heart = EnrichedReactionResponse<UserData, {}>;
-export type Reply = EnrichedReactionResponse<UserData, {}>;
+export type Repost = EnrichedReactionResponse<UserData, RepostData>;
 
 export type ReactionMap = {
   comment?: Array<Comment>,
   heart?: Array<Heart>,
-  reply?: Array<Reply>,
+  repost?: Array<Repost>,
 };

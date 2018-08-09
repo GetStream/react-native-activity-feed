@@ -17,7 +17,7 @@ const CommentList = ({ reactions, reactionKind }: Props) => {
     return null;
   }
 
-  if (reactionKind === undefined) {
+  if (!reactionKind) {
     reactionKind = 'comment';
   }
 

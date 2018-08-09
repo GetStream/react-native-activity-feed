@@ -7,7 +7,7 @@ import HeartIconOutline from '../images/icons/heart-outline.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import ReplyIcon from '../images/icons/reply.png';
 
-import { humanizeTimestamp } from '../utils';
+import { humanizeTimestamp } from 'react-native-activity-feed';
 
 import { Avatar } from 'react-native-activity-feed';
 import type { Comment } from '../types';

@@ -119,6 +119,10 @@ declare module 'getstream' {
     get(
       options?: FeedRequestOptions,
     ): Promise<FeedResponse<UserData, CustomActivityData>>;
+    getActivityDetail(
+      activityId: string,
+      options?: FeedRequestOptions,
+    ): Promise<FeedResponse<UserData, CustomActivityData>>;
     addActivity(
       ActivityArgData<UserData, CustomActivityData>,
     ): Promise<ActivityResponse<UserData, CustomActivityData>>;

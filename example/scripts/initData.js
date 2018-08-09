@@ -83,7 +83,7 @@ async function main() {
   await league.followUser(batman.user);
 
   let fluffActivity = await fluff.feed('user').addActivity({
-    foreign_id: 'fluff-2',
+    foreign_id: 'fluff-3',
     time: '2018-07-19T13:23:47',
 
     actor: fluff.user,
@@ -139,11 +139,11 @@ async function main() {
 
   await ignore409(() =>
     Promise.all(
-      randomUsers
-        .slice(1, 20)
-        .map((user, i) =>
-          user.react('heart', fluffActivity, { id: `random-heart-fluff-${i}` }),
-        ),
+      randomUsers.slice(1, 20).map((user, i) =>
+        user.react('heart', fluffActivity, {
+          id: `random-heart-fluff-2-${i}`,
+        }),
+      ),
     ),
   );
 
@@ -151,7 +151,10 @@ async function main() {
     Promise.all(
       randomUsers.slice(1, 5).map((user, i) =>
         user.react('repost', fluffActivity, {
-          id: `random-repost-fluff-${i}`,
+          id: `random-repost-fluff-2-${i}`,
+          data: {
+            text: 'best podcast ever!!!!' + i,
+          },
         }),
       ),
     ),
@@ -161,21 +164,11 @@ async function main() {
     Promise.all(
       randomUsers.slice(7, 9).map((user, i) =>
         user.react('comment', fluffActivity, {
-          id: `random-comment-fluff-${i}`,
+          id: `random-comment-fluff-2-${i}`,
           data: {
             text: `Oh yeah! ${(user.user.data || {}).name ||
               'Unknown'} loves this!`,
           },
-        }),
-      ),
-    ),
-  );
-
-  await ignore409(() =>
-    Promise.all(
-      randomUsers.slice(22, 26).map((user, i) =>
-        user.react('heart', wonderWomenActivity, {
-          id: `random-heart-wonderwomen-${i}`,
         }),
       ),
     ),
@@ -206,7 +199,7 @@ async function main() {
   );
 
   await ignore409(async () => {
-    await batman.react('heart', fluffActivity, { id: `batman-heart-fluff` });
+    await batman.react('heart', fluffActivity, { id: `batman-heart-fluff-2` });
   });
 }
 main();
