@@ -44,6 +44,8 @@ export default class StatusUpdateForm extends React.Component {
     ogScraping: false,
     ogLink: null,
     textInput: null,
+    urls: [],
+    dismissedUrls: [],
   };
 
   _pickImage = async () => {
@@ -145,10 +147,12 @@ export default class StatusUpdateForm extends React.Component {
         .og(url)
         .then((resp) => {
           console.log(resp);
+          const oldStateUrls = this.state.urls;
           this.setState({
             og: Object.keys(resp).length > 0 ? {...resp, url: url} : null, // Added url manually from the entered URL
             ogScraping: false,
-          });
+            urls: [...oldStateUrls, url],
+          }, () => text.replace(url, ''));
         })
         .catch((err) => {
           console.log(err);
@@ -158,6 +162,15 @@ export default class StatusUpdateForm extends React.Component {
           });
         });
     }
+  }
+
+  _onPressDismiss = (url) => {
+    const oldDismissedUrls = this.state.dismissedUrls;
+    this.setState({
+      dismissedUrls: [...oldDismissedUrls, url]
+    }, () => {
+      console.log('dismissedUrls: ', this.state.dismissedUrls);
+    })
   }
 
   render() {
@@ -197,9 +210,13 @@ export default class StatusUpdateForm extends React.Component {
                 </View>
               </View> : null}
 
-            {this.state.og ? <OgBlock og={this.state.og} styles={{
-              wrapper: { padding: 15, paddingTop: 8, paddingBottom: 8, borderTopColor: '#eee', borderTopWidth: 1 },
-              textStyle: { fontSize: 12 }
+            {this.state.og ?
+              <OgBlock
+                onPressDismiss={this._onPressDismiss}
+                og={this.state.og}
+                styles={{
+                wrapper: { padding: 15, paddingTop: 8, paddingBottom: 8, borderTopColor: '#eee', borderTopWidth: 1 },
+                textStyle: { fontSize: 12 }
               }} /> : null}
             <View style={mergeStyles('accessory', styles, this.props)}>
               <TouchableOpacity title="Pick an image from camera roll" onPress={this._pickImage}>

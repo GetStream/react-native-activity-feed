@@ -30,7 +30,7 @@ export default class OgBlock extends React.Component {
             </Text>
         </View>
         <TouchableOpacity
-          onPress={this.props.removeOgBlock}>
+          onPress={() => this.props.onPressDismiss(this.props.og.url)}>
           <Image
             source={require('../images/icons/close-black.png')}
             style={[styles.closeButton]} />
