@@ -10,9 +10,9 @@ import {
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import { Avatar, OgBlock } from 'react-native-activity-feed';
+import { mergeStyles } from '../utils';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
-import { ScrollView } from '../../node_modules/react-native-gesture-handler';
 
 const ImageState = Object.freeze({
   NO_IMAGE: Symbol('no_image'),
@@ -159,84 +159,37 @@ export default class StatusUpdateForm extends React.Component {
   }
 
   render() {
-    return (
-      <SafeAreaView style={styles.screenContainer}>
-
-        <View style={styles.newPostContainer}>
-          <Avatar source="https://placehold.it/100x100" size={48} />
-          <ScrollView style={styles.textInput}>
-            <TextInput
-              multiline
-              onChangeText={(text) => {
-                this.setState({
-                  textInput: text,
-                });
+    return <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
+        <View style={mergeStyles('newPostContainer', styles, this.props)}>
+          <Avatar source={this.props.session.user.data.profileImage} size={48} />
+          <View style={mergeStyles('textInput', styles, this.props)}>
+            <TextInput multiline onChangeText={(text) => {
+                this.setState({ textInput: text });
                 this._handleOgDebounced(text);
-              }}
-              ref={this.TextInput}
-              placeholder="Share something..."
-              underlineColorAndroid="transparent"
-            />
-          </ScrollView>
+              }} ref={this.TextInput} placeholder="Share something..." underlineColorAndroid="transparent" />
+          </View>
         </View>
-
-
 
         <View>
           <KeyboardAccessory backgroundColor="#fff">
-            <View styles={{flexDirection: 'row'}}>
+            {this.state.image ? <View style={mergeStyles('imageContainer', styles, this.props)}>
+                <Image source={{ uri: this.state.image }} style={this.state.imageState === ImageState.UPLOADING ? styles.image_loading : styles.image} />
+                <View style={mergeStyles('imageOverlay', styles, this.props)}>
+                  <TouchableOpacity>
+                    <Image source={require('../images/icons/close-white.png')} style={{ width: 24, height: 24 }} />
+                  </TouchableOpacity>
+                </View>
+              </View> : null}
 
-
-              <View>
-                {this.state.image ? (
-                  <View style={styles.imageContainer}>
-                    <Image
-                      source={{ uri: this.state.image }}
-                      style={
-                        this.state.imageState === ImageState.UPLOADING
-                          ? styles.image_loading
-                          : styles.image
-                      }
-                    />
-                    <View style={styles.imageOverlay}>
-                      <TouchableOpacity>
-                        <Image
-                          source={require('../images/icons/close-white.png')}
-                          style={{ width: 24, height: 24 }}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                ) : null}
-              </View>
-              <View>
-                {this.state.og ? <OgBlock
-                  styles={{ wrapper: { padding: 15, flex: 1 } }}
-                  og={this.state.og}
-                  removeOgBlock={() => {
-                    this.setState({
-                      og: null,
-                    })
-                  }} />: null}
-              </View>
-            </View>
-
-            <View style={styles.accessory}>
-              <TouchableOpacity
-                title="Pick an image from camera roll"
-                onPress={this._pickImage}
-              >
-                <Image
-                  source={require('../images/icons/gallery.png')}
-                  style={{ width: 24, height: 24 }}
-                />
+            {this.state.og ? <OgBlock og={this.state.og} styles={{ wrapper: { padding: 15, paddingTop: 8, paddingBottom: 8, borderTopColor: 'black', borderTopWidth: 1 } }} /> : null}
+            <View style={mergeStyles('accessory', styles, this.props)}>
+              <TouchableOpacity title="Pick an image from camera roll" onPress={this._pickImage}>
+                <Image source={require('../images/icons/gallery.png')} style={{ width: 24, height: 24 }} />
               </TouchableOpacity>
             </View>
           </KeyboardAccessory>
         </View>
-
-      </SafeAreaView>
-    );
+      </SafeAreaView>;
   }
 }
 
@@ -265,31 +218,28 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     position: 'relative',
-    width: 50,
-    height: 50,
-    borderRadius: 4,
+    width: 100,
+    height: 100,
     margin: 15,
   },
   imageOverlay: {
     position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 50,
-    height: 50,
-    borderRadius: 4,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    width: 100,
+    height: 100,
     padding: 8,
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
   image: {
     position: 'absolute',
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
   },
   image_loading: {
     position: 'absolute',
-    width: 50,
-    height: 50,
-    borderRadius: 4,
+    width: 100,
+    height: 100,
     opacity: 0.5,
   },
 });
