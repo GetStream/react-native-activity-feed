@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
@@ -110,6 +111,7 @@ export default class StatusUpdateForm extends React.Component {
       .addActivity(activity)
       .then((resp) => {
         console.log(resp);
+        this.props.navigation.navigate('Home');
       })
       .catch((err) => {
         console.log(err);
@@ -175,13 +177,30 @@ export default class StatusUpdateForm extends React.Component {
             {this.state.image ? <View style={mergeStyles('imageContainer', styles, this.props)}>
                 <Image source={{ uri: this.state.image }} style={this.state.imageState === ImageState.UPLOADING ? styles.image_loading : styles.image} />
                 <View style={mergeStyles('imageOverlay', styles, this.props)}>
-                  <TouchableOpacity>
-                    <Image source={require('../images/icons/close-white.png')} style={{ width: 24, height: 24 }} />
+                  { this.state.imageState === ImageState.UPLOADING ?
+                    <ActivityIndicator color="#ffffff"  />
+                  : <TouchableOpacity
+                    onPress={() => {
+                      this.setState({
+                        imageState: ImageState.NO_IMAGE,
+                        image_url: null,
+                        image: null
+                      })
+                    }}>
+                    <Image
+                      source={require('../images/icons/close-white.png')}
+                      style={{ width: 24, height: 24 }}
+
+                      />
                   </TouchableOpacity>
+                }
                 </View>
               </View> : null}
 
-            {this.state.og ? <OgBlock og={this.state.og} styles={{ wrapper: { padding: 15, paddingTop: 8, paddingBottom: 8, borderTopColor: 'black', borderTopWidth: 1 } }} /> : null}
+            {this.state.og ? <OgBlock og={this.state.og} styles={{
+              wrapper: { padding: 15, paddingTop: 8, paddingBottom: 8, borderTopColor: '#eee', borderTopWidth: 1 },
+              textStyle: { fontSize: 12 }
+              }} /> : null}
             <View style={mergeStyles('accessory', styles, this.props)}>
               <TouchableOpacity title="Pick an image from camera roll" onPress={this._pickImage}>
                 <Image source={require('../images/icons/gallery.png')} style={{ width: 24, height: 24 }} />
@@ -218,28 +237,28 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     position: 'relative',
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     margin: 15,
   },
   imageOverlay: {
     position: 'absolute',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-    width: 100,
-    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 50,
+    height: 50,
     padding: 8,
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
   image: {
     position: 'absolute',
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
   },
   image_loading: {
     position: 'absolute',
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     opacity: 0.5,
   },
 });

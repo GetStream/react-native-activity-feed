@@ -20,7 +20,7 @@ const Card = ({ item, ...props }) => {
           ...
         </Text>
         <Text style={mergeStyles('description', styles, props)}>
-          {description.slice(0, 60)}
+          {description.slice(0, 30)}
           ...
         </Text>
       </View>

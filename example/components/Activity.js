@@ -63,6 +63,7 @@ export default class Activity extends React.Component<Props> {
       content,
       image,
       reaction_counts,
+      attachments,
       own_reactions,
       latest_reactions,
     } = this.props.activity;
@@ -108,7 +109,7 @@ export default class Activity extends React.Component<Props> {
           />
         </View>
         <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
-          <Text>{content}</Text>
+          <Text>{typeof (object) === 'string' ? object : content}</Text>
         </View>
 
         {verb == 'repost' &&
@@ -123,6 +124,19 @@ export default class Activity extends React.Component<Props> {
             style={{ width: width, height: width }}
             source={{ uri: image }}
           />
+        )}
+
+        {attachments && attachments.images && (
+          <Image
+            style={{ width: width, height: width }}
+            source={{ uri: attachments.images[0] }}
+          />
+        )}
+
+        {attachments && attachments.og && (
+          <View style={{ paddingLeft: 15, paddingRight: 15 }}>
+            <Card item={{ title: attachments.og.title, description: attachments.og.description, image: attachments.og.images[0].image }} />
+          </View>
         )}
 
         {reaction_counts && (
