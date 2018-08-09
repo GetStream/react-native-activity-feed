@@ -62,7 +62,7 @@ class ProfileHeaderInner extends React.Component<PropsInner, State> {
             <Text style={styles.userUrl}>{url}</Text>
             <Text style={styles.userDesc}>{desc}</Text>
           </View>
-          <Avatar source={profileImage} size={150} style={styles.avatar} />
+          <Avatar source={profileImage} size={150} />
         </View>
 
         <View style={styles.statSection}>

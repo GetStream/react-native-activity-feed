@@ -1,19 +1,32 @@
+// @flow
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 
 import UploadImage from './UploadImage';
 import { mergeStyles } from '../utils';
 
+import type { StylesProps } from '../types';
+
+type Props = {|
+  source?: string,
+  size?: number,
+  editButton?: boolean,
+  noShadow?: boolean,
+  notRound?: boolean,
+
+  onUploadButtonPress?: () => mixed,
+  ...StylesProps,
+|};
+
 const Avatar = ({
   source,
-  size,
+  size = 200,
   noShadow,
   notRound,
   editButton,
   onUploadButtonPress,
   ...props
-}) => {
-  size = size || 200;
+}: Props) => {
   let borderRadius = notRound ? undefined : size / 2;
 
   return (

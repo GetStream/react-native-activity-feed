@@ -7,7 +7,7 @@ import type { StylesProps } from '../types';
 import PickPhotoIcon from '../images/icons/pickphoto.png';
 
 type Props = {|
-  onUploadButtonPress: () => mixed,
+  onUploadButtonPress?: () => mixed,
   ...StylesProps,
 |};
 

@@ -14,9 +14,9 @@ import {
   ReactionIcon,
   ReactionToggleIcon,
   ReactionIconBar,
+  Card,
 } from 'react-native-activity-feed';
 import CommentList from './CommentList';
-import Card from './Card';
 import type { ActivityData, UserResponse, NavigationProps } from '../types';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345

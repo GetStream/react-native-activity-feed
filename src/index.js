@@ -13,3 +13,4 @@ export { default as ReactionIcon } from './components/ReactionIcon';
 export { default as ReactionToggleIcon } from './components/ReactionToggleIcon';
 export { default as ReactionIconBar } from './components/ReactionIconBar';
 export { default as CommentsContainer } from './components/CommentsContainer';
+export { default as Card } from './components/Card';
