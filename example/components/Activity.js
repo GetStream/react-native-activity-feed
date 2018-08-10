@@ -118,7 +118,7 @@ export default class Activity extends React.Component<Props> {
           />
         </View>
         <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
-          <Text>{typeof (object) === 'string' ? object : content}</Text>
+          <Text>{typeof object === 'string' ? object : content}</Text>
         </View>
 
         {verb == 'repost' &&
@@ -135,18 +135,28 @@ export default class Activity extends React.Component<Props> {
           />
         )}
 
-        {attachments && attachments.images.length && (
-          <Image
-            style={{ width: width, height: width }}
-            source={{ uri: attachments.images[0] }}
-          />
-        )}
+        {attachments &&
+          attachments.images &&
+          !!attachments.images.length && (
+            <Image
+              style={{ width: width, height: width }}
+              source={{ uri: attachments.images[0] }}
+            />
+          )}
 
-        {attachments && attachments.og && (
-          <View style={{ paddingLeft: 15, paddingRight: 15 }}>
-            <Card item={{ title: attachments.og.title, description: attachments.og.description, image: attachments.og.images[0].image, url: attachments.og.url }} />
-          </View>
-        )}
+        {attachments &&
+          attachments.og && (
+            <View style={{ paddingLeft: 15, paddingRight: 15 }}>
+              <Card
+                item={{
+                  title: attachments.og.title,
+                  description: attachments.og.description,
+                  image: attachments.og.images[0].image,
+                  url: attachments.og.url,
+                }}
+              />
+            </View>
+          )}
 
         {reaction_counts && (
           <View

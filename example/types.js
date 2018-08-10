@@ -39,10 +39,20 @@ export type StreamAppCtx = AppCtx<UserData>;
 export type User = StreamUser<UserData>;
 export type UserResponse = StreamUserResponse<UserData>;
 
+export type OgData = {
+  title: string,
+  description: string,
+  images: Array<{ image: string }>,
+  url: string,
+};
 export type CustomActivityData = {
   content: string,
   link?: boolean,
   image?: string,
+  attachments?: {
+    images?: Array<string>,
+    og?: OgData,
+  },
 };
 
 export type ActivityData = ActivityResponse<UserData, CustomActivityData>;

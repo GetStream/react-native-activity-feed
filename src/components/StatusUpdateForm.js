@@ -148,11 +148,14 @@ export default class StatusUpdateForm extends React.Component {
         .then((resp) => {
           console.log(resp);
           const oldStateUrls = this.state.urls;
-          this.setState({
-            og: Object.keys(resp).length > 0 ? {...resp, url: url} : null, // Added url manually from the entered URL
-            ogScraping: false,
-            urls: [...oldStateUrls, url],
-          }, () => text.replace(url, ''));
+          this.setState(
+            {
+              og: Object.keys(resp).length > 0 ? { ...resp, url: url } : null, // Added url manually from the entered URL
+              ogScraping: false,
+              urls: [...oldStateUrls, url],
+            },
+            () => text.replace(url, ''),
+          );
         })
         .catch((err) => {
           console.log(err);
@@ -166,66 +169,104 @@ export default class StatusUpdateForm extends React.Component {
 
   _onPressDismiss = (url) => {
     const oldDismissedUrls = this.state.dismissedUrls;
-    this.setState({
-      dismissedUrls: [...oldDismissedUrls, url]
-    }, () => {
-      console.log('dismissedUrls: ', this.state.dismissedUrls);
-    })
-  }
+    this.setState(
+      {
+        dismissedUrls: [...oldDismissedUrls, url],
+      },
+      () => {
+        console.log('dismissedUrls: ', this.state.dismissedUrls);
+      },
+    );
+  };
 
   render() {
-    return <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
+    return (
+      <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
         <View style={mergeStyles('newPostContainer', styles, this.props)}>
-          <Avatar source={this.props.session.user.data.profileImage} size={48} />
+          <Avatar
+            source={this.props.session.user.data.profileImage}
+            size={48}
+          />
           <View style={mergeStyles('textInput', styles, this.props)}>
-            <TextInput multiline onChangeText={(text) => {
+            <TextInput
+              multiline
+              onChangeText={(text) => {
                 this.setState({ textInput: text });
                 this._handleOgDebounced(text);
-              }} ref={this.TextInput} placeholder="Share something..." underlineColorAndroid="transparent" />
+              }}
+              ref={this.TextInput}
+              placeholder="Share something..."
+              underlineColorAndroid="transparent"
+            />
           </View>
         </View>
 
         <View>
           <KeyboardAccessory backgroundColor="#fff">
-            {this.state.image ? <View style={mergeStyles('imageContainer', styles, this.props)}>
-                <Image source={{ uri: this.state.image }} style={this.state.imageState === ImageState.UPLOADING ? styles.image_loading : styles.image} />
+            {this.state.image ? (
+              <View style={mergeStyles('imageContainer', styles, this.props)}>
+                <Image
+                  source={{ uri: this.state.image }}
+                  style={
+                    this.state.imageState === ImageState.UPLOADING
+                      ? styles.image_loading
+                      : styles.image
+                  }
+                />
                 <View style={mergeStyles('imageOverlay', styles, this.props)}>
-                  { this.state.imageState === ImageState.UPLOADING ?
-                    <ActivityIndicator color="#ffffff"  />
-                  : <TouchableOpacity
-                    onPress={() => {
-                      this.setState({
-                        imageState: ImageState.NO_IMAGE,
-                        image_url: null,
-                        image: null
-                      })
-                    }}>
-                    <Image
-                      source={require('../images/icons/close-white.png')}
-                      style={{ width: 24, height: 24 }}
-
+                  {this.state.imageState === ImageState.UPLOADING ? (
+                    <ActivityIndicator color="#ffffff" />
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          imageState: ImageState.NO_IMAGE,
+                          image_url: null,
+                          image: null,
+                        });
+                      }}
+                    >
+                      <Image
+                        source={require('../images/icons/close-white.png')}
+                        style={{ width: 24, height: 24 }}
                       />
-                  </TouchableOpacity>
-                }
+                    </TouchableOpacity>
+                  )}
                 </View>
-              </View> : null}
+              </View>
+            ) : null}
 
-            {this.state.og ?
+            {this.state.og ? (
               <OgBlock
                 onPressDismiss={this._onPressDismiss}
                 og={this.state.og}
                 styles={{
-                wrapper: { padding: 15, paddingTop: 8, paddingBottom: 8, borderTopColor: '#eee', borderTopWidth: 1 },
-                textStyle: { fontSize: 12 }
-              }} /> : null}
+                  wrapper: {
+                    padding: 15,
+                    paddingTop: 8,
+                    paddingBottom: 8,
+                    borderTopColor: '#eee',
+                    borderTopWidth: 1,
+                  },
+                  textStyle: { fontSize: 12 },
+                }}
+              />
+            ) : null}
             <View style={mergeStyles('accessory', styles, this.props)}>
-              <TouchableOpacity title="Pick an image from camera roll" onPress={this._pickImage}>
-                <Image source={require('../images/icons/gallery.png')} style={{ width: 24, height: 24 }} />
+              <TouchableOpacity
+                title="Pick an image from camera roll"
+                onPress={this._pickImage}
+              >
+                <Image
+                  source={require('../images/icons/gallery.png')}
+                  style={{ width: 24, height: 24 }}
+                />
               </TouchableOpacity>
             </View>
           </KeyboardAccessory>
         </View>
-      </SafeAreaView>;
+      </SafeAreaView>
+    );
   }
 }
 

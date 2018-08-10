@@ -79,7 +79,6 @@ const Navigation = createStackNavigator({
 });
 
 const App = () => {
-
   let apiKey = process.env['STREAM_API_KEY'];
   let appId = process.env['STREAM_APP_ID'];
   let token = process.env['STREAM_TOKEN'];

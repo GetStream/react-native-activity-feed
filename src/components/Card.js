@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import { mergeStyles } from '../utils';
 
 const Card = ({ item, ...props }) => {
@@ -8,9 +15,10 @@ const Card = ({ item, ...props }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        Linking.openURL(url)
+        Linking.openURL(url);
       }}
-      style={mergeStyles('container', styles, props)}>
+      style={mergeStyles('container', styles, props)}
+    >
       <Image
         style={mergeStyles('image', styles, props)}
         source={image ? { uri: image } : require('../images/placeholder.png')}
