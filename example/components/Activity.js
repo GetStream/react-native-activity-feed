@@ -137,7 +137,7 @@ export default class Activity extends React.Component<Props> {
 
         {attachments &&
           attachments.images &&
-          !!attachments.images.length && (
+          Boolean(attachments.images.length) && (
             <Image
               style={{ width: width, height: width }}
               source={{ uri: attachments.images[0] }}
