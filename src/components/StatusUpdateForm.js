@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  ScrollView,
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
@@ -32,7 +31,6 @@ export default class StatusUpdateForm extends React.Component {
     this.props.feedUserId = this.props.feedUserId || props.session.userId;
     this._handleOgDebounced = _.debounce(this.handleOG, 250);
     this.TextInput = React.createRef();
-    this.ScrollView = React.createRef();
   }
 
   static defaultProps = {
@@ -138,12 +136,7 @@ export default class StatusUpdateForm extends React.Component {
       });
   }
 
-  handleScroll() {
-    this.ScrollView.current.scrollToEnd();
-  }
-
   handleOG(text) {
-    this.handleScroll();
     if (this.state.ogScraping) {
       return;
     }
@@ -232,9 +225,13 @@ export default class StatusUpdateForm extends React.Component {
               size={48}
             />
           )}
-          <ScrollView
-            style={mergeStyles('textInput', styles, this.props)}
-            ref={this.ScrollView}
+          <View
+            style={[
+              ...mergeStyles('textInput', styles, this.props),
+              {
+                marginBottom: this.state.orientation === 'portrait' ? 300 : 250,
+              },
+            ]}
           >
             <TextInput
               multiline
@@ -246,7 +243,7 @@ export default class StatusUpdateForm extends React.Component {
               placeholder="Share something..."
               underlineColorAndroid="transparent"
             />
-          </ScrollView>
+          </View>
         </View>
 
         <View>
@@ -345,6 +342,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 10,
     marginLeft: 15,
+    marginBottom: 250,
   },
   accessory: {
     borderTopColor: '#DADFE3',
