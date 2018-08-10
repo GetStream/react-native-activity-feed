@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
@@ -195,10 +195,15 @@ export default class StatusUpdateForm extends React.Component {
   render() {
     Dimensions.addEventListener('change', (dimensions) => {
       // you get:
-      this.setState({
-        orientation: dimensions.window.width > dimensions.window.height ? 'landscape' : 'portrait'
-      }, () => console.log(this.state.orientation));
-
+      this.setState(
+        {
+          orientation:
+            dimensions.window.width > dimensions.window.height
+              ? 'landscape'
+              : 'portrait',
+        },
+        () => console.log(this.state.orientation),
+      );
     });
     return (
       <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
