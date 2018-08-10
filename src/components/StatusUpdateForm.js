@@ -135,36 +135,44 @@ export default class StatusUpdateForm extends React.Component {
       return;
     }
 
-    if (urls[0] !== this.state.ogLink) {
-      const url = urls[0];
-      console.log(`retrieving ${url} from OG API`);
-      this.setState({
-        ogScraping: true,
-        ogLink: url,
-        og: url === this.state.ogLink ? this.state.og : null,
-      });
-      this.props.session
-        .og(url)
-        .then((resp) => {
-          console.log(resp);
-          const oldStateUrls = this.state.urls;
-          this.setState(
-            {
-              og: Object.keys(resp).length > 0 ? { ...resp, url: url } : null, // Added url manually from the entered URL
-              ogScraping: false,
-              urls: [...oldStateUrls, url],
-            },
-            () => text.replace(url, ''),
-          );
-        })
-        .catch((err) => {
-          console.log(err);
-          this.setState({
-            ogScraping: false,
-            og: null,
-          });
+    console.log(urls);
+    console.log(this.state.dismissedUrls.indexOf(urls[0]) > -1);
+    urls.forEach((url) => {
+      if (
+        url !== this.state.ogLink &&
+        !(this.state.dismissedUrls.indexOf(url) > -1) &&
+        !this.state.og &&
+        urls.indexOf(url) > -1
+      ) {
+        console.log(`retrieving ${url} from OG API`);
+        this.setState({
+          ogScraping: true,
+          ogLink: url,
+          og: url === this.state.ogLink ? this.state.og : null,
         });
-    }
+        this.props.session
+          .og(url)
+          .then((resp) => {
+            console.log(resp);
+            const oldStateUrls = this.state.urls;
+            this.setState(
+              {
+                og: Object.keys(resp).length > 0 ? { ...resp, url: url } : null, // Added url manually from the entered URL
+                ogScraping: false,
+                urls: [...oldStateUrls, url],
+              },
+              () => text.replace(url, ''),
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+            this.setState({
+              ogScraping: false,
+              og: null,
+            });
+          });
+      }
+    });
   }
 
   _onPressDismiss = (url) => {
@@ -172,6 +180,9 @@ export default class StatusUpdateForm extends React.Component {
     this.setState(
       {
         dismissedUrls: [...oldDismissedUrls, url],
+        ogScraping: false,
+        ogLink: null,
+        og: null,
       },
       () => {
         console.log('dismissedUrls: ', this.state.dismissedUrls);
