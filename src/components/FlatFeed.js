@@ -13,6 +13,7 @@ import type {
   BaseActivityResponse,
   BaseAppCtx,
   BaseUserSession,
+  ReactComponentFunction,
 } from '../types';
 import type { FeedRequestOptions, FeedResponse, StreamFeed } from 'getstream';
 
@@ -20,7 +21,7 @@ type Props = {|
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
-  renderActivity?: (any) => React.Element<any>,
+  renderActivity?: ReactComponentFunction,
   ActivityComponent?: ReactElementCreator,
   doFeedRequest?: (
     session: BaseUserSession,

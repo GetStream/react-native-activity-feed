@@ -2,7 +2,11 @@
 
 import * as React from 'react';
 import type { NavigationScreenProp } from 'react-navigation';
-import type { ActivityResponse, StreamUserSession } from 'getstream';
+import type {
+  ActivityResponse,
+  StreamUserSession,
+  ReactionKindMap,
+} from 'getstream';
 import type { AppCtx } from './Context';
 
 export type NavigationProps = {|
@@ -22,11 +26,16 @@ type StyleSheetLike = { [string]: {} } | StyleSheetInstance;
 export type StylesProps = {|
   styles?: StyleSheetLike,
 |};
+export type StyleProps = {|
+  style?: {} | StyleSheetInternalStyleIdentifier,
+|};
 
 type ReactComponentClass = Class<React.Component<any>>;
-type ReactComponentFunction = (props: any) => ?React.Element<any>;
+export type ReactComponentFunction = (props: any) => ?React.Element<any>;
 export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
 
 export type BaseActivityResponse = ActivityResponse<{}, {}>;
 export type BaseAppCtx = AppCtx<{}>;
 export type BaseUserSession = StreamUserSession<{}>;
+
+export type BaseReactionMap = ReactionKindMap<Object, Object>;
