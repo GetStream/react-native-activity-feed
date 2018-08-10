@@ -24,7 +24,7 @@ export type StylesProps = {|
 |};
 
 type ReactComponentClass = Class<React.Component<any>>;
-type ReactComponentFunction = (props: any) => ?React.Element<any>;
+export type ReactComponentFunction = (props: any) => ?React.Element<any>;
 export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
 
 export type BaseActivityResponse = ActivityResponse<{}, {}>;
