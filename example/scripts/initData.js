@@ -136,6 +136,20 @@ async function main() {
   console.log(response.results[0].reaction_counts);
   console.log(response.results[0].own_reactions);
   console.log(response.results[0].latest_reactions);
+  await ignore409(() =>
+    Promise.all(
+      randomUsers.slice(11, 27).map((user, i) =>
+        user.feed('notification', batman.user.id).addActivity({
+          foreign_id: 'follow:batman-random-' + i,
+          time: '2018-08-10T13:12:' + i,
+
+          actor: user.user,
+          verb: 'follow',
+          object: batman.user,
+        }),
+      ),
+    ),
+  );
 
   await ignore409(() =>
     Promise.all(

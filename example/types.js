@@ -79,3 +79,6 @@ export type ReactionMap = {
   heart?: Array<Heart>,
   repost?: Array<Repost>,
 };
+
+export type NotificationActivity = ActivityResponse<UserData, {}>;
+export type NotificationActivities = Array<ActivityResponse<UserData, {}>>;
