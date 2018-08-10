@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  ScrollView,
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
@@ -31,6 +32,7 @@ export default class StatusUpdateForm extends React.Component {
     this.props.feedUserId = this.props.feedUserId || props.session.userId;
     this._handleOgDebounced = _.debounce(this.handleOG, 250);
     this.TextInput = React.createRef();
+    this.ScrollView = React.createRef();
   }
 
   static defaultProps = {
@@ -82,8 +84,22 @@ export default class StatusUpdateForm extends React.Component {
     });
   };
 
+  _removeImage = () => {
+    this.setState({
+      imageState: ImageState.NO_IMAGE,
+      image_url: null,
+      image: null,
+    });
+  };
+
   componentDidMount() {
     this.TextInput.current.focus();
+
+    const { width, height } = Dimensions.get('window');
+    this.setState({
+      orientation: width > height ? 'landscape' : 'portrait',
+    });
+
     this.props.registerSubmit(async () => {
       this.buildActivity();
     });
@@ -122,7 +138,12 @@ export default class StatusUpdateForm extends React.Component {
       });
   }
 
+  handleScroll() {
+    this.ScrollView.current.scrollToEnd();
+  }
+
   handleOG(text) {
+    this.handleScroll();
     if (this.state.ogScraping) {
       return;
     }
@@ -195,24 +216,26 @@ export default class StatusUpdateForm extends React.Component {
   render() {
     Dimensions.addEventListener('change', (dimensions) => {
       // you get:
-      this.setState(
-        {
-          orientation:
-            dimensions.window.width > dimensions.window.height
-              ? 'landscape'
-              : 'portrait',
-        },
-        () => console.log(this.state.orientation),
-      );
+      this.setState({
+        orientation:
+          dimensions.window.width > dimensions.window.height
+            ? 'landscape'
+            : 'portrait',
+      });
     });
     return (
       <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
         <View style={mergeStyles('newPostContainer', styles, this.props)}>
-          <Avatar
-            source={this.props.session.user.data.profileImage}
-            size={48}
-          />
-          <View style={mergeStyles('textInput', styles, this.props)}>
+          {this.state.orientation === 'portrait' && (
+            <Avatar
+              source={this.props.session.user.data.profileImage}
+              size={48}
+            />
+          )}
+          <ScrollView
+            style={mergeStyles('textInput', styles, this.props)}
+            ref={this.ScrollView}
+          >
             <TextInput
               multiline
               onChangeText={(text) => {
@@ -223,45 +246,12 @@ export default class StatusUpdateForm extends React.Component {
               placeholder="Share something..."
               underlineColorAndroid="transparent"
             />
-          </View>
+          </ScrollView>
         </View>
 
         <View>
           <KeyboardAccessory backgroundColor="#fff">
-            {this.state.image ? (
-              <View style={mergeStyles('imageContainer', styles, this.props)}>
-                <Image
-                  source={{ uri: this.state.image }}
-                  style={
-                    this.state.imageState === ImageState.UPLOADING
-                      ? styles.image_loading
-                      : styles.image
-                  }
-                />
-                <View style={mergeStyles('imageOverlay', styles, this.props)}>
-                  {this.state.imageState === ImageState.UPLOADING ? (
-                    <ActivityIndicator color="#ffffff" />
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.setState({
-                          imageState: ImageState.NO_IMAGE,
-                          image_url: null,
-                          image: null,
-                        });
-                      }}
-                    >
-                      <Image
-                        source={require('../images/icons/close-white.png')}
-                        style={{ width: 24, height: 24 }}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </View>
-              </View>
-            ) : null}
-
-            {this.state.og ? (
+            {this.state.og && this.state.orientation === 'portrait' ? (
               <OgBlock
                 onPressDismiss={this._onPressDismiss}
                 og={this.state.og}
@@ -278,15 +268,60 @@ export default class StatusUpdateForm extends React.Component {
               />
             ) : null}
             <View style={mergeStyles('accessory', styles, this.props)}>
-              <TouchableOpacity
-                title="Pick an image from camera roll"
-                onPress={this._pickImage}
-              >
-                <Image
-                  source={require('../images/icons/gallery.png')}
-                  style={{ width: 24, height: 24 }}
+              {this.state.image ? (
+                <View style={mergeStyles('imageContainer', styles, this.props)}>
+                  <Image
+                    source={{ uri: this.state.image }}
+                    style={
+                      this.state.imageState === ImageState.UPLOADING
+                        ? styles.image_loading
+                        : styles.image
+                    }
+                  />
+                  <View style={mergeStyles('imageOverlay', styles, this.props)}>
+                    {this.state.imageState === ImageState.UPLOADING ? (
+                      <ActivityIndicator color="#ffffff" />
+                    ) : (
+                      <TouchableOpacity onPress={this._removeImage}>
+                        <Image
+                          source={require('../images/icons/close-white.png')}
+                          style={{ width: 24, height: 24 }}
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </View>
+              ) : (
+                <TouchableOpacity
+                  title="Pick an image from camera roll"
+                  onPress={this._pickImage}
+                >
+                  <Image
+                    source={require('../images/icons/gallery.png')}
+                    style={{ width: 24, height: 24 }}
+                  />
+                </TouchableOpacity>
+              )}
+              {this.state.og && this.state.orientation === 'landscape' ? (
+                <OgBlock
+                  onPressDismiss={this._onPressDismiss}
+                  og={this.state.og}
+                  styles={{
+                    wrapper: {
+                      padding: 0,
+                      paddingTop: 0,
+                      paddingBottom: 0,
+                      marginTop: -15,
+                      marginBottom: -15,
+                      marginLeft: 15,
+                      borderTopColor: 'transparent',
+                      borderTopWidth: 1,
+                      flex: 1,
+                    },
+                    textStyle: { fontSize: 12 },
+                  }}
                 />
-              </TouchableOpacity>
+              ) : null}
             </View>
           </KeyboardAccessory>
         </View>
@@ -317,31 +352,36 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     width: 100 + '%',
     padding: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   imageContainer: {
     position: 'relative',
-    width: 50,
-    height: 50,
-    margin: 15,
+    width: 30,
+    height: 30,
+    marginTop: -3,
+    marginBottom: -3,
+    overflow: 'hidden',
+    borderRadius: 4,
   },
   imageOverlay: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
     padding: 8,
     backgroundColor: 'rgba(0,0,0,0.4)',
   },
   image: {
     position: 'absolute',
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
   },
   image_loading: {
     position: 'absolute',
-    width: 50,
-    height: 50,
+    width: 30,
+    height: 30,
     opacity: 0.5,
   },
 });
