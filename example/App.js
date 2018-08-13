@@ -15,11 +15,11 @@ import EditProfileScreen from './screens/EditProfileScreen';
 import SinglePostScreen from './screens/SinglePostScreen';
 import StatusUpdateScreen from './screens/StatusUpdateScreen';
 
+// $FlowFixMe
 const NotificationsStack = createStackNavigator({
   Notifications: { screen: NotificationsScreen },
 });
 
-// $FlowFixMe
 const ProfileStack = createStackNavigator({
   Profile: { screen: ProfileScreen },
 });

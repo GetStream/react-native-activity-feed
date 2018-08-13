@@ -1,38 +1,65 @@
+// @flow
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import AttachedObject from './AttachedObject';
-import { UserBar } from 'react-native-activity-feed';
+import { View, StyleSheet, Text } from 'react-native';
+import AttachedActivity from './AttachedActivity';
+import { UserBar, humanizeTimestamp } from 'react-native-activity-feed';
+import { userOrDefault } from '../utils';
 
-const Notification = ({ item }) => {
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import HeartIcon from '../images/icons/heart.png';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import RepostIcon from '../images/icons/repost.png';
+
+import type { NotificationActivities } from '../types';
+
+type Props = {
+  activities: NotificationActivities,
+};
+
+const Notification = ({ activities }: Props) => {
   let headerText, headerSubtext, icon;
-  if (item.actors.length > 1) {
-    headerText = `${item.actors[0].user_name} and ${item.actors.length -
-      1} others `;
+  let lastActivity = activities[0];
+  let lastActor = userOrDefault(lastActivity.actor);
+  if (activities.length == 1) {
+    headerText = lastActor.data.name;
+  } else if (activities.length == 2) {
+    headerText = `${lastActor.data.name} and 1 other`;
   } else {
-    headerText = item.actors[0].user_name;
+    headerText = `${lastActor.data.name} and ${activities.length - 1} others `;
+  }
+  if (typeof lastActivity.object === 'string') {
+    return null;
   }
 
-  if (item.type === 'like') {
-    headerSubtext = `liked your ${item.object.type}`;
-    icon = require('../images/icons/heart.png');
+  if (lastActivity.verb === 'heart') {
+    headerSubtext = 'liked';
+    icon = HeartIcon;
+  } else if (lastActivity.verb === 'repost') {
+    headerSubtext = `reposted`;
+    icon = RepostIcon;
+  } else {
+    return null;
   }
 
-  if (item.type === 'repost') {
-    headerSubtext = `reposted your ${item.object.type}`;
-    icon = require('../images/icons/repost.png');
-  }
+  headerSubtext += ` your ${lastActivity.object.verb}`;
 
   return (
     <View style={styles.item}>
       <UserBar
         username={headerText}
-        avatar={item.actors[0].user_image}
+        avatar={lastActor.data.profileImage}
         subtitle={headerSubtext}
-        type={item.type}
         icon={icon}
       />
-      <View style={{ marginLeft: item.object.type !== 'link' ? 58 : 0 }}>
-        <AttachedObject item={item.object} />
+      <View
+        style={{ marginLeft: lastActivity.object.verb !== 'link' ? 58 : 0 }}
+      >
+        <AttachedActivity activity={lastActivity.object} />
+        <View style={styles.footer}>
+          <Text style={styles.footerTimestamp}>
+            {humanizeTimestamp(lastActivity.time)}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -47,6 +74,15 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     flexDirection: 'column',
+  },
+  footer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  footerTimestamp: {
+    fontSize: 13,
+    color: '#535B61',
   },
 });
 

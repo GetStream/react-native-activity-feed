@@ -23,7 +23,7 @@ export type ChildrenProps = {|
 |};
 
 export type UserData = {
-  name?: string,
+  name: string,
   url?: string,
   desc?: string,
   profileImage?: string,
@@ -79,3 +79,6 @@ export type ReactionMap = {
   heart?: Array<Heart>,
   repost?: Array<Repost>,
 };
+
+export type NotificationActivity = ActivityResponse<UserData, {}>;
+export type NotificationActivities = Array<ActivityResponse<UserData, {}>>;

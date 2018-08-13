@@ -35,6 +35,7 @@ declare module 'getstream' {
   declare type FollowResponse = DurationResponse;
 
   declare class StreamUserSession<UserData> {
+    userId: string;
     user: StreamUser<UserData>;
     feed<CustomActivityData>(
       feedGroup: string,

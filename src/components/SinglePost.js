@@ -40,6 +40,7 @@ export default class SinglePost extends React.Component<Props> {
             .feed(feedGroup, userId)
             .getActivityDetail(this.props.activity.id, options);
         }}
+        noPagination
       />
     );
   }
