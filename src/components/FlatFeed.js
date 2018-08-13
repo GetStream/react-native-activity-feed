@@ -246,7 +246,19 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     });
   };
 
-  _renderActivity = ({ item }: { item: BaseActivityResponse }) => {
+  _renderWrappedActivity = ({ item }: any) => {
+    return (
+      <ImmutableItemWrapper
+        renderItem={this._renderActivity}
+        item={item}
+        navigation={this.props.navigation}
+        feedGroup={this.props.feedGroup}
+        userId={this.props.userId}
+      />
+    );
+  };
+
+  _renderActivity = (item: BaseActivityResponse) => {
     let args = {
       activity: item,
       onToggleReaction: this._onToggleReaction,
@@ -281,15 +293,29 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
           />
         }
         data={this.state.activityOrder.map((id) =>
-          this.state.activities.get(id).toJS(),
+          this.state.activities.get(id),
         )}
-        keyExtractor={(item) => item.id}
-        renderItem={this._renderActivity}
+        keyExtractor={(item) => item.get('id')}
+        renderItem={this._renderWrappedActivity}
         onEndReached={this.props.noPagination ? undefined : this._loadNextPage}
       />
     );
   }
 }
+
+type ImmutableItemWrapperProps = {
+  renderItem: (item: any) => any,
+  item: any,
+};
+
+class ImmutableItemWrapper extends React.PureComponent<
+  ImmutableItemWrapperProps,
+> {
+  render() {
+    return this.props.renderItem(this.props.item.toJS());
+  }
+}
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
 });
