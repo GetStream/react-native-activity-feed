@@ -1,11 +1,13 @@
 // @flow
 import React from 'react';
+import { View, Text } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
 } from 'react-navigation';
 
 import Icon from './components/Icon';
+import IconBadge from './components/IconBadge';
 import { Avatar, StreamApp } from 'react-native-activity-feed';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
@@ -14,6 +16,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import EditProfileScreen from './screens/EditProfileScreen';
 import SinglePostScreen from './screens/SinglePostScreen';
 import StatusUpdateScreen from './screens/StatusUpdateScreen';
+import { StreamContext } from 'react-native-activity-feed';
 
 // $FlowFixMe
 const NotificationsStack = createStackNavigator({
@@ -48,7 +51,35 @@ const TabNavigator = createBottomTabNavigator(
         } else if (routeName === 'Search') {
           return <Icon name="search" />;
         } else if (routeName === 'Notifications') {
-          return <Icon name="notifications" />;
+          return (
+            <StreamContext.Consumer>
+              {(appCtx) => {
+                const notificationCount = appCtx.session
+                  .feed('notification')
+                  .get({ limit: 0 });
+                return (
+                  <IconBadge
+                    mainElement={<Icon name="notifications" />}
+                    hidden={notificationCount ? false : true}
+                    badgeElement={
+                      <View
+                        style={{
+                          backgroundColor: 'red',
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Text style={{ fontSize: 8, color: '#fff' }}>
+                          {/* {notificationCount._state} */}
+                        </Text>
+                      </View>
+                    }
+                  />
+                );
+              }}
+            </StreamContext.Consumer>
+          );
         } else if (routeName === 'Profile') {
           return (
             // TODO: Link this to the current user
@@ -72,7 +103,10 @@ const doNotShowHeaderOption = {
 };
 
 const Navigation = createStackNavigator({
-  Tabs: { screen: TabNavigator, ...doNotShowHeaderOption },
+  Tabs: {
+    screen: TabNavigator,
+    ...doNotShowHeaderOption,
+  },
   SinglePost: { screen: SinglePostScreen },
   NewPost: { screen: StatusUpdateScreen },
   EditProfile: { screen: EditProfileScreen },

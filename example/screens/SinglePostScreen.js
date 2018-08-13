@@ -36,7 +36,7 @@ export default class SinglePostScreen extends React.Component<Props> {
     const feedGroup = navigation.getParam('feedGroup');
     const userId = navigation.getParam('userId');
     return (
-      <SafeAreaView style={styles.container} behaviour="height" enabled>
+      <SafeAreaView style={styles.container}>
         <SinglePost
           activity={activity}
           feedGroup={feedGroup}
@@ -58,6 +58,8 @@ export default class SinglePostScreen extends React.Component<Props> {
             </React.Fragment>
           )}
         />
+        <View style={{ height: 78 }} />
+
         <KeyboardAccessory>
           <View style={styles.replyContainer}>
             <Avatar
@@ -82,6 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   replyContainer: {
+    flex: 1,
     height: 78,
     shadowOffset: { width: 0, height: -3 },
     shadowColor: 'black',
