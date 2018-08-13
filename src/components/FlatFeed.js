@@ -213,7 +213,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   _loadNextPage = async () => {
     let lastResponse = this.state.lastResponse;
-    if (!lastResponse) {
+    if (!lastResponse || !lastResponse.next) {
       return;
     }
     let cancel = false;
