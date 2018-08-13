@@ -14,3 +14,13 @@ export function userOrDefault(user: UserResponse | 'NotFound') {
   }
   return user;
 }
+
+export function activityOrDefault(user: UserResponse | 'NotFound') {
+  if (user === 'NotFound') {
+    return {
+      id: 'NotFound',
+      data: { name: 'Unknown', profileImage: undefined },
+    };
+  }
+  return user;
+}

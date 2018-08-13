@@ -42,11 +42,10 @@ export default class NotificationScreen extends React.Component<Props> {
   }
 
   _renderGroup = ({ activityGroup }: any) => {
-    console.log(activityGroup);
     if (activityGroup.activities[0].verb === 'follow') {
       return <Follow activities={activityGroup.activities} />;
     } else {
-      return <Notification item={activityGroup} />;
+      return <Notification activities={activityGroup.activities} />;
     }
   };
 

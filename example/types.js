@@ -23,7 +23,7 @@ export type ChildrenProps = {|
 |};
 
 export type UserData = {
-  name?: string,
+  name: string,
   url?: string,
   desc?: string,
   profileImage?: string,
