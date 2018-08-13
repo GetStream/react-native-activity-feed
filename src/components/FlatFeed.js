@@ -1,7 +1,8 @@
 // @flow
 import * as React from 'react';
-import { ScrollView, FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet } from 'react-native';
 import immutable from 'immutable';
+import URL from 'url-parse';
 
 import { StreamContext } from '../Context';
 import { mergeStyles } from '../utils';
@@ -29,6 +30,7 @@ type Props = {|
     userId?: string,
     options?: FeedRequestOptions,
   ) => Promise<FeedResponse<{}, {}>>,
+  noPagination?: boolean,
   analyticsLocation?: string,
   ...NavigationProps,
   ...ChildrenProps,
@@ -48,6 +50,7 @@ type State = {
   activityOrder: Array<string>,
   activities: any,
   refreshing: boolean,
+  lastResponse: ?FeedResponse<{}, {}>,
 };
 
 class FlatFeedInner extends React.Component<PropsInner, State> {
@@ -56,6 +59,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     this.state = {
       activityOrder: [],
       activities: immutable.Map(),
+      lastResponse: null,
       refreshing: false,
     };
   }
@@ -95,7 +99,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
       user: this.props.user.full,
     });
 
-    this.setState((prevState) => {
+    return this.setState((prevState) => {
       let activities = prevState.activities
         .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v + 1)
         .updateIn(
@@ -120,7 +124,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     await this.props.session.reactions.delete(id);
     this._trackAnalytics('un' + kind, activity, options.trackAnalytics);
 
-    this.setState((prevState) => {
+    return this.setState((prevState) => {
       let activities = prevState.activities
         .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v - 1)
         .updateIn(
@@ -159,18 +163,16 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     }
   };
 
-  _refresh = async () => {
-    this.setState({ refreshing: true });
-
+  _doFeedRequest = async (extraOptions) => {
     let options: FeedRequestOptions = {
       withReactionCounts: true,
       withOwnReactions: true,
       ...this.props.options,
+      ...extraOptions,
     };
 
-    let response;
     if (this.props.doFeedRequest) {
-      response = await this.props.doFeedRequest(
+      return this.props.doFeedRequest(
         this.props.session,
         this.props.feedGroup,
         this.props.userId,
@@ -181,24 +183,68 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
         this.props.feedGroup,
         this.props.userId,
       );
-      response = await feed.get(options);
+      return feed.get(options);
     }
+  };
+  _responseToActivityMap(response) {
+    return immutable.fromJS(
+      response.results.reduce((map, a) => {
+        map[a.id] = a;
+        return map;
+      }, {}),
+    );
+  }
 
-    let activityMap = response.results.reduce((map, a) => {
-      map[a.id] = a;
-      return map;
-    }, {});
+  _refresh = async () => {
+    await this.setState({ refreshing: true });
+    let response = await this._doFeedRequest();
 
-    this.setState({
+    return this.setState({
       activityOrder: response.results.map((a) => a.id),
-      activities: immutable.fromJS(activityMap),
+      activities: this._responseToActivityMap(response),
       refreshing: false,
+      lastResponse: response,
     });
   };
 
   async componentDidMount() {
     await this._refresh();
   }
+
+  _loadNextPage = async () => {
+    let lastResponse = this.state.lastResponse;
+    if (!lastResponse) {
+      return;
+    }
+    let cancel = false;
+    await this.setState((prevState) => {
+      if (prevState.refreshing) {
+        cancel = true;
+        return {};
+      }
+      return { refreshing: true };
+    });
+
+    if (cancel) {
+      return;
+    }
+
+    let nextURL = new URL(lastResponse.next, true);
+    let response = await this._doFeedRequest(nextURL.query);
+    return this.setState((prevState) => {
+      let activities = prevState.activities.merge(
+        this._responseToActivityMap(response),
+      );
+      return {
+        activityOrder: prevState.activityOrder.concat(
+          response.results.map((a) => a.id),
+        ),
+        activities: activities,
+        refreshing: false,
+        lastResponse: response,
+      };
+    });
+  };
 
   _renderActivity = ({ item }: { item: BaseActivityResponse }) => {
     let args = {
@@ -225,7 +271,8 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   render() {
     return (
-      <ScrollView
+      <FlatList
+        ListHeaderComponent={this.props.children}
         style={mergeStyles('container', styles, this.props)}
         refreshControl={
           <RefreshControl
@@ -233,16 +280,13 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
             onRefresh={this._refresh}
           />
         }
-      >
-        {this.props.children}
-        <FlatList
-          data={this.state.activityOrder.map((id) =>
-            this.state.activities.get(id).toJS(),
-          )}
-          keyExtractor={(item) => item.id}
-          renderItem={this._renderActivity}
-        />
-      </ScrollView>
+        data={this.state.activityOrder.map((id) =>
+          this.state.activities.get(id).toJS(),
+        )}
+        keyExtractor={(item) => item.id}
+        renderItem={this._renderActivity}
+        onEndReached={this.props.noPagination ? undefined : this._loadNextPage}
+      />
     );
   }
 }

@@ -140,6 +140,24 @@ async function main() {
 
     content: 'Great podcast with @getstream and @feeds! Thanks guys!',
   });
+
+  let adds = [];
+  for (let i = 1; i < 41; i++) {
+    adds.push(
+      batman.feed('timeline').addActivity({
+        foreign_id: 'filler-i',
+        time: '2018-07-10T01:23:' + (60 - i),
+
+        actor: batman.user,
+        verb: 'post',
+        object: 'filler number ' + i,
+
+        content: 'filler number ' + i,
+      }),
+    );
+  }
+  await Promise.all(adds);
+
   response = await batman.feed('timeline').get({
     withReactionCounts: true,
     withOwnReactions: true,
