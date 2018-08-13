@@ -127,6 +127,9 @@ declare module 'getstream' {
     addActivity(
       ActivityArgData<UserData, CustomActivityData>,
     ): Promise<ActivityResponse<UserData, CustomActivityData>>;
+    addActivities(
+      Array<ActivityArgData<UserData, CustomActivityData>>,
+    ): Promise<Array<ActivityResponse<UserData, CustomActivityData>>>;
   }
 
   declare type ReactionKindMap<UserData, ReactionData> = {

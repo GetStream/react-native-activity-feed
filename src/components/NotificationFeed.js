@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
-import { ScrollView, FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet } from 'react-native';
+import URL from 'url-parse';
 
 import { StreamContext } from '../Context';
 import { mergeStyles } from '../utils';
@@ -27,6 +28,7 @@ type Props = {|
     options?: FeedRequestOptions,
   ) => Promise<FeedResponse<{}, {}>>,
   analyticsLocation?: string,
+  noPagination?: boolean,
   ...NavigationProps,
   ...ChildrenProps,
   ...StylesProps,
@@ -35,7 +37,7 @@ type Props = {|
 export default function NotificationFeed(props: Props) {
   return (
     <StreamContext.Consumer>
-      {(appCtx) => <FlatFeedInner {...props} {...appCtx} />}
+      {(appCtx) => <NotificationFeedInner {...props} {...appCtx} />}
     </StreamContext.Consumer>
   );
 }
@@ -44,49 +46,81 @@ type PropsInner = {| ...Props, ...BaseAppCtx |};
 type State = {
   groups: Array<Object>,
   refreshing: boolean,
+  lastResponse: ?FeedResponse<{}, {}>,
 };
 
-class FlatFeedInner extends React.Component<PropsInner, State> {
+class NotificationFeedInner extends React.Component<PropsInner, State> {
   constructor(props: PropsInner) {
     super(props);
     this.state = {
       groups: [],
       refreshing: false,
+      lastResponse: null,
     };
   }
   _feedGroup = () => {
     return this.props.feedGroup || 'notification';
   };
 
-  _refresh = async () => {
-    this.setState({ refreshing: true });
-
+  _doFeedRequest = async (extraOptions) => {
     let options: FeedRequestOptions = {
-      withReactionCounts: true,
-      withOwnReactions: true,
       ...this.props.options,
+      ...extraOptions,
     };
 
-    let response;
     let { doFeedRequest } = this.props;
     if (doFeedRequest) {
-      response = await doFeedRequest(
+      return await doFeedRequest(
         this.props.session,
         this._feedGroup(),
         this.props.userId,
         options,
       );
-    } else {
-      let feed: StreamFeed<{}, {}> = this.props.session.feed(
-        this._feedGroup(),
-        this.props.userId,
-      );
-      response = await feed.get(options);
     }
 
+    let feed: StreamFeed<{}, {}> = this.props.session.feed(
+      this._feedGroup(),
+      this.props.userId,
+    );
+    return await feed.get(options);
+  };
+
+  _refresh = async () => {
+    this.setState({ refreshing: true });
+    let response = await this._doFeedRequest();
     this.setState({
       groups: response.results,
       refreshing: false,
+      lastResponse: response,
+    });
+  };
+
+  _loadNextPage = async () => {
+    let lastResponse = this.state.lastResponse;
+    if (!lastResponse || !lastResponse.next) {
+      return;
+    }
+    let cancel = false;
+    await this.setState((prevState) => {
+      if (prevState.refreshing) {
+        cancel = true;
+        return {};
+      }
+      return { refreshing: true };
+    });
+
+    if (cancel) {
+      return;
+    }
+
+    let nextURL = new URL(lastResponse.next, true);
+    let response = await this._doFeedRequest(nextURL.query);
+    return this.setState((prevState) => {
+      return {
+        groups: prevState.groups.concat(response.results),
+        refreshing: false,
+        lastResponse: response,
+      };
     });
   };
 
@@ -94,9 +128,21 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     await this._refresh();
   }
 
-  _renderGroup = ({ item }: { item: BaseActivityResponse }) => {
+  _renderWrappedGroup = ({ item }: { item: BaseActivityResponse }) => {
+    return (
+      <PureItemWrapper
+        renderItem={this._renderGroup}
+        item={item}
+        navigation={this.props.navigation}
+        feedGroup={this._feedGroup()}
+        userId={this.props.userId}
+      />
+    );
+  };
+  _renderGroup = (item: BaseActivityResponse) => {
     let args = {
       activityGroup: item,
+      navigation: this.props.navigation,
       feedGroup: this._feedGroup(),
       userId: this.props.userId,
     };
@@ -106,7 +152,8 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   render() {
     return (
-      <ScrollView
+      <FlatList
+        ListHeaderComponent={this.props.children}
         style={mergeStyles('container', styles, this.props)}
         refreshControl={
           <RefreshControl
@@ -114,17 +161,26 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
             onRefresh={this._refresh}
           />
         }
-      >
-        {this.props.children}
-        <FlatList
-          data={this.state.groups}
-          keyExtractor={(item) => item.id}
-          renderItem={this._renderGroup}
-        />
-      </ScrollView>
+        data={this.state.groups}
+        keyExtractor={(item) => item.id}
+        renderItem={this._renderWrappedGroup}
+        onEndReached={this.props.noPagination ? undefined : this._loadNextPage}
+      />
     );
   }
 }
+
+type PureItemWrapperProps = {
+  renderItem: (item: any) => any,
+  item: any,
+};
+
+class PureItemWrapper extends React.PureComponent<PureItemWrapperProps> {
+  render() {
+    return this.props.renderItem(this.props.item);
+  }
+}
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
 });

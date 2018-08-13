@@ -3,6 +3,7 @@ import React from 'react';
 import { StatusBar, Image, View } from 'react-native';
 
 import Notification from '../components/Notification';
+import Activity from '../components/Activity';
 import Follow from '../components/Notifications/Follow';
 import { NotificationFeed } from 'react-native-activity-feed';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
@@ -42,10 +43,19 @@ export default class NotificationScreen extends React.Component<Props> {
   }
 
   _renderGroup = ({ activityGroup }: any) => {
-    if (activityGroup.activities[0].verb === 'follow') {
+    let verb = activityGroup.activities[0].verb;
+    if (verb === 'follow') {
       return <Follow activities={activityGroup.activities} />;
-    } else {
+    } else if (verb === 'heart' || verb === 'repost') {
       return <Notification activities={activityGroup.activities} />;
+    } else {
+      return (
+        <Activity
+          activity={activityGroup.activities[0]}
+          feedGroup="notification"
+          navigation={this.props.navigation}
+        />
+      );
     }
   };
 

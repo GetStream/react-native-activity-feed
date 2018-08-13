@@ -178,13 +178,12 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
         this.props.userId,
         options,
       );
-    } else {
-      let feed: StreamFeed<{}, {}> = this.props.session.feed(
-        this.props.feedGroup,
-        this.props.userId,
-      );
-      return feed.get(options);
     }
+    let feed: StreamFeed<{}, {}> = this.props.session.feed(
+      this.props.feedGroup,
+      this.props.userId,
+    );
+    return feed.get(options);
   };
   _responseToActivityMap(response) {
     return immutable.fromJS(
@@ -246,7 +245,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     });
   };
 
-  _renderWrappedActivity = ({ item }: any) => {
+  _renderWrappedActivity = ({ item }: { item: any }) => {
     return (
       <ImmutableItemWrapper
         renderItem={this._renderActivity}
