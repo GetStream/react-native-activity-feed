@@ -25,3 +25,5 @@ yarn-error.log*
 
 # Don't submit src to npm to avoid confusion about which file is used
 /src/
+
+.babelrc
