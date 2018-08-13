@@ -82,6 +82,18 @@ async function main() {
   await batman.followUser(league.user);
   await league.followUser(batman.user);
 
+  let batmanActivity = await batman.feed('user').addActivity({
+    foreign_id: 'batman-3',
+    time: '2018-08-13T01:23:47',
+
+    actor: batman.user,
+    verb: 'post',
+    object: '-',
+
+    content:
+      'Just beat the joker again. Will he ever give me a real challenge?',
+  });
+
   let fluffActivity = await fluff.feed('user').addActivity({
     foreign_id: 'fluff-3',
     time: '2018-07-19T13:23:47',
@@ -136,6 +148,46 @@ async function main() {
   console.log(response.results[0].reaction_counts);
   console.log(response.results[0].own_reactions);
   console.log(response.results[0].latest_reactions);
+
+  await ignore409(() =>
+    Promise.all(
+      randomUsers.slice(5, 9).map((user, i) =>
+        user.react('heart', batmanActivity, {
+          id: `random-heart-batman-3-${i}`,
+          targetFeeds: [user.feed('notification', batman.user.id)],
+        }),
+      ),
+    ),
+  );
+
+  await ignore409(() =>
+    Promise.all(
+      randomUsers.slice(8, 17).map((user, i) =>
+        user.react('repost', batmanActivity, {
+          id: `random-repost-batman-3-${i}`,
+          data: {
+            text: 'The Joker is so dumb, hahaha!!!!' + i,
+          },
+          targetFeeds: [user.feed('notification', batman.user.id)],
+        }),
+      ),
+    ),
+  );
+
+  await ignore409(() =>
+    Promise.all(
+      randomUsers.slice(11, 27).map((user, i) =>
+        user.feed('notification', batman.user.id).addActivity({
+          foreign_id: 'follow:batman-random-' + i,
+          time: '2018-08-10T13:12:' + i,
+
+          actor: user.user,
+          verb: 'follow',
+          object: batman.user,
+        }),
+      ),
+    ),
+  );
 
   await ignore409(() =>
     Promise.all(

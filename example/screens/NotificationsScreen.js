@@ -1,39 +1,32 @@
+//@flow
 import React from 'react';
-import {
-  StatusBar,
-  ScrollView,
-  FlatList,
-  SafeAreaView,
-  Image,
-  View,
-} from 'react-native';
-
-import { notifications } from '../mock/data';
+import { StatusBar, Image, View } from 'react-native';
 
 import Notification from '../components/Notification';
 import Follow from '../components/Notifications/Follow';
+import { NotificationFeed } from 'react-native-activity-feed';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import CategoriesIcon from '../images/icons/categories.png';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import PostIcon from '../images/icons/post.png';
 
-class NotificationScreen extends React.Component {
-  state = {
-    notifications: notifications,
-  };
+import type { NavigationProps } from '../types';
+import type { NavigationEventSubscription } from 'react-navigation';
+
+type Props = NavigationProps;
+export default class NotificationScreen extends React.Component<Props> {
+  _navListener: NavigationEventSubscription;
 
   static navigationOptions = () => ({
     title: 'NOTIFICATIONS',
     headerLeft: (
       <View style={{ paddingLeft: 15 }}>
-        <Image
-          source={require('../images/icons/categories.png')}
-          style={{ width: 23, height: 23 }}
-        />
+        <Image source={CategoriesIcon} style={{ width: 23, height: 23 }} />
       </View>
     ),
     headerRight: (
       <View style={{ paddingRight: 15 }}>
-        <Image
-          source={require('../images/icons/post.png')}
-          style={{ width: 23, height: 23 }}
-        />
+        <Image source={PostIcon} style={{ width: 23, height: 23 }} />
       </View>
     ),
     headerTitleStyle: {
@@ -48,35 +41,20 @@ class NotificationScreen extends React.Component {
     });
   }
 
-  _keyExtractor = (item) => item.id;
-
-  _renderItem = ({ item }) => {
-    if (item.type === 'follow') {
-      return (
-        <Follow onPressAvatar={this._onPressAvatar} items={item.follows} />
-      );
+  _renderGroup = ({ activityGroup }: any) => {
+    if (activityGroup.activities[0].verb === 'follow') {
+      return <Follow activities={activityGroup.activities} />;
     } else {
-      return <Notification item={item} />;
+      return <Notification activities={activityGroup.activities} />;
     }
   };
 
-  _onPressAvatar(id) {
-    console.log('hello ', id);
-  }
-
   render() {
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
-        <SafeAreaView>
-          <FlatList
-            data={this.state.notifications}
-            renderItem={this._renderItem}
-            keyExtractor={this._keyExtractor}
-          />
-        </SafeAreaView>
-      </ScrollView>
+      <NotificationFeed
+        renderGroup={this._renderGroup}
+        navigation={this.props.navigation}
+      />
     );
   }
 }
-
-export default NotificationScreen;

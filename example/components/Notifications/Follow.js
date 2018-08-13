@@ -1,33 +1,45 @@
+// @flow
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { Avatar } from 'react-native-activity-feed';
+// $FlowFixMe https://github.com/facebook/flow/issues/345
+import FollowersIcon from '../../images/icons/followers.png';
 
-const Follow = ({ items, onPressAvatar }) => {
+import type { NotificationActivities } from '../../types';
+
+import { userOrDefault } from '../../utils';
+
+type Props = {
+  activities: NotificationActivities,
+};
+
+const Follow = ({ activities }: Props) => {
   return (
     <View style={styles.item}>
-      {items.length !== 1 ? (
-        <Image
-          style={styles.icon}
-          source={require('../../images/icons/followers.png')}
-        />
+      {activities.length !== 1 ? (
+        <Image style={styles.icon} source={FollowersIcon} />
       ) : (
-        <TouchableOpacity onPress={() => onPressAvatar(items[0].user_id)}>
-          <Avatar source={items[0].user_image} size={48} noShadow />
+        <TouchableOpacity>
+          <Avatar
+            source={userOrDefault(activities[0].actor).data.profileImage}
+            size={48}
+            noShadow
+          />
         </TouchableOpacity>
       )}
 
       <View style={{ flex: 1, paddingLeft: 15 }}>
         <View style={{ flexDirection: 'row' }}>
-          {items.length > 1
-            ? items.map((item) => {
+          {activities.length > 1
+            ? activities.map((activity) => {
                 return (
-                  <TouchableOpacity
-                    onPress={() => onPressAvatar(item.user_id)}
-                    style={styles.follow}
-                    key={item.user_id}
-                  >
-                    <Avatar source={item.user_image} size={29} noShadow />
+                  <TouchableOpacity style={styles.follow} key={activity.id}>
+                    <Avatar
+                      source={userOrDefault(activity.actor).data.profileImage}
+                      size={29}
+                      noShadow
+                    />
                   </TouchableOpacity>
                 );
               })
@@ -36,9 +48,11 @@ const Follow = ({ items, onPressAvatar }) => {
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            <Text style={styles.footerTextBold}>@{items[0].user_name}</Text>
-            {items.length > 1
-              ? ' and ' + (items.length - 1) + ' others'
+            <Text style={styles.footerTextBold}>
+              @{userOrDefault(activities[0].actor).data.name}
+            </Text>
+            {activities.length > 1
+              ? ' and ' + (activities.length - 1) + ' others'
               : null}{' '}
             followed you
           </Text>
