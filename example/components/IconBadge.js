@@ -15,30 +15,33 @@ export default class IconBadge extends React.Component {
       .feed('notification')
       .get({ limit: 1 })
       .then((data) => {
-        console.log(data);
         this.setState({ loaded: true, unread: data.unread });
       });
 
     const user = this.props.session.client.feed(
       'notification',
       'batman',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZSI6IioiLCJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6Im5vdGlmaWNhdGlvbmJhdG1hbiJ9.Ztf103rqNTaOq4cr9VDPfluNDW5Q8LXE28GcQYY9mzs',
+      this.props.realtimeToken,
     );
 
     const callback = (data) => {
-      console.log(data);
-      this.setState((prevState) => ({
-        unread: prevState.unread + data.new.length - data.deleted.length,
-      }));
+      console.log('data: ', data);
+      this.setState(
+        (prevState) => ({
+          unread: prevState.unread + data.new.length - data.deleted.length,
+        }),
+        () => {
+          console.log('state: ', this.state.unread);
+        },
+      );
     };
 
     function successCallback() {
       console.log('now listening to changes in realtime');
     }
 
-    function failCallback(data) {
+    function failCallback() {
       alert('something went wrong, check the console logs');
-      console.log(data);
     }
 
     user.subscribe(callback).then(successCallback, failCallback);

@@ -119,6 +119,7 @@ const App = () => {
       appId={appId}
       userId="batman"
       token={token}
+      realtimeToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZSI6IioiLCJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6Im5vdGlmaWNhdGlvbmJhdG1hbiJ9.Ztf103rqNTaOq4cr9VDPfluNDW5Q8LXE28GcQYY9mzs"
       defaultUserData={{
         name: 'Batman',
         url: 'batsignal.com',

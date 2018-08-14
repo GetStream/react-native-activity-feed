@@ -28,6 +28,7 @@ export type AppCtx<UserData> = {|
   userData: ?UserData,
   changedUserData: () => void,
   analyticsClient?: any,
+  realtimeToken?: string,
 |};
 
 type StreamAppProps<UserData> = {|
@@ -75,6 +76,7 @@ export class StreamApp<UserData> extends React.Component<
         this.setState({ userData: this.state.user.data });
       },
       analyticsClient: analyticsClient,
+      realtimeToken: this.props.realtimeToken,
     };
   }
 
