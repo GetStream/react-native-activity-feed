@@ -37,6 +37,7 @@ type StreamAppProps<UserData> = {|
   userId: string,
   options?: {},
   analyticsToken?: string,
+  realtimeToken?: string,
   defaultUserData: UserData,
   ...ChildrenProps,
 |};

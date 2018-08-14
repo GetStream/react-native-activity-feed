@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-export default class IconBade extends React.Component {
+export default class IconBadge extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +18,30 @@ export default class IconBade extends React.Component {
         console.log(data);
         this.setState({ loaded: true, unread: data.unread });
       });
+
+    const user = this.props.session.client.feed(
+      'notification',
+      'batman',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZSI6IioiLCJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6Im5vdGlmaWNhdGlvbmJhdG1hbiJ9.Ztf103rqNTaOq4cr9VDPfluNDW5Q8LXE28GcQYY9mzs',
+    );
+
+    const callback = (data) => {
+      console.log(data);
+      this.setState((prevState) => ({
+        unread: prevState.unread + data.new.length - data.deleted.length,
+      }));
+    };
+
+    function successCallback() {
+      console.log('now listening to changes in realtime');
+    }
+
+    function failCallback(data) {
+      alert('something went wrong, check the console logs');
+      console.log(data);
+    }
+
+    user.subscribe(callback).then(successCallback, failCallback);
   }
 
   render() {
