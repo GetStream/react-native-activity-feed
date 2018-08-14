@@ -18,6 +18,7 @@ type Props = {|
   options?: FeedRequestOptions,
   analyticsLocation?: string,
   renderActivity: ReactComponentFunction,
+  BelowPostComponent?: any,
   ...NavigationProps,
   ...StylesProps,
 |};
@@ -40,6 +41,7 @@ export default class SinglePost extends React.Component<Props> {
             .feed(feedGroup, userId)
             .getActivityDetail(this.props.activity.id, options);
         }}
+        BelowListComponent={this.props.BelowPostComponent}
         noPagination
       />
     );

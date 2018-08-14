@@ -1,18 +1,17 @@
 // @flow
 import React from 'react';
-import { SafeAreaView, View, TextInput, StyleSheet } from 'react-native';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
 
 import BackButton from '../components/BackButton';
 
-import { Avatar, SinglePost } from 'react-native-activity-feed';
-import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
+import { SinglePost, CommentBox } from 'react-native-activity-feed';
 
 import Activity from '../components/Activity';
 import LikesList from '../components/LikesList';
 import RepostList from '../components/RepostList';
 import CommentList from '../components/CommentList';
 
-import type { NavigationProps } from '../types';
+import type { NavigationProps, UserResponse } from '../types';
 
 type Props = NavigationProps;
 
@@ -57,22 +56,19 @@ export default class SinglePostScreen extends React.Component<Props> {
               </View>
             </React.Fragment>
           )}
+          BelowPostComponent={(props) => (
+            <CommentBox
+              onSubmit={(text) =>
+                props.onAddReaction('comment', activity, {
+                  data: { text: text },
+                })
+              }
+              avatarProps={{
+                source: (userData: UserResponse) => userData.data.profileImage,
+              }}
+            />
+          )}
         />
-        <View style={{ height: 78 }} />
-
-        <KeyboardAccessory>
-          <View style={styles.replyContainer}>
-            <Avatar
-              source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
-              size={48}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Share something..."
-              underlineColorAndroid="transparent"
-            />
-          </View>
-        </KeyboardAccessory>
       </SafeAreaView>
     );
   }
@@ -82,22 +78,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-  },
-  replyContainer: {
-    flex: 1,
-    height: 78,
-    shadowOffset: { width: 0, height: -3 },
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-  },
-  textInput: {
-    flex: 1,
-    marginLeft: 25,
-    fontSize: 16,
-    color: '#364047',
   },
 });

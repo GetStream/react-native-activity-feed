@@ -34,6 +34,12 @@ declare module 'getstream' {
 
   declare type FollowResponse = DurationResponse;
 
+  declare type ReactionRequestOptions<ReactionData> = {
+    id?: string,
+    data?: ReactionData,
+    targetFeeds?: Array<StreamFeed<*, *> | string>, // allows feeds and feed ids
+  };
+
   declare class StreamUserSession<UserData> {
     userId: string;
     user: StreamUser<UserData>;
@@ -50,11 +56,7 @@ declare module 'getstream' {
     react<ReactionData>(
       kind: string,
       activity: string | ActivityResponse<*, *>, // allows activityId and ActivityResponse
-      data?: {
-        id?: string,
-        data?: ReactionData,
-        targetFeeds?: Array<StreamFeed<*, *> | string>, // allows feeds and feed ids
-      },
+      data?: ReactionRequestOptions<ReactionData>,
     ): Promise<ReactionResponse<ReactionData>>;
   }
 
@@ -69,11 +71,7 @@ declare module 'getstream' {
     add(
       kind: string,
       activity: string | ActivityResponse<*, *>, // allows activityId and ActivityResponse
-      optionalArgs?: {
-        id?: string,
-        data?: ReactionData,
-        targetFeeds?: Array<StreamFeed<*, *> | string>, // allows feeds and feed ids
-      },
+      optionalArgs?: ReactionRequestOptions<ReactionData>,
     ): Promise<ReactionResponse<ReactionData>>;
     delete(id: string): Promise<{}>;
   }

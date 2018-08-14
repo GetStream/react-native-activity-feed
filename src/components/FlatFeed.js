@@ -16,7 +16,12 @@ import type {
   BaseUserSession,
   ReactComponentFunction,
 } from '../types';
-import type { FeedRequestOptions, FeedResponse, StreamFeed } from 'getstream';
+import type {
+  FeedRequestOptions,
+  FeedResponse,
+  StreamFeed,
+  ReactionRequestOptions,
+} from 'getstream';
 
 type Props = {|
   feedGroup: string,
@@ -24,6 +29,7 @@ type Props = {|
   options?: FeedRequestOptions,
   renderActivity?: ReactComponentFunction,
   ActivityComponent?: ReactElementCreator,
+  BelowListComponent?: any,
   doFeedRequest?: (
     session: BaseUserSession,
     feedGroup: string,
@@ -90,9 +96,9 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   _onAddReaction = async (
     kind: string,
     activity: BaseActivityResponse,
-    options: { trackAnalytics?: boolean } = {},
+    options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
   ) => {
-    let reaction = await this.props.session.react(kind, activity);
+    let reaction = await this.props.session.react(kind, activity, options);
     this._trackAnalytics(kind, activity, options.trackAnalytics);
     let enrichedReaction = immutable.fromJS({
       ...reaction,
@@ -144,7 +150,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   _onToggleReaction = async (
     kind: string,
     activity: BaseActivityResponse,
-    options: { trackAnalytics?: boolean } = {},
+    options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
   ) => {
     let currentReactions = this.state.activities.getIn(
       [activity.id, 'own_reactions', kind],
@@ -257,15 +263,19 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     );
   };
 
+  _childProps = () => ({
+    onToggleReaction: this._onToggleReaction,
+    onAddReaction: this._onAddReaction,
+    onRemoveReaction: this._onRemoveReaction,
+    navigation: this.props.navigation,
+    feedGroup: this.props.feedGroup,
+    userId: this.props.userId,
+  });
+
   _renderActivity = (item: BaseActivityResponse) => {
     let args = {
       activity: item,
-      onToggleReaction: this._onToggleReaction,
-      onAddReaction: this._onAddReaction,
-      onRemoveReaction: this._onRemoveReaction,
-      navigation: this.props.navigation,
-      feedGroup: this.props.feedGroup,
-      userId: this.props.userId,
+      ...this._childProps(),
     };
 
     if (this.props.renderActivity) {
@@ -281,23 +291,34 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   };
 
   render() {
+    let { BelowListComponent } = this.props;
     return (
-      <FlatList
-        ListHeaderComponent={this.props.children}
-        style={mergeStyles('container', styles, this.props)}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._refresh}
-          />
-        }
-        data={this.state.activityOrder.map((id) =>
-          this.state.activities.get(id),
+      <React.Fragment>
+        <FlatList
+          ListHeaderComponent={this.props.children}
+          style={mergeStyles('container', styles, this.props)}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._refresh}
+            />
+          }
+          data={this.state.activityOrder.map((id) =>
+            this.state.activities.get(id),
+          )}
+          keyExtractor={(item) => item.get('id')}
+          renderItem={this._renderWrappedActivity}
+          onEndReached={
+            this.props.noPagination ? undefined : this._loadNextPage
+          }
+        />
+        {!BelowListComponent || React.isValidElement(BelowListComponent) ? (
+          BelowListComponent
+        ) : (
+          // $FlowFixMe
+          <BelowListComponent {...this._childProps()} />
         )}
-        keyExtractor={(item) => item.get('id')}
-        renderItem={this._renderWrappedActivity}
-        onEndReached={this.props.noPagination ? undefined : this._loadNextPage}
-      />
+      </React.Fragment>
     );
   }
 }

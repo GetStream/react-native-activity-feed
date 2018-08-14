@@ -18,4 +18,5 @@ export { default as ReactionIconBar } from './components/ReactionIconBar';
 export { default as CommentsContainer } from './components/CommentsContainer';
 export { default as Card } from './components/Card';
 export { default as ReactionList } from './components/ReactionList';
+export { default as CommentBox } from './components/CommentBox';
 export { humanizeTimestamp } from './utils';
