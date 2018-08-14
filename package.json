@@ -40,7 +40,8 @@
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
     "preversion": "yarn && yarn lint",
-    "prepack": "yarn && yarn lint && yarn build && git push origin master"
+    "prepack": "bin/prepack.sh",
+    "postpack": "bin/postpack.sh"
   },
   "jest": {
     "preset": "jest-expo"
