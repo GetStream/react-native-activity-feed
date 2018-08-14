@@ -23,7 +23,7 @@ declare module 'getstream' {
 
   declare class StreamUser<Data> {
     id: string;
-    full: UserResponse<Data>;
+    full: ?UserResponse<Data>;
     data: ?Data;
     get(): Promise<UserResponse<Data>>;
     getOrCreate(Data): Promise<UserResponse<Data>>;

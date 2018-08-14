@@ -4,11 +4,13 @@ import { View, Image, StyleSheet } from 'react-native';
 
 import UploadImage from './UploadImage';
 import { mergeStyles } from '../utils';
+import { StreamContext } from '../Context';
 
 import type { StylesProps } from '../types';
+import type { UserResponse } from 'getstream';
 
-type Props = {|
-  source?: string,
+export type Props = {|
+  source?: ?string | ((activeUser: UserResponse<Object>) => ?string),
   size?: number,
   editButton?: boolean,
   noShadow?: boolean,
@@ -30,30 +32,45 @@ const Avatar = ({
   let borderRadius = notRound ? undefined : size / 2;
 
   return (
-    <View
-      style={mergeStyles(
-        'container',
-        styles,
-        props,
-        noShadow ? styles.noShadow : null,
-        {
-          width: size,
-          height: size,
-        },
-      )}
-    >
-      <Image
-        style={mergeStyles('image', styles, props, {
-          width: size,
-          height: size,
-          borderRadius: borderRadius,
-        })}
-        source={source ? { uri: source } : require('../images/placeholder.png')}
-      />
-      {editButton ? (
-        <UploadImage onUploadButtonPress={onUploadButtonPress} />
-      ) : null}
-    </View>
+    <StreamContext.Consumer>
+      {(appCtx) => {
+        if (typeof source === 'function') {
+          if (appCtx.user.full) {
+            source = source(appCtx.user.full);
+          } else {
+            source = undefined;
+          }
+        }
+        return (
+          <View
+            style={mergeStyles(
+              'container',
+              styles,
+              props,
+              noShadow ? styles.noShadow : null,
+              {
+                width: size,
+                height: size,
+              },
+            )}
+          >
+            <Image
+              style={mergeStyles('image', styles, props, {
+                width: size,
+                height: size,
+                borderRadius: borderRadius,
+              })}
+              source={
+                source ? { uri: source } : require('../images/placeholder.png')
+              }
+            />
+            {editButton ? (
+              <UploadImage onUploadButtonPress={onUploadButtonPress} />
+            ) : null}
+          </View>
+        );
+      }}
+    </StreamContext.Consumer>
   );
 };
 

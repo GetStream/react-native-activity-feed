@@ -6,6 +6,7 @@ import type {
   ActivityResponse,
   StreamUserSession,
   ReactionKindMap,
+  UserResponse,
 } from 'getstream';
 import type { AppCtx } from './Context';
 
@@ -39,3 +40,5 @@ export type BaseAppCtx = AppCtx<{}>;
 export type BaseUserSession = StreamUserSession<{}>;
 
 export type BaseReactionMap = ReactionKindMap<Object, Object>;
+
+export type BaseUserResponse = UserResponse<{}>;
