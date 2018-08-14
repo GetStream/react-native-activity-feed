@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { View, Text } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
@@ -53,31 +52,13 @@ const TabNavigator = createBottomTabNavigator(
         } else if (routeName === 'Notifications') {
           return (
             <StreamContext.Consumer>
-              {(appCtx) => {
-                const notificationCount = appCtx.session
-                  .feed('notification')
-                  .get({ limit: 0 });
-                return (
-                  <IconBadge
-                    mainElement={<Icon name="notifications" />}
-                    hidden={notificationCount ? false : true}
-                    badgeElement={
-                      <View
-                        style={{
-                          backgroundColor: 'red',
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Text style={{ fontSize: 8, color: '#fff' }}>
-                          {/* {notificationCount._state} */}
-                        </Text>
-                      </View>
-                    }
-                  />
-                );
-              }}
+              {(appCtx) => (
+                <IconBadge
+                  {...appCtx}
+                  showNumber
+                  mainElement={<Icon name="notifications" />}
+                />
+              )}
             </StreamContext.Consumer>
           );
         } else if (routeName === 'Profile') {
