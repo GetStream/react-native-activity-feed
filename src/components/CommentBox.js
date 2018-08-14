@@ -45,7 +45,7 @@ export default class CommentBox extends React.Component<Props, State> {
             )}
             <TextInput
               value={this.state.text}
-              style={styles.textInput}
+              style={mergeStyles('textInput', styles, this.props)}
               placeholder="Your comment..."
               underlineColorAndroid="transparent"
               returnKeyType="send"
