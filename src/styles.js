@@ -271,6 +271,5 @@ export function buildStylesheet(styleName, styleOverwrites) {
       return Object.assign(accumulated, v);
     }, {});
 
-  console.log(_.defaultsDeep(topLevelOverwrites, base));
   return StyleSheet.create(_.defaultsDeep(topLevelOverwrites, base));
 }
