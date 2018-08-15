@@ -2109,9 +2109,9 @@ browser-process-hrtime@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-0.1.2.tgz#425d68a58d3447f02a04aa894187fce8af8b7b8e"
 
-"browser-request@git://github.com/matthisk/browser-request":
+"browser-request@git://github.com/matthisk/browser-request.git":
   version "0.3.2"
-  resolved "git://github.com/matthisk/browser-request#253fa31d99bbb4d03bb72e11a5a1c73ccc85ac71"
+  resolved "git://github.com/matthisk/browser-request.git#253fa31d99bbb4d03bb72e11a5a1c73ccc85ac71"
 
 browser-resolve@^1.11.2:
   version "1.11.3"
@@ -7548,9 +7548,9 @@ stealthy-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
 
-stream-analytics@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/stream-analytics/-/stream-analytics-2.7.0.tgz#0b818c0b1ef8586128511a370f69482dfcf2936e"
+stream-analytics@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/stream-analytics/-/stream-analytics-2.7.1.tgz#4e62ca6b7cc9808869b1455db4a6acb125ff477f"
   dependencies:
     browser-request "git://github.com/matthisk/browser-request"
     json-loader "^0.5.3"
