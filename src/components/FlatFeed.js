@@ -5,7 +5,8 @@ import immutable from 'immutable';
 import URL from 'url-parse';
 
 import { StreamContext } from '../Context';
-import { mergeStyles } from '../utils';
+import { buildStylesheet } from '../styles';
+
 import type {
   NavigationProps,
   ChildrenProps,
@@ -43,12 +44,19 @@ type Props = {|
   ...StylesProps,
 |};
 
-export default function FlatFeed(props: Props) {
-  return (
-    <StreamContext.Consumer>
-      {(appCtx) => <FlatFeedInner {...props} {...appCtx} />}
-    </StreamContext.Consumer>
-  );
+export default class FlatFeed extends React.Component<Props> {
+
+  static defaultProps = {
+    styles: {}
+  };
+
+  render = function() {
+    return (
+      <StreamContext.Consumer>
+        {(appCtx) => <FlatFeedInner {...this.props} {...appCtx} />}
+      </StreamContext.Consumer>
+    );
+  }
 }
 
 type PropsInner = {| ...Props, ...BaseAppCtx |};
@@ -275,6 +283,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   _renderActivity = (item: BaseActivityResponse) => {
     let args = {
       activity: item,
+      styles: this.props.styles.activity,
       ...this._childProps(),
     };
 
@@ -292,11 +301,13 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   render() {
     let { BelowListComponent } = this.props;
+    let styles = buildStylesheet('flatFeed', this.props.styles);
+
     return (
       <React.Fragment>
         <FlatList
           ListHeaderComponent={this.props.children}
-          style={mergeStyles('container', styles, this.props)}
+          style={styles.container}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -335,7 +346,3 @@ class ImmutableItemWrapper extends React.PureComponent<
     return this.props.renderItem(this.props.item.toJS());
   }
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-});

@@ -55,6 +55,7 @@ const TabNavigator = createBottomTabNavigator(
               {(appCtx) => (
                 <IconBadge
                   {...appCtx}
+                  onPress={() => console.log('hello world')}
                   showNumber
                   mainElement={<Icon name="notifications" />}
                 />
@@ -94,9 +95,14 @@ const Navigation = createStackNavigator({
 });
 
 const App = () => {
-  let apiKey = process.env['STREAM_API_KEY'];
-  let appId = process.env['STREAM_APP_ID'];
-  let token = process.env['STREAM_TOKEN'];
+  // let apiKey = process.env['STREAM_API_KEY'];
+  // let appId = process.env['STREAM_APP_ID'];
+  // let token = process.env['STREAM_TOKEN'];
+
+  let apiKey = '6hwxyxcq4rpe';
+  let appId = '35808';
+  let token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZSI6IioiLCJhY3Rpb24iOiIqIiwiZmVlZF9pZCI6IioiLCJ1c2VyX2lkIjoiYmF0bWFuIn0.Cjg0p-WQin8tfz5y_cWszJr0ZDmaMlHiNu50xrqq4Wg';
 
   if (!apiKey) {
     console.error('STREAM_API_KEY should be set');

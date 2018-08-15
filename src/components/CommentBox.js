@@ -8,6 +8,7 @@ import Avatar from './Avatar';
 import { mergeStyles } from '../utils';
 import type { StylesProps } from '../types';
 import type { Props as AvatarProps } from './Avatar';
+import { buildStylesheet } from '../styles';
 
 type Props = {|
   onSubmit: (string) => mixed,
@@ -23,29 +24,31 @@ type State = {|
 
 export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
-    height: 78,
+    styles: {},
   };
   state = {
     text: '',
   };
 
   render() {
+    let styles = buildStylesheet('commentBox', this.props.styles);
+
     return (
       <React.Fragment>
         <View style={{ height: this.props.height }} />
 
         <KeyboardAccessory>
-          <View
-            style={mergeStyles('container', styles, this.props, {
-              height: this.props.height,
-            })}
-          >
+          <View style={styles.container}>
             {this.props.noAvatar || (
-              <Avatar size={48} {...this.props.avatarProps} />
+              <Avatar
+                size={48}
+                styles={this.props.styles.avatar}
+                {...this.props.avatarProps}
+              />
             )}
             <TextInput
               value={this.state.text}
-              style={mergeStyles('textInput', styles, this.props)}
+              style={styles.textInput}
               placeholder="Your comment..."
               underlineColorAndroid="transparent"
               returnKeyType="send"
@@ -61,21 +64,3 @@ export default class CommentBox extends React.Component<Props, State> {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    shadowOffset: { width: 0, height: -3 },
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-  },
-  textInput: {
-    flex: 1,
-    marginLeft: 25,
-    fontSize: 16,
-    color: '#364047',
-  },
-});

@@ -2,9 +2,7 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 
-import BackButton from '../components/BackButton';
-
-import { SinglePost, CommentBox } from 'react-native-activity-feed';
+import { SinglePost, CommentBox, BackButton } from 'react-native-activity-feed';
 
 import Activity from '../components/Activity';
 import LikesList from '../components/LikesList';
@@ -66,6 +64,7 @@ export default class SinglePostScreen extends React.Component<Props> {
               avatarProps={{
                 source: (userData: UserResponse) => userData.data.profileImage,
               }}
+              styles={{ container: { height: 78 } }}
             />
           )}
         />

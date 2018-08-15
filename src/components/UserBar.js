@@ -6,6 +6,7 @@ import { humanizeTimestamp, mergeStyles } from '../utils';
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
 import type { StylesProps } from '../types';
+import { buildStylesheet } from '../styles';
 
 type Props = {|
   username: ?string,
@@ -35,6 +36,8 @@ const UserBar = ({
     time = humanizeTimestamp(props.timestamp);
   }
 
+  let styles = buildStylesheet('userBar', props.styles);
+
   return (
     <View style={mergeStyles('container', styles, props)}>
       {avatar ? (
@@ -43,13 +46,13 @@ const UserBar = ({
             source={avatar}
             size={48}
             noShadow
-            styles={{ container: { marginRight: 10 } }}
+            styles={styles && styles.avatar || { container: { marginRight: 10 }}}
           />
         </TouchableOpacity>
       ) : null}
 
-      <View style={mergeStyles('content', styles, props)}>
-        <Text style={mergeStyles('username', styles, props)}>{username}</Text>
+      <View style={styles.content}>
+        <Text style={styles.username}>{username}</Text>
         <View style={{ flexDirection: 'row' }}>
           {icon !== undefined ? (
             <Image
@@ -58,7 +61,7 @@ const UserBar = ({
             />
           ) : null}
           {subtitle && (
-            <Text style={mergeStyles('subtitle', styles, props)}>
+            <Text style={styles.subtitle}>
               {subtitle}
             </Text>
           )}
@@ -66,7 +69,7 @@ const UserBar = ({
       </View>
       {time && (
         <View>
-          <Text style={mergeStyles('time', styles, props)}>{time}</Text>
+          <Text style={styles.time}>{time}</Text>
         </View>
       )}
       {follow && (
@@ -77,31 +80,5 @@ const UserBar = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: 100 + '%',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  content: {
-    flex: 1,
-  },
-  username: {
-    fontSize: 17,
-    fontWeight: '300',
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 15,
-    opacity: 0.8,
-    fontWeight: '300',
-  },
-  time: {
-    fontSize: 13,
-    opacity: 0.8,
-    fontWeight: '300',
-  },
-});
 
 export default UserBar;

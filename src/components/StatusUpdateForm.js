@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   View,
   Image,
-  StyleSheet,
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
@@ -12,7 +11,7 @@ import {
 import { ImagePicker, Permissions } from 'expo';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import { Avatar, OgBlock } from 'react-native-activity-feed';
-import { mergeStyles } from '../utils';
+import { buildStylesheet } from '../styles';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
 
@@ -36,6 +35,18 @@ export default class StatusUpdateForm extends React.Component {
   static defaultProps = {
     activity_verb: 'post',
     feedGroup: 'timeline',
+    styles: {
+      ogBlock: {
+        wrapper: {
+          padding: 15,
+          paddingTop: 8,
+          paddingBottom: 8,
+          borderTopColor: '#eee',
+          borderTopWidth: 1,
+        },
+        textStyle: { fontSize: 12 },
+      }
+    },
   };
 
   state = {
@@ -62,19 +73,12 @@ export default class StatusUpdateForm extends React.Component {
       return;
     }
 
-    console.log(result);
-
     this.setState({
       image: result.uri,
       imageState: ImageState.UPLOADING,
     });
 
-    console.log(this.props.session);
-    console.log(this.props.session.images);
-    console.log(this.props.session.images.upload);
-
     let response = await this.props.session.images.upload(result.uri);
-    console.log(response);
 
     this.setState({
       imageState: ImageState.UPLOADED,
@@ -105,7 +109,6 @@ export default class StatusUpdateForm extends React.Component {
 
   componentWillUnmount() {
     this.TextInput.current.blur();
-    // TODO: do we have to deregister the submit cb from navigation?
   }
 
   buildActivity() {
@@ -119,16 +122,11 @@ export default class StatusUpdateForm extends React.Component {
       object: this.state.textInput,
       attachments,
     };
-    console.log(
-      `adding actvity to feed ${this.props.feedGroup}:${this.props.feedUserId}`,
-    );
-    console.log(activity);
 
     this.props.session
       .feed(this.props.feedGroup, this.props.feedUserId)
       .addActivity(activity)
       .then((resp) => {
-        console.log(resp);
         this.props.navigation.navigate('Home');
       })
       .catch((err) => {
@@ -140,7 +138,6 @@ export default class StatusUpdateForm extends React.Component {
     if (this.state.ogScraping) {
       return;
     }
-    console.log(`changed into ${text}`);
     const urls = text.match(urlRegex);
 
     if (!urls) {
@@ -151,8 +148,6 @@ export default class StatusUpdateForm extends React.Component {
       return;
     }
 
-    console.log(urls);
-    console.log(this.state.dismissedUrls.indexOf(urls[0]) > -1);
     urls.forEach((url) => {
       if (
         url !== this.state.ogLink &&
@@ -160,7 +155,6 @@ export default class StatusUpdateForm extends React.Component {
         !this.state.og &&
         urls.indexOf(url) > -1
       ) {
-        console.log(`retrieving ${url} from OG API`);
         this.setState({
           ogScraping: true,
           ogLink: url,
@@ -169,7 +163,6 @@ export default class StatusUpdateForm extends React.Component {
         this.props.session
           .og(url)
           .then((resp) => {
-            console.log(resp);
             const oldStateUrls = this.state.urls;
             this.setState(
               {
@@ -207,8 +200,8 @@ export default class StatusUpdateForm extends React.Component {
   };
 
   render() {
+    let styles = buildStylesheet('statusUpdateForm', this.props.styles);
     Dimensions.addEventListener('change', (dimensions) => {
-      // you get:
       this.setState({
         orientation:
           dimensions.window.width > dimensions.window.height
@@ -217,8 +210,8 @@ export default class StatusUpdateForm extends React.Component {
       });
     });
     return (
-      <SafeAreaView style={mergeStyles('screenContainer', styles, this.props)}>
-        <View style={mergeStyles('newPostContainer', styles, this.props)}>
+      <SafeAreaView style={styles.screenContainer}>
+        <View style={styles.newPostContainer}>
           {this.state.orientation === 'portrait' && (
             <Avatar
               source={this.props.session.user.data.profileImage}
@@ -227,10 +220,8 @@ export default class StatusUpdateForm extends React.Component {
           )}
           <View
             style={[
-              ...mergeStyles('textInput', styles, this.props),
-              {
-                marginBottom: this.state.orientation === 'portrait' ? 300 : 250,
-              },
+              styles.textInput,
+              this.state.orientation === 'portrait' ? styles.textInputPortrait : styles.textInputPortrait,
             ]}
           >
             <TextInput
@@ -252,21 +243,12 @@ export default class StatusUpdateForm extends React.Component {
               <OgBlock
                 onPressDismiss={this._onPressDismiss}
                 og={this.state.og}
-                styles={{
-                  wrapper: {
-                    padding: 15,
-                    paddingTop: 8,
-                    paddingBottom: 8,
-                    borderTopColor: '#eee',
-                    borderTopWidth: 1,
-                  },
-                  textStyle: { fontSize: 12 },
-                }}
+                styles={this.props.styles.ogBlock}
               />
             ) : null}
-            <View style={mergeStyles('accessory', styles, this.props)}>
+            <View style={styles.accessory}>
               {this.state.image ? (
-                <View style={mergeStyles('imageContainer', styles, this.props)}>
+                <View style={styles.imageContainer}>
                   <Image
                     source={{ uri: this.state.image }}
                     style={
@@ -275,7 +257,7 @@ export default class StatusUpdateForm extends React.Component {
                         : styles.image
                     }
                   />
-                  <View style={mergeStyles('imageOverlay', styles, this.props)}>
+                  <View style={styles.imageOverlay}>
                     {this.state.imageState === ImageState.UPLOADING ? (
                       <ActivityIndicator color="#ffffff" />
                     ) : (
@@ -326,60 +308,3 @@ export default class StatusUpdateForm extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    backgroundColor: '#f6f6f6',
-  },
-  newPostContainer: {
-    backgroundColor: '#ffffff',
-    padding: 15,
-    flexDirection: 'row',
-    flex: 1,
-  },
-  textInput: {
-    flex: 1,
-    marginTop: 10,
-    marginLeft: 15,
-    marginBottom: 250,
-  },
-  accessory: {
-    borderTopColor: '#DADFE3',
-    backgroundColor: '#f6f6f6',
-    borderTopWidth: 1,
-    width: 100 + '%',
-    padding: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  imageContainer: {
-    position: 'relative',
-    width: 30,
-    height: 30,
-    marginTop: -3,
-    marginBottom: -3,
-    overflow: 'hidden',
-    borderRadius: 4,
-  },
-  imageOverlay: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 30,
-    height: 30,
-    padding: 8,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-  },
-  image: {
-    position: 'absolute',
-    width: 30,
-    height: 30,
-  },
-  image_loading: {
-    position: 'absolute',
-    width: 30,
-    height: 30,
-    opacity: 0.5,
-  },
-});

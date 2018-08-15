@@ -5,6 +5,8 @@ import URL from 'url-parse';
 
 import { StreamContext } from '../Context';
 import { mergeStyles } from '../utils';
+import { buildStylesheet } from '../styles';
+
 import type {
   NavigationProps,
   ChildrenProps,
@@ -58,6 +60,11 @@ class NotificationFeedInner extends React.Component<PropsInner, State> {
       lastResponse: null,
     };
   }
+
+  static defaultProps = {
+    styles: {}
+  };
+
   _feedGroup = () => {
     return this.props.feedGroup || 'notification';
   };
@@ -139,18 +146,20 @@ class NotificationFeedInner extends React.Component<PropsInner, State> {
       />
     );
   };
+
   _renderGroup = (item: BaseActivityResponse) => {
     let args = {
       activityGroup: item,
       navigation: this.props.navigation,
       feedGroup: this._feedGroup(),
       userId: this.props.userId,
+      styles: this.props.styles.activity,
     };
-
     return this.props.renderGroup(args);
   };
 
   render() {
+    let styles = buildStylesheet('notificationFeed', this.props.styles);
     return (
       <FlatList
         ListHeaderComponent={this.props.children}
@@ -180,7 +189,3 @@ class PureItemWrapper extends React.PureComponent<PureItemWrapperProps> {
     return this.props.renderItem(this.props.item);
   }
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-});

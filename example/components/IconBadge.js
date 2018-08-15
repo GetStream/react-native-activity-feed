@@ -47,6 +47,12 @@ export default class IconBadge extends React.Component {
     user.subscribe(callback).then(successCallback, failCallback);
   }
 
+  _markAsRead() {
+    this.setState({
+      unread: 0,
+    });
+  }
+
   render() {
     const {
       mainElement,

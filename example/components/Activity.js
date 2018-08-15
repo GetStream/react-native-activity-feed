@@ -35,6 +35,7 @@ type Props = {|
   onToggleReaction?: (kind: string, activity: ActivityData) => mixed,
   clickable?: boolean,
   ...NavigationProps,
+  styles?: any,
 |};
 
 export default class Activity extends React.Component<Props> {
@@ -100,7 +101,6 @@ export default class Activity extends React.Component<Props> {
       // TODO: This is wrong. Should take name from object.
       sub = `reply to ${actor.data.name || 'Unknown'}`;
     }
-
     return (
       <TouchableOpacity
         style={[{ ...this.props.style }, styles.container]}

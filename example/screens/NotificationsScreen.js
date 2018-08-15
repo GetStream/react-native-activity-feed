@@ -42,18 +42,22 @@ export default class NotificationScreen extends React.Component<Props> {
     });
   }
 
-  _renderGroup = ({ activityGroup }: any) => {
+  _renderGroup = ({ activityGroup, ...styles }: any) => {
     let verb = activityGroup.activities[0].verb;
     if (verb === 'follow') {
-      return <Follow activities={activityGroup.activities} />;
+      return <Follow activities={activityGroup.activities} styles={styles} />;
     } else if (verb === 'heart' || verb === 'repost') {
-      return <Notification activities={activityGroup.activities} />;
+      return (
+        <Notification activities={activityGroup.activities} styles={styles} />
+      );
     } else {
       return (
         <Activity
           activity={activityGroup.activities[0]}
           feedGroup="notification"
           navigation={this.props.navigation}
+          // $FlowFixMe
+          styles={styles}
         />
       );
     }

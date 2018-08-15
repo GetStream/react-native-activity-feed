@@ -3,16 +3,21 @@ import stream from 'getstream';
 import type { UserSession, CloudClient } from '../types';
 
 async function main() {
-  let apiKey = process.env['STREAM_API_KEY'] || '';
-  let apiSecret = process.env['STREAM_API_SECRET'] || '';
-  let appId = process.env['STREAM_APP_ID'] || '';
-  let apiUrl = process.env['STREAM_API_URL'];
+  // let apiKey = process.env['STREAM_API_KEY'] || '';
+  // let apiSecret = process.env['STREAM_API_SECRET'] || '';
+  // let appId = process.env['STREAM_APP_ID'] || '';
+  // let apiUrl = process.env['STREAM_API_URL'];
 
-  console.log(apiKey, apiSecret, apiUrl);
+  let apiKey = '6hwxyxcq4rpe';
+  let appId = '35808';
+  let apiSecret =
+    '8mdkn9n6vqe4dngtjznnm66n2e9vq3x6a2ep5e82gdxntbqbftmqmtxwqee47rjt';
+
+  console.log(apiKey, apiSecret);
   let client: CloudClient = stream.connectCloud(apiKey, appId, {
-    urlOverride: {
-      api: apiUrl,
-    },
+    // urlOverride: {
+    //   api: apiUrl,
+    // },
     keepAlive: false,
   });
 
@@ -24,7 +29,7 @@ async function main() {
   }
 
   let batman = createUserSession('batman');
-  let content = 'test1';
+  let content = 'test2';
   await batman.feed('notification').addActivity({
     actor: batman.user,
     verb: 'post',
