@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image } from 'react-native';
 
 import UploadImage from './UploadImage';
 import { mergeStyles } from '../utils';
@@ -21,8 +21,7 @@ export type Props = {|
   ...StylesProps,
 |};
 
-class Avatar extends React.Component {
-
+class Avatar extends React.Component<Props> {
   render = function() {
     let {
       source,

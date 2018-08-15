@@ -1,11 +1,10 @@
 // @flow
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput } from 'react-native';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
 import Avatar from './Avatar';
 
-import { mergeStyles } from '../utils';
 import type { StylesProps } from '../types';
 import type { Props as AvatarProps } from './Avatar';
 import { buildStylesheet } from '../styles';
@@ -42,6 +41,7 @@ export default class CommentBox extends React.Component<Props, State> {
             {this.props.noAvatar || (
               <Avatar
                 size={48}
+                // $FlowFixMe
                 styles={this.props.styles.avatar}
                 {...this.props.avatarProps}
               />

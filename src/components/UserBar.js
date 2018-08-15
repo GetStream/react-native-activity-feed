@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { humanizeTimestamp, mergeStyles } from '../utils';
 
 import Avatar from './Avatar';
@@ -46,7 +46,9 @@ const UserBar = ({
             source={avatar}
             size={48}
             noShadow
-            styles={styles && styles.avatar || { container: { marginRight: 10 }}}
+            styles={
+              (styles && styles.avatar) || { container: { marginRight: 10 } }
+            }
           />
         </TouchableOpacity>
       ) : null}
@@ -60,11 +62,7 @@ const UserBar = ({
               style={{ width: 24, height: 24, top: -2, marginRight: 5 }}
             />
           ) : null}
-          {subtitle && (
-            <Text style={styles.subtitle}>
-              {subtitle}
-            </Text>
-          )}
+          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </View>
       </View>
       {time && (

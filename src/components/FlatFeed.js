@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import immutable from 'immutable';
 import URL from 'url-parse';
 
@@ -45,9 +45,8 @@ type Props = {|
 |};
 
 export default class FlatFeed extends React.Component<Props> {
-
   static defaultProps = {
-    styles: {}
+    styles: {},
   };
 
   render = function() {
@@ -56,7 +55,7 @@ export default class FlatFeed extends React.Component<Props> {
         {(appCtx) => <FlatFeedInner {...this.props} {...appCtx} />}
       </StreamContext.Consumer>
     );
-  }
+  };
 }
 
 type PropsInner = {| ...Props, ...BaseAppCtx |};
@@ -283,6 +282,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   _renderActivity = (item: BaseActivityResponse) => {
     let args = {
       activity: item,
+      // $FlowFixMe
       styles: this.props.styles.activity,
       ...this._childProps(),
     };

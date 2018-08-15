@@ -6,7 +6,7 @@ const CommentsContainer = ({
   renderComment,
   renderMoreLink,
   maxComments,
-  ...props
+  // ...props
 }) => {
   return (
     <View>

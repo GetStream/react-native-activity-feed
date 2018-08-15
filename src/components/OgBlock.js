@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 export default class OgBlock extends React.Component {
   render() {
-    let styles = buildStylesheet('ogBlock', props.styles);
+    let styles = buildStylesheet('ogBlock', this.props.styles);
 
     return (
       <View style={styles.wrapper}>

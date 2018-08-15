@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import URL from 'url-parse';
 
 import { StreamContext } from '../Context';
@@ -62,7 +62,7 @@ class NotificationFeedInner extends React.Component<PropsInner, State> {
   }
 
   static defaultProps = {
-    styles: {}
+    styles: {},
   };
 
   _feedGroup = () => {
@@ -153,6 +153,7 @@ class NotificationFeedInner extends React.Component<PropsInner, State> {
       navigation: this.props.navigation,
       feedGroup: this._feedGroup(),
       userId: this.props.userId,
+      // $FlowFixMe
       styles: this.props.styles.activity,
     };
     return this.props.renderGroup(args);

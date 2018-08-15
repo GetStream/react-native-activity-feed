@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Linking,
-} from 'react-native';
+import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import { buildStylesheet } from '../styles';
 
 const Card = ({ item, ...props }) => {

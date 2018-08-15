@@ -1,6 +1,5 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import _ from 'lodash';
-
 
 let styles = {
   avatar: StyleSheet.create({
@@ -19,7 +18,7 @@ let styles = {
       shadowOpacity: 0,
     },
   }),
-  backButton : StyleSheet.create({
+  backButton: StyleSheet.create({
     backButton: { width: 50, paddingRight: 6, paddingTop: 6, paddingBottom: 6 },
     backArrow: { height: 22, width: 12 },
   }),
@@ -81,7 +80,7 @@ let styles = {
       marginLeft: 15,
       marginBottom: 250,
     },
-    textInpuPortrait:{
+    textInpuPortrait: {
       marginBottom: 300,
     },
     textInpuLandscape: {
@@ -128,22 +127,29 @@ let styles = {
   }),
   ogBlock: StyleSheet.create({
     wrapper: {
-      flex: 1, flexDirection: 'row', alignItems: 'center'
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     leftColumn: {
-      position: 'relative'
+      position: 'relative',
     },
     rightColumn: {
-      flex: 1, flexDirection: 'column', marginLeft: 8
+      flex: 1,
+      flexDirection: 'column',
+      marginLeft: 8,
     },
     textStyle: {
-      fontWeight: '700'
+      fontWeight: '700',
     },
     image: {
-      width: 35, height: 35, borderRadius: 4
+      width: 35,
+      height: 35,
+      borderRadius: 4,
     },
     closeButton: {
-      width: 20, height: 20
+      width: 20,
+      height: 20,
     },
   }),
   card: StyleSheet.create({
@@ -214,10 +220,10 @@ let styles = {
   }),
   notificationFeed: StyleSheet.create({
     container: { flex: 1, backgroundColor: '#fff' },
-  })
+  }),
 };
 
-depthOf = function (object) {
+const depthOf = function(object) {
   var level = 1;
   var key;
   for (key in object) {
@@ -229,7 +235,7 @@ depthOf = function (object) {
     }
   }
   return level;
-}
+};
 
 export function getStyle(styleName) {
   return styles[styleName] || {};
@@ -245,22 +251,25 @@ export function buildStylesheet(styleName, styleOverwrites) {
     return baseStyle;
   }
 
-  let base = Object.keys(baseStyle).map(k => {
-    return { [k]: StyleSheet.flatten(baseStyle[k]) }
-  }).reduce((accumulated, v) => {
-    return Object.assign(accumulated, v);
-  }, {});
+  let base = Object.keys(baseStyle)
+    .map((k) => {
+      return { [k]: StyleSheet.flatten(baseStyle[k]) };
+    })
+    .reduce((accumulated, v) => {
+      return Object.assign(accumulated, v);
+    }, {});
 
-  let topLevelOverwrites = Object.keys(styleOverwrites).map(k => {
-    if (depthOf(styleOverwrites[k]) === 1) {
-      return { [k]: StyleSheet.flatten(styleOverwrites[k]) }
-    }
-    return false;
-  }).filter(
-    v => v
-  ).reduce((accumulated, v) => {
-    return Object.assign(accumulated, v);
-  }, {});
+  let topLevelOverwrites = Object.keys(styleOverwrites)
+    .map((k) => {
+      if (depthOf(styleOverwrites[k]) === 1) {
+        return { [k]: StyleSheet.flatten(styleOverwrites[k]) };
+      }
+      return false;
+    })
+    .filter((v) => v)
+    .reduce((accumulated, v) => {
+      return Object.assign(accumulated, v);
+    }, {});
 
   console.log(_.defaultsDeep(topLevelOverwrites, base));
   return StyleSheet.create(_.defaultsDeep(topLevelOverwrites, base));

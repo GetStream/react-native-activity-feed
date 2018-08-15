@@ -1,9 +1,8 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import { buildStylesheet } from '../styles'
+import { buildStylesheet } from '../styles';
 
 export default class BackButton extends React.Component {
-
   render() {
     let styles = buildStylesheet('backButton', this.props.styles);
     let { color, pressed } = this.props;
@@ -27,5 +26,5 @@ export default class BackButton extends React.Component {
         </TouchableOpacity>
       );
     }
-  };
+  }
 }

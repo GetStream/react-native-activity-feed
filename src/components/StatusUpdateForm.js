@@ -45,7 +45,7 @@ export default class StatusUpdateForm extends React.Component {
           borderTopWidth: 1,
         },
         textStyle: { fontSize: 12 },
-      }
+      },
     },
   };
 
@@ -126,7 +126,7 @@ export default class StatusUpdateForm extends React.Component {
     this.props.session
       .feed(this.props.feedGroup, this.props.feedUserId)
       .addActivity(activity)
-      .then((resp) => {
+      .then(() => {
         this.props.navigation.navigate('Home');
       })
       .catch((err) => {
@@ -221,7 +221,9 @@ export default class StatusUpdateForm extends React.Component {
           <View
             style={[
               styles.textInput,
-              this.state.orientation === 'portrait' ? styles.textInputPortrait : styles.textInputPortrait,
+              this.state.orientation === 'portrait'
+                ? styles.textInputPortrait
+                : styles.textInputPortrait,
             ]}
           >
             <TextInput
