@@ -156,7 +156,7 @@ let styles = {
     container: {
       flex: 1,
       flexDirection: 'row',
-      marginTop: 15,
+      margin: 15,
       borderWidth: 1,
       borderRadius: 4,
       borderColor: '#C5D9E6',
@@ -221,6 +221,31 @@ let styles = {
   notificationFeed: StyleSheet.create({
     container: { flex: 1, backgroundColor: '#fff' },
   }),
+  defaultActivity: StyleSheet.create({
+    container: {
+      paddingTop: 15,
+      paddingBottom: 15,
+      borderBottomColor: 'rgba(0,0,0,0.1)',
+      borderBottomWidth: 1,
+    },
+  }),
+  button: StyleSheet.create({
+    container: {
+      alignSelf: 'flex-start',
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingTop: 5,
+      paddingBottom: 5,
+    },
+    text: {
+      fontWeight: '700',
+    },
+    image: {
+      marginRight: 5,
+      width: 24,
+      height: 24,
+    },
+  }),
 };
 
 const depthOf = function(object) {
@@ -271,6 +296,6 @@ export function buildStylesheet(styleName, styleOverwrites) {
       return Object.assign(accumulated, v);
     }, {});
 
-  console.log(_.defaultsDeep(topLevelOverwrites, base));
+  // console.log(_.defaultsDeep(topLevelOverwrites, base));
   return StyleSheet.create(_.defaultsDeep(topLevelOverwrites, base));
 }

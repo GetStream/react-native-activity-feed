@@ -20,5 +20,7 @@ export { default as Card } from './components/Card';
 export { default as ReactionList } from './components/ReactionList';
 export { default as CommentBox } from './components/CommentBox';
 export { default as BackButton } from './components/BackButton';
+export { default as BaseActivity } from './components/BaseActivity';
+export { default as Button } from './components/Button';
 export { updateStyle, getStyle } from './styles';
 export { humanizeTimestamp } from './utils';

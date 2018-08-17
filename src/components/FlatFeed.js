@@ -4,6 +4,9 @@ import { FlatList, RefreshControl } from 'react-native';
 import immutable from 'immutable';
 import URL from 'url-parse';
 
+//$FlowFixMe
+import { BaseActivity } from 'react-native-activity-feed';
+
 import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
 
@@ -47,6 +50,10 @@ type Props = {|
 export default class FlatFeed extends React.Component<Props> {
   static defaultProps = {
     styles: {},
+    feedGroup: 'timeline',
+    options: {
+      limit: 10,
+    },
   };
 
   render = function() {
@@ -294,6 +301,10 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     if (this.props.ActivityComponent) {
       let ActivityComponent = this.props.ActivityComponent;
       return <ActivityComponent {...args} />;
+    }
+
+    if (!this.props.renderActivity && !this.props.ActivityComponent) {
+      return <BaseActivity {...args} />;
     }
 
     return null;

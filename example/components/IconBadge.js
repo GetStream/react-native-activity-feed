@@ -25,15 +25,9 @@ export default class IconBadge extends React.Component {
     );
 
     const callback = (data) => {
-      console.log('data: ', data);
-      this.setState(
-        (prevState) => ({
-          unread: prevState.unread + data.new.length - data.deleted.length,
-        }),
-        () => {
-          console.log('state: ', this.state.unread);
-        },
-      );
+      this.setState((prevState) => ({
+        unread: prevState.unread + data.new.length - data.deleted.length,
+      }));
     };
 
     function successCallback() {
@@ -94,6 +88,13 @@ export default class IconBadge extends React.Component {
     );
   }
 }
+
+// <IconBadge
+//   feedGroup
+//   realtimeToken
+//   badgeNumbers
+//   renderIcon
+//   renderBadge />
 
 const styles = StyleSheet.create({
   IconBadge: {

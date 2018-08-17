@@ -11,7 +11,7 @@ import type {
 import type { AppCtx } from './Context';
 
 export type NavigationProps = {|
-  navigation: NavigationScreenProp<{}>,
+  navigation?: NavigationScreenProp<{}>,
 |};
 
 export type ChildrenProps = {|

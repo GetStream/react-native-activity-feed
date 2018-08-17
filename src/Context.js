@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from 'react';
+import { View, Text, Image } from 'react-native';
 import stream from 'getstream';
 import StreamAnalytics from 'stream-analytics';
 import type { ChildrenProps } from './types';
@@ -27,8 +28,9 @@ export type AppCtx<UserData> = {|
   // the internal fields changed so it thinks it doesn't need to rerender.
   userData: ?UserData,
   changedUserData: () => void,
+  changeNotificationCounts?: any,
   analyticsClient?: any,
-  realtimeToken?: string,
+  notificationFeed?: any,
 |};
 
 type StreamAppProps<UserData> = {|
@@ -39,6 +41,11 @@ type StreamAppProps<UserData> = {|
   options?: {},
   analyticsToken?: string,
   realtimeToken?: string,
+  notificationFeed?: {
+    feedGroup?: string,
+    userId?: string,
+    realtimeToken?: string,
+  },
   defaultUserData: UserData,
   ...ChildrenProps,
 |};
@@ -67,13 +74,33 @@ export class StreamApp<UserData> extends React.Component<
       });
       analyticsClient.setUser(this.props.userId);
     }
+    let notificationFeed;
+    if (this.props.notificationFeed) {
+      //$FlowFixMe
+      notificationFeed = session.client.feed(
+        this.props.notificationFeed.feedGroup || 'notification',
+        this.props.notificationFeed.userId || this.props.userId,
+        //$FlowFixMe
+        this.props.notificationFeed.realtimeToken || session.token,
+      );
+    }
 
+    //$FlowFixMe
     this.state = {
       session: session,
       user: session.user,
       userData: session.user.data,
       changedUserData: () => {
         this.setState({ userData: this.state.user.data });
+      },
+      notificationFeed: notificationFeed,
+      notificationCounts: {
+        unread: 0,
+        unseen: 0,
+      },
+      changeNotificationCounts: (counts) => {
+        //$FlowFixMe
+        this.setState({ notificationCounts: counts });
       },
       analyticsClient: analyticsClient,
       realtimeToken: this.props.realtimeToken,
@@ -84,6 +111,16 @@ export class StreamApp<UserData> extends React.Component<
     // TODO: Change this to an empty object by default
     // TODO: Maybe move this somewhere else
     await this.state.user.getOrCreate(this.props.defaultUserData);
+    if (this.state.notificationFeed) {
+      let results = await this.state.notificationFeed.get({ limit: 1 });
+      //$FlowFixMe
+      this.state.changeNotificationCounts({
+        unread: results.unread,
+        unseen: results.unseen,
+      });
+      //$FlowFixMe
+      this.state.notificationFeed.subscribe;
+    }
 
     this.state.changedUserData();
   }
@@ -91,7 +128,27 @@ export class StreamApp<UserData> extends React.Component<
   render() {
     return (
       <StreamContext.Provider value={{ ...this.state }}>
-        {this.props.children}
+        {this.props.children || (
+          <View
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Image
+              source={{
+                uri:
+                  'https://popculturalstudies.files.wordpress.com/2016/02/batman-66-6.gif',
+              }}
+              style={{
+                width: 200,
+                height: 200,
+                borderRadius: 100,
+                margin: 50,
+              }}
+            />
+            <Text style={{ fontWeight: '700', fontSize: 18 }}>
+              You are now connected to Stream
+            </Text>
+          </View>
+        )}
       </StreamContext.Provider>
     );
   }

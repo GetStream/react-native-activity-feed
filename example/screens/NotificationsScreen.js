@@ -41,6 +41,7 @@ export default class NotificationScreen extends React.Component<Props> {
       StatusBar.setBarStyle('dark-content');
     });
   }
+  componentDidUpdate() {}
 
   _renderGroup = ({ activityGroup, ...styles }: any) => {
     let verb = activityGroup.activities[0].verb;
