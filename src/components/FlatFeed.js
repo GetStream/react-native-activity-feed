@@ -56,13 +56,15 @@ export default class FlatFeed extends React.Component<Props> {
     },
   };
 
-  render = function() {
+  render() {
     return (
       <StreamContext.Consumer>
-        {(appCtx) => <FlatFeedInner {...this.props} {...appCtx} />}
+        {(appCtx) => {
+          return <FlatFeedInner {...this.props} {...appCtx} />;
+        }}
       </StreamContext.Consumer>
     );
-  };
+  }
 }
 
 type PropsInner = {| ...Props, ...BaseAppCtx |};

@@ -125,9 +125,80 @@ let styles = {
       opacity: 0.5,
     },
   }),
+  statusUpdateFormSimple: StyleSheet.create({
+    container: {
+      shadowOffset: { width: 0, height: -3 },
+      shadowColor: 'black',
+      shadowOpacity: 0.1,
+      backgroundColor: '#f6f6f6',
+      height: 80,
+    },
+    containerFocused: {
+      height: 120,
+    },
+    containerFocusedOg: {
+      height: 171,
+    },
+    newPostContainer: {
+      backgroundColor: '#ffffff',
+      padding: 15,
+      flexDirection: 'row',
+      flex: 1,
+    },
+    textInput: {
+      position: 'relative',
+      // borderWidth: 1,
+      // borderColor: 'red',
+      padding: 10,
+      marginRight: 10,
+      flex: 1,
+      backgroundColor: '#f8f8f8',
+      borderRadius: 10,
+    },
+    actionPanel: {
+      justifyContent: 'space-between',
+    },
+    accessory: {
+      borderTopColor: '#DADFE3',
+      backgroundColor: '#f6f6f6',
+      borderTopWidth: 1,
+
+      width: 100 + '%',
+      padding: 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    imageContainer: {
+      width: 30,
+      height: 30,
+      marginTop: -3,
+      marginBottom: -3,
+      overflow: 'hidden',
+      borderRadius: 4,
+    },
+    imageOverlay: {
+      // position: 'absolute',
+      // justifyContent: 'center',
+      // alignItems: 'center',
+      width: 30,
+      height: 30,
+      padding: 8,
+      backgroundColor: 'rgba(0,0,0,0.4)',
+    },
+    image: {
+      // position: 'absolute',
+      width: 30,
+      height: 30,
+    },
+    image_loading: {
+      position: 'absolute',
+      width: 30,
+      height: 30,
+      opacity: 0.5,
+    },
+  }),
   ogBlock: StyleSheet.create({
     wrapper: {
-      flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
     },
@@ -152,6 +223,7 @@ let styles = {
       height: 20,
     },
   }),
+
   card: StyleSheet.create({
     container: {
       flex: 1,

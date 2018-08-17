@@ -81,12 +81,15 @@ export default class BaseActivity extends React.Component {
           )}
 
         {attachments &&
-          attachments.og && (
+          attachments.og &&
+          Object.keys(attachments.og).length > 0 && (
             <Card
               item={{
                 title: attachments.og.title,
                 description: attachments.og.description,
-                image: attachments.og.images[0].image,
+                image: attachments.og.images
+                  ? attachments.og.images[0].image
+                  : null,
                 url: attachments.og.url,
               }}
             />

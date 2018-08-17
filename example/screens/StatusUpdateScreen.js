@@ -33,15 +33,17 @@ class StatusUpdateScreen extends React.Component {
   render() {
     return (
       <StreamContext.Consumer>
-        {(appCtx) => (
-          <StatusUpdateForm
-            {...this.props}
-            {...appCtx}
-            registerSubmit={(submitFunc) => {
-              this.props.navigation.setParams({ submitFunc });
-            }}
-          />
-        )}
+        {(appCtx) => {
+          return (
+            <StatusUpdateForm
+              {...this.props}
+              {...appCtx}
+              registerSubmit={(submitFunc) => {
+                this.props.navigation.setParams({ submitFunc });
+              }}
+            />
+          );
+        }}
       </StreamContext.Consumer>
     );
   }

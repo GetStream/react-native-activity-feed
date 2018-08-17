@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  SafeAreaView,
   View,
   Image,
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
   Dimensions,
+  Keyboard,
 } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
-import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
-import { Avatar, OgBlock } from 'react-native-activity-feed';
+import { OgBlock, StreamContext } from 'react-native-activity-feed';
+
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
@@ -24,12 +24,32 @@ const ImageState = Object.freeze({
 
 const urlRegex = /(https?:\/\/[^\s]+)/gi;
 
-export default class StatusUpdateForm extends React.Component {
+export default class StatusUpdateFormSimple extends React.Component {
+  static defaultProps = {
+    styles: {},
+    feedGroup: 'timeline',
+    options: {
+      limit: 10,
+    },
+  };
+
+  render() {
+    return (
+      <StreamContext.Consumer>
+        {(appCtx) => {
+          return <StatusUpdateFormInner {...this.props} {...appCtx} />;
+        }}
+      </StreamContext.Consumer>
+    );
+  }
+}
+
+class StatusUpdateFormInner extends React.Component {
   constructor(props) {
     super(props);
     this.props.feedUserId = this.props.feedUserId || props.session.userId;
     this._handleOgDebounced = _.debounce(this.handleOG, 250);
-    this.TextInput = React.createRef();
+    this.textInput = React.createRef();
   }
 
   static defaultProps = {
@@ -57,6 +77,7 @@ export default class StatusUpdateForm extends React.Component {
     ogLink: null,
     textInput: null,
     orientation: 'portrait',
+    focused: false,
     urls: [],
     dismissedUrls: [],
   };
@@ -95,15 +116,9 @@ export default class StatusUpdateForm extends React.Component {
   };
 
   componentDidMount() {
-    this.TextInput.current.focus();
-
     const { width, height } = Dimensions.get('window');
     this.setState({
       orientation: width > height ? 'landscape' : 'portrait',
-    });
-
-    this.props.registerSubmit(async () => {
-      this.buildActivity();
     });
   }
 
@@ -112,24 +127,29 @@ export default class StatusUpdateForm extends React.Component {
   }
 
   buildActivity() {
-    console.log(this.state);
-    let attachments = {
-      images: this.state.image_url ? [this.state.image_url] : [],
-      og: this.state.og ? this.state.og : {},
-    };
-    const activity = {
+    let attachments = {};
+
+    if (this.state.og && Object.keys(this.state.og).length > 0) {
+      attachments.og = this.state.og;
+    }
+
+    if (this.state.image_url) {
+      attachments.images = [this.state.image_url];
+    }
+
+    let activity = {
       actor: this.props.session.user,
       verb: this.props.activity_verb,
       object: this.state.textInput,
-      attachments,
     };
+
+    if (Object.keys(attachments).length > 0) {
+      activity.attachments = attachments;
+    }
 
     this.props.session
       .feed(this.props.feedGroup, this.props.feedUserId)
       .addActivity(activity)
-      .then(() => {
-        this.props.navigation.navigate('Home');
-      })
       .catch((err) => {
         console.log(err);
       });
@@ -200,8 +220,27 @@ export default class StatusUpdateForm extends React.Component {
     );
   };
 
+  onSubmitForm = () => {
+    // this.buildActivity()
+    this.textInput.clear();
+    console.log('tets')
+    // Keyboard.dismiss();
+    // this.setState(
+    //   {
+    //     image: null,
+    //     imageState: ImageState.NO_IMAGE,
+    //     og: null,
+    //     ogScraping: false,
+    //     ogLink: null,
+    //     textInput: null,
+    //     focused: false,
+    //     urls: [],
+    //     dismissedUrls: [],
+    //   });
+  };
+
   render() {
-    let styles = buildStylesheet('statusUpdateForm', this.props.styles);
+    let styles = buildStylesheet('statusUpdateFormSimple', this.props.styles);
     Dimensions.addEventListener('change', (dimensions) => {
       this.setState({
         orientation:
@@ -211,47 +250,41 @@ export default class StatusUpdateForm extends React.Component {
       });
     });
     return (
-      <SafeAreaView style={styles.screenContainer}>
+      <View
+        style={[
+          styles.container,
+          this.state.focused ? styles.containerFocused : {},
+          this.state.og ? styles.containerFocusedOg : {},
+        ]}
+      >
+        {this.state.og && (
+          <OgBlock
+            onPressDismiss={this._onPressDismiss}
+            og={this.state.og}
+            styles={this.props.styles.ogBlock}
+          />
+        )}
+
         <View style={styles.newPostContainer}>
-          {this.state.orientation === 'portrait' && (
-            <Avatar
-              source={this.props.session.user.data.profileImage}
-              size={48}
-            />
-          )}
-          <View
-            style={[
-              styles.textInput,
-              this.state.orientation === 'portrait'
-                ? styles.textInputPortrait
-                : styles.textInputPortrait,
-            ]}
-          >
+          <View style={[styles.textInput]}>
             <TextInput
+              ref={this.textInput}
               multiline
-              onChangeText={(text) => {
-                this.setState({ textInput: text });
-                this._handleOgDebounced(text);
-              }}
-              ref={this.TextInput}
+              // onChangeText={(text) => {
+              //   this.setState({ textInput: text });
+              //   this._handleOgDebounced(text);
+              // }}
               placeholder="Share something..."
               underlineColorAndroid="transparent"
+              // onBlur={() => this.setState({ focused: false })}
+              // onFocus={() => this.setState({ focused: true })}
             />
           </View>
-        </View>
 
-        <View>
-          <KeyboardAccessory backgroundColor="#fff">
-            {this.state.og && this.state.orientation === 'portrait' ? (
-              <OgBlock
-                onPressDismiss={this._onPressDismiss}
-                og={this.state.og}
-                styles={this.props.styles.ogBlock}
-              />
-            ) : null}
-            <View style={styles.accessory}>
+          <View style={styles.actionPanel}>
+            <View style={styles.imageContainer}>
               {this.state.image ? (
-                <View style={styles.imageContainer}>
+                <React.Fragment>
                   <Image
                     source={{ uri: this.state.image }}
                     style={
@@ -267,12 +300,12 @@ export default class StatusUpdateForm extends React.Component {
                       <TouchableOpacity onPress={this._removeImage}>
                         <Image
                           source={require('../images/icons/close-white.png')}
-                          style={{ width: 24, height: 24 }}
+                          style={[{ width: 24, height: 24 }]}
                         />
                       </TouchableOpacity>
                     )}
                   </View>
-                </View>
+                </React.Fragment>
               ) : (
                 <TouchableOpacity
                   title="Pick an image from camera roll"
@@ -284,30 +317,19 @@ export default class StatusUpdateForm extends React.Component {
                   />
                 </TouchableOpacity>
               )}
-              {this.state.og && this.state.orientation === 'landscape' ? (
-                <OgBlock
-                  onPressDismiss={this._onPressDismiss}
-                  og={this.state.og}
-                  styles={{
-                    wrapper: {
-                      padding: 0,
-                      paddingTop: 0,
-                      paddingBottom: 0,
-                      marginTop: -15,
-                      marginBottom: -15,
-                      marginLeft: 15,
-                      borderTopColor: 'transparent',
-                      borderTopWidth: 1,
-                      flex: 1,
-                    },
-                    textStyle: { fontSize: 12 },
-                  }}
-                />
-              ) : null}
             </View>
-          </KeyboardAccessory>
+            <TouchableOpacity
+              title="Pick an image from camera roll"
+              onPress={this.onSubmitForm}
+            >
+              <Image
+                source={require('../images/icons/send.png')}
+                style={{ width: 24, height: 24 }}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
