@@ -76,6 +76,7 @@ class StatusUpdateFormInner extends React.Component {
     ogScraping: false,
     ogLink: null,
     textInput: null,
+    clearInput: false,
     orientation: 'portrait',
     focused: false,
     urls: [],
@@ -221,22 +222,21 @@ class StatusUpdateFormInner extends React.Component {
   };
 
   onSubmitForm = () => {
-    // this.buildActivity()
-    this.textInput.clear();
-    console.log('tets')
-    // Keyboard.dismiss();
-    // this.setState(
-    //   {
-    //     image: null,
-    //     imageState: ImageState.NO_IMAGE,
-    //     og: null,
-    //     ogScraping: false,
-    //     ogLink: null,
-    //     textInput: null,
-    //     focused: false,
-    //     urls: [],
-    //     dismissedUrls: [],
-    //   });
+    this.buildActivity()
+    Keyboard.dismiss();
+    this.setState(
+      {
+        image: null,
+        imageState: ImageState.NO_IMAGE,
+        og: null,
+        ogScraping: false,
+        ogLink: null,
+        textInput: null,
+        focused: false,
+        urls: [],
+        dismissedUrls: [],
+        clearInput: true
+      });
   };
 
   render() {
@@ -270,14 +270,16 @@ class StatusUpdateFormInner extends React.Component {
             <TextInput
               ref={this.textInput}
               multiline
-              // onChangeText={(text) => {
-              //   this.setState({ textInput: text });
-              //   this._handleOgDebounced(text);
-              // }}
+              onChangeText={(text) => {
+                this.setState({ textInput: text, clearInput: false });
+                this._handleOgDebounced(text);
+              }}
+              value={!this.state.clearInput ? this.state.textInput : null}
+              autocorrect={false}
               placeholder="Share something..."
               underlineColorAndroid="transparent"
-              // onBlur={() => this.setState({ focused: false })}
-              // onFocus={() => this.setState({ focused: true })}
+              onBlur={() => this.setState({ focused: false })}
+              onFocus={() => this.setState({ focused: true })}
             />
           </View>
 
