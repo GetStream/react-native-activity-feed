@@ -223,7 +223,6 @@ let styles = {
       height: 20,
     },
   }),
-
   card: StyleSheet.create({
     container: {
       flex: 1,
@@ -316,6 +315,36 @@ let styles = {
       marginRight: 5,
       width: 24,
       height: 24,
+    },
+  }),
+  likeButton: StyleSheet.create({
+    container: {
+      alignSelf: 'flex-start',
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingTop: 5,
+      paddingBottom: 5,
+      marginLeft: 15,
+    },
+    text: {
+      fontWeight: '700',
+    },
+    image: {
+      marginRight: 5,
+      width: 24,
+      height: 24,
+    },
+  }),
+  simpleNotificationBlock: StyleSheet.create({
+    container: { 
+      backgroundColor: '#007AFF',
+      borderRadius: 12,
+      padding: 15,
+      margin: 5,
+    },
+    text: {
+      // color: '#007AFF',
+      fontWeight: '700',
     },
   }),
 };

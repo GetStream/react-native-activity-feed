@@ -222,21 +222,20 @@ class StatusUpdateFormInner extends React.Component {
   };
 
   onSubmitForm = () => {
-    this.buildActivity()
+    this.buildActivity();
     Keyboard.dismiss();
-    this.setState(
-      {
-        image: null,
-        imageState: ImageState.NO_IMAGE,
-        og: null,
-        ogScraping: false,
-        ogLink: null,
-        textInput: null,
-        focused: false,
-        urls: [],
-        dismissedUrls: [],
-        clearInput: true
-      });
+    this.setState({
+      image: null,
+      imageState: ImageState.NO_IMAGE,
+      og: null,
+      ogScraping: false,
+      ogLink: null,
+      textInput: null,
+      focused: false,
+      urls: [],
+      dismissedUrls: [],
+      clearInput: true,
+    });
   };
 
   render() {
