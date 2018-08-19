@@ -299,6 +299,12 @@ let styles = {
       borderBottomColor: 'rgba(0,0,0,0.1)',
       borderBottomWidth: 1,
     },
+    mention: {
+      color: 'blue',
+    },
+    hashtag: {
+      color: 'green',
+    },
   }),
   button: StyleSheet.create({
     container: {
