@@ -65,16 +65,13 @@ class PagerInner extends React.Component<PropsInner, State> {
   };
 
   async componentDidMount() {
-    const feed = this.props.session.client.feed(
+    const feed = this.props.session.feed(
       this.props.feedGroup,
       this.props.user.id,
-      this.props.session.token,
     );
 
     let subscription = feed
       .subscribe((data) => {
-        console.log('got something!');
-        console.log(data);
         this.setState((prevState) => {
           prevState.messages.push(data.new);
           return { messages: [prevState.messages] };
