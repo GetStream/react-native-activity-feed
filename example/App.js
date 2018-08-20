@@ -24,7 +24,6 @@ import {
   BaseActivity,
   StatusUpdateFormSimple,
   LikeButton,
-  Pager,
 } from 'react-native-activity-feed';
 
 // $FlowFixMe
@@ -234,9 +233,7 @@ const App = () => {
 
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <Pager />
-
-        <FlatFeed renderActivity={renderActivity} />
+        <FlatFeed renderActivity={renderActivity} showPager={true} />
 
         <KeyboardAccessory>
           <StatusUpdateFormSimple

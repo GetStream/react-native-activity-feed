@@ -5,7 +5,7 @@ import immutable from 'immutable';
 import URL from 'url-parse';
 
 //$FlowFixMe
-import { BaseActivity } from 'react-native-activity-feed';
+import { BaseActivity, Pager } from 'react-native-activity-feed';
 
 import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
@@ -33,6 +33,8 @@ type Props = {|
   options?: FeedRequestOptions,
   renderActivity?: ReactComponentFunction,
   ActivityComponent?: ReactElementCreator,
+  pager?: ReactElementCreator,
+  showPager: boolean,
   BelowListComponent?: any,
   doFeedRequest?: (
     session: BaseUserSession,
@@ -42,6 +44,7 @@ type Props = {|
   ) => Promise<FeedResponse<{}, {}>>,
   noPagination?: boolean,
   analyticsLocation?: string,
+  onRefresh?: () => void,
   ...NavigationProps,
   ...ChildrenProps,
   ...StylesProps,
@@ -54,6 +57,7 @@ export default class FlatFeed extends React.Component<Props> {
     options: {
       limit: 10,
     },
+    showPager: false,
   };
 
   render() {
@@ -76,8 +80,11 @@ type State = {
 };
 
 class FlatFeedInner extends React.Component<PropsInner, State> {
+  pagerRef: ?React.Component<any>;
+
   constructor(props: PropsInner) {
     super(props);
+    this.pagerRef = null;
     this.state = {
       activityOrder: [],
       activities: immutable.Map(),
@@ -207,6 +214,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     );
     return feed.get(options);
   };
+
   _responseToActivityMap(response) {
     return immutable.fromJS(
       response.results.reduce((map, a) => {
@@ -219,6 +227,11 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   _refresh = async () => {
     await this.setState({ refreshing: true });
     let response = await this._doFeedRequest();
+
+    if (this.pagerRef) {
+      //$FlowFixMe
+      this.pagerRef.dismiss();
+    }
 
     return this.setState({
       activityOrder: response.results.map((a) => a.id),
@@ -312,12 +325,29 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     return null;
   };
 
+  getPager() {
+    if (this.props.showPager || this.props.pager) {
+      return this.props.pager ? this.props.pager : Pager;
+    }
+  }
+
   render() {
-    let { BelowListComponent } = this.props;
+    let { BelowListComponent, feedGroup, userId } = this.props;
     let styles = buildStylesheet('flatFeed', this.props.styles);
+    let pager = this.getPager();
+    let BoundPager = pager
+      ? React.createElement(pager, {
+          feedGroup,
+          userId,
+          ref: (node) => {
+            this.pagerRef = node;
+          },
+        })
+      : null;
 
     return (
       <React.Fragment>
+        {BoundPager}
         <FlatList
           ListHeaderComponent={this.props.children}
           style={styles.container}
