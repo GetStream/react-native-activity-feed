@@ -8,7 +8,7 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
-import { ImagePicker, Permissions } from 'expo';
+let ImagePicker, Permissions;
 import { OgBlock, StreamContext } from 'react-native-activity-feed';
 
 import { buildStylesheet } from '../styles';

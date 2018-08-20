@@ -8,7 +8,7 @@ let repoDir = path.dirname(__dirname);
 module.exports = {
   getBlacklistRE() {
     return blacklist([
-      new RegExp(repoDir + '/rn-example/'),
+      new RegExp(repoDir + '/native-example/'),
       new RegExp(repoDir + '/example/node_modules/(.*)'),
       new RegExp(repoDir + '/expo-example/node_modules/(.*)'),
       new RegExp(
