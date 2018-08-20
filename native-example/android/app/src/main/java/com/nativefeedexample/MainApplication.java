@@ -1,4 +1,4 @@
-package com.rnexample;
+package com.nativefeedexample;
 
 import android.app.Application;
 

@@ -145,10 +145,10 @@ const App = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {/* {stepOne()} */}
+      {stepOne()}
       {/* {stepTwo()} */}
       {/* {stepThree()} */}
-      {stepFour()}
+      {/* stepFour() */}
       {/* {stepFive()} */}
     </SafeAreaView>
   );
