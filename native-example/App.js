@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Platform } from 'react-native';
 
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
@@ -71,6 +71,32 @@ const App = () => {
     );
   }
 
+  function statusUpdateForm() {
+    if (Platform.OS === 'android') {
+      return (
+        <StatusUpdateFormSimple
+          styles={{
+            ogBlock: {
+              wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
+            },
+          }}
+        />
+      );
+    } else {
+      return (
+        <KeyboardAccessory>
+          <StatusUpdateFormSimple
+            styles={{
+              ogBlock: {
+                wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
+              },
+            }}
+          />
+        </KeyboardAccessory>
+      );
+    }
+  }
+
   // eslint-disable-next-line no-unused-vars
   function stepFour() {
     return (
@@ -92,16 +118,7 @@ const App = () => {
             );
           }}
         />
-
-        <KeyboardAccessory>
-          <StatusUpdateFormSimple
-            styles={{
-              ogBlock: {
-                wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
-              },
-            }}
-          />
-        </KeyboardAccessory>
+        {statusUpdateForm()}
       </StreamApp>
     );
   }
@@ -130,15 +147,7 @@ const App = () => {
 
         <FlatFeed renderActivity={renderActivity} />
 
-        <KeyboardAccessory>
-          <StatusUpdateFormSimple
-            styles={{
-              ogBlock: {
-                wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
-              },
-            }}
-          />
-        </KeyboardAccessory>
+        {statusUpdateForm()}
       </StreamApp>
     );
   }
