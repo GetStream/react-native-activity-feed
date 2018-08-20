@@ -9,7 +9,6 @@ import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
 import Icon from './components/Icon';
 import IconBadge from './components/IconBadge';
-import { Avatar, StreamApp } from 'react-native-activity-feed';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
@@ -19,13 +18,15 @@ import SinglePostScreen from './screens/SinglePostScreen';
 import StatusUpdateScreen from './screens/StatusUpdateScreen';
 
 import {
+  Avatar,
+  StreamApp,
   StreamContext,
   FlatFeed,
   BaseActivity,
   StatusUpdateFormSimple,
   LikeButton,
   FeedNotification,
-} from 'react-native-activity-feed';
+} from 'expo-activity-feed';
 
 // $FlowFixMe
 const NotificationsStack = createStackNavigator({
