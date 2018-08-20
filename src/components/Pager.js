@@ -14,7 +14,7 @@ type Props = {|
 
 type PropsInner = {| ...Props, ...BaseAppCtx |};
 
-class SimpleNotificationBlock extends React.Component<any, State> {
+class PagerBlock extends React.Component<any, State> {
   static defaultProps = {
     messages: [],
     labelSingular: 'activity',
@@ -36,9 +36,9 @@ class SimpleNotificationBlock extends React.Component<any, State> {
   }
 }
 
-export default class FeedNotification extends React.Component<Props> {
+export default class Pager extends React.Component<Props> {
   static defaultProps = {
-    Child: SimpleNotificationBlock,
+    Child: PagerBlock,
     feedGroup: 'timeline',
   };
 
@@ -46,7 +46,7 @@ export default class FeedNotification extends React.Component<Props> {
     return (
       <StreamContext.Consumer>
         {(appCtx) => {
-          return <FeedNotificationInner {...this.props} {...appCtx} />;
+          return <PagerInner {...this.props} {...appCtx} />;
         }}
       </StreamContext.Consumer>
     );
@@ -58,7 +58,7 @@ type State = {
   subscription: any,
 };
 
-class FeedNotificationInner extends React.Component<PropsInner, State> {
+class PagerInner extends React.Component<PropsInner, State> {
   state = {
     messages: [],
     subscription: {},
