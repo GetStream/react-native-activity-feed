@@ -28,3 +28,8 @@ yarn-error.log*
 
 .babelrc
 /bin/
+/native-package/
+/expo-package/
+/dotgit/
+/example/
+/native-example/
