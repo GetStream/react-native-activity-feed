@@ -78,7 +78,15 @@ export default class StatusUpdateForm extends React.Component {
       imageState: ImageState.UPLOADING,
     });
 
-    let response = await this.props.session.images.upload(result.uri);
+    let response;
+    try {
+      response = await this.props.session.images.upload(result.uri);
+    } catch (e) {
+      this.setState({
+        imageState: ImageState.UPLOAD_FAILED,
+      });
+      throw e;
+    }
 
     this.setState({
       imageState: ImageState.UPLOADED,
