@@ -1,26 +1,36 @@
-import React from 'react';
+//@flow
+import * as React from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 
 import { buildStylesheet } from '../styles';
 
+//$FlowFixMe
 import { UserBar, Card } from 'react-native-activity-feed';
+import type { ActivityData } from '../types';
 
-export default class BaseActivity extends React.Component {
+type Props = {
+  Header?: Node,
+  Content?: Node,
+  Footer?: Node,
+  onPress?: () => void,
+  onPressAvatar?: () => void,
+  sub?: string,
+  icon?: string,
+  activity: ActivityData,
+  styles: Map<string, any>,
+};
+
+export default class BaseActivity extends React.Component<Props> {
   _onPress = () => {
-    if (this.props.clickable) {
-      this.props.navigation.navigate('SinglePost', {
-        activity: this.props.activity,
-        userId: this.props.userId,
-        feedGroup: this.props.feedGroup,
-      });
+    if (this.props.onPress) {
+      this.props.onPress();
     }
   };
 
   _onPressAvatar = () => {
-    if (this.props.activity.actor !== 'NotFound') {
-      return;
+    if (this.props.activity.actor !== 'NotFound' && this.props.onPressAvatar) {
+      this.props.onPressAvatar();
     }
-    // TODO: go to profile
   };
 
   renderHeader = () => {
@@ -29,7 +39,7 @@ export default class BaseActivity extends React.Component {
       id: '!not-found',
       created_at: '',
       updated_at: '',
-      data: { name: 'Unknown' },
+      data: { name: 'Unknown', profileImage: '' },
     };
     if (actor === 'NotFound') {
       actor = notFound;
@@ -48,15 +58,15 @@ export default class BaseActivity extends React.Component {
     );
   };
 
-  onPressMention = (text, activity) => {
+  onPressMention = (text: string, activity: ActivityData) => {
     console.log(`pressed on ${text} mention of ${activity.id}`);
-  }
+  };
 
-  onPressHashtag = (text, activity) => {
+  onPressHashtag = (text: string, activity: ActivityData) => {
     console.log(`pressed on ${text} hashtag of ${activity.id}`);
-  }
+  };
 
-  renderText = (text, activity) => {
+  renderText = (text: string, activity: ActivityData) => {
     let tokens = text.split(' ');
     let rendered = [];
     let styles = buildStylesheet('defaultActivity', this.props.styles);
@@ -66,17 +76,27 @@ export default class BaseActivity extends React.Component {
         rendered.push(
           <Text
             style={styles.mention}
-            onPress={() => { this.onPressMention(tokens[i], activity); }} key={i}
-          >{tokens[i]} </Text>
+            onPress={() => {
+              this.onPressMention(tokens[i], activity);
+            }}
+            key={i}
+          >
+            {tokens[i]}{' '}
+          </Text>,
         );
       } else if (tokens[i][0] === '#') {
         rendered.push(
           <Text
             style={styles.hashtag}
-            onPress={() => { this.onPressHashtag(tokens[i], activity); }} key={i}
-          >{tokens[i]} </Text>
+            onPress={() => {
+              this.onPressHashtag(tokens[i], activity);
+            }}
+            key={i}
+          >
+            {tokens[i]}{' '}
+          </Text>,
         );
-      }  else {
+      } else {
         rendered.push(tokens[i] + ' ');
       }
     }
@@ -89,7 +109,11 @@ export default class BaseActivity extends React.Component {
     return (
       <View>
         <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
-          <Text>{typeof object === 'string' ? this.renderText(object, this.props.activity) : this.renderText(content, this.props.activity)}</Text>
+          <Text>
+            {typeof object === 'string'
+              ? this.renderText(object, this.props.activity)
+              : this.renderText(content, this.props.activity)}
+          </Text>
         </View>
 
         {verb == 'repost' &&
@@ -146,7 +170,7 @@ export default class BaseActivity extends React.Component {
       <TouchableOpacity
         style={[styles.container]}
         onPress={this._onPress}
-        disabled={!this.props.clickable}
+        disabled={!this.props.onPress && !this.props.onPressAvatar}
       >
         {smartRender(Header, this.renderHeader)}
         {smartRender(Content, this.renderContent)}
@@ -156,7 +180,7 @@ export default class BaseActivity extends React.Component {
   }
 }
 
-function smartRender(MaybeElement, fallback) {
+function smartRender(MaybeElement: any, fallback) {
   if (MaybeElement !== undefined) {
     if (!MaybeElement) {
       return null;

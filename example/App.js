@@ -147,23 +147,13 @@ const App = () => {
 
   function stepOne() {
     return (
-      <StreamApp
-        apiKey={apiKey}
-        appId={appId}
-        userId="batman"
-        token={token}
-      />
+      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token} />
     );
   }
 
   function stepTwo() {
     return (
-      <StreamApp
-        apiKey={apiKey}
-        appId={appId}
-        userId="batman"
-        token={token}
-      >
+      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
         <FlatFeed />
       </StreamApp>
     );
@@ -171,12 +161,7 @@ const App = () => {
 
   function stepThree() {
     return (
-      <StreamApp
-        apiKey={apiKey}
-        appId={appId}
-        userId="batman"
-        token={token}
-      >
+      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
         <FlatFeed
           renderActivity={(props) => {
             return (
@@ -198,13 +183,7 @@ const App = () => {
 
   function stepFour() {
     return (
-      <StreamApp
-        apiKey={apiKey}
-        appId={appId}
-        userId="batman"
-        token={token}
-      >
-
+      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
         <FlatFeed
           renderActivity={(props) => {
             return (
@@ -237,32 +216,27 @@ const App = () => {
   }
 
   function stepFive() {
+    const renderActivity = (props) => {
+      return (
+        <BaseActivity
+          {...props}
+          Footer={
+            <View style={{ paddingLeft: 15 }}>
+              <LikeButton
+                activity={props.activity}
+                onToggleReaction={props.onToggleReaction}
+              />
+            </View>
+          }
+        />
+      );
+    };
+
     return (
-      <StreamApp
-        apiKey={apiKey}
-        appId={appId}
-        userId="batman"
-        token={token}
-      >
+      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
         <FeedNotification />
 
-        <FlatFeed
-          renderActivity={(props) => {
-            return (
-              <BaseActivity
-                {...props}
-                Footer={
-                  <View style={{ paddingLeft: 15 }}>
-                    <LikeButton
-                      activity={props.activity}
-                      onToggleReaction={props.onToggleReaction}
-                    />
-                  </View>
-                }
-              />
-            );
-          }}
-        />
+        <FlatFeed renderActivity={renderActivity} />
 
         <KeyboardAccessory>
           <StatusUpdateFormSimple
@@ -279,14 +253,12 @@ const App = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
-        {/* {example()} */}
-        {stepOne()}
-        {/* {stepTwo()} */}
-        {/* {stepThree()} */}
-        {/* {stepFour()} */}
-        {/* {stepFive()} */}
-      </View>
+      {example()}
+      {stepOne}
+      {stepTwo}
+      {stepThree}
+      {stepFour}
+      {stepFive}
     </SafeAreaView>
   );
 };

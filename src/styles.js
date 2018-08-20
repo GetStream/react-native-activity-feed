@@ -342,7 +342,7 @@ let styles = {
     },
   }),
   simpleNotificationBlock: StyleSheet.create({
-    container: { 
+    container: {
       backgroundColor: '#007AFF',
       borderRadius: 12,
       padding: 15,

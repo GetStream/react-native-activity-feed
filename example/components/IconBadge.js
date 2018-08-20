@@ -18,10 +18,9 @@ export default class IconBadge extends React.Component {
         this.setState({ loaded: true, unread: data.unread });
       });
 
-    const user = this.props.session.client.feed(
+    const user = this.props.session.feed(
       this.props.feedGroup,
       this.props.user.id,
-      this.props.session.token,
     );
 
     const callback = (data) => {

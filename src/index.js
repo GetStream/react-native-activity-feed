@@ -25,7 +25,7 @@ export { default as CommentBox } from './components/CommentBox';
 export { default as BackButton } from './components/BackButton';
 export { default as BaseActivity } from './components/BaseActivity';
 export { default as LikeButton } from './components/LikeButton';
-export { default as FeedNotification } from './components/FeedNotification';
+export { default as Pager } from './components/Pager';
 
 export { updateStyle, getStyle } from './styles';
 export { humanizeTimestamp } from './utils';
