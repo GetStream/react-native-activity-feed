@@ -3712,9 +3712,9 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@3.21.0-beta.2:
-  version "3.21.0-beta.2"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.2.tgz#4ded3d5af05907b104ae27e82e14c7dff487949e"
+getstream@3.21.0-beta.3:
+  version "3.21.0-beta.3"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.3.tgz#25d663202798f0577311ff9d8f38a02a1897f19a"
   dependencies:
     Base64 "^1.0.1"
     cross-fetch "^2.2.2"
@@ -8247,9 +8247,9 @@ xmldom@0.1.x, xmldom@^0.1.27:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
 
-"xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
+"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"
-  resolved "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 xpipe@^1.0.5:
   version "1.0.5"
