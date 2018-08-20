@@ -9,11 +9,10 @@ module.exports = {
   getBlacklistRE() {
     return blacklist([
       new RegExp(repoDir + '/native-example/'),
-      new RegExp(repoDir + '/example/node_modules/(.*)'),
-      new RegExp(repoDir + '/expo-example/node_modules/(.*)'),
-      new RegExp(
-        repoDir + '/node_modules/(react-native|react|react-native-paper)/(.*)',
-      ),
+      new RegExp(repoDir + '/example/(.*)'),
+      new RegExp(repoDir + '/expo-package/(.*)'),
+      new RegExp(repoDir + '/native-package/node_modules/(.*)'),
+      new RegExp(repoDir + '/node_modules/(.*)'),
     ]);
   },
   extraNodeModules: getNodeModulesForDirectory(path.resolve('.')),

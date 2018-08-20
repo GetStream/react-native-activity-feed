@@ -11,9 +11,8 @@ module.exports = {
       new RegExp(repoDir + '/example/'),
       new RegExp(repoDir + '/native-example/(.*)'),
       new RegExp(repoDir + '/native-package/(.*)'),
-      new RegExp(
-        repoDir + '/node_modules/(react-native|react|react-native-paper)/(.*)',
-      ),
+      new RegExp(repoDir + '/expo-package/node_modules/(.*)'),
+      new RegExp(repoDir + '/node_modules/(.*)'),
     ]);
   },
   extraNodeModules: getNodeModulesForDirectory(path.resolve('.')),
