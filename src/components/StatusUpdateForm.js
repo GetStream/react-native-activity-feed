@@ -8,9 +8,9 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-let ImagePicker, Permissions;
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
-import { Avatar, OgBlock } from 'react-native-activity-feed';
+import { Avatar, OgBlock } from 'react-native-activity-feed-core';
+import { pickImage } from '../native';
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
@@ -62,13 +62,7 @@ export default class StatusUpdateForm extends React.Component {
   };
 
   _pickImage = async () => {
-    await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: false,
-      aspect: [4, 3],
-    });
-
+    let result = await pickImage();
     if (result.cancelled) {
       return;
     }

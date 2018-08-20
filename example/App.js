@@ -124,6 +124,7 @@ const App = () => {
     return null;
   }
 
+  // eslint-disable-next-line no-unused-vars
   function example() {
     return (
       <StreamApp
@@ -146,12 +147,14 @@ const App = () => {
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepOne() {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token} />
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepTwo() {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
@@ -160,6 +163,7 @@ const App = () => {
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepThree() {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
@@ -182,6 +186,7 @@ const App = () => {
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepFour() {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
@@ -216,6 +221,7 @@ const App = () => {
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepFive() {
     const renderActivity = (props) => {
       return (
@@ -254,12 +260,12 @@ const App = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {example()}
-      {stepOne}
-      {stepTwo}
-      {stepThree}
-      {stepFour}
-      {stepFive}
+      {/* {example()} */}
+      {/* {stepOne()} */}
+      {/* {stepTwo()} */}
+      {/* {stepThree()} */}
+      {stepFour()}
+      {/* {stepFive()} */}
     </SafeAreaView>
   );
 };

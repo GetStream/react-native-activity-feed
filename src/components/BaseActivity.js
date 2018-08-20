@@ -5,7 +5,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { buildStylesheet } from '../styles';
 
 //$FlowFixMe
-import { UserBar, Card } from 'react-native-activity-feed';
+import { UserBar, Card } from 'react-native-activity-feed-core';
 import type { ActivityData } from '../types';
 
 type Props = {
