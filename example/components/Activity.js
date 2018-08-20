@@ -15,7 +15,7 @@ import {
   ReactionToggleIcon,
   ReactionIconBar,
   Card,
-} from 'react-native-activity-feed';
+} from 'expo-activity-feed';
 import type { ActivityData, UserResponse, NavigationProps } from '../types';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345

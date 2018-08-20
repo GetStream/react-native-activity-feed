@@ -1,5 +1,5 @@
 {
-  "presets": ["babel-preset-expo", "flow", "react-native"],
+  "presets": ["flow", "react-native"],
   "env": {
     "development": {
       "plugins": [

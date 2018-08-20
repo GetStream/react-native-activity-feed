@@ -4,9 +4,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CoverImage from './CoverImage';
-import { Avatar, UploadImage } from 'react-native-activity-feed';
+import { Avatar, UploadImage } from 'expo-activity-feed';
 import FormField from './FormField';
-import { StreamContext } from 'react-native-activity-feed';
+import { StreamContext } from 'expo-activity-feed';
 import type { UserData, StreamAppCtx } from '../types';
 
 type Props = {|

@@ -1,6 +1,6 @@
 {
-  "name": "react-native-activity-feed",
-  "version": "0.4.0",
+  "name": "react-native-activity-feed-core",
+  "version": "0.5.0",
   "license": "BSD-3-Clause",
   "author": {
     "company": "Stream.io Inc"
@@ -25,7 +25,6 @@
     "eslint-plugin-react": "^7.10.0",
     "flow-bin": "^0.78.0",
     "flow-copy-source": "^2.0.2",
-    "jest-expo": "~27.0.0",
     "prettier": "^1.13.7",
     "react-native": "~0.55.2",
     "react-native-scripts": "1.14.0",
@@ -44,12 +43,8 @@
     "prepack": "bin/prepack.sh",
     "postpack": "bin/postpack.sh"
   },
-  "jest": {
-    "preset": "jest-expo"
-  },
   "dependencies": {
     "es6-symbol": "^3.1.1",
-    "expo": "^27.0.1",
     "faker": "^4.1.0",
     "getstream": "3.21.0-beta.3",
     "immutable": "^4.0.0-rc.9",

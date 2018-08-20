@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { ReactionList } from 'react-native-activity-feed';
+import { ReactionList } from 'expo-activity-feed';
 
 import RepostItem from './RepostItem';
 import SectionHeader from './SectionHeader';

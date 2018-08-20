@@ -8,8 +8,8 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
-import { ImagePicker, Permissions } from 'expo';
-import { OgBlock, StreamContext } from 'react-native-activity-feed';
+import { OgBlock, StreamContext } from 'react-native-activity-feed-core';
+import { pickImage } from '../native';
 
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
@@ -84,13 +84,7 @@ class StatusUpdateFormInner extends React.Component {
   };
 
   _pickImage = async () => {
-    await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: false,
-      aspect: [4, 3],
-    });
-
+    let result = await pickImage();
     if (result.cancelled) {
       return;
     }

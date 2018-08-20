@@ -9,7 +9,6 @@ import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
 import Icon from './components/Icon';
 import IconBadge from './components/IconBadge';
-import { Avatar, StreamApp } from 'react-native-activity-feed';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
@@ -19,12 +18,14 @@ import SinglePostScreen from './screens/SinglePostScreen';
 import StatusUpdateScreen from './screens/StatusUpdateScreen';
 
 import {
+  Avatar,
+  StreamApp,
   StreamContext,
   FlatFeed,
   BaseActivity,
   StatusUpdateFormSimple,
   LikeButton,
-} from 'react-native-activity-feed';
+} from 'expo-activity-feed';
 
 // $FlowFixMe
 const NotificationsStack = createStackNavigator({
@@ -122,6 +123,7 @@ const App = () => {
     return null;
   }
 
+  // eslint-disable-next-line no-unused-vars
   function example() {
     return (
       <StreamApp
@@ -144,12 +146,14 @@ const App = () => {
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepOne() {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token} />
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepTwo() {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
@@ -158,6 +162,7 @@ const App = () => {
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepThree() {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
@@ -180,6 +185,7 @@ const App = () => {
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepFour() {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
@@ -214,6 +220,7 @@ const App = () => {
     );
   }
 
+  // eslint-disable-next-line no-unused-vars
   function stepFive() {
     const renderActivity = (props) => {
       return (
@@ -250,11 +257,11 @@ const App = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {example}
-      {stepOne}
-      {stepTwo}
-      {stepThree}
-      {stepFour}
+      {/* {example()} */}
+      {/* {stepOne()} */}
+      {/* {stepTwo()} */}
+      {/* {stepThree()} */}
+      {/* {stepFour()} */}
       {stepFive()}
     </SafeAreaView>
   );

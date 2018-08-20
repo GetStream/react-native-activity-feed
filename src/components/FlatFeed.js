@@ -5,7 +5,7 @@ import immutable from 'immutable';
 import URL from 'url-parse';
 
 //$FlowFixMe
-import { BaseActivity, Pager } from 'react-native-activity-feed';
+import { BaseActivity, Pager } from 'react-native-activity-feed-core';
 
 import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';

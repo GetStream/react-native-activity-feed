@@ -3,7 +3,7 @@ import React from 'react';
 
 import CommentItem from './CommentItem';
 import SectionHeader from './SectionHeader';
-import { ReactionList } from 'react-native-activity-feed';
+import { ReactionList } from 'expo-activity-feed';
 
 import type { ReactionMap } from '../types';
 

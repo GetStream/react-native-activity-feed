@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-import { Avatar, humanizeTimestamp } from 'react-native-activity-feed';
+import { Avatar, humanizeTimestamp } from 'expo-activity-feed';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import HeartIconOutline from '../images/icons/heart-outline.png';
