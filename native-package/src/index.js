@@ -3,7 +3,7 @@ import ImagePicker from 'react-native-image-picker';
 registerNativeHandlers({
   pickImage: async () => {
     return new Promise((resolve, reject) => {
-      ImagePicker.launchImageLibrary(null, (response) => {
+      ImagePicker.showImagePicker(null, (response) => {
         if (response.error) {
           reject(Error(response.error));
         }
