@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import AttachedActivity from './AttachedActivity';
-import { UserBar, humanizeTimestamp } from 'react-native-activity-feed';
+import { UserBar, humanizeTimestamp } from 'expo-activity-feed';
 import { userOrDefault } from '../utils';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345

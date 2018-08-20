@@ -29,3 +29,4 @@ export { default as Pager } from './components/Pager';
 
 export { updateStyle, getStyle } from './styles';
 export { humanizeTimestamp } from './utils';
+export { registerNativeHandlers } from './native';

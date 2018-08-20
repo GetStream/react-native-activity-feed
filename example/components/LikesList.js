@@ -2,7 +2,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 
-import { Avatar, ReactionList } from 'react-native-activity-feed';
+import { Avatar, ReactionList } from 'expo-activity-feed';
 import SectionHeader from './SectionHeader';
 import type { ReactionMap } from '../types';
 

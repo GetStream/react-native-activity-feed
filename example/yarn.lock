@@ -3123,6 +3123,10 @@ expect@^22.4.0:
     jest-message-util "^22.4.3"
     jest-regex-util "^22.4.3"
 
+"expo-activity-feed@link:../expo-package":
+  version "0.0.0"
+  uid ""
+
 expo@^27.0.1:
   version "27.1.0"
   resolved "https://registry.yarnpkg.com/expo/-/expo-27.1.0.tgz#c8ec4a7abaf9ae96c6f2863320670e960ae2d78a"
@@ -6463,9 +6467,24 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-"react-native-activity-feed@link:..":
+"react-native-activity-feed-core@link:..":
   version "0.0.0"
   uid ""
+
+react-native-activity-feed@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed/-/react-native-activity-feed-0.4.0.tgz#f7cf82d8fae68ec3760ce05ada530a60da0b2906"
+  dependencies:
+    es6-symbol "^3.1.1"
+    expo "^27.0.1"
+    faker "^4.1.0"
+    getstream "3.21.0-beta.2"
+    immutable "^4.0.0-rc.9"
+    moment "^2.22.2"
+    numeral "^2.0.6"
+    react-native-sticky-keyboard-accessory "^0.1.1"
+    stream-analytics "^2.7.1"
+    url-parse "^1.4.3"
 
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
@@ -8385,11 +8404,6 @@ xmldoc@^0.4.0:
 xmldom@0.1.x, xmldom@^0.1.27:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
-
-"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
-  version "0.4.0"
-  uid "2474db1c2829697bcf2788fee49156b62ad8bcfd"
-  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 "xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"

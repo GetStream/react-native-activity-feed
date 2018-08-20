@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { Card } from 'react-native-activity-feed';
+import { Card } from 'expo-activity-feed';
 import type { ActivityData } from '../types';
 
 type Props = {
