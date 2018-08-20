@@ -132,18 +132,28 @@ export class StreamApp<UserData> extends React.Component<
           <View
             style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
           >
-            <Image
-              source={{
-                uri:
-                  'https://popculturalstudies.files.wordpress.com/2016/02/batman-66-6.gif',
-              }}
+            <View
               style={{
                 width: 200,
                 height: 200,
-                borderRadius: 100,
                 margin: 50,
+                overflow: 'hidden',
               }}
-            />
+              resizeMode="cover"
+              borderRadius={100}
+            >
+              <Image
+                source={{
+                  uri:
+                    'https://popculturalstudies.files.wordpress.com/2016/02/batman-66-6.gif',
+                }}
+                style={{
+                  width: 200,
+                  height: 200,
+                  overflow: 'hidden',
+                }}
+              />
+            </View>
             <Text style={{ fontWeight: '700', fontSize: 18 }}>
               You are now connected to Stream
             </Text>
