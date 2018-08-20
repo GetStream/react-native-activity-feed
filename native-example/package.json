@@ -9,7 +9,8 @@
   "dependencies": {
     "react": "16.4.1",
     "react-native": "0.56.0",
-    "react-native-activity-feed": "link:.."
+    "react-native-activity-feed-core": "link:..",
+    "react-native-activity-feed": "link:../native-package"
   },
   "devDependencies": {
     "babel-jest": "23.4.2",
