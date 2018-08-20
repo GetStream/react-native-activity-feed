@@ -44,6 +44,7 @@
     "postpack": "bin/postpack.sh"
   },
   "dependencies": {
-    "react-native-activity-feed": "^0.4.0"
+    "react-native-activity-feed": "^0.4.0",
+    "react-native-image-picker": "0.26.10"
   }
 }
