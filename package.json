@@ -39,6 +39,7 @@
     "lint": "yarn prettier && yarn eslint",
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
+    "release": "bin/release.sh",
     "preversion": "yarn && yarn lint",
     "prepack": "bin/prepack.sh",
     "postpack": "bin/postpack.sh"
