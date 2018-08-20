@@ -40,8 +40,8 @@
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
     "preversion": "yarn && yarn lint",
-    "prepack": "../bin/prepack.sh",
-    "postpack": "../bin/postpack.sh"
+    "prepack": "../bin/prepack.sh && cp ../README.md .",
+    "postpack": "../bin/postpack.sh && rm README.md"
   },
   "dependencies": {
     "react-native-activity-feed": "^0.4.0",
