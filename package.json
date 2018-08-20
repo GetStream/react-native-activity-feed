@@ -37,7 +37,7 @@
     "eslint": "eslint '**/*.js' --max-warnings 0",
     "flow": "flow && cd example && flow",
     "prettier": "prettier --list-different '**/*.{js,ts}'",
-    "lint": "yarn prettier && yarn eslint && yarn flow",
+    "lint": "yarn prettier && yarn eslint",
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
     "preversion": "yarn && yarn lint",

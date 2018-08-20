@@ -50,11 +50,11 @@ export default class BaseActivity extends React.Component {
 
   onPressMention = (text, activity) => {
     console.log(`pressed on ${text} mention of ${activity.id}`);
-  }
+  };
 
   onPressHashtag = (text, activity) => {
     console.log(`pressed on ${text} hashtag of ${activity.id}`);
-  }
+  };
 
   renderText = (text, activity) => {
     let tokens = text.split(' ');
@@ -66,17 +66,27 @@ export default class BaseActivity extends React.Component {
         rendered.push(
           <Text
             style={styles.mention}
-            onPress={() => { this.onPressMention(tokens[i], activity); }} key={i}
-          >{tokens[i]} </Text>
+            onPress={() => {
+              this.onPressMention(tokens[i], activity);
+            }}
+            key={i}
+          >
+            {tokens[i]}{' '}
+          </Text>,
         );
       } else if (tokens[i][0] === '#') {
         rendered.push(
           <Text
             style={styles.hashtag}
-            onPress={() => { this.onPressHashtag(tokens[i], activity); }} key={i}
-          >{tokens[i]} </Text>
+            onPress={() => {
+              this.onPressHashtag(tokens[i], activity);
+            }}
+            key={i}
+          >
+            {tokens[i]}{' '}
+          </Text>,
         );
-      }  else {
+      } else {
         rendered.push(tokens[i] + ' ');
       }
     }
@@ -89,7 +99,11 @@ export default class BaseActivity extends React.Component {
     return (
       <View>
         <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
-          <Text>{typeof object === 'string' ? this.renderText(object, this.props.activity) : this.renderText(content, this.props.activity)}</Text>
+          <Text>
+            {typeof object === 'string'
+              ? this.renderText(object, this.props.activity)
+              : this.renderText(content, this.props.activity)}
+          </Text>
         </View>
 
         {verb == 'repost' &&
