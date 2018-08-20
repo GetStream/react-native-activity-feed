@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-import { ImagePicker, Permissions } from 'expo';
+let ImagePicker, Permissions;
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import { Avatar, OgBlock } from 'react-native-activity-feed';
 import { buildStylesheet } from '../styles';
