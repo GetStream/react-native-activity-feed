@@ -10,8 +10,12 @@ fi
 
 cd native-package
 npm version --no-git-tag-version "$1"
+sed 's|"react-native-activity-feed-core": "[^"]"+,|"react-native-activity-feed-core": "='"$1"'",|g' -i.bak package.json
+rm package.json.bak
 cd ../expo-package
 npm version --no-git-tag-version "$1"
+sed 's|"react-native-activity-feed-core": "[^"]"+,|"react-native-activity-feed-core": "='"$1"'",|g' -i.bak package.json
+rm package.json.bak
 cd ..
 git add {expo,native}-package/package.json
 npm version "$1" --force
