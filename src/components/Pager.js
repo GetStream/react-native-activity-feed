@@ -37,16 +37,38 @@ class PagerBlock extends React.Component<any, State> {
 }
 
 export default class Pager extends React.Component<Props> {
+  innerRef: ?React.Component<any, any>;
+
   static defaultProps = {
     Child: PagerBlock,
     feedGroup: 'timeline',
   };
 
+  constructor(props: Props) {
+    super(props);
+    this.innerRef = null;
+  }
+
+  dismiss() {
+    if (this.innerRef) {
+      // $FlowFixMe
+      this.innerRef.dismiss();
+    }
+  }
+
   render() {
     return (
       <StreamContext.Consumer>
         {(appCtx) => {
-          return <PagerInner {...this.props} {...appCtx} />;
+          return (
+            <PagerInner
+              {...this.props}
+              {...appCtx}
+              ref={(node) => {
+                this.innerRef = node;
+              }}
+            />
+          );
         }}
       </StreamContext.Consumer>
     );
@@ -100,8 +122,12 @@ class PagerInner extends React.Component<PropsInner, State> {
     }
   }
 
+  dismiss() {
+    this.setState({ messages: [] });
+  }
+
   render() {
     let Child = this.props.Child;
-    return <Child {...this.props} messages={this.state.messages} />;
+    return <Child messages={this.state.messages} {...this.props} />;
   }
 }
