@@ -32,7 +32,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "build": "rm -rf lib && babel src --out-dir lib --compact=false && cp -R src/images/ lib/ && flow-copy-source src lib",
+    "build": "rm -rf lib && babel src --out-dir lib --compact=false && flow-copy-source src lib",
     "eslint": "eslint '**/*.js' --max-warnings 0",
     "flow": "flow && cd example && flow",
     "prettier": "prettier --list-different '**/*.{js,ts}'",
@@ -40,8 +40,8 @@
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
     "preversion": "yarn && yarn lint",
-    "prepack": "bin/prepack.sh",
-    "postpack": "bin/postpack.sh"
+    "prepack": "../bin/prepack.sh",
+    "postpack": "../bin/postpack.sh"
   },
   "dependencies": {
     "react-native-activity-feed": "^0.4.0",
