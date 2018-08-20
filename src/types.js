@@ -43,7 +43,10 @@ export type BaseReactionMap = ReactionKindMap<Object, Object>;
 
 export type BaseUserResponse = UserResponse<{}>;
 
-export type UserData = {||};
+export type UserData = {
+  name?: string,
+  profileImage?: string,
+};
 
 export type OgData = {
   title: string,
