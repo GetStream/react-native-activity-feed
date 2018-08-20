@@ -40,11 +40,9 @@ type StreamAppProps<UserData> = {|
   userId: string,
   options?: {},
   analyticsToken?: string,
-  realtimeToken?: string,
   notificationFeed?: {
     feedGroup?: string,
     userId?: string,
-    realtimeToken?: string,
   },
   defaultUserData: UserData,
   ...ChildrenProps,
@@ -81,7 +79,7 @@ export class StreamApp<UserData> extends React.Component<
         this.props.notificationFeed.feedGroup || 'notification',
         this.props.notificationFeed.userId || this.props.userId,
         //$FlowFixMe
-        this.props.notificationFeed.realtimeToken || session.token,
+        this.props.token,
       );
     }
 
@@ -103,7 +101,6 @@ export class StreamApp<UserData> extends React.Component<
         this.setState({ notificationCounts: counts });
       },
       analyticsClient: analyticsClient,
-      realtimeToken: this.props.realtimeToken,
     };
   }
 
@@ -121,7 +118,6 @@ export class StreamApp<UserData> extends React.Component<
       //$FlowFixMe
       this.state.notificationFeed.subscribe;
     }
-
     this.state.changedUserData();
   }
 

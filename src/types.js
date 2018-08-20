@@ -42,3 +42,24 @@ export type BaseUserSession = StreamUserSession<{}>;
 export type BaseReactionMap = ReactionKindMap<Object, Object>;
 
 export type BaseUserResponse = UserResponse<{}>;
+
+export type UserData = {||};
+
+export type OgData = {
+  title: string,
+  description: string,
+  images: Array<{ image: string }>,
+  url: string,
+};
+
+export type CustomActivityData = {
+  content: string,
+  link?: boolean,
+  image?: string,
+  attachments?: {
+    images?: Array<string>,
+    og?: OgData,
+  },
+};
+
+export type ActivityData = ActivityResponse<UserData, CustomActivityData>;

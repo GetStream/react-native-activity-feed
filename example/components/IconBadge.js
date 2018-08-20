@@ -19,9 +19,9 @@ export default class IconBadge extends React.Component {
       });
 
     const user = this.props.session.client.feed(
-      'notification',
-      'batman',
-      this.props.realtimeToken,
+      this.props.feedGroup,
+      this.props.user.id,
+      this.props.session.token,
     );
 
     const callback = (data) => {
@@ -88,13 +88,6 @@ export default class IconBadge extends React.Component {
     );
   }
 }
-
-// <IconBadge
-//   feedGroup
-//   realtimeToken
-//   badgeNumbers
-//   renderIcon
-//   renderBadge />
 
 const styles = StyleSheet.create({
   IconBadge: {

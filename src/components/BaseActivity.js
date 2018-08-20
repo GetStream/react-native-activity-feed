@@ -48,13 +48,48 @@ export default class BaseActivity extends React.Component {
     );
   };
 
+  onPressMention = (text, activity) => {
+    console.log(`pressed on ${text} mention of ${activity.id}`);
+  }
+
+  onPressHashtag = (text, activity) => {
+    console.log(`pressed on ${text} hashtag of ${activity.id}`);
+  }
+
+  renderText = (text, activity) => {
+    let tokens = text.split(' ');
+    let rendered = [];
+    let styles = buildStylesheet('defaultActivity', this.props.styles);
+
+    for (let i = 0; i < tokens.length; i++) {
+      if (tokens[i][0] === '@') {
+        rendered.push(
+          <Text
+            style={styles.mention}
+            onPress={() => { this.onPressMention(tokens[i], activity); }} key={i}
+          >{tokens[i]} </Text>
+        );
+      } else if (tokens[i][0] === '#') {
+        rendered.push(
+          <Text
+            style={styles.hashtag}
+            onPress={() => { this.onPressHashtag(tokens[i], activity); }} key={i}
+          >{tokens[i]} </Text>
+        );
+      }  else {
+        rendered.push(tokens[i] + ' ');
+      }
+    }
+    return <Text>{rendered}</Text>;
+  };
+
   renderContent = () => {
     const { width } = Dimensions.get('window');
     let { verb, object, content, image, attachments } = this.props.activity;
     return (
       <View>
         <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
-          <Text>{typeof object === 'string' ? object : content}</Text>
+          <Text>{typeof object === 'string' ? this.renderText(object, this.props.activity) : this.renderText(content, this.props.activity)}</Text>
         </View>
 
         {verb == 'repost' &&
@@ -81,12 +116,15 @@ export default class BaseActivity extends React.Component {
           )}
 
         {attachments &&
-          attachments.og && (
+          attachments.og &&
+          Object.keys(attachments.og).length > 0 && (
             <Card
               item={{
                 title: attachments.og.title,
                 description: attachments.og.description,
-                image: attachments.og.images[0].image,
+                image: attachments.og.images
+                  ? attachments.og.images[0].image
+                  : null,
                 url: attachments.og.url,
               }}
             />

@@ -1,14 +1,15 @@
-// @flow
 import React from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
 } from 'react-navigation';
 
+import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
+
 import Icon from './components/Icon';
 import IconBadge from './components/IconBadge';
-import { Avatar, StreamApp, Button } from 'react-native-activity-feed';
+import { Avatar, StreamApp } from 'react-native-activity-feed';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
@@ -16,10 +17,14 @@ import ProfileScreen from './screens/ProfileScreen';
 import EditProfileScreen from './screens/EditProfileScreen';
 import SinglePostScreen from './screens/SinglePostScreen';
 import StatusUpdateScreen from './screens/StatusUpdateScreen';
+
 import {
   StreamContext,
   FlatFeed,
   BaseActivity,
+  StatusUpdateFormSimple,
+  LikeButton,
+  FeedNotification,
 } from 'react-native-activity-feed';
 
 // $FlowFixMe
@@ -125,7 +130,6 @@ const App = () => {
         appId={appId}
         userId="batman"
         token={token}
-        realtimeToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZSI6IioiLCJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6Im5vdGlmaWNhdGlvbmJhdG1hbiJ9.Ztf103rqNTaOq4cr9VDPfluNDW5Q8LXE28GcQYY9mzs"
         defaultUserData={{
           name: 'Batman',
           url: 'batsignal.com',
@@ -148,16 +152,6 @@ const App = () => {
         appId={appId}
         userId="batman"
         token={token}
-        realtimeToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZSI6IioiLCJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6Im5vdGlmaWNhdGlvbmJhdG1hbiJ9.Ztf103rqNTaOq4cr9VDPfluNDW5Q8LXE28GcQYY9mzs"
-        defaultUserData={{
-          name: 'Batman',
-          url: 'batsignal.com',
-          desc: 'Smart, violent and brutally tough solutions to crime.',
-          profileImage:
-            'https://i.kinja-img.com/gawker-media/image/upload/s--PUQWGzrn--/c_scale,f_auto,fl_progressive,q_80,w_800/yktaqmkm7ninzswgkirs.jpg',
-          coverImage:
-            'https://i0.wp.com/photos.smugmug.com/Portfolio/Full/i-mwrhZK2/0/ea7f1268/X2/GothamCity-X2.jpg?resize=1280%2C743&ssl=1',
-        }}
       />
     );
   }
@@ -169,16 +163,6 @@ const App = () => {
         appId={appId}
         userId="batman"
         token={token}
-        realtimeToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZSI6IioiLCJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6Im5vdGlmaWNhdGlvbmJhdG1hbiJ9.Ztf103rqNTaOq4cr9VDPfluNDW5Q8LXE28GcQYY9mzs"
-        defaultUserData={{
-          name: 'Batman',
-          url: 'batsignal.com',
-          desc: 'Smart, violent and brutally tough solutions to crime.',
-          profileImage:
-            'https://i.kinja-img.com/gawker-media/image/upload/s--PUQWGzrn--/c_scale,f_auto,fl_progressive,q_80,w_800/yktaqmkm7ninzswgkirs.jpg',
-          coverImage:
-            'https://i0.wp.com/photos.smugmug.com/Portfolio/Full/i-mwrhZK2/0/ea7f1268/X2/GothamCity-X2.jpg?resize=1280%2C743&ssl=1',
-        }}
       >
         <FlatFeed />
       </StreamApp>
@@ -192,16 +176,6 @@ const App = () => {
         appId={appId}
         userId="batman"
         token={token}
-        realtimeToken="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZSI6IioiLCJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6Im5vdGlmaWNhdGlvbmJhdG1hbiJ9.Ztf103rqNTaOq4cr9VDPfluNDW5Q8LXE28GcQYY9mzs"
-        defaultUserData={{
-          name: 'Batman',
-          url: 'batsignal.com',
-          desc: 'Smart, violent and brutally tough solutions to crime.',
-          profileImage:
-            'https://i.kinja-img.com/gawker-media/image/upload/s--PUQWGzrn--/c_scale,f_auto,fl_progressive,q_80,w_800/yktaqmkm7ninzswgkirs.jpg',
-          coverImage:
-            'https://i0.wp.com/photos.smugmug.com/Portfolio/Full/i-mwrhZK2/0/ea7f1268/X2/GothamCity-X2.jpg?resize=1280%2C743&ssl=1',
-        }}
       >
         <FlatFeed
           renderActivity={(props) => {
@@ -209,28 +183,10 @@ const App = () => {
               <BaseActivity
                 {...props}
                 Footer={
-                  <View style={{ paddingLeft: 15 }}>
-                    <Button
-                      count={props.activity.reaction_counts.heart}
-                      on={
-                        props.activity.own_reactions.heart &&
-                        Boolean(props.activity.own_reactions.heart.length)
-                      }
-                      onPress={() =>
-                        props.onToggleReaction('heart', props.activity)
-                      }
-                      icon={{
-                        //$FlowFixMe
-                        on: require('../example/images/icons/heart.png'),
-                        //$FlowFixMe
-                        off: require('../example/images/icons/heart-outline.png'),
-                      }}
-                      label={{
-                        single: 'like',
-                        plural: 'likes',
-                      }}
-                    />
-                  </View>
+                  <LikeButton
+                    activity={props.activity}
+                    onToggleReaction={props.onToggleReaction}
+                  />
                 }
               />
             );
@@ -240,14 +196,98 @@ const App = () => {
     );
   }
 
-  return (
-    <React.Fragment>
-      {example()}
+  function stepFour() {
+    return (
+      <StreamApp
+        apiKey={apiKey}
+        appId={appId}
+        userId="batman"
+        token={token}
+      >
 
-      {stepOne()}
-      {stepTwo()}
-      {stepThree()}
-    </React.Fragment>
+        <FlatFeed
+          renderActivity={(props) => {
+            return (
+              <BaseActivity
+                {...props}
+                Footer={
+                  <View style={{ paddingLeft: 15 }}>
+                    <LikeButton
+                      activity={props.activity}
+                      onToggleReaction={props.onToggleReaction}
+                    />
+                  </View>
+                }
+              />
+            );
+          }}
+        />
+
+        <KeyboardAccessory>
+          <StatusUpdateFormSimple
+            styles={{
+              ogBlock: {
+                wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
+              },
+            }}
+          />
+        </KeyboardAccessory>
+      </StreamApp>
+    );
+  }
+
+  function stepFive() {
+    return (
+      <StreamApp
+        apiKey={apiKey}
+        appId={appId}
+        userId="batman"
+        token={token}
+      >
+        <FeedNotification />
+
+        <FlatFeed
+          renderActivity={(props) => {
+            return (
+              <BaseActivity
+                {...props}
+                Footer={
+                  <View style={{ paddingLeft: 15 }}>
+                    <LikeButton
+                      activity={props.activity}
+                      onToggleReaction={props.onToggleReaction}
+                    />
+                  </View>
+                }
+              />
+            );
+          }}
+        />
+
+        <KeyboardAccessory>
+          <StatusUpdateFormSimple
+            styles={{
+              ogBlock: {
+                wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
+              },
+            }}
+          />
+        </KeyboardAccessory>
+      </StreamApp>
+    );
+  }
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        {/* {example()} */}
+        {stepOne()}
+        {/* {stepTwo()} */}
+        {/* {stepThree()} */}
+        {/* {stepFour()} */}
+        {/* {stepFive()} */}
+      </View>
+    </SafeAreaView>
   );
 };
 

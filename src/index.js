@@ -10,6 +10,9 @@ export { default as Avatar } from './components/Avatar';
 export { default as FollowButton } from './components/FollowButton';
 export { default as OgBlock } from './components/OgBlock';
 export { default as StatusUpdateForm } from './components/StatusUpdateForm';
+export {
+  default as StatusUpdateFormSimple,
+} from './components/StatusUpdateFormSimple';
 export { default as UploadImage } from './components/UploadImage';
 export { default as UserBar } from './components/UserBar';
 export { default as ReactionIcon } from './components/ReactionIcon';
@@ -21,6 +24,8 @@ export { default as ReactionList } from './components/ReactionList';
 export { default as CommentBox } from './components/CommentBox';
 export { default as BackButton } from './components/BackButton';
 export { default as BaseActivity } from './components/BaseActivity';
-export { default as Button } from './components/Button';
+export { default as LikeButton } from './components/LikeButton';
+export { default as FeedNotification } from './components/FeedNotification';
+
 export { updateStyle, getStyle } from './styles';
 export { humanizeTimestamp } from './utils';
