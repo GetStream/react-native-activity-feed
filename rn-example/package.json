@@ -8,10 +8,12 @@
   },
   "dependencies": {
     "react": "16.4.1",
-    "react-native": "0.56.0"
+    "react-native": "0.56.0",
+    "react-native-activity-feed": "link:.."
   },
   "devDependencies": {
     "babel-jest": "23.4.2",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "babel-preset-react-native": "^5",
     "jest": "23.5.0",
     "react-test-renderer": "16.4.1"
