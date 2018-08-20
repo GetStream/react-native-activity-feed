@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { View, Text } from 'react-native';
 import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
@@ -9,7 +9,7 @@ import type { BaseAppCtx } from '../types';
 type Props = {|
   feedGroup: string,
   userId?: string,
-  Child: ?React$Element<any>,
+  Child: Class<React.Component<any>>,
 |};
 
 type PropsInner = {| ...Props, ...BaseAppCtx |};
@@ -101,7 +101,7 @@ class PagerInner extends React.Component<PropsInner, State> {
   }
 
   render() {
-    let { Child } = this.props;
+    let Child = this.props.Child;
     return <Child {...this.props} messages={this.state.messages} />;
   }
 }

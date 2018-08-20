@@ -24,7 +24,7 @@ import {
   BaseActivity,
   StatusUpdateFormSimple,
   LikeButton,
-  FeedNotification,
+  Pager,
 } from 'react-native-activity-feed';
 
 // $FlowFixMe
@@ -234,7 +234,7 @@ const App = () => {
 
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FeedNotification />
+        <Pager />
 
         <FlatFeed renderActivity={renderActivity} />
 
@@ -253,12 +253,12 @@ const App = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {example()}
+      {example}
       {stepOne}
       {stepTwo}
       {stepThree}
       {stepFour}
-      {stepFive}
+      {stepFive()}
     </SafeAreaView>
   );
 };
