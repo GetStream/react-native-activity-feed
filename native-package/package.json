@@ -1,6 +1,6 @@
 {
   "name": "react-native-activity-feed",
-  "version": "0.5.1",
+  "version": "0.5.7",
   "license": "BSD-3-Clause",
   "author": {
     "company": "Stream.io Inc"
@@ -40,11 +40,11 @@
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
     "preversion": "yarn && yarn lint",
-    "prepack": "../bin/prepack.sh",
-    "postpack": "../bin/postpack.sh"
+    "prepack": "../bin/prepack.sh && cp ../README.md .",
+    "postpack": "../bin/postpack.sh && rm README.md"
   },
   "dependencies": {
-    "react-native-activity-feed": "^0.4.0",
+    "react-native-activity-feed-core": "0.5.7",
     "react-native-image-picker": "0.26.10"
   }
 }
