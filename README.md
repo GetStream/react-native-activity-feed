@@ -5,9 +5,65 @@ The official React Native integration library for Stream, a web service for buil
 
 ## Installation
 
+The components provided by this package are available for apps built with Expo
+(created with `create-react-native-app`), but also for apps with native code
+(created with `react-native init`). You should install the package that matches
+your situation:
+
 ```bash
-npm i react-native-activity-feed
+# For Expo apps
+npm i expo-activity-feed --save
+
+# For apps with native code
+npm i react-native-activity-feed --save
 ```
+
+Both packages export the same components (which they re-export from the
+underlying `react-native-activity-feed-core` package).
+
+### Final setup steps for the `react-native-activity-feed` package
+
+If you use the package for apps with native code you need to do some more steps
+to get the image upload functionality working. If you don't need that feel free
+to skip these steps.
+
+1. Run the following command:
+
+```bash
+react-native link react-native-image-picker
+```
+
+2.
+Add the following permissions to `android/app/src/main/AndroidManifest.xml`:
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+```
+
+3.
+Add the following key/value pairs to `ios/{app-name-here}/Info.plist`:
+```xml
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your camera</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to your microphone (for videos)</string>
+```
+
+4. Make sure that the gradle version inside `android/build.gradle` is 2.2.0 or
+   higher:
+```
+buildscript {
+    // ....
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+    }
+}
+```
+
 
 ## Usage
 
