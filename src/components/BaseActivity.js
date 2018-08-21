@@ -119,9 +119,7 @@ export default class BaseActivity extends React.Component<Props> {
         </View>
 
         {verb == 'repost' &&
-          object instanceof Object && (
-            <Card item={object.data} />
-          )}
+          object instanceof Object && <Card item={object.data} />}
 
         {image && (
           <Image
