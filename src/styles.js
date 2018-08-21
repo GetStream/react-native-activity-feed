@@ -296,18 +296,24 @@ let styles = {
   notificationFeed: StyleSheet.create({
     container: { flex: 1, backgroundColor: '#fff' },
   }),
-  defaultActivity: StyleSheet.create({
+  baseActivity: StyleSheet.create({
     container: {
       paddingTop: 15,
       paddingBottom: 15,
       borderBottomColor: 'rgba(0,0,0,0.1)',
       borderBottomWidth: 1,
     },
+    content: {
+      paddingBottom: 15,
+      paddingLeft: 15,
+      paddingRight: 15,
+    },
     mention: {
-      color: 'blue',
+      color: '#0076FF',
+      fontWeight: '700',
     },
     hashtag: {
-      color: 'green',
+      color: '#0076FF',
     },
   }),
   button: StyleSheet.create({
@@ -347,12 +353,12 @@ let styles = {
   }),
   pagerBlock: StyleSheet.create({
     container: {
-      backgroundColor: '#007AFF',
-      borderRadius: 12,
+      backgroundColor: '#0068FF',
       padding: 15,
-      margin: 5,
     },
     text: {
+      color: '#fff',
+      textAlign: 'center',
       fontWeight: '700',
     },
   }),

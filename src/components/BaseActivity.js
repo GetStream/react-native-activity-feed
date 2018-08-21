@@ -70,7 +70,7 @@ export default class BaseActivity extends React.Component<Props> {
   renderText = (text: string, activity: ActivityData) => {
     let tokens = text.split(' ');
     let rendered = [];
-    let styles = buildStylesheet('defaultActivity', this.props.styles);
+    let styles = buildStylesheet('baseActivity', this.props.styles);
 
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i][0] === '@') {
@@ -107,9 +107,10 @@ export default class BaseActivity extends React.Component<Props> {
   renderContent = () => {
     const { width } = Dimensions.get('window');
     let { verb, object, content, image, attachments } = this.props.activity;
+    let styles = buildStylesheet('baseActivity', this.props.styles);
     return (
       <View>
-        <View style={{ paddingBottom: 15, paddingLeft: 15, paddingRight: 15 }}>
+        <View style={styles.content}>
           <Text>
             {typeof object === 'string'
               ? this.renderText(object, this.props.activity)
@@ -119,9 +120,7 @@ export default class BaseActivity extends React.Component<Props> {
 
         {verb == 'repost' &&
           object instanceof Object && (
-            <View style={{ paddingLeft: 15, paddingRight: 15 }}>
-              <Card item={object.data} />
-            </View>
+            <Card item={object.data} />
           )}
 
         {image && (
@@ -165,7 +164,7 @@ export default class BaseActivity extends React.Component<Props> {
   render() {
     let { Header, Content, Footer } = this.props;
 
-    let styles = buildStylesheet('defaultActivity', this.props.styles);
+    let styles = buildStylesheet('baseActivity', this.props.styles);
 
     return (
       <TouchableOpacity
