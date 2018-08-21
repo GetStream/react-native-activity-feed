@@ -19,3 +19,14 @@ rm package.json.bak
 cd ..
 git add {expo,native}-package/package.json
 npm version "$1" --force
+
+
+npm publish
+
+cd native-package
+npm publish
+
+cd ../expo-package
+npm publish
+
+git push --follow-tags
