@@ -23,7 +23,6 @@ import type {
 import type {
   FeedRequestOptions,
   FeedResponse,
-  StreamFeed,
   ReactionRequestOptions,
 } from 'getstream';
 
@@ -77,6 +76,9 @@ type State = {
   activities: any,
   refreshing: boolean,
   lastResponse: ?FeedResponse<{}, {}>,
+  realtimeAdds: Array<{}>,
+  realtimeDeletes: Array<{}>,
+  subscription?: any,
 };
 
 class FlatFeedInner extends React.Component<PropsInner, State> {
@@ -84,12 +86,13 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   constructor(props: PropsInner) {
     super(props);
-    this.pagerRef = null;
     this.state = {
       activityOrder: [],
       activities: immutable.Map(),
       lastResponse: null,
       refreshing: false,
+      realtimeAdds: [],
+      realtimeDeletes: [],
     };
   }
 
@@ -208,11 +211,11 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
         options,
       );
     }
-    let feed: StreamFeed<{}, {}> = this.props.session.feed(
-      this.props.feedGroup,
-      this.props.userId,
-    );
-    return feed.get(options);
+    return this._feed().get(options);
+  };
+
+  _feed = () => {
+    return this.props.session.feed(this.props.feedGroup, this.props.userId);
   };
 
   _responseToActivityMap(response) {
@@ -227,11 +230,10 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   _refresh = async () => {
     await this.setState({ refreshing: true });
     let response = await this._doFeedRequest();
-
-    if (this.pagerRef) {
-      //$FlowFixMe
-      this.pagerRef.dismiss();
-    }
+    this.setState({
+      realtimeAdds: [],
+      realtimeDeletes: [],
+    });
 
     return this.setState({
       activityOrder: response.results.map((a) => a.id),
@@ -243,6 +245,41 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   async componentDidMount() {
     await this._refresh();
+    if (this.getPager()) {
+      let subscription = this._feed()
+        .subscribe((data) => {
+          this.setState((prevState) => {
+            return {
+              realtimeAdds: prevState.realtimeAdds.concat(data.new),
+              realtimeDeletes: prevState.realtimeDeletes.concat(data.deleted),
+            };
+          });
+        })
+        .then(
+          () => {
+            console.log(
+              `now listening to changes in realtime ${this.props.feedGroup}:${
+                this.props.user.id
+              }`,
+            );
+          },
+          (err) => {
+            console.error(err);
+          },
+        );
+      this.setState({ subscription });
+    }
+  }
+
+  async componentWillUnmount() {
+    if (!this.state.subscription) {
+      return;
+    }
+    try {
+      await this.state.subscription.cancel();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   _loadNextPage = async () => {
@@ -334,20 +371,21 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   render() {
     let { BelowListComponent, feedGroup, userId } = this.props;
     let styles = buildStylesheet('flatFeed', this.props.styles);
-    let pager = this.getPager();
-    let BoundPager = pager
-      ? React.createElement(pager, {
-          feedGroup,
-          userId,
-          ref: (node) => {
-            this.pagerRef = node;
-          },
-        })
-      : null;
+    let Pager = this.getPager();
+    if (Pager) {
+      Pager = (
+        <Pager
+          feedGroup={feedGroup}
+          userId={userId}
+          adds={this.state.realtimeAdds}
+          deletes={this.state.realtimeDeletes}
+        />
+      );
+    }
 
     return (
       <React.Fragment>
-        {BoundPager}
+        {Pager}
         <FlatList
           ListHeaderComponent={this.props.children}
           style={styles.container}
@@ -369,7 +407,6 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
         {!BelowListComponent || React.isValidElement(BelowListComponent) ? (
           BelowListComponent
         ) : (
-          // $FlowFixMe
           <BelowListComponent {...this._childProps()} />
         )}
       </React.Fragment>
