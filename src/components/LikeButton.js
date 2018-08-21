@@ -2,12 +2,15 @@
 import React from 'react';
 import { buildStylesheet } from '../styles';
 import Button from './Button.js';
-import type { ActivityData } from '../types';
+import type {
+  BaseActivityResponse,
+  ToggleReactionCallbackFunction,
+} from '../types';
 
 type Props = {|
-  activity: ActivityData,
+  activity: BaseActivityResponse,
+  onToggleReaction: ToggleReactionCallbackFunction,
   styles: any,
-  onToggleReaction: any,
 |};
 
 export default class LikeButton extends React.Component<Props> {
@@ -23,7 +26,7 @@ export default class LikeButton extends React.Component<Props> {
           activity.own_reactions.heart &&
           Boolean(activity.own_reactions.heart.length)
         }
-        onPress={() => onToggleReaction('heart', activity)}
+        onPress={() => onToggleReaction('heart', activity, {})}
         icon={{
           on: require('../images/icons/heart.png'),
           off: require('../images/icons/heart-outline.png'),

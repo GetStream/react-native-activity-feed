@@ -145,17 +145,18 @@ export default class Activity extends React.Component<Props> {
           )}
 
         {attachments &&
-          attachments.og && (
-            <View style={{ paddingLeft: 15, paddingRight: 15 }}>
-              <Card
-                item={{
-                  title: attachments.og.title,
-                  description: attachments.og.description,
-                  image: attachments.og.images[0].image,
-                  url: attachments.og.url,
-                }}
-              />
-            </View>
+          attachments.og &&
+          Object.keys(attachments.og).length > 0 && (
+            <Card
+              item={{
+                title: attachments.og.title,
+                description: attachments.og.description,
+                image: attachments.og.images
+                  ? attachments.og.images[0].image
+                  : null,
+                url: attachments.og.url,
+              }}
+            />
           )}
 
         {reaction_counts && (

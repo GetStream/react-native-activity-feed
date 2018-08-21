@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { View, Text, Image } from 'react-native';
+import { SafeAreaView, View, Text, Image } from 'react-native';
 import stream from 'getstream';
 import StreamAnalytics from 'stream-analytics';
 import type { ChildrenProps } from './types';
@@ -124,37 +124,43 @@ export class StreamApp<UserData> extends React.Component<
   render() {
     return (
       <StreamContext.Provider value={{ ...this.state }}>
-        {this.props.children || (
-          <View
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-          >
+        <SafeAreaView style={{ flex: 1 }}>
+          {this.props.children || (
             <View
               style={{
-                width: 200,
-                height: 200,
-                margin: 50,
-                overflow: 'hidden',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-              resizeMode="cover"
-              borderRadius={100}
             >
-              <Image
-                source={{
-                  uri:
-                    'https://popculturalstudies.files.wordpress.com/2016/02/batman-66-6.gif',
-                }}
+              <View
                 style={{
                   width: 200,
                   height: 200,
+                  margin: 50,
                   overflow: 'hidden',
                 }}
-              />
+                resizeMode="cover"
+                borderRadius={100}
+              >
+                <Image
+                  source={{
+                    uri:
+                      'https://popculturalstudies.files.wordpress.com/2016/02/batman-66-6.gif',
+                  }}
+                  style={{
+                    width: 200,
+                    height: 200,
+                    overflow: 'hidden',
+                  }}
+                />
+              </View>
+              <Text style={{ fontWeight: '700', fontSize: 18 }}>
+                You are now connected to Stream
+              </Text>
             </View>
-            <Text style={{ fontWeight: '700', fontSize: 18 }}>
-              You are now connected to Stream
-            </Text>
-          </View>
-        )}
+          )}
+        </SafeAreaView>
       </StreamContext.Provider>
     );
   }

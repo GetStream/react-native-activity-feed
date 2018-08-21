@@ -1,14 +1,10 @@
 import React from 'react';
-import { View, SafeAreaView } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
 } from 'react-navigation';
 
-import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
-
 import Icon from './components/Icon';
-import IconBadge from './components/IconBadge';
 import HomeScreen from './screens/HomeScreen';
 import SearchScreen from './screens/SearchScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
@@ -20,11 +16,11 @@ import StatusUpdateScreen from './screens/StatusUpdateScreen';
 import {
   Avatar,
   StreamApp,
-  StreamContext,
   FlatFeed,
   BaseActivity,
   StatusUpdateFormSimple,
   LikeButton,
+  IconBadge,
 } from 'expo-activity-feed';
 
 // $FlowFixMe
@@ -61,15 +57,7 @@ const TabNavigator = createBottomTabNavigator(
           return <Icon name="search" />;
         } else if (routeName === 'Notifications') {
           return (
-            <StreamContext.Consumer>
-              {(appCtx) => (
-                <IconBadge
-                  {...appCtx}
-                  showNumber
-                  mainElement={<Icon name="notifications" />}
-                />
-              )}
-            </StreamContext.Consumer>
+            <IconBadge showNumber mainElement={<Icon name="notifications" />} />
           );
         } else if (routeName === 'Profile') {
           return (
@@ -164,58 +152,27 @@ const App = () => {
 
   // eslint-disable-next-line no-unused-vars
   function stepThree() {
+    const renderActivity = (props) => {
+      return <BaseActivity {...props} Footer={<LikeButton {...props} />} />;
+    };
+
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FlatFeed
-          renderActivity={(props) => {
-            return (
-              <BaseActivity
-                {...props}
-                Footer={
-                  <LikeButton
-                    activity={props.activity}
-                    onToggleReaction={props.onToggleReaction}
-                  />
-                }
-              />
-            );
-          }}
-        />
+        <FlatFeed renderActivity={renderActivity} />
       </StreamApp>
     );
   }
 
   // eslint-disable-next-line no-unused-vars
   function stepFour() {
+    const renderActivity = (props) => {
+      return <BaseActivity {...props} Footer={<LikeButton {...props} />} />;
+    };
+
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FlatFeed
-          renderActivity={(props) => {
-            return (
-              <BaseActivity
-                {...props}
-                Footer={
-                  <View style={{ paddingLeft: 15 }}>
-                    <LikeButton
-                      activity={props.activity}
-                      onToggleReaction={props.onToggleReaction}
-                    />
-                  </View>
-                }
-              />
-            );
-          }}
-        />
-
-        <KeyboardAccessory>
-          <StatusUpdateFormSimple
-            styles={{
-              ogBlock: {
-                wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
-              },
-            }}
-          />
-        </KeyboardAccessory>
+        <FlatFeed renderActivity={renderActivity} />
+        <StatusUpdateFormSimple />
       </StreamApp>
     );
   }
@@ -223,48 +180,24 @@ const App = () => {
   // eslint-disable-next-line no-unused-vars
   function stepFive() {
     const renderActivity = (props) => {
-      return (
-        <BaseActivity
-          {...props}
-          Footer={
-            <View style={{ paddingLeft: 15 }}>
-              <LikeButton
-                activity={props.activity}
-                onToggleReaction={props.onToggleReaction}
-              />
-            </View>
-          }
-        />
-      );
+      return <BaseActivity {...props} Footer={<LikeButton {...props} />} />;
     };
 
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FlatFeed renderActivity={renderActivity} showPager={true} />
-
-        <KeyboardAccessory>
-          <StatusUpdateFormSimple
-            styles={{
-              ogBlock: {
-                wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
-              },
-            }}
-          />
-        </KeyboardAccessory>
+        <FlatFeed renderActivity={renderActivity} showPager />
+        <StatusUpdateFormSimple />
       </StreamApp>
     );
   }
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {/* {example()} */}
-      {/* {stepOne()} */}
-      {/* {stepTwo()} */}
-      {/* {stepThree()} */}
-      {/* {stepFour()} */}
-      {stepFive()}
-    </SafeAreaView>
-  );
+  // eslint-disable-next-line no-unused-vars
+  // return example();
+  // return stepOne();
+  // return stepTwo();
+  // return stepThree();
+  // return stepFour();
+  return stepFive();
 };
 
 export default App;

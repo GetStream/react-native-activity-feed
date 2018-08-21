@@ -7,6 +7,7 @@ import type {
   StreamUserSession,
   ReactionKindMap,
   UserResponse,
+  ReactionRequestOptions,
 } from 'getstream';
 import type { AppCtx } from './Context';
 
@@ -66,3 +67,9 @@ export type CustomActivityData = {
 };
 
 export type ActivityData = ActivityResponse<UserData, CustomActivityData>;
+
+export type ToggleReactionCallbackFunction = (
+  kind: string,
+  activity: BaseActivityResponse,
+  options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
+) => void;

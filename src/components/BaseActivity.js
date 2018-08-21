@@ -6,7 +6,7 @@ import { buildStylesheet } from '../styles';
 
 //$FlowFixMe
 import { UserBar, Card } from 'react-native-activity-feed-core';
-import type { ActivityData } from '../types';
+import type { ActivityData, ToggleReactionCallbackFunction } from '../types';
 
 type Props = {
   Header?: Node,
@@ -18,6 +18,7 @@ type Props = {
   icon?: string,
   activity: ActivityData,
   styles: Map<string, any>,
+  onToggleReaction: ToggleReactionCallbackFunction,
 };
 
 export default class BaseActivity extends React.Component<Props> {

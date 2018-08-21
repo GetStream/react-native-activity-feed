@@ -2,7 +2,7 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 
-import { SinglePost, CommentBox, BackButton } from 'react-native-activity-feed';
+import { SinglePost, CommentBox, BackButton } from 'expo-activity-feed';
 
 import Activity from '../components/Activity';
 import LikesList from '../components/LikesList';

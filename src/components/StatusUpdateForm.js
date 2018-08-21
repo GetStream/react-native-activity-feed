@@ -114,24 +114,29 @@ export default class StatusUpdateForm extends React.Component {
   }
 
   buildActivity() {
-    console.log(this.state);
-    let attachments = {
-      images: this.state.image_url ? [this.state.image_url] : [],
-      og: this.state.og ? this.state.og : {},
-    };
-    const activity = {
+    let attachments = {};
+
+    if (this.state.og && Object.keys(this.state.og).length > 0) {
+      attachments.og = this.state.og;
+    }
+
+    if (this.state.image_url) {
+      attachments.images = [this.state.image_url];
+    }
+
+    let activity = {
       actor: this.props.session.user,
       verb: this.props.activity_verb,
       object: this.state.textInput,
-      attachments,
     };
+
+    if (Object.keys(attachments).length > 0) {
+      activity.attachments = attachments;
+    }
 
     this.props.session
       .feed(this.props.feedGroup, this.props.feedUserId)
       .addActivity(activity)
-      .then(() => {
-        this.props.navigation.navigate('Home');
-      })
       .catch((err) => {
         console.log(err);
       });

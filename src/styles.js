@@ -196,6 +196,10 @@ let styles = {
       height: 30,
       opacity: 0.5,
     },
+    submitImage: {
+      width: 24,
+      height: 24,
+    },
   }),
   ogBlock: StyleSheet.create({
     wrapper: {
@@ -341,7 +345,7 @@ let styles = {
       height: 24,
     },
   }),
-  simpleNotificationBlock: StyleSheet.create({
+  pagerBlock: StyleSheet.create({
     container: {
       backgroundColor: '#007AFF',
       borderRadius: 12,
@@ -349,7 +353,6 @@ let styles = {
       margin: 5,
     },
     text: {
-      // color: '#007AFF',
       fontWeight: '700',
     },
   }),

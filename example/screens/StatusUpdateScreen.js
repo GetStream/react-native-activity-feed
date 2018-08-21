@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Image, TouchableOpacity } from 'react-native';
-import { StreamContext, StatusUpdateForm } from 'react-native-activity-feed';
+import { StreamContext, StatusUpdateForm } from 'expo-activity-feed';
 
 class StatusUpdateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

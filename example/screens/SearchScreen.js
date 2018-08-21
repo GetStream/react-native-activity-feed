@@ -3,7 +3,7 @@ import { View, StatusBar, Image, ScrollView, FlatList } from 'react-native';
 
 import LargeHeading from '../components/LargeHeading';
 import HorizontalScrollFeed from '../components/HorizontalScrollFeed';
-import { Avatar, UserBar } from 'react-native-activity-feed';
+import { Avatar, UserBar } from 'expo-activity-feed';
 import GroupCard from '../components/GroupCard';
 import SearchBox from '../components/SearchBox';
 

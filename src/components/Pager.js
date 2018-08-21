@@ -9,6 +9,8 @@ import type { BaseAppCtx } from '../types';
 type Props = {|
   feedGroup: string,
   userId?: string,
+  labelSingular?: string,
+  labelPlural?: string,
   Child: Class<React.Component<any>>,
 |};
 
@@ -23,7 +25,7 @@ class PagerBlock extends React.Component<any, State> {
 
   render() {
     let { messages, labelSingular, labelPlural } = this.props;
-    let styles = buildStylesheet('simpleNotificationBlock', this.props.styles);
+    let styles = buildStylesheet('pagerBlock', this.props.styles);
     return messages && messages.length > 0 ? (
       <View style={[styles.container]}>
         <Text style={[styles.text]}>
@@ -37,12 +39,14 @@ class PagerBlock extends React.Component<any, State> {
 }
 
 export default class Pager extends React.Component<Props> {
-  innerRef: ?React.Component<any, any>;
-
   static defaultProps = {
     Child: PagerBlock,
     feedGroup: 'timeline',
+    labelSingular: 'activity',
+    labelPlural: 'activities',
   };
+
+  innerRef: ?React.Component<any, any>;
 
   constructor(props: Props) {
     super(props);

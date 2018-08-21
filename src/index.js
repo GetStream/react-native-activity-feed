@@ -26,6 +26,7 @@ export { default as BackButton } from './components/BackButton';
 export { default as BaseActivity } from './components/BaseActivity';
 export { default as LikeButton } from './components/LikeButton';
 export { default as Pager } from './components/Pager';
+export { default as IconBadge } from './components/IconBadge';
 
 export { updateStyle, getStyle } from './styles';
 export { humanizeTimestamp } from './utils';

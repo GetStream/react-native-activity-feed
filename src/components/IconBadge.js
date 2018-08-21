@@ -1,7 +1,24 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import { StreamContext } from '../Context';
 
 export default class IconBadge extends React.Component {
+  static defaultProps = {
+    feedGroup: 'notification',
+  };
+
+  render() {
+    return (
+      <StreamContext.Consumer>
+        {(appCtx) => {
+          return <IconBadgeInner {...this.props} {...appCtx} />;
+        }}
+      </StreamContext.Consumer>
+    );
+  }
+}
+
+class IconBadgeInner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +29,7 @@ export default class IconBadge extends React.Component {
 
   componentDidMount() {
     this.props.session
-      .feed('notification')
+      .feed(this.props.feedGroup)
       .get({ limit: 1 })
       .then((data) => {
         this.setState({ loaded: true, unread: data.unread });
@@ -33,8 +50,9 @@ export default class IconBadge extends React.Component {
       console.log('now listening to changes in realtime');
     }
 
-    function failCallback() {
-      alert('something went wrong, check the console logs');
+    function failCallback(err) {
+      console.log('something went wrong, check the console logs');
+      console.error(err);
     }
 
     user.subscribe(callback).then(successCallback, failCallback);
