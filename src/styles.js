@@ -365,6 +365,29 @@ let styles = {
       fontWeight: '700',
     },
   }),
+  reactionIconBar: StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      width: 100 + '%',
+    },
+  }),
+  reactionIcon: StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      marginTop: 12,
+    },
+    image: {
+      height: 24,
+      width: 24,
+    },
+    text: {
+      marginTop: 4,
+      marginLeft: 4,
+      fontWeight: '300',
+      opacity: 0.8,
+      fontSize: 14,
+    },
+  }),
 };
 
 const depthOf = function(object) {

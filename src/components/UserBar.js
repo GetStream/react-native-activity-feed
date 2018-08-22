@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { humanizeTimestamp, mergeStyles } from '../utils';
+import { humanizeTimestamp } from '../utils';
 
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
@@ -39,7 +39,7 @@ const UserBar = ({
   let styles = buildStylesheet('userBar', props.styles);
 
   return (
-    <View style={mergeStyles('container', styles, props)}>
+    <View style={styles.container}>
       {avatar ? (
         <TouchableOpacity onPress={onPressAvatar}>
           <Avatar

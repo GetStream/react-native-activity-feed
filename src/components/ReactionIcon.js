@@ -1,8 +1,9 @@
 // @flow
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Image, Text, TouchableOpacity } from 'react-native';
 import type { ReactionCounts } from 'getstream';
-import { mergeStyles } from '../utils';
+import { buildStylesheet } from '../styles';
+
 import type { StylesProps } from '../types';
 
 type Props = {|
@@ -20,39 +21,21 @@ export default function ReactionIcon(props: Props) {
   if (props.counts && props.kind) {
     count = props.counts[props.kind];
   }
+  let styles = buildStylesheet('reactionIcon', props.styles);
+
   return (
-    <TouchableOpacity
-      style={mergeStyles('container', styles, props)}
-      onPress={props.onPress}
-    >
+    <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <Image
         source={props.icon}
-        style={mergeStyles('image', styles, props, styles.image, {
-          width: props.width,
-          height: props.height,
-        })}
+        style={[
+          styles.image,
+          {
+            width: props.width,
+            height: props.height,
+          },
+        ]}
       />
-      {count != null ? (
-        <Text style={mergeStyles('text', styles, props)}>{count}</Text>
-      ) : null}
+      {count != null ? <Text style={styles.text}>{count}</Text> : null}
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    marginTop: 12,
-  },
-  image: {
-    height: 24,
-    width: 24,
-  },
-  text: {
-    marginTop: 4,
-    marginLeft: 4,
-    fontWeight: '300',
-    opacity: 0.8,
-    fontSize: 14,
-  },
-});

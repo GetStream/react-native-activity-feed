@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { mergeStyles } from '../utils';
+import { View } from 'react-native';
+import { buildStylesheet } from '../styles';
 import type { ChildrenProps, StylesProps } from '../types';
 
 type Props = {
@@ -10,16 +10,7 @@ type Props = {
 };
 
 export default function ReactionIconBar(props: Props) {
-  return (
-    <View style={mergeStyles('container', styles, props)}>
-      {props.children}
-    </View>
-  );
-}
+  let styles = buildStylesheet('reactionIconBar', props.styles);
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    width: 100 + '%',
-  },
-});
+  return <View style={styles.container}>{props.children}</View>;
+}
