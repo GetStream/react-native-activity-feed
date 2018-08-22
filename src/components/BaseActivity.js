@@ -138,7 +138,7 @@ export default class BaseActivity extends React.Component<Props> {
         {verb == 'repost' &&
           object instanceof Object && <Card item={object.data} />}
 
-        {image && (
+        {Boolean(image) && (
           <Image
             style={{ width: width, height: width }}
             source={{ uri: image }}
