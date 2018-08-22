@@ -4,6 +4,8 @@ import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 
 import { buildStylesheet } from '../styles';
 
+import _ from 'lodash';
+
 //$FlowFixMe
 import { UserBar, Card } from 'react-native-activity-feed-core';
 import type { ActivityData, ToggleReactionCallbackFunction } from '../types';
@@ -45,8 +47,10 @@ export default class BaseActivity extends React.Component<Props> {
     if (actor === 'NotFound') {
       actor = notFound;
     }
+    let styles = buildStylesheet('baseActivity', this.props.styles);
+
     return (
-      <View style={{ padding: 15 }}>
+      <View style={styles.header}>
         <UserBar
           username={actor.data.name}
           avatar={actor.data.profileImage}
@@ -67,8 +71,21 @@ export default class BaseActivity extends React.Component<Props> {
     console.log(`pressed on ${text} hashtag of ${activity.id}`);
   };
 
+  removeUrl = (text: string, activity: ActivityData) => {
+    if (
+      activity.attachments &&
+      activity.attachments.og &&
+      Object.keys(activity.attachments.og).length > 0
+    ) {
+      let textWithoutUrl = _.replace(text, activity.attachments.og.url, ' ');
+      return textWithoutUrl.split(' ');
+    } else {
+      return text.split(' ');
+    }
+  };
+
   renderText = (text: string, activity: ActivityData) => {
-    let tokens = text.split(' ');
+    let tokens = this.removeUrl(text, activity);
     let rendered = [];
     let styles = buildStylesheet('baseActivity', this.props.styles);
 
@@ -119,9 +136,7 @@ export default class BaseActivity extends React.Component<Props> {
         </View>
 
         {verb == 'repost' &&
-          object instanceof Object && (
-            <Card item={object.data} />
-          )}
+          object instanceof Object && <Card item={object.data} />}
 
         {image && (
           <Image

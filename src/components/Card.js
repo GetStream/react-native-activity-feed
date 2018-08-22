@@ -23,11 +23,9 @@ const Card = ({ item, ...props }) => {
         {
           //TODO: Only put ... when the title or description are too long
         }
-        <Text style={styles.title}>
-          {_.truncate(title, {'length': 60})}
-        </Text>
+        <Text style={styles.title}>{_.truncate(title, { length: 60 })}</Text>
         <Text style={styles.description}>
-          {_.truncate(description, { 'length': 60})}
+          {_.truncate(description, { length: 60 })}
         </Text>
       </View>
     </TouchableOpacity>

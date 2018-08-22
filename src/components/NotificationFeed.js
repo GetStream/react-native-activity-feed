@@ -4,7 +4,6 @@ import { FlatList, RefreshControl } from 'react-native';
 import URL from 'url-parse';
 
 import { StreamContext } from '../Context';
-import { mergeStyles } from '../utils';
 import { buildStylesheet } from '../styles';
 
 import type {
@@ -164,7 +163,7 @@ class NotificationFeedInner extends React.Component<PropsInner, State> {
     return (
       <FlatList
         ListHeaderComponent={this.props.children}
-        style={mergeStyles('container', styles, this.props)}
+        style={styles.container}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}

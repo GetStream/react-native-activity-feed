@@ -303,6 +303,9 @@ let styles = {
       borderBottomColor: 'rgba(0,0,0,0.1)',
       borderBottomWidth: 1,
     },
+    header: {
+      padding: 15,
+    },
     content: {
       paddingBottom: 15,
       paddingLeft: 15,
