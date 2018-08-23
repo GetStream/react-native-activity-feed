@@ -250,6 +250,13 @@ class StatusUpdateFormInner extends React.Component {
     });
     return (
       <SafeAreaView>
+        <View
+          style={[
+            { height: 80 },
+            this.state.focused ? styles.containerFocused : {},
+            this.state.og ? styles.containerFocusedOg : {},
+          ]}
+        />
         <KeyboardAccessory>
           <View
             style={[
