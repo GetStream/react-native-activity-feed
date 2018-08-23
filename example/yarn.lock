@@ -2032,9 +2032,9 @@ browser-process-hrtime@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-0.1.2.tgz#425d68a58d3447f02a04aa894187fce8af8b7b8e"
 
-"browser-request@git://github.com/matthisk/browser-request.git":
+"browser-request@git://github.com/matthisk/browser-request":
   version "0.3.2"
-  resolved "git://github.com/matthisk/browser-request.git#253fa31d99bbb4d03bb72e11a5a1c73ccc85ac71"
+  resolved "git://github.com/matthisk/browser-request#253fa31d99bbb4d03bb72e11a5a1c73ccc85ac71"
 
 browser-resolve@^1.11.2:
   version "1.11.3"
@@ -3637,22 +3637,6 @@ getpass@^0.1.1:
   resolved "https://registry.yarnpkg.com/getpass/-/getpass-0.1.7.tgz#5eff8e3e684d569ae4cb2b1282604e8ba62149fa"
   dependencies:
     assert-plus "^1.0.0"
-
-getstream@3.21.0-beta.2:
-  version "3.21.0-beta.2"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.2.tgz#4ded3d5af05907b104ae27e82e14c7dff487949e"
-  dependencies:
-    Base64 "^1.0.1"
-    cross-fetch "^2.2.2"
-    faye "^1.2.4"
-    form-data "^2.3.2"
-    http-signature "~1.2.0"
-    jsonwebtoken "^8.3.0"
-    lodash "^4.17.10"
-    qs "^6.5.1"
-    request "^2.86.0"
-    whatwg-fetch "^2.0.4"
-    xmlhttp-request "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 getstream@3.21.0-beta.4:
   version "3.21.0-beta.4"
@@ -8339,9 +8323,9 @@ xmldom@0.1.x, xmldom@^0.1.27:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
 
-"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
+"xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"
-  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+  resolved "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 xpipe@^1.0.5:
   version "1.0.5"
