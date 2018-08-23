@@ -28,7 +28,7 @@ const urlRegex = /(https?:\/\/[^\s]+)/gi;
 
 export default class StatusUpdateFormSimple extends React.Component {
   static defaultProps = {
-    feedGroup: 'timeline',
+    feedGroup: 'user',
     activity_verb: 'post',
     styles: {
       ogBlock: {
