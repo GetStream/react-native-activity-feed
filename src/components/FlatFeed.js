@@ -24,6 +24,7 @@ import type {
   FeedRequestOptions,
   FeedResponse,
   ReactionRequestOptions,
+  ActivityResponse,
 } from 'getstream';
 
 type Props = {|
@@ -338,7 +339,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     userId: this.props.userId,
   });
 
-  _renderActivity = (item: BaseActivityResponse) => {
+  _renderActivity = (item: ActivityResponse<Object, Object>) => {
     let args = {
       activity: item,
       // $FlowFixMe
