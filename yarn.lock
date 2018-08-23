@@ -3254,9 +3254,9 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@3.21.0-beta.3:
-  version "3.21.0-beta.3"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.3.tgz#25d663202798f0577311ff9d8f38a02a1897f19a"
+getstream@3.21.0-beta.4:
+  version "3.21.0-beta.4"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.4.tgz#b59a3d0ffdfb86a5f34c03597f022a3f9855054d"
   dependencies:
     Base64 "^1.0.1"
     cross-fetch "^2.2.2"
