@@ -15,7 +15,11 @@ import _ from 'lodash';
 
 import UserBar from './UserBar';
 import Card from './Card';
-import type { ActivityData, ToggleReactionCallbackFunction } from '../types';
+import type {
+  ActivityData,
+  ToggleReactionCallbackFunction,
+  StylesProps,
+} from '../types';
 
 type Props = {
   Header?: Node,
@@ -26,8 +30,8 @@ type Props = {
   sub?: string,
   icon?: string,
   activity: ActivityData,
-  styles: Map<string, any>,
   onToggleReaction: ToggleReactionCallbackFunction,
+  ...StylesProps,
 };
 
 export default class BaseActivity extends React.Component<Props> {
@@ -127,12 +131,9 @@ export default class BaseActivity extends React.Component<Props> {
         Object.keys(activity.attachments.og).length > 0 &&
         tokens[i] === activity.attachments.og.url
       ) {
+        let url = activity.attachments.og.url;
         rendered.push(
-          <Text
-            key={i}
-            onPress={() => Linking.openURL(activity.attachments.og.url)}
-            style={styles.url}
-          >
+          <Text key={i} onPress={() => Linking.openURL(url)} style={styles.url}>
             {tokens[i].slice(0, 20)}
             {tokens[i].length > 20 ? '...' : ''}{' '}
           </Text>,

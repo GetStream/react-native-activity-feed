@@ -12,7 +12,7 @@ import type {
   EnrichedReactionResponse,
 } from 'getstream';
 
-import type { AppCtx } from 'react-native-activity-feed';
+import type { AppCtx } from 'expo-activity-feed';
 
 export type NavigationProps = {|
   navigation: NavigationScreenProp<{}>,

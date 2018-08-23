@@ -13,6 +13,8 @@ type Props = {|
   height?: number,
   width?: number,
   onPress?: (kind: ?string) => any,
+  labelSingle?: string,
+  labelPlural?: string,
   ...StylesProps,
 |};
 
