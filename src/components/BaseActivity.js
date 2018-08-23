@@ -22,9 +22,9 @@ import type {
 } from '../types';
 
 type Props = {
-  Header?: Node,
-  Content?: Node,
-  Footer?: Node,
+  Header?: React.Element<any>,
+  Content?: React.Element<any>,
+  Footer?: React.Element<any>,
   onPress?: () => void,
   onPressAvatar?: () => void,
   sub?: string,

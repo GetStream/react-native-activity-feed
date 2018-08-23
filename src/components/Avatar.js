@@ -10,7 +10,8 @@ import type { StylesProps } from '../types';
 import type { UserResponse } from 'getstream';
 
 export type Props = {|
-  source?: ?string | ((activeUser: UserResponse<Object>) => ?string),
+  /** The image source or a getter fn */
+  source: ?string | ((activeUser: UserResponse<Object>) => ?string),
   size?: number,
   editButton?: boolean,
   noShadow?: boolean,
@@ -20,6 +21,9 @@ export type Props = {|
   ...StylesProps,
 |};
 
+/**
+ * A users' profile picture
+ */
 class Avatar extends React.Component<Props> {
   render = function() {
     let {

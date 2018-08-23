@@ -1,3 +1,4 @@
+// @flow
 import { StyleSheet } from 'react-native';
 import _ from 'lodash';
 
@@ -407,20 +408,20 @@ const depthOf = function(object) {
   return level;
 };
 
-export function getStyle(styleName) {
+export function getStyle(styleName: string): any {
   return styles[styleName] || {};
 }
 
-export function updateStyle(styleName, styleOverwrites) {
+export function updateStyle(styleName: string, styleOverwrites: any): any {
   styles[styleName] = buildStylesheet(styleName, styleOverwrites);
 }
 
-export function buildStylesheet(styleName, styleOverwrites) {
+export function buildStylesheet(styleName: string, styleOverwrites: any): any {
   const baseStyle = getStyle(styleName);
   if (!styleOverwrites || Object.keys(styleOverwrites).length === 0) {
     return baseStyle;
   }
-
+  let falseObj = {};
   let base = Object.keys(baseStyle)
     .map((k) => {
       return { [k]: StyleSheet.flatten(baseStyle[k]) };
@@ -434,9 +435,9 @@ export function buildStylesheet(styleName, styleOverwrites) {
       if (depthOf(styleOverwrites[k]) === 1) {
         return { [k]: StyleSheet.flatten(styleOverwrites[k]) };
       }
-      return false;
+      return falseObj;
     })
-    .filter((v) => v)
+    .filter((v) => v !== falseObj)
     .reduce((accumulated, v) => {
       return Object.assign(accumulated, v);
     }, {});

@@ -5,6 +5,7 @@ module.exports = {
   components: 'src/**/[A-Z]*.js',
   usageMode: 'expand',
   styleguideDir: 'docs',
+  sortProps: (props) => props,
   webpackConfig: {
     resolve: {
       // auto resolves any react-native import as react-native-web
