@@ -1,6 +1,13 @@
 //@flow
 import * as React from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 
 import { buildStylesheet } from '../styles';
 
@@ -71,7 +78,7 @@ export default class BaseActivity extends React.Component<Props> {
     console.log(`pressed on ${text} hashtag of ${activity.id}`);
   };
 
-  removeUrl = (text: string, activity: ActivityData) => {
+  getAndTrimUrl = (text: string, activity: ActivityData) => {
     if (
       activity.attachments &&
       activity.attachments.og &&
@@ -85,7 +92,7 @@ export default class BaseActivity extends React.Component<Props> {
   };
 
   renderText = (text: string, activity: ActivityData) => {
-    let tokens = this.removeUrl(text, activity);
+    let tokens = text.split(' ');
     let rendered = [];
     let styles = buildStylesheet('baseActivity', this.props.styles);
 
@@ -112,6 +119,22 @@ export default class BaseActivity extends React.Component<Props> {
             key={i}
           >
             {tokens[i]}{' '}
+          </Text>,
+        );
+      } else if (
+        activity.attachments &&
+        activity.attachments.og &&
+        Object.keys(activity.attachments.og).length > 0 &&
+        tokens[i] === activity.attachments.og.url
+      ) {
+        rendered.push(
+          <Text
+            key={i}
+            onPress={() => Linking.openURL(activity.attachments.og.url)}
+            style={styles.url}
+          >
+            {tokens[i].slice(0, 20)}
+            {tokens[i].length > 20 ? '...' : ''}{' '}
           </Text>,
         );
       } else {

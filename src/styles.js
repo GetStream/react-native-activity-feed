@@ -177,9 +177,9 @@ let styles = {
       borderRadius: 4,
     },
     imageOverlay: {
-      // position: 'absolute',
-      // justifyContent: 'center',
-      // alignItems: 'center',
+      position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
       width: 30,
       height: 30,
       padding: 8,
@@ -317,6 +317,9 @@ let styles = {
     },
     hashtag: {
       color: '#0076FF',
+    },
+    url: {
+      color: '#666',
     },
   }),
   button: StyleSheet.create({
