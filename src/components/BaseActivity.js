@@ -1,11 +1,20 @@
 //@flow
 import * as React from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 
 import { buildStylesheet } from '../styles';
 
-//$FlowFixMe
-import { UserBar, Card } from 'react-native-activity-feed-core';
+import _ from 'lodash';
+
+import UserBar from './UserBar';
+import Card from './Card';
 import type { ActivityData, ToggleReactionCallbackFunction } from '../types';
 
 type Props = {
@@ -45,8 +54,10 @@ export default class BaseActivity extends React.Component<Props> {
     if (actor === 'NotFound') {
       actor = notFound;
     }
+    let styles = buildStylesheet('baseActivity', this.props.styles);
+
     return (
-      <View style={{ padding: 15 }}>
+      <View style={styles.header}>
         <UserBar
           username={actor.data.name}
           avatar={actor.data.profileImage}
@@ -65,6 +76,19 @@ export default class BaseActivity extends React.Component<Props> {
 
   onPressHashtag = (text: string, activity: ActivityData) => {
     console.log(`pressed on ${text} hashtag of ${activity.id}`);
+  };
+
+  getAndTrimUrl = (text: string, activity: ActivityData) => {
+    if (
+      activity.attachments &&
+      activity.attachments.og &&
+      Object.keys(activity.attachments.og).length > 0
+    ) {
+      let textWithoutUrl = _.replace(text, activity.attachments.og.url, ' ');
+      return textWithoutUrl.split(' ');
+    } else {
+      return text.split(' ');
+    }
   };
 
   renderText = (text: string, activity: ActivityData) => {
@@ -97,6 +121,22 @@ export default class BaseActivity extends React.Component<Props> {
             {tokens[i]}{' '}
           </Text>,
         );
+      } else if (
+        activity.attachments &&
+        activity.attachments.og &&
+        Object.keys(activity.attachments.og).length > 0 &&
+        tokens[i] === activity.attachments.og.url
+      ) {
+        rendered.push(
+          <Text
+            key={i}
+            onPress={() => Linking.openURL(activity.attachments.og.url)}
+            style={styles.url}
+          >
+            {tokens[i].slice(0, 20)}
+            {tokens[i].length > 20 ? '...' : ''}{' '}
+          </Text>,
+        );
       } else {
         rendered.push(tokens[i] + ' ');
       }
@@ -121,7 +161,7 @@ export default class BaseActivity extends React.Component<Props> {
         {verb == 'repost' &&
           object instanceof Object && <Card item={object.data} />}
 
-        {image && (
+        {Boolean(image) && (
           <Image
             style={{ width: width, height: width }}
             source={{ uri: image }}

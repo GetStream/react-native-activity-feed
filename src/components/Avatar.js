@@ -3,7 +3,6 @@ import React from 'react';
 import { View, Image } from 'react-native';
 
 import UploadImage from './UploadImage';
-import { mergeStyles } from '../utils';
 import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
 
@@ -46,23 +45,24 @@ class Avatar extends React.Component<Props> {
           }
           return (
             <View
-              style={mergeStyles(
-                'container',
-                styles,
-                this.props,
+              style={[
+                styles.container,
                 noShadow ? styles.noShadow : null,
                 {
                   width: size,
                   height: size,
                 },
-              )}
+              ]}
             >
               <Image
-                style={mergeStyles('image', styles, this.props, {
-                  width: size,
-                  height: size,
-                  borderRadius: borderRadius,
-                })}
+                style={[
+                  styles.image,
+                  {
+                    width: size,
+                    height: size,
+                    borderRadius: borderRadius,
+                  },
+                ]}
                 source={
                   source
                     ? { uri: source }

@@ -177,9 +177,9 @@ let styles = {
       borderRadius: 4,
     },
     imageOverlay: {
-      // position: 'absolute',
-      // justifyContent: 'center',
-      // alignItems: 'center',
+      position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
       width: 30,
       height: 30,
       padding: 8,
@@ -303,6 +303,9 @@ let styles = {
       borderBottomColor: 'rgba(0,0,0,0.1)',
       borderBottomWidth: 1,
     },
+    header: {
+      padding: 15,
+    },
     content: {
       paddingBottom: 15,
       paddingLeft: 15,
@@ -314,6 +317,9 @@ let styles = {
     },
     hashtag: {
       color: '#0076FF',
+    },
+    url: {
+      color: '#666',
     },
   }),
   button: StyleSheet.create({
@@ -360,6 +366,29 @@ let styles = {
       color: '#fff',
       textAlign: 'center',
       fontWeight: '700',
+    },
+  }),
+  reactionIconBar: StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      width: 100 + '%',
+    },
+  }),
+  reactionIcon: StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      marginTop: 12,
+    },
+    image: {
+      height: 24,
+      width: 24,
+    },
+    text: {
+      marginTop: 4,
+      marginLeft: 4,
+      fontWeight: '300',
+      opacity: 0.8,
+      fontSize: 14,
     },
   }),
 };
