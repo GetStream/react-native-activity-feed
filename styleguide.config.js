@@ -3,6 +3,8 @@ const webpack = require('webpack');
 module.exports = {
   require: ['babel-polyfill'],
   components: 'src/**/[A-Z]*.js',
+  usageMode: 'expand',
+  styleguideDir: 'docs',
   webpackConfig: {
     resolve: {
       // auto resolves any react-native import as react-native-web

@@ -48,7 +48,7 @@
     "prettier": "prettier --list-different '**/*.{js,ts}'",
     "lint": "yarn prettier && yarn eslint",
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
-    "docs": "styleguidist build; mv styleguide/* docs/",
+    "docs": "styleguidist build",
     "test": "jest",
     "release": "bin/release.sh",
     "preversion": "yarn && yarn lint",
