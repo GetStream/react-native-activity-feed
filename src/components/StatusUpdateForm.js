@@ -9,7 +9,8 @@ import {
   Dimensions,
 } from 'react-native';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
-import { Avatar, OgBlock } from 'react-native-activity-feed-core';
+import Avatar from './Avatar';
+import OgBlock from './OgBlock';
 import { pickImage } from '../native';
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
