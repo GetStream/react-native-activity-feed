@@ -2,7 +2,7 @@
 import React from 'react';
 import { StatusBar, Text, TouchableOpacity } from 'react-native';
 import EditProfileForm from '../components/EditProfileForm';
-import { BackButton } from 'react-native-activity-feed';
+import { BackButton } from 'expo-activity-feed';
 import type { NavigationProps } from '../types';
 import type { NavigationEventSubscription } from 'react-navigation';
 

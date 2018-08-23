@@ -9,7 +9,8 @@ import {
   Keyboard,
   SafeAreaView,
 } from 'react-native';
-import { OgBlock, StreamContext } from 'react-native-activity-feed-core';
+import { StreamContext } from '../Context';
+import OgBlock from './OgBlock';
 import { pickImage } from '../native';
 
 import { buildStylesheet } from '../styles';
@@ -28,7 +29,7 @@ const urlRegex = /(https?:\/\/[^\s]+)/gi;
 
 export default class StatusUpdateFormSimple extends React.Component {
   static defaultProps = {
-    feedGroup: 'timeline',
+    feedGroup: 'user',
     activity_verb: 'post',
     styles: {
       ogBlock: {

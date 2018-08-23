@@ -13,8 +13,8 @@ import { buildStylesheet } from '../styles';
 
 import _ from 'lodash';
 
-//$FlowFixMe
-import { UserBar, Card } from 'react-native-activity-feed-core';
+import UserBar from './UserBar';
+import Card from './Card';
 import type { ActivityData, ToggleReactionCallbackFunction } from '../types';
 
 type Props = {
