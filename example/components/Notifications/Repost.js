@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { UserBar, Card } from 'react-native-activity-feed';
+import { UserBar, Card } from 'expo-activity-feed';
 
 const Repost = ({ item }) => {
   return (

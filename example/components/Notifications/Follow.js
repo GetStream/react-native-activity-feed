@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-import { Avatar } from 'react-native-activity-feed';
+import { Avatar } from 'expo-activity-feed';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import FollowersIcon from '../../images/icons/followers.png';
 
