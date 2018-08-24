@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   Dimensions,
   Keyboard,
-  SafeAreaView,
 } from 'react-native';
 import { StreamContext } from '../Context';
 import OgBlock from './OgBlock';
@@ -17,6 +16,7 @@ import { buildStylesheet } from '../styles';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const ImageState = Object.freeze({
   NO_IMAGE: Symbol('no_image'),
@@ -52,7 +52,21 @@ export default class StatusUpdateFormSimple extends React.Component {
     return (
       <StreamContext.Consumer>
         {(appCtx) => {
-          return <StatusUpdateFormInner {...this.props} {...appCtx} />;
+          if (this.props.screen) {
+            return (
+              <View style={{ flex: 1 }}>
+                <StatusUpdateFormInner {...this.props} {...appCtx} />
+              </View>
+            );
+          } else {
+            return (
+              <React.Fragment>
+                <KeyboardAccessory>
+                  <StatusUpdateFormInner {...this.props} {...appCtx} />
+                </KeyboardAccessory>
+              </React.Fragment>
+            );
+          }
         }}
       </StreamContext.Consumer>
     );
@@ -250,99 +264,92 @@ class StatusUpdateFormInner extends React.Component {
       });
     });
     return (
-      <SafeAreaView>
+      <View style={this.props.screen ? { flex: 1 } : {}}>
         <View
           style={[
-            { height: 80 },
+            styles.container,
             this.state.focused ? styles.containerFocused : {},
             this.state.og ? styles.containerFocusedOg : {},
+            this.props.screen ? { flex: 1 } : {},
           ]}
-        />
-        <KeyboardAccessory>
-          <View
-            style={[
-              styles.container,
-              this.state.focused ? styles.containerFocused : {},
-              this.state.og ? styles.containerFocusedOg : {},
-            ]}
-          >
-            {this.state.og && (
-              <OgBlock
-                onPressDismiss={this._onPressDismiss}
-                og={this.state.og}
-                styles={this.props.styles.ogBlock}
+        >
+          {this.state.og && (
+            <OgBlock
+              onPressDismiss={this._onPressDismiss}
+              og={this.state.og}
+              styles={this.props.styles.ogBlock}
+            />
+          )}
+
+          <View style={styles.newPostContainer}>
+            <View style={[styles.textInput]}>
+              <TextInput
+                ref={this.textInput}
+                multiline
+                onChangeText={(text) => {
+                  this.setState({ textInput: text, clearInput: false });
+                  this._handleOgDebounced(text);
+                }}
+                value={!this.state.clearInput ? this.state.textInput : null}
+                autocorrect={false}
+                placeholder="Share something..."
+                underlineColorAndroid="transparent"
+                onBlur={() => this.setState({ focused: false })}
+                onFocus={() => this.setState({ focused: true })}
               />
-            )}
+            </View>
 
-            <View style={styles.newPostContainer}>
-              <View style={[styles.textInput]}>
-                <TextInput
-                  ref={this.textInput}
-                  multiline
-                  onChangeText={(text) => {
-                    this.setState({ textInput: text, clearInput: false });
-                    this._handleOgDebounced(text);
-                  }}
-                  value={!this.state.clearInput ? this.state.textInput : null}
-                  autocorrect={false}
-                  placeholder="Share something..."
-                  underlineColorAndroid="transparent"
-                  onBlur={() => this.setState({ focused: false })}
-                  onFocus={() => this.setState({ focused: true })}
+            <View style={styles.actionPanel}>
+              <View style={styles.imageContainer}>
+                {this.state.image ? (
+                  <React.Fragment>
+                    <Image
+                      source={{ uri: this.state.image }}
+                      style={
+                        this.state.imageState === ImageState.UPLOADING
+                          ? styles.image_loading
+                          : styles.image
+                      }
+                    />
+                    <View style={styles.imageOverlay}>
+                      {this.state.imageState === ImageState.UPLOADING ? (
+                        <ActivityIndicator color="#ffffff" />
+                      ) : (
+                        <TouchableOpacity onPress={this._removeImage}>
+                          <Image
+                            source={require('../images/icons/close-white.png')}
+                            style={[{ width: 24, height: 24 }]}
+                          />
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  </React.Fragment>
+                ) : (
+                  <TouchableOpacity
+                    title="Pick an image from camera roll"
+                    onPress={this._pickImage}
+                  >
+                    <Image
+                      source={require('../images/icons/gallery.png')}
+                      style={{ width: 24, height: 24 }}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+              <TouchableOpacity
+                title="Pick an image from camera roll"
+                onPress={this.onSubmitForm}
+              >
+                <Image
+                  source={require('../images/icons/send.png')}
+                  style={styles.submitImage}
                 />
-              </View>
-
-              <View style={styles.actionPanel}>
-                <View style={styles.imageContainer}>
-                  {this.state.image ? (
-                    <React.Fragment>
-                      <Image
-                        source={{ uri: this.state.image }}
-                        style={
-                          this.state.imageState === ImageState.UPLOADING
-                            ? styles.image_loading
-                            : styles.image
-                        }
-                      />
-                      <View style={styles.imageOverlay}>
-                        {this.state.imageState === ImageState.UPLOADING ? (
-                          <ActivityIndicator color="#ffffff" />
-                        ) : (
-                          <TouchableOpacity onPress={this._removeImage}>
-                            <Image
-                              source={require('../images/icons/close-white.png')}
-                              style={[{ width: 24, height: 24 }]}
-                            />
-                          </TouchableOpacity>
-                        )}
-                      </View>
-                    </React.Fragment>
-                  ) : (
-                    <TouchableOpacity
-                      title="Pick an image from camera roll"
-                      onPress={this._pickImage}
-                    >
-                      <Image
-                        source={require('../images/icons/gallery.png')}
-                        style={{ width: 24, height: 24 }}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </View>
-                <TouchableOpacity
-                  title="Pick an image from camera roll"
-                  onPress={this.onSubmitForm}
-                >
-                  <Image
-                    source={require('../images/icons/send.png')}
-                    style={styles.submitImage}
-                  />
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
-        </KeyboardAccessory>
-      </SafeAreaView>
+        </View>
+        {this.props.screen ? <KeyboardSpacer /> : null}
+      </View>
     );
   }
 }
