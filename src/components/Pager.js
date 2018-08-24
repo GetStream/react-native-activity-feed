@@ -17,7 +17,6 @@ type Props = {|
 
 export default class Pager extends React.Component<Props> {
   static defaultProps = {
-    messages: [],
     labelSingular: 'activity',
     labelPlural: 'activities',
   };

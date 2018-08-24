@@ -4,7 +4,6 @@
 .*/node_modules/findup/test/
 .*/node_modules/*/test/
 .*/node_modules/*/tests/
-.*/expo-package/node_modules/
 .*/native-package/
 
 [include]
@@ -25,7 +24,6 @@ sketchy-null-bool=off
 [options]
 module.name_mapper='^react-native-activity-feed-core$' -> '<PROJECT_ROOT>/..'
 module.name_mapper='^expo-activity-feed$' -> '<PROJECT_ROOT>/../expo-package'
-module.name_mapper='^expo$' -> '<PROJECT_ROOT>/node_modules/expo'
 module.name_mapper.extension='\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)' -> 'RelativeImageStub'
 
 [strict]

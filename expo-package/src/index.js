@@ -1,3 +1,4 @@
+// @flow
 import { registerNativeHandlers } from 'react-native-activity-feed-core';
 import { ImagePicker, Permissions } from 'expo';
 registerNativeHandlers({
@@ -12,3 +13,4 @@ registerNativeHandlers({
 });
 
 export * from 'react-native-activity-feed-core';
+export type { AppCtx } from 'react-native-activity-feed-core';

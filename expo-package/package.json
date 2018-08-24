@@ -23,6 +23,7 @@
     "eslint-plugin-flowtype": "^2.29.1",
     "eslint-plugin-jest": "^21.17.0",
     "eslint-plugin-react": "^7.10.0",
+    "expo": "^27.0.0",
     "flow-bin": "^0.78.0",
     "flow-copy-source": "^2.0.2",
     "prettier": "^1.13.7",
@@ -34,7 +35,7 @@
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir lib --compact=false && flow-copy-source src lib",
     "eslint": "eslint '**/*.js' --max-warnings 0",
-    "flow": "flow && cd example && flow",
+    "flow": "flow",
     "prettier": "prettier --list-different '**/*.{js,ts}'",
     "lint": "yarn prettier && yarn eslint",
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",

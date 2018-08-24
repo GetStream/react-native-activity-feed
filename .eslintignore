@@ -7,4 +7,5 @@ node_modules/
 /native-package/lib/
 /expo-package/lib/
 /flow-typed/
+/docs/
 /.git/

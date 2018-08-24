@@ -72,4 +72,4 @@ export type ToggleReactionCallbackFunction = (
   kind: string,
   activity: BaseActivityResponse,
   options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
-) => void;
+) => void | Promise<mixed>;
