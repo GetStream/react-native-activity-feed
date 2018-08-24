@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { SafeAreaView, View, Text, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import stream from 'getstream';
 import StreamAnalytics from 'stream-analytics';
 import type { ChildrenProps } from './types';
@@ -124,7 +124,7 @@ export class StreamApp<UserData> extends React.Component<
   render() {
     return (
       <StreamContext.Provider value={{ ...this.state }}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           {this.props.children || (
             <View
               style={{
@@ -160,7 +160,7 @@ export class StreamApp<UserData> extends React.Component<
               </Text>
             </View>
           )}
-        </SafeAreaView>
+        </View>
       </StreamContext.Provider>
     );
   }

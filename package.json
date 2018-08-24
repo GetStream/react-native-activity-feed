@@ -61,6 +61,7 @@
     "immutable": "^4.0.0-rc.9",
     "moment": "^2.22.2",
     "numeral": "^2.0.6",
+    "react-native-keyboard-spacer": "^0.4.1",
     "react-native-sticky-keyboard-accessory": "^0.1.1",
     "stream-analytics": "^2.7.1",
     "url-parse": "^1.4.3"
