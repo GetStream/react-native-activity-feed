@@ -9,9 +9,12 @@ import LikesList from '../components/LikesList';
 import RepostList from '../components/RepostList';
 import CommentList from '../components/CommentList';
 
-import type { NavigationProps, UserResponse } from '../types';
+import type { UserResponse } from '../types';
+import type { NavigationScreen } from 'expo-activity-feed';
 
-type Props = NavigationProps;
+type Props = {|
+  navigation?: NavigationScreen,
+|};
 
 export default class SinglePostScreen extends React.Component<Props> {
   static navigationOptions = ({ navigation }: Props) => ({

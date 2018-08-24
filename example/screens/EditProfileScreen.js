@@ -3,10 +3,12 @@ import React from 'react';
 import { StatusBar, Text, TouchableOpacity } from 'react-native';
 import EditProfileForm from '../components/EditProfileForm';
 import { BackButton } from 'expo-activity-feed';
-import type { NavigationProps } from '../types';
+import type { NavigationScreen } from 'expo-activity-feed';
 import type { NavigationEventSubscription } from 'react-navigation';
 
-type Props = NavigationProps;
+type Props = {|
+  navigation?: NavigationScreen,
+|};
 
 export default class EditProfileScreen extends React.Component<Props> {
   _navListener: NavigationEventSubscription;

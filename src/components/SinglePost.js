@@ -5,10 +5,10 @@ import { FlatFeed } from '..';
 
 import type { FeedRequestOptions } from 'getstream';
 import type {
-  NavigationProps,
+  NavigationScreen,
   BaseActivityResponse,
   ReactComponentFunction,
-  StylesProps,
+  StyleSheetLike,
 } from '../types';
 
 type Props = {|
@@ -19,8 +19,8 @@ type Props = {|
   analyticsLocation?: string,
   renderActivity: ReactComponentFunction,
   BelowPostComponent?: any,
-  ...NavigationProps,
-  ...StylesProps,
+  styles?: StyleSheetLike,
+  navigation?: NavigationScreen,
 |};
 
 export default class SinglePost extends React.Component<Props> {

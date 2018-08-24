@@ -17,7 +17,7 @@ import {
   Avatar,
   StreamApp,
   FlatFeed,
-  BaseActivity,
+  Activity,
   StatusUpdateFormSimple,
   LikeButton,
   IconBadge,
@@ -153,7 +153,7 @@ const App = () => {
   // eslint-disable-next-line no-unused-vars
   function stepThree() {
     const renderActivity = (props) => {
-      return <BaseActivity {...props} Footer={<LikeButton {...props} />} />;
+      return <Activity {...props} Footer={<LikeButton {...props} />} />;
     };
 
     return (
@@ -166,7 +166,7 @@ const App = () => {
   // eslint-disable-next-line no-unused-vars
   function stepFour() {
     const renderActivity = (props) => {
-      return <BaseActivity {...props} Footer={<LikeButton {...props} />} />;
+      return <Activity {...props} Footer={<LikeButton {...props} />} />;
     };
 
     return (
@@ -180,7 +180,7 @@ const App = () => {
   // eslint-disable-next-line no-unused-vars
   function stepFive() {
     const renderActivity = (props) => {
-      return <BaseActivity {...props} Footer={<LikeButton {...props} />} />;
+      return <Activity {...props} Footer={<LikeButton {...props} />} />;
     };
 
     return (

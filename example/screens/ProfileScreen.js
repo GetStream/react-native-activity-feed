@@ -4,10 +4,12 @@ import React from 'react';
 import { View, StatusBar } from 'react-native';
 import ProfileHeader from '../components/ProfileHeader';
 import Button from '../components/Button';
-import type { NavigationProps } from '../types';
+import type { NavigationScreen } from 'expo-activity-feed';
 import type { NavigationEventSubscription } from 'react-navigation';
 
-type Props = NavigationProps;
+type Props = {|
+  navigation?: NavigationScreen,
+|};
 
 export default class ProfileScreen extends React.Component<Props> {
   _navListener: NavigationEventSubscription;

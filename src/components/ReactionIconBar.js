@@ -1,12 +1,12 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { View } from 'react-native';
 import { buildStylesheet } from '../styles';
-import type { ChildrenProps, StylesProps } from '../types';
+import type { StyleSheetLike } from '../types';
 
 type Props = {
-  ...ChildrenProps,
-  ...StylesProps,
+  children?: React.Node,
+  styles?: StyleSheetLike,
 };
 
 export default function ReactionIconBar(props: Props) {

@@ -16,7 +16,8 @@ import {
   ReactionIconBar,
   Card,
 } from 'expo-activity-feed';
-import type { ActivityData, UserResponse, NavigationProps } from '../types';
+import type { ActivityData, UserResponse } from '../types';
+import type { NavigationScreen } from 'expo-activity-feed';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import HeartIcon from '../images/icons/heart.png';
@@ -34,7 +35,7 @@ type Props = {|
   userId?: string,
   onToggleReaction?: (kind: string, activity: ActivityData) => mixed,
   clickable?: boolean,
-  ...NavigationProps,
+  navigation?: NavigationScreen,
   styles?: any,
 |};
 

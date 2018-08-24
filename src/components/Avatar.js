@@ -6,7 +6,7 @@ import UploadImage from './UploadImage';
 import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
 
-import type { StylesProps } from '../types';
+import type { StyleSheetLike } from '../types';
 import type { UserResponse } from 'getstream';
 
 export type Props = {|
@@ -18,11 +18,12 @@ export type Props = {|
   notRound?: boolean,
 
   onUploadButtonPress?: () => mixed,
-  ...StylesProps,
+  styles?: StyleSheetLike,
 |};
 
 /**
  * A users' profile picture
+ * @example ./examples/Avatar.md
  */
 class Avatar extends React.Component<Props> {
   render = function() {

@@ -4,7 +4,6 @@ import * as React from 'react';
 import { View, Text, Image } from 'react-native';
 import stream from 'getstream';
 import StreamAnalytics from 'stream-analytics';
-import type { ChildrenProps } from './types';
 import type {
   StreamCloudClient,
   StreamUser,
@@ -45,7 +44,7 @@ type StreamAppProps<UserData> = {|
     userId?: string,
   },
   defaultUserData: UserData,
-  ...ChildrenProps,
+  children?: React.Node,
 |};
 
 type StreamAppState<UserData> = AppCtx<UserData>;
@@ -171,7 +170,8 @@ export const StreamFeedContext = React.createContext();
 type StreamFeedProps = {
   feedGroup: string,
   userId?: string,
-} & ChildrenProps;
+  children?: React.Node,
+};
 
 export class StreamCurrentFeed extends React.Component<StreamFeedProps> {
   render() {

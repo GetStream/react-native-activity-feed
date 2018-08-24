@@ -8,9 +8,12 @@ import { Avatar, FlatFeed } from 'expo-activity-feed';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
 
-import type { NavigationProps } from '../types';
+import type { NavigationScreen } from 'expo-activity-feed';
 import type { NavigationEventSubscription } from 'react-navigation';
-type Props = NavigationProps;
+
+type Props = {|
+  navigation?: NavigationScreen,
+|};
 
 class HomeScreen extends React.Component<Props> {
   _navListener: NavigationEventSubscription;

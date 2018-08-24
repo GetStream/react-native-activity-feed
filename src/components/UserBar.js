@@ -5,7 +5,7 @@ import { humanizeTimestamp } from '../utils';
 
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
-import type { StylesProps } from '../types';
+import type { StyleSheetLike } from '../types';
 import { buildStylesheet } from '../styles';
 
 type Props = {|
@@ -18,7 +18,7 @@ type Props = {|
 
   onPressAvatar?: () => mixed,
   follow?: boolean,
-  ...StylesProps,
+  styles?: StyleSheetLike,
 |};
 
 const UserBar = ({

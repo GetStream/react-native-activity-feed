@@ -7,9 +7,8 @@ import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
 
 import type {
-  NavigationProps,
-  ChildrenProps,
-  StylesProps,
+  NavigationScreen,
+  StyleSheetLike,
   BaseActivityResponse,
   BaseAppCtx,
   BaseUserSession,
@@ -30,9 +29,9 @@ type Props = {|
   ) => Promise<FeedResponse<{}, {}>>,
   analyticsLocation?: string,
   noPagination?: boolean,
-  ...NavigationProps,
-  ...ChildrenProps,
-  ...StylesProps,
+  children?: React.Node,
+  styles?: StyleSheetLike,
+  navigation?: NavigationScreen,
 |};
 
 export default function NotificationFeed(props: Props) {

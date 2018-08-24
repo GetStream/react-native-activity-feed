@@ -5,7 +5,7 @@ import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
 import Avatar from './Avatar';
 
-import type { StylesProps } from '../types';
+import type { StyleSheetLike } from '../types';
 import type { Props as AvatarProps } from './Avatar';
 import { buildStylesheet } from '../styles';
 
@@ -14,7 +14,7 @@ type Props = {|
   height?: number,
   avatarProps?: AvatarProps,
   noAvatar?: boolean,
-  ...StylesProps,
+  styles?: StyleSheetLike,
 |};
 
 type State = {|

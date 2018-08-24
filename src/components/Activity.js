@@ -18,7 +18,7 @@ import Card from './Card';
 import type {
   ActivityData,
   ToggleReactionCallbackFunction,
-  StylesProps,
+  StyleSheetLike,
 } from '../types';
 
 type Props = {
@@ -31,10 +31,10 @@ type Props = {
   icon?: string,
   activity: ActivityData,
   onToggleReaction: ToggleReactionCallbackFunction,
-  ...StylesProps,
+  styles?: StyleSheetLike,
 };
 
-export default class BaseActivity extends React.Component<Props> {
+export default class Activity extends React.Component<Props> {
   _onPress = () => {
     if (this.props.onPress) {
       this.props.onPress();
@@ -58,7 +58,7 @@ export default class BaseActivity extends React.Component<Props> {
     if (actor === 'NotFound') {
       actor = notFound;
     }
-    let styles = buildStylesheet('baseActivity', this.props.styles);
+    let styles = buildStylesheet('activity', this.props.styles);
 
     return (
       <View style={styles.header}>
@@ -98,7 +98,7 @@ export default class BaseActivity extends React.Component<Props> {
   renderText = (text: string, activity: ActivityData) => {
     let tokens = text.split(' ');
     let rendered = [];
-    let styles = buildStylesheet('baseActivity', this.props.styles);
+    let styles = buildStylesheet('activity', this.props.styles);
 
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i][0] === '@') {
@@ -148,7 +148,7 @@ export default class BaseActivity extends React.Component<Props> {
   renderContent = () => {
     const { width } = Dimensions.get('window');
     let { verb, object, content, image, attachments } = this.props.activity;
-    let styles = buildStylesheet('baseActivity', this.props.styles);
+    let styles = buildStylesheet('activity', this.props.styles);
     return (
       <View>
         <View style={styles.content}>
@@ -203,7 +203,7 @@ export default class BaseActivity extends React.Component<Props> {
   render() {
     let { Header, Content, Footer } = this.props;
 
-    let styles = buildStylesheet('baseActivity', this.props.styles);
+    let styles = buildStylesheet('activity', this.props.styles);
 
     return (
       <TouchableOpacity

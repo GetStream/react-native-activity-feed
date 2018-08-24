@@ -4,16 +4,15 @@ import { FlatList, RefreshControl } from 'react-native';
 import immutable from 'immutable';
 import URL from 'url-parse';
 
-import BaseActivity from './BaseActivity';
+import Activity from './Activity';
 import Pager from './Pager';
 
 import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
 
 import type {
-  NavigationProps,
-  ChildrenProps,
-  StylesProps,
+  NavigationScreen,
+  StyleSheetLike,
   ReactElementCreator,
   BaseActivityResponse,
   BaseAppCtx,
@@ -45,9 +44,9 @@ type Props = {|
   noPagination?: boolean,
   analyticsLocation?: string,
   onRefresh?: () => void,
-  ...NavigationProps,
-  ...ChildrenProps,
-  ...StylesProps,
+  children?: React.Node,
+  styles?: StyleSheetLike,
+  navigation?: NavigationScreen,
 |};
 
 export default class FlatFeed extends React.Component<Props> {
@@ -357,7 +356,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     }
 
     if (!this.props.renderActivity && !this.props.ActivityComponent) {
-      return <BaseActivity {...args} />;
+      return <Activity {...args} />;
     }
 
     return null;

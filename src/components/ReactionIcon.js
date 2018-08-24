@@ -4,7 +4,7 @@ import { Image, Text, TouchableOpacity } from 'react-native';
 import type { ReactionCounts } from 'getstream';
 import { buildStylesheet } from '../styles';
 
-import type { StylesProps } from '../types';
+import type { StyleSheetLike } from '../types';
 
 type Props = {|
   icon: string | number,
@@ -15,7 +15,7 @@ type Props = {|
   onPress?: (kind: ?string) => any,
   labelSingle?: string,
   labelPlural?: string,
-  ...StylesProps,
+  styles?: StyleSheetLike,
 |};
 
 export default function ReactionIcon(props: Props) {
