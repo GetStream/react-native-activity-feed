@@ -24,7 +24,9 @@ export { default as CommentBox } from './components/CommentBox';
 export { default as BackButton } from './components/BackButton';
 export { default as Activity } from './components/Activity';
 export { default as LikeButton } from './components/LikeButton';
-export { default as Pager } from './components/Pager';
+export {
+  default as NewActivitiesNotification,
+} from './components/NewActivitiesNotification';
 export { default as IconBadge } from './components/IconBadge';
 
 export { updateStyle, getStyle } from './styles';

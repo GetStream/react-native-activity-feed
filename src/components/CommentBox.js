@@ -21,6 +21,10 @@ type State = {|
   text: string,
 |};
 
+/**
+ * Comment box
+ * @example ./examples/CommentBox.md
+ */
 export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
     styles: {},
