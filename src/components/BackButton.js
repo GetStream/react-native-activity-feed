@@ -1,30 +1,35 @@
+//@flow
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { buildStylesheet } from '../styles';
+import type { StyleSheetLike } from '../types';
 
-export default class BackButton extends React.Component {
+export type Props = {|
+  styles?: StyleSheetLike,
+  blue?: boolean,
+  pressed?: () => void,
+|};
+
+/**
+ * Back button
+ * @example ./examples/BackButton.md
+ */
+export default class BackButton extends React.Component<Props> {
   render() {
     let styles = buildStylesheet('backButton', this.props.styles);
-    let { color, pressed } = this.props;
+    let { blue, pressed } = this.props;
 
-    if (color === 'blue') {
-      return (
-        <TouchableOpacity style={styles.backButton} onPress={pressed}>
-          <Image
-            source={require('../images/icons/backarrow-blue.png')}
-            style={styles.backArrow}
-          />
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <TouchableOpacity style={styles.backButton} onPress={pressed}>
-          <Image
-            source={require('../images/icons/backarrow.png')}
-            style={styles.backArrow}
-          />
-        </TouchableOpacity>
-      );
-    }
+    return (
+      <TouchableOpacity style={styles.backButton} onPress={pressed}>
+        <Image
+          source={
+            blue
+              ? require('../images/icons/backarrow-blue.png')
+              : require('../images/icons/backarrow.png')
+          }
+          style={styles.backArrow}
+        />
+      </TouchableOpacity>
+    );
   }
 }

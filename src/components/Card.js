@@ -1,10 +1,28 @@
+//@flow
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import { buildStylesheet } from '../styles';
 
 import _ from 'lodash';
 
-const Card = ({ item, ...props }) => {
+export type Item = {|
+  title: ?string,
+  description: ?string,
+  image?: ?string,
+  url?: ?string,
+|};
+
+export type Props = {|
+  styles?: StyleSheetLike,
+  blue?: boolean,
+  pressed?: () => void,
+|};
+
+/**
+ * Card element
+ * @example ./examples/Card.md
+ */
+const Card = (item: Item, props: Props): any => {
   let { title, description, image, url } = item;
   let styles = buildStylesheet('card', props.styles);
 
@@ -20,9 +38,6 @@ const Card = ({ item, ...props }) => {
         source={image ? { uri: image } : require('../images/placeholder.png')}
       />
       <View style={styles.content}>
-        {
-          //TODO: Only put ... when the title or description are too long
-        }
         <Text style={styles.title}>{_.truncate(title, { length: 60 })}</Text>
         <Text style={styles.description}>
           {_.truncate(description, { length: 60 })}

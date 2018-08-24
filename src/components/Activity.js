@@ -32,8 +32,13 @@ type Props = {
   activity: ActivityData,
   onToggleReaction: ToggleReactionCallbackFunction,
   styles?: StyleSheetLike,
+  imageWidth?: number,
 };
 
+/**
+ * Renders feed activities
+ * @example ./examples/Activity.md
+ */
 export default class Activity extends React.Component<Props> {
   _onPress = () => {
     if (this.props.onPress) {
@@ -146,7 +151,9 @@ export default class Activity extends React.Component<Props> {
   };
 
   renderContent = () => {
-    const { width } = Dimensions.get('window');
+    const width = this.props.imageWidth
+      ? this.props.imageWidth
+      : Dimensions.get('window');
     let { verb, object, content, image, attachments } = this.props.activity;
     let styles = buildStylesheet('activity', this.props.styles);
     return (
