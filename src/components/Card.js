@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import { buildStylesheet } from '../styles';
+import type { StyleSheetLike } from '../types';
 
 import _ from 'lodash';
 
@@ -13,6 +14,7 @@ export type Item = {|
 |};
 
 export type Props = {|
+  item: Item,
   styles?: StyleSheetLike,
   blue?: boolean,
   pressed?: () => void,
@@ -22,8 +24,8 @@ export type Props = {|
  * Card element
  * @example ./examples/Card.md
  */
-const Card = (item: Item, props: Props): any => {
-  let { title, description, image, url } = item;
+const Card = (props: Props): any => {
+  let { title, description, image, url } = props.item;
   let styles = buildStylesheet('card', props.styles);
 
   return (

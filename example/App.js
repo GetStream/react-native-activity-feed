@@ -185,7 +185,7 @@ const App = () => {
 
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FlatFeed renderActivity={renderActivity} showPager />
+        <FlatFeed renderActivity={renderActivity} notify />
         <StatusUpdateForm />
       </StreamApp>
     );

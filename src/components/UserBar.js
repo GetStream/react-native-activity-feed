@@ -21,6 +21,10 @@ type Props = {|
   styles?: StyleSheetLike,
 |};
 
+/**
+ * A compact horizontal user information box (it is used as activities' header)
+ * @example ./examples/UserBar.md
+ */
 const UserBar = ({
   username,
   subtitle,
@@ -72,7 +76,7 @@ const UserBar = ({
       )}
       {follow && (
         <View>
-          <FollowButton />
+          <FollowButton followed />
         </View>
       )}
     </View>

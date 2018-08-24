@@ -6,8 +6,6 @@ import { buildStylesheet } from '../styles';
 import type { StyleSheetLike } from '../types';
 
 type Props = {|
-  feedGroup: string,
-  userId?: string,
   adds: Array<{}>,
   deletes: Array<{}>,
   labelSingular?: string,
@@ -15,7 +13,11 @@ type Props = {|
   styles?: StyleSheetLike,
 |};
 
-export default class Pager extends React.Component<Props> {
+/**
+ * Renders a notification message when new activities are received by a feed
+ * @example ./examples/NewActivitiesNotification.md
+ */
+export default class NewActivitiesNotification extends React.Component<Props> {
   static defaultProps = {
     labelSingular: 'activity',
     labelPlural: 'activities',
@@ -30,8 +32,7 @@ export default class Pager extends React.Component<Props> {
     return count ? (
       <View style={[styles.container]}>
         <Text style={[styles.text]}>
-          You have {count} new {count > 1 ? labelPlural : labelSingular} drag
-          down to refresh
+          You have {count} new {count > 1 ? labelPlural : labelSingular}
         </Text>
       </View>
     ) : null;

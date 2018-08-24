@@ -5,7 +5,7 @@ import immutable from 'immutable';
 import URL from 'url-parse';
 
 import Activity from './Activity';
-import Pager from './Pager';
+import NewActivitiesNotification from './NewActivitiesNotification';
 
 import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
@@ -32,8 +32,8 @@ type Props = {|
   options?: FeedRequestOptions,
   renderActivity?: ReactComponentFunction,
   ActivityComponent?: ReactElementCreator,
-  pager?: ReactElementCreator,
-  showPager: boolean,
+  NewActivitiesComponent?: ReactElementCreator,
+  notify?: boolean,
   BelowListComponent?: any,
   doFeedRequest?: (
     session: BaseUserSession,
@@ -56,7 +56,7 @@ export default class FlatFeed extends React.Component<Props> {
     options: {
       limit: 10,
     },
-    showPager: false,
+    notify: false,
   };
 
   render() {
@@ -245,7 +245,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
   async componentDidMount() {
     await this._refresh();
-    if (this.getPager()) {
+    if (this.getNewActivitiesComponent()) {
       let subscription = this._feed()
         .subscribe((data) => {
           this.setState((prevState) => {
@@ -362,21 +362,21 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
     return null;
   };
 
-  getPager() {
-    if (this.props.showPager || this.props.pager) {
-      return this.props.pager ? this.props.pager : Pager;
+  getNewActivitiesComponent() {
+    if (this.props.notify || this.props.NewActivitiesComponent) {
+      return this.props.NewActivitiesComponent
+        ? this.props.NewActivitiesComponent
+        : NewActivitiesNotification;
     }
   }
 
   render() {
-    let { BelowListComponent, feedGroup, userId } = this.props;
+    let { BelowListComponent } = this.props;
     let styles = buildStylesheet('flatFeed', this.props.styles);
-    let Pager = this.getPager();
-    if (Pager) {
-      Pager = (
-        <Pager
-          feedGroup={feedGroup}
-          userId={userId}
+    let NewActivitiesComponent = this.getNewActivitiesComponent();
+    if (NewActivitiesComponent) {
+      NewActivitiesComponent = (
+        <NewActivitiesComponent
           adds={this.state.realtimeAdds}
           deletes={this.state.realtimeDeletes}
         />
@@ -385,7 +385,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
 
     return (
       <React.Fragment>
-        {Pager}
+        {NewActivitiesComponent}
         <FlatList
           ListHeaderComponent={this.props.children}
           style={styles.container}
