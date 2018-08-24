@@ -65,68 +65,6 @@ let styles = {
     },
   }),
   statusUpdateForm: StyleSheet.create({
-    screenContainer: {
-      flex: 1,
-      backgroundColor: '#f6f6f6',
-    },
-    newPostContainer: {
-      backgroundColor: '#ffffff',
-      padding: 15,
-      flexDirection: 'row',
-      flex: 1,
-    },
-    textInput: {
-      flex: 1,
-      marginTop: 10,
-      marginLeft: 15,
-      marginBottom: 250,
-    },
-    textInpuPortrait: {
-      marginBottom: 300,
-    },
-    textInpuLandscape: {
-      marginBottom: 250,
-    },
-    accessory: {
-      borderTopColor: '#DADFE3',
-      backgroundColor: '#f6f6f6',
-      borderTopWidth: 1,
-      width: 100 + '%',
-      padding: 15,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    imageContainer: {
-      position: 'relative',
-      width: 30,
-      height: 30,
-      marginTop: -3,
-      marginBottom: -3,
-      overflow: 'hidden',
-      borderRadius: 4,
-    },
-    imageOverlay: {
-      position: 'absolute',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: 30,
-      height: 30,
-      padding: 8,
-      backgroundColor: 'rgba(0,0,0,0.4)',
-    },
-    image: {
-      position: 'absolute',
-      width: 30,
-      height: 30,
-    },
-    image_loading: {
-      position: 'absolute',
-      width: 30,
-      height: 30,
-      opacity: 0.5,
-    },
-  }),
-  statusUpdateFormSimple: StyleSheet.create({
     container: {
       shadowOffset: { width: 0, height: -3 },
       shadowColor: 'black',

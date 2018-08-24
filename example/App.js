@@ -18,7 +18,7 @@ import {
   StreamApp,
   FlatFeed,
   Activity,
-  StatusUpdateFormSimple,
+  StatusUpdateForm,
   LikeButton,
   IconBadge,
 } from 'expo-activity-feed';
@@ -172,7 +172,7 @@ const App = () => {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
         <FlatFeed renderActivity={renderActivity} />
-        <StatusUpdateFormSimple />
+        <StatusUpdateForm />
       </StreamApp>
     );
   }
@@ -186,18 +186,18 @@ const App = () => {
     return (
       <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
         <FlatFeed renderActivity={renderActivity} showPager />
-        <StatusUpdateFormSimple />
+        <StatusUpdateForm />
       </StreamApp>
     );
   }
 
   // eslint-disable-next-line no-unused-vars
-  // return example();
+  return example();
   // return stepOne();
   // return stepTwo();
   // return stepThree();
   // return stepFour();
-  return stepFive();
+  // return stepFive();
 };
 
 export default App;

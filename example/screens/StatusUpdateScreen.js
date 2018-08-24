@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Image, TouchableOpacity } from 'react-native';
-import { StreamContext, StatusUpdateFormSimple } from 'expo-activity-feed';
+import { StreamContext, StatusUpdateForm } from 'expo-activity-feed';
 
 class StatusUpdateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -35,7 +35,7 @@ class StatusUpdateScreen extends React.Component {
       <StreamContext.Consumer>
         {(appCtx) => {
           return (
-            <StatusUpdateFormSimple
+            <StatusUpdateForm
               screen
               {...this.props}
               {...appCtx}

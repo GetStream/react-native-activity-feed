@@ -11,9 +11,6 @@ export { default as Avatar } from './components/Avatar';
 export { default as FollowButton } from './components/FollowButton';
 export { default as OgBlock } from './components/OgBlock';
 export { default as StatusUpdateForm } from './components/StatusUpdateForm';
-export {
-  default as StatusUpdateFormSimple,
-} from './components/StatusUpdateFormSimple';
 export { default as UploadImage } from './components/UploadImage';
 export { default as UserBar } from './components/UserBar';
 export { default as ReactionIcon } from './components/ReactionIcon';

@@ -1,20 +1,22 @@
 import React from 'react';
 import {
-  SafeAreaView,
   View,
   Image,
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
   Dimensions,
+  Keyboard,
 } from 'react-native';
-import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
-import Avatar from './Avatar';
+import { StreamContext } from '../Context';
 import OgBlock from './OgBlock';
 import { pickImage } from '../native';
+
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
 import Symbol from 'es6-symbol';
+import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const ImageState = Object.freeze({
   NO_IMAGE: Symbol('no_image'),
@@ -26,16 +28,9 @@ const ImageState = Object.freeze({
 const urlRegex = /(https?:\/\/[^\s]+)/gi;
 
 export default class StatusUpdateForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props.feedUserId = this.props.feedUserId || props.session.userId;
-    this._handleOgDebounced = _.debounce(this.handleOG, 250);
-    this.TextInput = React.createRef();
-  }
-
   static defaultProps = {
+    feedGroup: 'user',
     activity_verb: 'post',
-    feedGroup: 'timeline',
     styles: {
       ogBlock: {
         wrapper: {
@@ -45,10 +40,45 @@ export default class StatusUpdateForm extends React.Component {
           borderTopColor: '#eee',
           borderTopWidth: 1,
         },
-        textStyle: { fontSize: 12 },
+        textStyle: { fontSize: 14 },
       },
     },
+    options: {
+      limit: 10,
+    },
   };
+
+  render() {
+    return (
+      <StreamContext.Consumer>
+        {(appCtx) => {
+          if (this.props.screen) {
+            return (
+              <View style={{ flex: 1 }}>
+                <StatusUpdateFormInner {...this.props} {...appCtx} />
+              </View>
+            );
+          } else {
+            return (
+              <React.Fragment>
+                <KeyboardAccessory>
+                  <StatusUpdateFormInner {...this.props} {...appCtx} />
+                </KeyboardAccessory>
+              </React.Fragment>
+            );
+          }
+        }}
+      </StreamContext.Consumer>
+    );
+  }
+}
+
+class StatusUpdateFormInner extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.feedUserId = this.props.feedUserId || props.session.userId;
+    this._handleOgDebounced = _.debounce(this.handleOG, 250);
+  }
 
   state = {
     image: null,
@@ -57,7 +87,9 @@ export default class StatusUpdateForm extends React.Component {
     ogScraping: false,
     ogLink: null,
     textInput: null,
+    clearInput: false,
     orientation: 'portrait',
+    focused: false,
     urls: [],
     dismissedUrls: [],
   };
@@ -77,6 +109,7 @@ export default class StatusUpdateForm extends React.Component {
     try {
       response = await this.props.session.images.upload(result.uri);
     } catch (e) {
+      console.log(e);
       this.setState({
         imageState: ImageState.UPLOAD_FAILED,
       });
@@ -98,20 +131,10 @@ export default class StatusUpdateForm extends React.Component {
   };
 
   componentDidMount() {
-    this.TextInput.current.focus();
-
     const { width, height } = Dimensions.get('window');
     this.setState({
       orientation: width > height ? 'landscape' : 'portrait',
     });
-
-    this.props.registerSubmit(async () => {
-      this.buildActivity();
-    });
-  }
-
-  componentWillUnmount() {
-    this.TextInput.current.blur();
   }
 
   buildActivity() {
@@ -208,6 +231,23 @@ export default class StatusUpdateForm extends React.Component {
     );
   };
 
+  onSubmitForm = () => {
+    this.buildActivity();
+    Keyboard.dismiss();
+    this.setState({
+      image: null,
+      imageState: ImageState.NO_IMAGE,
+      og: null,
+      ogScraping: false,
+      ogLink: null,
+      textInput: null,
+      focused: false,
+      urls: [],
+      dismissedUrls: [],
+      clearInput: true,
+    });
+  };
+
   render() {
     let styles = buildStylesheet('statusUpdateForm', this.props.styles);
     Dimensions.addEventListener('change', (dimensions) => {
@@ -219,103 +259,93 @@ export default class StatusUpdateForm extends React.Component {
       });
     });
     return (
-      <SafeAreaView style={styles.screenContainer}>
-        <View style={styles.newPostContainer}>
-          {this.state.orientation === 'portrait' && (
-            <Avatar
-              source={this.props.session.user.data.profileImage}
-              size={48}
+      <View style={this.props.screen ? { flex: 1 } : {}}>
+        <View
+          style={[
+            styles.container,
+            this.state.focused ? styles.containerFocused : {},
+            this.state.og ? styles.containerFocusedOg : {},
+            this.props.screen ? { flex: 1 } : {},
+          ]}
+        >
+          {this.state.og && (
+            <OgBlock
+              onPressDismiss={this._onPressDismiss}
+              og={this.state.og}
+              styles={this.props.styles.ogBlock}
             />
           )}
-          <View
-            style={[
-              styles.textInput,
-              this.state.orientation === 'portrait'
-                ? styles.textInputPortrait
-                : styles.textInputPortrait,
-            ]}
-          >
-            <TextInput
-              multiline
-              onChangeText={(text) => {
-                this.setState({ textInput: text });
-                this._handleOgDebounced(text);
-              }}
-              ref={this.TextInput}
-              placeholder="Share something..."
-              underlineColorAndroid="transparent"
-            />
+
+          <View style={styles.newPostContainer}>
+            <View style={[styles.textInput]}>
+              <TextInput
+                ref={this.textInput}
+                style={this.props.screen ? { flex: 1 } : {}}
+                multiline
+                onChangeText={(text) => {
+                  this.setState({ textInput: text, clearInput: false });
+                  this._handleOgDebounced(text);
+                }}
+                value={!this.state.clearInput ? this.state.textInput : null}
+                autocorrect={false}
+                placeholder="Share something..."
+                underlineColorAndroid="transparent"
+                onBlur={() => this.setState({ focused: false })}
+                onFocus={() => this.setState({ focused: true })}
+              />
+            </View>
+
+            <View style={styles.actionPanel}>
+              <View style={styles.imageContainer}>
+                {this.state.image ? (
+                  <React.Fragment>
+                    <Image
+                      source={{ uri: this.state.image }}
+                      style={
+                        this.state.imageState === ImageState.UPLOADING
+                          ? styles.image_loading
+                          : styles.image
+                      }
+                    />
+                    <View style={styles.imageOverlay}>
+                      {this.state.imageState === ImageState.UPLOADING ? (
+                        <ActivityIndicator color="#ffffff" />
+                      ) : (
+                        <TouchableOpacity onPress={this._removeImage}>
+                          <Image
+                            source={require('../images/icons/close-white.png')}
+                            style={[{ width: 24, height: 24 }]}
+                          />
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  </React.Fragment>
+                ) : (
+                  <TouchableOpacity
+                    title="Pick an image from camera roll"
+                    onPress={this._pickImage}
+                  >
+                    <Image
+                      source={require('../images/icons/gallery.png')}
+                      style={{ width: 24, height: 24 }}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+              <TouchableOpacity
+                title="Pick an image from camera roll"
+                onPress={this.onSubmitForm}
+              >
+                <Image
+                  source={require('../images/icons/send.png')}
+                  style={styles.submitImage}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-
-        <View>
-          <KeyboardAccessory backgroundColor="#fff">
-            {this.state.og && this.state.orientation === 'portrait' ? (
-              <OgBlock
-                onPressDismiss={this._onPressDismiss}
-                og={this.state.og}
-                styles={this.props.styles.ogBlock}
-              />
-            ) : null}
-            <View style={styles.accessory}>
-              {this.state.image ? (
-                <View style={styles.imageContainer}>
-                  <Image
-                    source={{ uri: this.state.image }}
-                    style={
-                      this.state.imageState === ImageState.UPLOADING
-                        ? styles.image_loading
-                        : styles.image
-                    }
-                  />
-                  <View style={styles.imageOverlay}>
-                    {this.state.imageState === ImageState.UPLOADING ? (
-                      <ActivityIndicator color="#ffffff" />
-                    ) : (
-                      <TouchableOpacity onPress={this._removeImage}>
-                        <Image
-                          source={require('../images/icons/close-white.png')}
-                          style={{ width: 24, height: 24 }}
-                        />
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                </View>
-              ) : (
-                <TouchableOpacity
-                  title="Pick an image from camera roll"
-                  onPress={this._pickImage}
-                >
-                  <Image
-                    source={require('../images/icons/gallery.png')}
-                    style={{ width: 24, height: 24 }}
-                  />
-                </TouchableOpacity>
-              )}
-              {this.state.og && this.state.orientation === 'landscape' ? (
-                <OgBlock
-                  onPressDismiss={this._onPressDismiss}
-                  og={this.state.og}
-                  styles={{
-                    wrapper: {
-                      padding: 0,
-                      paddingTop: 0,
-                      paddingBottom: 0,
-                      marginTop: -15,
-                      marginBottom: -15,
-                      marginLeft: 15,
-                      borderTopColor: 'transparent',
-                      borderTopWidth: 1,
-                      flex: 1,
-                    },
-                    textStyle: { fontSize: 12 },
-                  }}
-                />
-              ) : null}
-            </View>
-          </KeyboardAccessory>
-        </View>
-      </SafeAreaView>
+        {this.props.screen ? <KeyboardSpacer /> : null}
+      </View>
     );
   }
 }
