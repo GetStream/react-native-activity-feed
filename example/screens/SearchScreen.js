@@ -3,7 +3,7 @@ import { View, StatusBar, Image, ScrollView, FlatList } from 'react-native';
 
 import LargeHeading from '../components/LargeHeading';
 import HorizontalScrollFeed from '../components/HorizontalScrollFeed';
-import { Avatar, UserBar } from 'expo-activity-feed';
+import { Avatar, UserCard } from 'expo-activity-feed';
 import GroupCard from '../components/GroupCard';
 import SearchBox from '../components/SearchBox';
 
@@ -70,36 +70,43 @@ class SearchScreen extends React.Component {
       users: [
         {
           id: 1235,
+          name: 'Danny',
           user_image: 'https://randomuser.me/api/portraits/women/65.jpg',
           followed: false,
         },
         {
           id: 2345,
+          name: 'James',
           user_image: 'https://randomuser.me/api/portraits/men/24.jpg',
           followed: true,
         },
         {
           id: 3456,
+          name: 'Jennifer',
           user_image: 'https://randomuser.me/api/portraits/women/45.jpg',
           followed: false,
         },
         {
           id: 4567,
+          name: 'hello world',
           user_image: 'https://randomuser.me/api/portraits/men/45.jpg',
           followed: false,
         },
         {
           id: 6789,
+          name: 'hello world',
           user_image: 'https://randomuser.me/api/portraits/women/23.jpg',
           followed: false,
         },
         {
           id: 7890,
+          name: 'hello world',
           user_image: 'https://randomuser.me/api/portraits/men/67.jpg',
           followed: false,
         },
         {
           id: 2456,
+          name: 'hello world',
           user_image: 'https://randomuser.me/api/portraits/women/12.jpg',
           followed: false,
         },
@@ -170,10 +177,10 @@ class SearchScreen extends React.Component {
           data={this.state.users}
           renderItem={({ item }) => (
             <View style={{ marginLeft: 15, marginRight: 15, marginBottom: 15 }}>
-              <UserBar
+              <UserCard
                 username={'UserName'}
                 subtitle={'@subtitle'}
-                item={item}
+                user={item}
                 follow
               />
             </View>

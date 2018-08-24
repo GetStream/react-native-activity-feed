@@ -330,6 +330,20 @@ let styles = {
       fontSize: 14,
     },
   }),
+  userCard: StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingTop: 8,
+      paddingBottom: 8,
+    },
+    text: {
+      marginLeft: 8,
+      fontSize: 16,
+      fontWeight: '300',
+      flex: 1,
+    },
+  }),
 };
 
 const depthOf = function(object) {
