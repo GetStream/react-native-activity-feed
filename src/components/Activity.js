@@ -151,9 +151,11 @@ export default class Activity extends React.Component<Props> {
   };
 
   renderContent = () => {
+    // return null;
     const width = this.props.imageWidth
       ? this.props.imageWidth
-      : Dimensions.get('window');
+      : Dimensions.get('window').width;
+
     let { verb, object, content, image, attachments } = this.props.activity;
     let styles = buildStylesheet('activity', this.props.styles);
     return (
