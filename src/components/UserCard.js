@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Avatar, FollowButton } from 'expo-activity-feed';
+import Avatar from './Avatar';
+import FollowButton from './FollowButton';
 import { buildStylesheet } from '../styles';
 
 export default class UserCard extends React.Component {
