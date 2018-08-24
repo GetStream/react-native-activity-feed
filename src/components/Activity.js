@@ -151,6 +151,7 @@ export default class Activity extends React.Component<Props> {
   };
 
   renderContent = () => {
+    // return null;
     const width = this.props.imageWidth
       ? this.props.imageWidth
       : Dimensions.get('window').width;
