@@ -1,20 +1,15 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { FlatList } from 'react-native';
-import type {
-  ChildrenProps,
-  StyleProps,
-  BaseReactionMap,
-  ReactComponentFunction,
-} from '../types';
+import type { Style, BaseReactionMap, ReactComponentFunction } from '../types';
 
 type Props = {|
   reactions: ?BaseReactionMap,
   reactionKind: string,
   renderReaction: ReactComponentFunction,
   flatListProps?: {},
-  ...StyleProps,
-  ...ChildrenProps,
+  children?: React.Node,
+  style?: Style,
 |};
 
 const ReactionList = ({ reactions, reactionKind, ...props }: Props) => {

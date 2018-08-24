@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactionIcon from './ReactionIcon';
 import type { ReactionCounts, ReactionKindMap } from 'getstream';
-import type { StylesProps } from '../types';
+import type { StyleSheetLike } from '../types';
 
 type Props = {|
   activeIcon: string,
@@ -15,7 +15,7 @@ type Props = {|
   onPress?: (kind: ?string) => any,
   labelSingle?: string,
   labelPlural?: string,
-  ...StylesProps,
+  styles?: StyleSheetLike,
 |};
 
 export default function ReactionToggleIcon({

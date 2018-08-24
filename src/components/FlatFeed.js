@@ -11,9 +11,8 @@ import { StreamContext } from '../Context';
 import { buildStylesheet } from '../styles';
 
 import type {
-  NavigationProps,
-  ChildrenProps,
-  StylesProps,
+  NavigationScreen,
+  StyleSheetLike,
   ReactElementCreator,
   BaseActivityResponse,
   BaseAppCtx,
@@ -45,9 +44,9 @@ type Props = {|
   noPagination?: boolean,
   analyticsLocation?: string,
   onRefresh?: () => void,
-  ...NavigationProps,
-  ...ChildrenProps,
-  ...StylesProps,
+  children?: React.Node,
+  styles?: StyleSheetLike,
+  navigation?: NavigationScreen,
 |};
 
 export default class FlatFeed extends React.Component<Props> {

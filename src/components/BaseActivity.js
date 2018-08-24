@@ -18,7 +18,7 @@ import Card from './Card';
 import type {
   ActivityData,
   ToggleReactionCallbackFunction,
-  StylesProps,
+  StyleSheetLike,
 } from '../types';
 
 type Props = {
@@ -31,7 +31,7 @@ type Props = {
   icon?: string,
   activity: ActivityData,
   onToggleReaction: ToggleReactionCallbackFunction,
-  ...StylesProps,
+  styles?: StyleSheetLike,
 };
 
 export default class BaseActivity extends React.Component<Props> {

@@ -11,26 +11,14 @@ import type {
 } from 'getstream';
 import type { AppCtx } from './Context';
 
-export type NavigationProps = {|
-  navigation?: NavigationScreenProp<{}>,
-|};
-
-export type ChildrenProps = {|
-  children?: React.Node,
-|};
+export type NavigationScreen = NavigationScreenProp<{}>;
 
 // Copied from react native source code
 type StyleSheetInternalStyleIdentifier = number;
 type StyleSheetInstance = { [string]: StyleSheetInternalStyleIdentifier };
 
-type StyleSheetLike = { [string]: {} } | StyleSheetInstance;
-
-export type StylesProps = {|
-  styles?: StyleSheetLike,
-|};
-export type StyleProps = {|
-  style?: {} | StyleSheetInternalStyleIdentifier,
-|};
+export type StyleSheetLike = { [string]: {} } | StyleSheetInstance;
+export type Style = {} | StyleSheetInternalStyleIdentifier;
 
 type ReactComponentClass = Class<React.Component<any>>;
 export type ReactComponentFunction = (props: any) => ?React.Element<any>;

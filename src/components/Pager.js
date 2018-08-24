@@ -3,7 +3,7 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import { buildStylesheet } from '../styles';
 
-import type { StylesProps } from '../types';
+import type { StyleSheetLike } from '../types';
 
 type Props = {|
   feedGroup: string,
@@ -12,7 +12,7 @@ type Props = {|
   deletes: Array<{}>,
   labelSingular?: string,
   labelPlural?: string,
-  ...StylesProps,
+  styles?: StyleSheetLike,
 |};
 
 export default class Pager extends React.Component<Props> {

@@ -1,7 +1,5 @@
 // @flow
 
-import * as React from 'react';
-import type { NavigationScreenProp } from 'react-navigation';
 import type {
   StreamCloudClient,
   StreamUser,
@@ -13,14 +11,6 @@ import type {
 } from 'getstream';
 
 import type { AppCtx } from 'expo-activity-feed';
-
-export type NavigationProps = {|
-  navigation: NavigationScreenProp<{}>,
-|};
-
-export type ChildrenProps = {|
-  children?: React.Node,
-|};
 
 export type UserData = {
   name: string,

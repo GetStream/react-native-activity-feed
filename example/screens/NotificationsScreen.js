@@ -11,10 +11,13 @@ import CategoriesIcon from '../images/icons/categories.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
 
-import type { NavigationProps } from '../types';
+import type { NavigationScreen } from 'expo-activity-feed';
 import type { NavigationEventSubscription } from 'react-navigation';
 
-type Props = NavigationProps;
+type Props = {|
+  navigation?: NavigationScreen,
+|};
+
 export default class NotificationScreen extends React.Component<Props> {
   _navListener: NavigationEventSubscription;
 

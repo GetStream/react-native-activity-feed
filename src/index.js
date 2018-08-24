@@ -1,6 +1,7 @@
 // @flow
 export { StreamApp, StreamContext } from './Context';
-export type { AppCtx } from './Context';
+
+export type * from './types.js';
 
 export { default as FlatFeed } from './components/FlatFeed';
 export { default as NotificationFeed } from './components/NotificationFeed';
