@@ -23,6 +23,7 @@ export type Props = {|
 
 /**
  * A users' profile picture
+ * @example ./examples/Avatar.md
  */
 class Avatar extends React.Component<Props> {
   render = function() {

@@ -1,7 +1,7 @@
 // @flow
 export { StreamApp, StreamContext } from './Context';
 
-export type * from './types.js';
+export * from './types.js';
 
 export { default as FlatFeed } from './components/FlatFeed';
 export { default as NotificationFeed } from './components/NotificationFeed';
@@ -24,7 +24,7 @@ export { default as Card } from './components/Card';
 export { default as ReactionList } from './components/ReactionList';
 export { default as CommentBox } from './components/CommentBox';
 export { default as BackButton } from './components/BackButton';
-export { default as BaseActivity } from './components/BaseActivity';
+export { default as Activity } from './components/Activity';
 export { default as LikeButton } from './components/LikeButton';
 export { default as Pager } from './components/Pager';
 export { default as IconBadge } from './components/IconBadge';

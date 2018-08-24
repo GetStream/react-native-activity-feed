@@ -297,7 +297,7 @@ let styles = {
   notificationFeed: StyleSheet.create({
     container: { flex: 1, backgroundColor: '#fff' },
   }),
-  baseActivity: StyleSheet.create({
+  activity: StyleSheet.create({
     container: {
       paddingTop: 15,
       paddingBottom: 15,
