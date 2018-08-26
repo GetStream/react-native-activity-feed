@@ -13,6 +13,10 @@ type Props = {|
   styles: any,
 |};
 
+/**
+ * Like button ready to be embedded as Activity footer
+ * @example ./examples/LikeButton.md
+ */
 export default class LikeButton extends React.Component<Props> {
   render() {
     let { activity, onToggleReaction } = this.props;

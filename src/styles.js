@@ -2,7 +2,7 @@
 import { StyleSheet } from 'react-native';
 import _ from 'lodash';
 
-let styles = {
+export const styles = {
   avatar: StyleSheet.create({
     container: {
       shadowColor: '#000',
@@ -20,8 +20,16 @@ let styles = {
     },
   }),
   backButton: StyleSheet.create({
-    backButton: { width: 50, paddingRight: 6, paddingTop: 6, paddingBottom: 6 },
-    backArrow: { height: 22, width: 12 },
+    backButton: {
+      width: 50,
+      paddingRight: 6,
+      paddingTop: 6,
+      paddingBottom: 6,
+    },
+    backArrow: {
+      height: 22,
+      width: 12,
+    },
   }),
   userBar: StyleSheet.create({
     container: {

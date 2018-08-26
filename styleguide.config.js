@@ -1,11 +1,43 @@
 const webpack = require('webpack');
 
 module.exports = {
+  title: 'React native activity feeds - Docs',
   require: ['babel-polyfill'],
-  components: 'src/**/[A-Z]*.js',
-  usageMode: 'expand',
   styleguideDir: 'docs',
   sortProps: (props) => props,
+  sections: [
+    {
+      name: 'Introduction',
+      content: 'docs/setup.md',
+    },
+    {
+      name: 'Top Level Components',
+      content: 'docs/top-level-components.md',
+      components: [
+        'src/components/FlatFeed.js',
+        'src/components/NotificationFeed.js',
+        'src/components/SinglePost.js',
+      ],
+      exampleMode: 'collapse',
+      usageMode: 'expand',
+    },
+    {
+      name: 'UI Components',
+      content: 'docs/other-components.md',
+      components: 'src/**/[A-Z]*.js',
+      ignore: [
+        'src/components/FlatFeed.js',
+        'src/componentsNotificationFeed.js',
+        'src/components/SinglePost.js',
+      ],
+      exampleMode: 'collapse',
+      usageMode: 'expand',
+    },
+    {
+      name: 'Styles',
+      content: 'docs/styles.md',
+    },
+  ],
   webpackConfig: {
     resolve: {
       // auto resolves any react-native import as react-native-web

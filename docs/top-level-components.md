@@ -1,0 +1,3 @@
+The most important kind of components provide most of the functionality and integrate with Stream APIs. In almost all cases, your application will start with one of these components and customize them to fit your needs (eg. change style, swap internal components, change layout, ...).
+
+**Note:** for this components to work with the APIs, they have to be places inside of the <StreamApp> element, which it is used to perform API calls.

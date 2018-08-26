@@ -1,9 +1,21 @@
+// @flow
 import React from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
+import type { OgData, StyleSheetLike } from '../types';
 
-export default class OgBlock extends React.Component {
+export type Props = {|
+  og: OgData,
+  styles?: StyleSheetLike,
+  onPressDismiss: (string) => void,
+|};
+
+/**
+ * Open Graph data preview block with dismiss button
+ * @example ./examples/OgBlock.md
+ */
+export default class OgBlock extends React.Component<Props> {
   render() {
     let styles = buildStylesheet('ogBlock', this.props.styles);
 
