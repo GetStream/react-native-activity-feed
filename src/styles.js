@@ -344,6 +344,34 @@ let styles = {
       flex: 1,
     },
   }),
+  iconBadge: StyleSheet.create({
+    container: {},
+    icon: {
+      position: 'absolute',
+      top: -3,
+      left: 12,
+      alignSelf: 'center',
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#FF0000',
+    },
+    text: {
+      fontSize: 10,
+      color: '#fff',
+    },
+    iconInner: {
+      backgroundColor: 'red',
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      minWidth: 15,
+      height: 15,
+      paddingLeft: 3,
+      paddingRight: 3,
+      borderRadius: 20,
+    },
+  }),
 };
 
 const depthOf = function(object) {

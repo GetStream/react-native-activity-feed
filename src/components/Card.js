@@ -6,15 +6,11 @@ import type { StyleSheetLike } from '../types';
 
 import _ from 'lodash';
 
-export type Item = {|
+export type Props = {|
   title: ?string,
   description: ?string,
   image?: ?string,
   url?: ?string,
-|};
-
-export type Props = {|
-  item: Item,
   styles?: StyleSheetLike,
   blue?: boolean,
   pressed?: () => void,
@@ -25,7 +21,7 @@ export type Props = {|
  * @example ./examples/Card.md
  */
 const Card = (props: Props): any => {
-  let { title, description, image, url } = props.item;
+  let { title, description, image, url } = props;
   let styles = buildStylesheet('card', props.styles);
 
   return (

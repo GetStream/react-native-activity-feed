@@ -1,11 +1,11 @@
 ```js { "props": { "adds": [1] } }
-<NewActivitiesNotifications 
+<NewActivitiesNotification 
     adds={[{}]}
 />
 ```
 
 ```js
-<NewActivitiesNotifications
+<NewActivitiesNotification
     labelSingular={'tweet'}
     labelPlural={'tweets'}
     adds={[{}, {}]}

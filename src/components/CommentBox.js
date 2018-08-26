@@ -10,10 +10,15 @@ import type { Props as AvatarProps } from './Avatar';
 import { buildStylesheet } from '../styles';
 
 type Props = {|
+  /** callback function called when the text is submitted */
   onSubmit: (string) => mixed,
+  /** height in pixels for the whole component */
   height?: number,
+  /** props used to render the Avatar component */
   avatarProps?: AvatarProps,
+  /** skips the Avatar component when provided */
   noAvatar?: boolean,
+  /** style changes to default */
   styles?: StyleSheetLike,
 |};
 
@@ -22,8 +27,7 @@ type State = {|
 |};
 
 /**
- * Comment box
- * @example ./examples/CommentBox.md
+ * Comment box with keyboard control, avatar and text input
  */
 export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {

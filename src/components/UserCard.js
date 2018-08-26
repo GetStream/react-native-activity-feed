@@ -1,10 +1,17 @@
+// @flow
 import React from 'react';
 import { View, Text } from 'react-native';
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
 import { buildStylesheet } from '../styles';
 
-export default class UserCard extends React.Component {
+import type { StyleSheetLike } from '../types';
+
+export type Props = {
+  styles?: StyleSheetLike,
+};
+
+export default class UserCard extends React.Component<Props> {
   static defaultProps = {};
   render() {
     let styles = buildStylesheet('userCard', this.props.styles);

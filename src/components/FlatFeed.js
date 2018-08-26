@@ -29,18 +29,24 @@ import type {
 type Props = {|
   feedGroup: string,
   userId?: string,
+  /** read options for the API client (eg. limit, ranking, ...) */
   options?: FeedRequestOptions,
   renderActivity?: ReactComponentFunction,
   ActivityComponent?: ReactElementCreator,
+  /** the component to use to render new activities notification */
   NewActivitiesComponent?: ReactElementCreator,
+  /** if true, feed shows the NewActivitiesNotification component when new activities are added */
   notify?: boolean,
-  BelowListComponent?: any,
+  //** the element that renders the feed footer */
+  Footer?: ReactElementCreator,
+  //** the feed read hander (change only for advanced/complex use-cases) */
   doFeedRequest?: (
     session: BaseUserSession,
     feedGroup: string,
     userId?: string,
     options?: FeedRequestOptions,
   ) => Promise<FeedResponse<{}, {}>>,
+  //** turns off pagination */
   noPagination?: boolean,
   analyticsLocation?: string,
   onRefresh?: () => void,
@@ -49,6 +55,10 @@ type Props = {|
   navigation?: NavigationScreen,
 |};
 
+/**
+ * Renders a feed of activities, this component is a StreamApp consumer
+ * and must always be a child of the <StreamApp> element
+ */
 export default class FlatFeed extends React.Component<Props> {
   static defaultProps = {
     styles: {},
@@ -371,7 +381,7 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
   }
 
   render() {
-    let { BelowListComponent } = this.props;
+    let { Footer } = this.props;
     let styles = buildStylesheet('flatFeed', this.props.styles);
     let NewActivitiesComponent = this.getNewActivitiesComponent();
     if (NewActivitiesComponent) {
@@ -404,10 +414,10 @@ class FlatFeedInner extends React.Component<PropsInner, State> {
             this.props.noPagination ? undefined : this._loadNextPage
           }
         />
-        {!BelowListComponent || React.isValidElement(BelowListComponent) ? (
-          BelowListComponent
+        {!Footer || React.isValidElement(Footer) ? (
+          Footer
         ) : (
-          <BelowListComponent {...this._childProps()} />
+          <Footer {...this._childProps()} />
         )}
       </React.Fragment>
     );
