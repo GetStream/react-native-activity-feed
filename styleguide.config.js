@@ -38,6 +38,9 @@ module.exports = {
       content: 'docs/styles.md',
     },
   ],
+  template: {
+    favicon: 'https://getstream.imgix.net/images/favicons/favicon-96x96.png',
+  },
   webpackConfig: {
     resolve: {
       // auto resolves any react-native import as react-native-web
