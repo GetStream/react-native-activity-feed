@@ -15,7 +15,7 @@ const LikesList = ({ reactions }: Props) => {
     <ReactionList
       style={{ padding: 12, paddingLeft: 15, paddingRight: 15 }}
       reactions={reactions}
-      reactionKind={'heart'}
+      reactionKind={'like'}
       flatListProps={{ horizontal: true }}
       renderReaction={(reaction) => (
         <TouchableOpacity style={{ marginRight: 10 }}>

@@ -324,17 +324,17 @@ export const styles = {
   reactionIcon: StyleSheet.create({
     container: {
       flexDirection: 'row',
-      marginTop: 12,
+      // marginTop: 12,
     },
     image: {
       height: 24,
       width: 24,
     },
     text: {
-      marginTop: 4,
-      marginLeft: 4,
+      // marginTop: 4,
+      // marginLeft: 4,
       fontWeight: '300',
-      opacity: 0.8,
+      opacity: 1,
       fontSize: 14,
     },
   }),
