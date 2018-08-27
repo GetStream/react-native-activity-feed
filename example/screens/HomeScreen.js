@@ -1,9 +1,8 @@
 // @flow
 import React from 'react';
-import { StatusBar, Image, TouchableOpacity } from 'react-native';
-import Activity from '../components/Activity';
+import { StatusBar, Image, TouchableOpacity, View } from 'react-native';
 
-import { Avatar, FlatFeed } from 'expo-activity-feed';
+import { Avatar, FlatFeed, Activity, LikeButton } from 'expo-activity-feed';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
@@ -51,6 +50,12 @@ class HomeScreen extends React.Component<Props> {
     });
   }
 
+  _onPressActivity = (activity) => {
+    this.props.navigation.navigate('SinglePost', {
+      activity: activity,
+    });
+  };
+
   render() {
     return (
       <FlatFeed
@@ -59,7 +64,20 @@ class HomeScreen extends React.Component<Props> {
           limit: 10,
         }}
         navigation={this.props.navigation}
-        renderActivity={(props) => <Activity {...props} clickable />}
+        renderActivity={(props) => (
+          <TouchableOpacity
+            onPress={() => this._onPressActivity(props.activity)}
+          >
+            <Activity
+              {...props}
+              Footer={
+                <View>
+                  <LikeButton {...props} />
+                </View>
+              }
+            />
+          </TouchableOpacity>
+        )}
       />
     );
   }

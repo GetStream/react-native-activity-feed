@@ -1,9 +1,10 @@
 // @flow
 
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { ScrollView, StatusBar } from 'react-native';
 import ProfileHeader from '../components/ProfileHeader';
 import Button from '../components/Button';
+import { FlatFeed } from 'expo-activity-feed';
 import type { NavigationScreen } from 'expo-activity-feed';
 import type { NavigationEventSubscription } from 'react-navigation';
 
@@ -37,9 +38,10 @@ export default class ProfileScreen extends React.Component<Props> {
 
   render() {
     return (
-      <View>
+      <ScrollView style={{ flex: 1 }}>
         <ProfileHeader />
-      </View>
+        <FlatFeed feedGroup="user" />
+      </ScrollView>
     );
   }
 }

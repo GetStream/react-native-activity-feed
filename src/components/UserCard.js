@@ -20,6 +20,7 @@ export default class UserCard extends React.Component<Props> {
       <View style={styles.container}>
         <Avatar source={user.user_image} size={42} noShadow />
         <Text style={styles.text}>{user.name}</Text>
+
         <FollowButton />
       </View>
     );

@@ -3,13 +3,14 @@ import React from 'react';
 import { StatusBar, Image, View } from 'react-native';
 
 import Notification from '../components/Notification';
-import Activity from '../components/Activity';
 import Follow from '../components/Notifications/Follow';
 import { NotificationFeed } from 'expo-activity-feed';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import CategoriesIcon from '../images/icons/categories.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
+
+import { Activity } from 'expo-activity-feed';
 
 import type { NavigationScreen } from 'expo-activity-feed';
 import type { NavigationEventSubscription } from 'react-navigation';
@@ -55,15 +56,7 @@ export default class NotificationScreen extends React.Component<Props> {
         <Notification activities={activityGroup.activities} styles={styles} />
       );
     } else {
-      return (
-        <Activity
-          activity={activityGroup.activities[0]}
-          feedGroup="notification"
-          navigation={this.props.navigation}
-          // $FlowFixMe
-          styles={styles}
-        />
-      );
+      return <Activity activity={activityGroup.activities[0]} />;
     }
   };
 
