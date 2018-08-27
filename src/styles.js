@@ -148,7 +148,7 @@ export const styles = {
       height: 24,
     },
   }),
-  ogBlock: StyleSheet.create({
+  urlPreview: StyleSheet.create({
     wrapper: {
       flexDirection: 'row',
       alignItems: 'center',

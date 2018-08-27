@@ -76,7 +76,7 @@ const App = () => {
       return (
         <StatusUpdateFormSimple
           styles={{
-            ogBlock: {
+            urlPreview: {
               wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
             },
           }}
@@ -87,7 +87,7 @@ const App = () => {
         <KeyboardAccessory>
           <StatusUpdateFormSimple
             styles={{
-              ogBlock: {
+              urlPreview: {
                 wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
               },
             }}

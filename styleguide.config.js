@@ -17,6 +17,7 @@ module.exports = {
         'src/components/FlatFeed.js',
         'src/components/NotificationFeed.js',
         'src/components/SinglePost.js',
+        'src/Context.js',
       ],
       exampleMode: 'collapse',
       usageMode: 'expand',
@@ -24,12 +25,8 @@ module.exports = {
     {
       name: 'UI Components',
       content: 'docs/other-components.md',
-      components: 'src/**/[A-Z]*.js',
-      ignore: [
-        'src/components/FlatFeed.js',
-        'src/componentsNotificationFeed.js',
-        'src/components/SinglePost.js',
-      ],
+      components: 'src/components/[A-Z]*.js',
+      ignore: ['**/FlatFeed.js', '**/NotificationFeed.js', '**/SinglePost.js'],
       exampleMode: 'collapse',
       usageMode: 'expand',
     },
