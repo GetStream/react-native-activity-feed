@@ -87,25 +87,6 @@ class HomeScreen extends React.Component<Props> {
                     labelPlural="comments"
                     counts={props.activity.reaction_counts}
                     kind="comment"
-                    styles={{
-                      container: {
-                        alignSelf: 'flex-start',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        paddingTop: 5,
-                        paddingBottom: 5,
-                        marginLeft: 15,
-                      },
-                      text: {
-                        fontWeight: '700',
-                        color: '#000',
-                      },
-                      image: {
-                        marginRight: 5,
-                        width: 24,
-                        height: 24,
-                      },
-                    }}
                   />
                 </View>
               }
