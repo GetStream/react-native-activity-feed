@@ -1,5 +1,5 @@
 ```js
-<OgBlock 
+<UrlPreview 
     // open graph data is retrieved using session.og('url') this is just an example with mock data
     og={{
         title: "2001: A Space Odyssey (1968)",

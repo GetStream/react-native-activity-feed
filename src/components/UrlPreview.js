@@ -12,12 +12,12 @@ export type Props = {|
 |};
 
 /**
- * Open Graph data preview block with dismiss button
- * @example ./examples/OgBlock.md
+ * URL preview block with dismiss button (using open-graph attributes)
+ * @example ./examples/UrlPreview.md
  */
-export default class OgBlock extends React.Component<Props> {
+export default class UrlPreview extends React.Component<Props> {
   render() {
-    let styles = buildStylesheet('ogBlock', this.props.styles);
+    let styles = buildStylesheet('urlPreview', this.props.styles);
 
     return (
       <View style={styles.wrapper}>

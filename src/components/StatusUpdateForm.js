@@ -9,7 +9,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { StreamContext } from '../Context';
-import OgBlock from './OgBlock';
+import UrlPreview from './UrlPreview';
 import { pickImage } from '../native';
 
 import { buildStylesheet } from '../styles';
@@ -32,7 +32,7 @@ export default class StatusUpdateForm extends React.Component {
     feedGroup: 'user',
     activity_verb: 'post',
     styles: {
-      ogBlock: {
+      urlPreview: {
         wrapper: {
           padding: 15,
           paddingTop: 8,
@@ -269,10 +269,10 @@ class StatusUpdateFormInner extends React.Component {
           ]}
         >
           {this.state.og && (
-            <OgBlock
+            <UrlPreview
               onPressDismiss={this._onPressDismiss}
               og={this.state.og}
-              styles={this.props.styles.ogBlock}
+              styles={this.props.styles.urlPreview}
             />
           )}
 
