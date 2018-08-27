@@ -10,7 +10,7 @@ import type {
   ReactionRequestOptions,
   EnrichedReactionResponse,
 } from 'getstream';
-import type { AppCtx } from './Context';
+import type { AppCtx, FeedCtx } from './Context';
 
 export type NavigationScreen = NavigationScreenProp<{}>;
 
@@ -27,6 +27,7 @@ export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
 
 export type BaseActivityResponse = ActivityResponse<{}, {}>;
 export type BaseAppCtx = AppCtx<{}>;
+export type BaseFeedCtx = FeedCtx<{}>;
 export type BaseUserSession = StreamUserSession<{}>;
 
 export type BaseReactionMap = ReactionKindMap<Object, Object>;
@@ -63,8 +64,22 @@ export type ToggleReactionCallbackFunction = (
   options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
 ) => void | Promise<mixed>;
 
+export type AddReactionCallbackFunction = (
+  kind: string,
+  activity: BaseActivityResponse,
+  options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
+) => void | Promise<mixed>;
+
+export type RemoveReactionCallbackFunction = (
+  kind: string,
+  activity: BaseActivityResponse,
+  id: string,
+  options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
+) => void | Promise<mixed>;
+
 export type CommentData = {
   text: string,
 };
 
 export type Comment = EnrichedReactionResponse<UserData, CommentData>;
+
