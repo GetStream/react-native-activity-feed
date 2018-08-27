@@ -2,9 +2,14 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 
-import { SinglePost, CommentBox, BackButton } from 'expo-activity-feed';
+import {
+  SinglePost,
+  CommentBox,
+  BackButton,
+  Activity,
+  LikeButton,
+} from 'expo-activity-feed';
 
-import Activity from '../components/Activity';
 import LikesList from '../components/LikesList';
 import RepostList from '../components/RepostList';
 import CommentList from '../components/CommentList';
@@ -21,7 +26,7 @@ export default class SinglePostScreen extends React.Component<Props> {
     title: 'POST DETAIL',
     headerLeft: (
       <View style={{ paddingLeft: 15 }}>
-        <BackButton pressed={() => navigation.goBack()} color="blue" />
+        <BackButton pressed={() => navigation.goBack()} blue />
       </View>
     ),
     headerTitleStyle: {
@@ -44,7 +49,14 @@ export default class SinglePostScreen extends React.Component<Props> {
           navigation={this.props.navigation}
           renderActivity={(props) => (
             <React.Fragment>
-              <Activity {...props} />
+              <Activity
+                {...props}
+                Footer={
+                  <View>
+                    <LikeButton {...props} />
+                  </View>
+                }
+              />
               <CommentList reactions={props.activity.latest_reactions} />
               <RepostList reactions={props.activity.latest_reactions} />
 
@@ -57,19 +69,22 @@ export default class SinglePostScreen extends React.Component<Props> {
               </View>
             </React.Fragment>
           )}
-          BelowPostComponent={(props) => (
-            <CommentBox
-              onSubmit={(text) =>
-                props.onAddReaction('comment', activity, {
-                  data: { text: text },
-                })
-              }
-              avatarProps={{
-                source: (userData: UserResponse) => userData.data.profileImage,
-              }}
-              styles={{ container: { height: 78 } }}
-            />
-          )}
+          BelowPostComponent={(props) => {
+            return (
+              <CommentBox
+                onSubmit={(text) =>
+                  props.onAddReaction('comment', activity, {
+                    data: { text: text },
+                  })
+                }
+                avatarProps={{
+                  source: (userData: UserResponse) =>
+                    userData.data.profileImage,
+                }}
+                styles={{ container: { height: 78 } }}
+              />
+            );
+          }}
         />
       </SafeAreaView>
     );

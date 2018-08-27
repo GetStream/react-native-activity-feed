@@ -1,9 +1,14 @@
 // @flow
 import React from 'react';
-import { StatusBar, Image, TouchableOpacity } from 'react-native';
-import Activity from '../components/Activity';
+import { StatusBar, Image, TouchableOpacity, View } from 'react-native';
 
-import { Avatar, FlatFeed } from 'expo-activity-feed';
+import {
+  Avatar,
+  FlatFeed,
+  Activity,
+  LikeButton,
+  ReactionToggleIcon,
+} from 'expo-activity-feed';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
@@ -51,6 +56,12 @@ class HomeScreen extends React.Component<Props> {
     });
   }
 
+  _onPressActivity = (activity) => {
+    this.props.navigation.navigate('SinglePost', {
+      activity: activity,
+    });
+  };
+
   render() {
     return (
       <FlatFeed
@@ -59,7 +70,48 @@ class HomeScreen extends React.Component<Props> {
           limit: 10,
         }}
         navigation={this.props.navigation}
-        renderActivity={(props) => <Activity {...props} clickable />}
+        renderActivity={(props) => (
+          <TouchableOpacity
+            onPress={() => this._onPressActivity(props.activity)}
+          >
+            <Activity
+              {...props}
+              Footer={
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <LikeButton {...props} />
+
+                  <ReactionToggleIcon
+                    activeIcon={require('../images/icons/reply.png')}
+                    inactiveIcon={require('../images/icons/reply.png')}
+                    labelSingle="comment"
+                    labelPlural="comments"
+                    counts={props.activity.reaction_counts}
+                    kind="comment"
+                    styles={{
+                      container: {
+                        alignSelf: 'flex-start',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingTop: 5,
+                        paddingBottom: 5,
+                        marginLeft: 15,
+                      },
+                      text: {
+                        fontWeight: '700',
+                        color: '#000',
+                      },
+                      image: {
+                        marginRight: 5,
+                        width: 24,
+                        height: 24,
+                      },
+                    }}
+                  />
+                </View>
+              }
+            />
+          </TouchableOpacity>
+        )}
       />
     );
   }

@@ -19,6 +19,7 @@ type Props = {|
   analyticsLocation?: string,
   renderActivity: ReactComponentFunction,
   BelowPostComponent?: any,
+  Footer?: any,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,
 |};
@@ -26,24 +27,26 @@ type Props = {|
 export default class SinglePost extends React.Component<Props> {
   render() {
     return (
-      <FlatFeed
-        feedGroup={this.props.feedGroup}
-        userId={this.props.userId}
-        options={{
-          withRecentReactions: true,
-          ...this.props.options,
-        }}
-        renderActivity={this.props.renderActivity}
-        styles={this.props.styles}
-        navigation={this.props.navigation}
-        doFeedRequest={(session, feedGroup, userId, options) => {
-          return session
-            .feed(feedGroup, userId)
-            .getActivityDetail(this.props.activity.id, options);
-        }}
-        BelowListComponent={this.props.BelowPostComponent}
-        noPagination
-      />
+      <React.Fragment>
+        <FlatFeed
+          feedGroup={this.props.feedGroup}
+          userId={this.props.userId}
+          options={{
+            withRecentReactions: true,
+            ...this.props.options,
+          }}
+          renderActivity={this.props.renderActivity}
+          styles={this.props.styles}
+          navigation={this.props.navigation}
+          doFeedRequest={(session, feedGroup, userId, options) => {
+            return session
+              .feed(feedGroup, userId)
+              .getActivityDetail(this.props.activity.id, options);
+          }}
+          Footer={this.props.BelowPostComponent}
+          noPagination
+        />
+      </React.Fragment>
     );
   }
 }

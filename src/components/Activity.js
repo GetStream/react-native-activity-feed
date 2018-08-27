@@ -190,14 +190,12 @@ export default class Activity extends React.Component<Props> {
           attachments.og &&
           Object.keys(attachments.og).length > 0 && (
             <Card
-              item={{
-                title: attachments.og.title,
-                description: attachments.og.description,
-                image: attachments.og.images
-                  ? attachments.og.images[0].image
-                  : null,
-                url: attachments.og.url,
-              }}
+              title={attachments.og.title}
+              description={attachments.og.description}
+              image={
+                attachments.og.images ? attachments.og.images[0].image : null
+              }
+              url={attachments.og.url}
             />
           )}
       </View>
