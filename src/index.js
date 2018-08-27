@@ -21,6 +21,7 @@ export { default as CommentsContainer } from './components/CommentsContainer';
 export { default as Card } from './components/Card';
 export { default as ReactionList } from './components/ReactionList';
 export { default as CommentBox } from './components/CommentBox';
+export { default as CommentItem } from './components/CommentItem';
 export { default as BackButton } from './components/BackButton';
 export { default as Activity } from './components/Activity';
 export { default as LikeButton } from './components/LikeButton';

@@ -380,6 +380,37 @@ export const styles = {
       borderRadius: 20,
     },
   }),
+  commentItem: StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      flex: 1,
+      alignItems: 'flex-start',
+      paddingTop: 12,
+      paddingBottom: 12,
+      paddingRight: 15,
+      paddingLeft: 15,
+      borderBottomColor: '#DADFE3',
+      borderBottomWidth: 1,
+    },
+    commentText: {
+      flex: 1,
+      marginLeft: 5,
+      paddingTop: 3,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    commentAuthor: {
+      fontWeight: '700',
+      fontSize: 14,
+    },
+    commentContent: {
+      fontSize: 14,
+    },
+    commentTime: {
+      fontSize: 14,
+      color: '#95A4AD',
+    },
+  }),
 };
 
 const depthOf = function(object) {

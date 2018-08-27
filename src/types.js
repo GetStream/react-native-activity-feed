@@ -8,6 +8,7 @@ import type {
   ReactionKindMap,
   UserResponse,
   ReactionRequestOptions,
+  EnrichedReactionResponse,
 } from 'getstream';
 import type { AppCtx } from './Context';
 
@@ -61,3 +62,9 @@ export type ToggleReactionCallbackFunction = (
   activity: BaseActivityResponse,
   options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
 ) => void | Promise<mixed>;
+
+export type CommentData = {
+  text: string,
+};
+
+export type Comment = EnrichedReactionResponse<UserData, CommentData>;
