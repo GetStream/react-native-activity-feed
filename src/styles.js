@@ -323,17 +323,20 @@ export const styles = {
   }),
   reactionIcon: StyleSheet.create({
     container: {
+      alignSelf: 'flex-start',
       flexDirection: 'row',
-      // marginTop: 12,
+      alignItems: 'center',
+      paddingTop: 5,
+      paddingBottom: 5,
+      marginLeft: 15,
     },
     image: {
+      marginRight: 5,
       height: 24,
       width: 24,
     },
     text: {
-      // marginTop: 4,
-      // marginLeft: 4,
-      fontWeight: '300',
+      fontWeight: '700',
       opacity: 1,
       fontSize: 14,
     },
