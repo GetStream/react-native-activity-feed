@@ -26,7 +26,7 @@ export default class FollowButton extends React.Component<Props, State> {
     this.state = { followed: this.props.followed || false };
   }
 
-  defaultProps = {
+  static defaultProps = {
     followed: false,
   };
 

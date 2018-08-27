@@ -2,18 +2,24 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 
-import { Avatar, ReactionList } from 'expo-activity-feed';
+import Avatar from './Avatar';
+import ReactionList from './ReactionList';
 import SectionHeader from './SectionHeader';
-import type { ReactionMap } from '../types';
+
+import type { BaseReactionMap } from '../types';
 
 type Props = {
-  reactions: ?ReactionMap,
+  reactions: ?BaseReactionMap,
 };
 
+/**
+ * A container for a list of likes
+ * @example ./examples/LikesList.md
+ */
 const LikesList = ({ reactions }: Props) => {
   return (
     <ReactionList
-      style={{ padding: 12, paddingLeft: 15, paddingRight: 15 }}
+      styles={{ container: { padding: 12, paddingLeft: 15, paddingRight: 15 } }}
       reactions={reactions}
       reactionKind={'like'}
       flatListProps={{ horizontal: true }}

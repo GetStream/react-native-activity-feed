@@ -1,9 +1,8 @@
 // @flow
 import React from 'react';
-import { ReactionList } from 'expo-activity-feed';
+import { ReactionList, SectionHeader } from 'expo-activity-feed';
 
 import RepostItem from './RepostItem';
-import SectionHeader from './SectionHeader';
 
 import type { ReactionMap } from '../types';
 

@@ -1,7 +1,12 @@
 // @flow
 import * as React from 'react';
 import { FlatList } from 'react-native';
-import type { Style, BaseReactionMap, ReactComponentFunction } from '../types';
+import { buildStylesheet } from '../styles';
+import type {
+  StyleSheetLike,
+  BaseReactionMap,
+  ReactComponentFunction,
+} from '../types';
 
 type Props = {|
   reactions: ?BaseReactionMap,
@@ -9,10 +14,12 @@ type Props = {|
   renderReaction: ReactComponentFunction,
   flatListProps?: {},
   children?: React.Node,
-  style?: Style,
+  styles?: StyleSheetLike,
 |};
 
 const ReactionList = ({ reactions, reactionKind, ...props }: Props) => {
+  let styles = buildStylesheet('reactionList', props.styles);
+
   if (!reactions) {
     return null;
   }
@@ -26,7 +33,7 @@ const ReactionList = ({ reactions, reactionKind, ...props }: Props) => {
     <React.Fragment>
       {props.children}
       <FlatList
-        style={props.style}
+        style={styles.container}
         data={reactionsOfKind}
         keyExtractor={(item, i) => item.id || '' + i}
         listKey={reactionKind}

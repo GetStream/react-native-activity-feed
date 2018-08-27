@@ -25,7 +25,7 @@ class KeyValue extends Component {
     render() {
         let {tuples} = this.props;
         return (
-            <ul style={{'list-style': 'none'}}>
+            <ul style={{'listStyle': 'none'}}>
                 {tuples.map( tuple => (
                     <li key={tuple[0]}>
                         {tuple[0]}: {JSON.stringify(tuple[1])}
@@ -46,7 +46,7 @@ class StyleTable extends Component {
                         {Object.keys(styles[s]).map(ss => {
                             const flatSS = StyleSheet.flatten(styles[s][ss]);
                             return (
-                                <ul style={{'list-style': 'none'}}>
+                                <ul style={{'listStyle': 'none'}}>
                                     <li>{ss}:</li>
                                     <li>
                                         <KeyValue

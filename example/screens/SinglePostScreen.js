@@ -9,11 +9,11 @@ import {
   Activity,
   LikeButton,
   ReactionToggleIcon,
+  CommentList,
+  LikesList,
 } from 'expo-activity-feed';
 
-import LikesList from '../components/LikesList';
 import RepostList from '../components/RepostList';
-import CommentList from '../components/CommentList';
 
 import type { UserResponse } from '../types';
 import type { NavigationScreen } from 'expo-activity-feed';

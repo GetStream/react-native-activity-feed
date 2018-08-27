@@ -414,6 +414,25 @@ export const styles = {
       color: '#95A4AD',
     },
   }),
+  sectionHeader: StyleSheet.create({
+    container: {
+      height: 30,
+      backgroundColor: '#F5F5F5',
+      borderBottomWidth: 1,
+      borderBottomColor: '#DADFE3',
+      paddingLeft: 15,
+      paddingRight: 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    label: {
+      fontSize: 13,
+      color: '#69747A',
+    },
+  }),
+  reactionList: StyleSheet.create({
+    container: {},
+  }),
 };
 
 const depthOf = function(object) {
