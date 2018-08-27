@@ -17,11 +17,11 @@ updateStyle('avatar', {
 Here is the list of all styles organized by component name:
 
 ```jsx noeditor
-var Component = require('react').Component;
+var PureComponent = require('react').PureComponent;
 const styles = require('../src/styles.js').styles;
 const StyleSheet = require('react-native').StyleSheet;
 
-class KeyValue extends Component {
+class KeyValue extends PureComponent {
     render() {
         let {tuples} = this.props;
         return (
@@ -36,7 +36,7 @@ class KeyValue extends Component {
     };
 };
 
-class StyleTable extends Component {
+class StyleTable extends PureComponent {
     render() {
         return (<div>
             {Object.keys(styles).map(s => {

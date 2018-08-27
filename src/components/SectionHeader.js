@@ -9,6 +9,10 @@ type Props = {
   styles?: StyleSheetLike,
 };
 
+/**
+ * Header components for list of reactions (eg. LikesList)
+ * @example ./examples/SectionHeader.md
+ */
 export default function SectionHeader(props: Props) {
   let styles = buildStylesheet('sectionHeader', props.styles);
   return (
