@@ -8,7 +8,7 @@ export type Props = {|
   /** callback function used on click */
   clicked?: () => void,
   /** initial follow state */
-  followed: boolean,
+  followed?: boolean,
   styles?: StyleSheetLike,
 |};
 
@@ -23,8 +23,12 @@ export type State = {
 export default class FollowButton extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { followed: this.props.followed };
+    this.state = { followed: this.props.followed || false };
   }
+
+  defaultProps = {
+    followed: false,
+  };
 
   render() {
     let { clicked } = this.props;

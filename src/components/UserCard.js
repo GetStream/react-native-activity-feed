@@ -5,9 +5,10 @@ import Avatar from './Avatar';
 import FollowButton from './FollowButton';
 import { buildStylesheet } from '../styles';
 
-import type { StyleSheetLike } from '../types';
+import type { StyleSheetLike, UserData } from '../types';
 
 export type Props = {
+  user: UserData,
   styles?: StyleSheetLike,
 };
 
@@ -18,7 +19,7 @@ export default class UserCard extends React.Component<Props> {
     let { user } = this.props;
     return (
       <View style={styles.container}>
-        <Avatar source={user.user_image} size={42} noShadow />
+        <Avatar source={user.profileImage} size={42} noShadow />
         <Text style={styles.text}>{user.name}</Text>
 
         <FollowButton />

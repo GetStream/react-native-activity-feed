@@ -168,7 +168,7 @@ export default class Activity extends React.Component<Props> {
         </View>
 
         {verb == 'repost' &&
-          object instanceof Object && <Card item={object.data} />}
+          object instanceof Object && <Card {...object.data} />}
 
         {Boolean(image) && (
           <Image
