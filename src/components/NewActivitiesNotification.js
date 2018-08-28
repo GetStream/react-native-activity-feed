@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { buildStylesheet } from '../styles';
 
 import type { StyleSheetLike } from '../types';
@@ -11,6 +11,7 @@ type Props = {|
   labelSingular?: string,
   labelPlural?: string,
   styles?: StyleSheetLike,
+  onPress?: () => mixed,
 |};
 
 /**
@@ -30,11 +31,11 @@ export default class NewActivitiesNotification extends React.Component<Props> {
     let deleteCount = (deletes || []).length;
     let count = addCount + deleteCount;
     return count ? (
-      <View style={[styles.container]}>
+      <TouchableOpacity style={[styles.container]} onPress={this.props.onPress}>
         <Text style={[styles.text]}>
           You have {count} new {count > 1 ? labelPlural : labelSingular}
         </Text>
-      </View>
+      </TouchableOpacity>
     ) : null;
   }
 }

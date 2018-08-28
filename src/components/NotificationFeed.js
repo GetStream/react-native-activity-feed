@@ -74,8 +74,13 @@ const makeDefaultOptions = (options) => {
 
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class NotificationFeedInner extends React.Component<PropsInner> {
+  listRef = React.createRef();
   _refresh = async () => {
     await this.props.refresh(makeDefaultOptions(this.props.options));
+    let ref = this.listRef;
+    if (ref && ref.current) {
+      ref.current.scrollToOffset({ offset: 0 });
+    }
   };
   async componentDidMount() {
     await this._refresh();
@@ -120,6 +125,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
         <NewActivitiesComponent
           adds={this.props.realtimeAdds}
           deletes={this.props.realtimeDeletes}
+          onPress={this._refresh}
         />
       );
     }
@@ -144,6 +150,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
           onEndReached={
             this.props.noPagination ? undefined : this.props.loadNextPage
           }
+          ref={this.listRef}
         />
       </React.Fragment>
     );

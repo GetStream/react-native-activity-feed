@@ -59,9 +59,6 @@ export default class FlatFeed extends React.Component<Props> {
   static defaultProps = {
     styles: {},
     feedGroup: 'timeline',
-    options: {
-      limit: 10,
-    },
     notify: false,
   };
 
@@ -86,8 +83,16 @@ export default class FlatFeed extends React.Component<Props> {
 
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class FlatFeedInner extends React.Component<PropsInner> {
-  async componentDidMount() {
+  listRef = React.createRef();
+  _refresh = async () => {
     await this.props.refresh(this.props.options);
+    let ref = this.listRef;
+    if (ref && ref.current) {
+      ref.current.scrollToOffset({ offset: 0 });
+    }
+  };
+  async componentDidMount() {
+    await this._refresh();
   }
 
   _renderWrappedActivity = ({ item }: { item: any }) => {
@@ -152,6 +157,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
         <NewActivitiesComponent
           adds={this.props.realtimeAdds}
           deletes={this.props.realtimeDeletes}
+          onPress={this._refresh}
         />
       );
     }
@@ -176,6 +182,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
           onEndReached={
             this.props.noPagination ? undefined : this.props.loadNextPage
           }
+          ref={this.listRef}
         />
         {!Footer || React.isValidElement(Footer) ? (
           Footer

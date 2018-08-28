@@ -344,6 +344,7 @@ class FeedManager {
   getOptions = (extraOptions?: FeedRequestOptions): FeedRequestOptions => ({
     withReactionCounts: true,
     withOwnReactions: true,
+    limit: 10,
     ...this.props.options,
     ...extraOptions,
   });
