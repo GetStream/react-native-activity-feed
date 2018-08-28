@@ -79,7 +79,7 @@ export default class SinglePostScreen extends React.Component<Props> {
               </View>
             </React.Fragment>
           )}
-          BelowPostComponent={(props) => {
+          Footer={(props) => {
             return (
               <CommentBox
                 onSubmit={(text) =>

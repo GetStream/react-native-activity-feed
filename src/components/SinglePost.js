@@ -18,12 +18,15 @@ type Props = {|
   options?: FeedRequestOptions,
   analyticsLocation?: string,
   renderActivity: ReactComponentFunction,
-  BelowPostComponent?: any,
   Footer?: any,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,
 |};
 
+/**
+ * Shows the detail of a single activity
+ * @example ./examples/SinglePost.md
+ */
 export default class SinglePost extends React.Component<Props> {
   render() {
     return (
@@ -43,7 +46,7 @@ export default class SinglePost extends React.Component<Props> {
               .feed(feedGroup, userId)
               .getActivityDetail(this.props.activity.id, options);
           }}
-          Footer={this.props.BelowPostComponent}
+          Footer={this.props.Footer}
           noPagination
         />
       </React.Fragment>

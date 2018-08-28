@@ -38,10 +38,10 @@ class KeyValue extends PureComponent {
 
 class StyleTable extends PureComponent {
     render() {
-        return (<div>
+        return (<>
             {Object.keys(styles).map(s => {
                 return (
-                    <div>
+                    <>
                         <h4>{s}</h4>
                         {Object.keys(styles[s]).map(ss => {
                             const flatSS = StyleSheet.flatten(styles[s][ss]);
@@ -56,10 +56,10 @@ class StyleTable extends PureComponent {
                                 </ul>
                             )
                         })}
-                    </div>
+                    </>
                 );
             })}
-        </div>);
+        </>);
     }
 };
 

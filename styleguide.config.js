@@ -31,6 +31,10 @@ module.exports = {
       usageMode: 'expand',
     },
     {
+      name: 'Cookbook',
+      content: 'docs/cookbook.md',
+    },
+    {
       name: 'Styles',
       content: 'docs/styles.md',
     },
