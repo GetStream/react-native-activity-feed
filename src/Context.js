@@ -34,6 +34,7 @@ export const StreamContext = React.createContext({
   user: emptySession.user,
   userData: undefined,
   changedUserData: () => {},
+  sharedFeedManagers: {},
 });
 
 export type AppCtx<UserData> = {|
@@ -46,7 +47,7 @@ export type AppCtx<UserData> = {|
   changedUserData: () => void,
   changeNotificationCounts?: any,
   analyticsClient?: any,
-  notificationFeed?: any,
+  sharedFeedManagers: { [string]: FeedManager },
 |};
 
 type StreamAppProps<UserData> = {|
@@ -56,23 +57,30 @@ type StreamAppProps<UserData> = {|
   userId: string,
   options?: {},
   analyticsToken?: string,
-  notificationFeed?: {
-    feedGroup?: string,
-    userId?: string,
-  },
+  sharedFeeds: Array<FeedProps>,
   defaultUserData: UserData,
   children?: React.Node,
 |};
 
 type StreamAppState<UserData> = AppCtx<UserData>;
 
-export class StreamApp<UserData> extends React.Component<
-  StreamAppProps<UserData>,
-  StreamAppState<UserData>,
+export class StreamApp extends React.Component<
+  StreamAppProps<Object>,
+  StreamAppState<Object>,
 > {
-  constructor(props: StreamAppProps<UserData>) {
+  static defaultProps = {
+    sharedFeeds: [
+      {
+        feedGroup: 'notification',
+        notify: true,
+        options: { mark_seen: true },
+      },
+    ],
+  };
+  constructor(props: StreamAppProps<Object>) {
     super(props);
-    let client: StreamCloudClient<UserData> = stream.connectCloud(
+
+    let client: StreamCloudClient<Object> = stream.connectCloud(
       this.props.apiKey,
       this.props.appId,
       this.props.options || {},
@@ -88,18 +96,6 @@ export class StreamApp<UserData> extends React.Component<
       });
       analyticsClient.setUser(this.props.userId);
     }
-    let notificationFeed;
-    if (this.props.notificationFeed) {
-      //$FlowFixMe
-      notificationFeed = session.client.feed(
-        this.props.notificationFeed.feedGroup || 'notification',
-        this.props.notificationFeed.userId || this.props.userId,
-        //$FlowFixMe
-        this.props.token,
-      );
-    }
-
-    //$FlowFixMe
     this.state = {
       session: session,
       user: session.user,
@@ -107,33 +103,21 @@ export class StreamApp<UserData> extends React.Component<
       changedUserData: () => {
         this.setState({ userData: this.state.user.data });
       },
-      notificationFeed: notificationFeed,
-      notificationCounts: {
-        unread: 0,
-        unseen: 0,
-      },
-      changeNotificationCounts: (counts) => {
-        //$FlowFixMe
-        this.setState({ notificationCounts: counts });
-      },
       analyticsClient: analyticsClient,
+      sharedFeedManagers: {},
     };
+    for (let feedProps of this.props.sharedFeeds) {
+      let manager = new FeedManager({ ...feedProps, ...this.state }, () =>
+        this.forceUpdate(),
+      );
+      this.state.sharedFeedManagers[manager.feed().id] = manager;
+    }
   }
 
   async componentDidMount() {
     // TODO: Change this to an empty object by default
     // TODO: Maybe move this somewhere else
     await this.state.user.getOrCreate(this.props.defaultUserData);
-    if (this.state.notificationFeed) {
-      let results = await this.state.notificationFeed.get({ limit: 1 });
-      //$FlowFixMe
-      this.state.changeNotificationCounts({
-        unread: results.unread,
-        unseen: results.unseen,
-      });
-      //$FlowFixMe
-      this.state.notificationFeed.subscribe;
-    }
     this.state.changedUserData();
   }
 
@@ -189,7 +173,10 @@ export type FeedCtx = {|
   userId?: string,
   activityOrder: Array<string>,
   activities: any,
-  refresh: () => Promise<mixed>,
+  unread: number,
+  unseen: number,
+  refresh: (extraOptions?: FeedRequestOptions) => Promise<mixed>,
+  refreshUnreadUnseen: () => Promise<mixed>,
   loadNextPage: () => Promise<mixed>,
   refreshing: boolean,
   realtimeAdds: Array<{}>,
@@ -211,11 +198,11 @@ type FeedProps = {|
     feedGroup: string,
     userId?: string,
     options?: FeedRequestOptions,
-  ) => Promise<FeedResponse<{}, {}>>,
+  ) => Promise<FeedResponse<Object, Object>>,
   children: React.Node,
 |};
 
-type FeedState = {|
+type FeedManagerState = {|
   activityOrder: Array<string>,
   activities: any,
   refreshing: boolean,
@@ -223,23 +210,17 @@ type FeedState = {|
   realtimeAdds: Array<{}>,
   realtimeDeletes: Array<{}>,
   subscription: ?any,
+  unread: number,
+  unseen: number,
 |};
 
-export class Feed extends React.Component<FeedProps, FeedState> {
-  render() {
-    return (
-      <StreamContext.Consumer>
-        {(appCtx: AppCtx<any>) => {
-          return <FeedInner {...this.props} {...appCtx} />;
-        }}
-      </StreamContext.Consumer>
-    );
-  }
-}
+type FeedState = {|
+  manager: FeedManager,
+|};
 
-type FeedInnerProps = {| ...FeedProps, ...BaseAppCtx |};
-class FeedInner extends React.Component<FeedInnerProps, FeedState> {
-  state = {
+class FeedManager {
+  props: FeedInnerProps;
+  state: FeedManagerState = {
     activityOrder: [],
     activities: immutable.Map(),
     lastResponse: null,
@@ -247,9 +228,25 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
     realtimeAdds: [],
     realtimeDeletes: [],
     subscription: null,
+    unread: 0,
+    unseen: 0,
   };
 
-  _trackAnalytics = (
+  triggerUpdate: () => mixed;
+  constructor(props, triggerUpdate) {
+    this.props = props;
+    this.triggerUpdate = triggerUpdate;
+  }
+
+  setState = (changed) => {
+    if (typeof changed === 'function') {
+      changed = changed(this.state);
+    }
+    this.state = { ...this.state, ...changed };
+    this.triggerUpdate();
+  };
+
+  trackAnalytics = (
     label: string,
     activity: BaseActivityResponse,
     track: ?boolean,
@@ -272,19 +269,19 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
     });
   };
 
-  _onAddReaction = async (
+  onAddReaction = async (
     kind: string,
     activity: BaseActivityResponse,
     options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
   ) => {
     let reaction = await this.props.session.react(kind, activity, options);
-    this._trackAnalytics(kind, activity, options.trackAnalytics);
+    this.trackAnalytics(kind, activity, options.trackAnalytics);
     let enrichedReaction = immutable.fromJS({
       ...reaction,
       user: this.props.user.full,
     });
 
-    return this.setState((prevState) => {
+    this.setState((prevState) => {
       let activities = prevState.activities
         .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v + 1)
         .updateIn(
@@ -300,14 +297,14 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
     });
   };
 
-  _onRemoveReaction = async (
+  onRemoveReaction = async (
     kind: string,
     activity: BaseActivityResponse,
     id: string,
     options: { trackAnalytics?: boolean } = {},
   ) => {
     await this.props.session.reactions.delete(id);
-    this._trackAnalytics('un' + kind, activity, options.trackAnalytics);
+    this.trackAnalytics('un' + kind, activity, options.trackAnalytics);
 
     return this.setState((prevState) => {
       let activities = prevState.activities
@@ -326,7 +323,7 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
     });
   };
 
-  _onToggleReaction = async (
+  onToggleReaction = async (
     kind: string,
     activity: BaseActivityResponse,
     options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
@@ -338,20 +335,20 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
 
     let last = currentReactions.last();
     if (last) {
-      await this._onRemoveReaction(kind, activity, last.get('id'), options);
+      await this.onRemoveReaction(kind, activity, last.get('id'), options);
     } else {
-      this._onAddReaction(kind, activity, options);
+      this.onAddReaction(kind, activity, options);
     }
   };
 
-  _doFeedRequest = async (extraOptions?: FeedRequestOptions) => {
-    let options: FeedRequestOptions = {
-      withReactionCounts: true,
-      withOwnReactions: true,
-      ...this.props.options,
-      ...extraOptions,
-    };
+  getOptions = (extraOptions?: FeedRequestOptions): FeedRequestOptions => ({
+    withReactionCounts: true,
+    withOwnReactions: true,
+    ...this.props.options,
+    ...extraOptions,
+  });
 
+  doFeedRequest = async (options: FeedRequestOptions) => {
     if (this.props.doFeedRequest) {
       return this.props.doFeedRequest(
         this.props.session,
@@ -360,110 +357,97 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
         options,
       );
     }
-    return this._feed().get(options);
+    return this.feed().get(options);
   };
 
-  _feed = () => {
+  feed = () => {
     return this.props.session.feed(this.props.feedGroup, this.props.userId);
   };
 
-  _responseToActivityMap(response) {
+  responseToActivityMap = (response) => {
     return immutable.fromJS(
       response.results.reduce((map, a) => {
         map[a.id] = a;
         return map;
       }, {}),
     );
-  }
-
-  _refresh = async () => {
-    await this.setState({ refreshing: true });
-    let response = await this._doFeedRequest();
-    this.setState({
-      realtimeAdds: [],
-      realtimeDeletes: [],
-    });
-
-    return this.setState({
-      activityOrder: response.results.map((a) => a.id),
-      activities: this._responseToActivityMap(response),
-      refreshing: false,
-      lastResponse: response,
-    });
   };
 
-  async componentDidMount() {
-    await this._refresh();
-    await this._subscribe();
-  }
+  refresh = async (extraOptions) => {
+    let options = this.getOptions(extraOptions);
 
-  async componentDidUpdate(prevProps) {
-    let sessionDifferent = this.props.session !== prevProps.session;
-    let notifyDifferent = this.props.notify != prevProps.notify;
-    let feedDifferent =
-      this.props.userId != prevProps.userId ||
-      this.props.feedGroup != prevProps.feedGroup;
-    let optionsDifferent = !_.isEqual(this.props.options, prevProps.options);
-    let doFeedRequestDifferent =
-      this.props.doFeedRequest !== this.props.doFeedRequest;
+    await this.setState({ refreshing: true });
+    let response = await this.doFeedRequest(options);
+    let newState = {
+      activityOrder: response.results.map((a) => a.id),
+      activities: this.responseToActivityMap(response),
+      refreshing: false,
+      lastResponse: response,
+      realtimeAdds: [],
+      realtimeDeletes: [],
+      unread: response.unread || 0,
+      unseen: response.unseen || 0,
+    };
 
-    if (
-      sessionDifferent ||
-      feedDifferent ||
-      optionsDifferent ||
-      doFeedRequestDifferent
-    ) {
-      await this._refresh();
+    if (options.mark_seen === true) {
+      newState.unseen = 0;
     }
-    if (sessionDifferent || feedDifferent || notifyDifferent) {
-      this._unsubscribe(this.state.subscription);
-      this._subscribe();
+    if (options.mark_read === true) {
+      newState.unread = 0;
     }
-  }
 
-  async _subscribe() {
+    return this.setState(newState);
+  };
+
+  subscribe = async () => {
     if (this.props.notify) {
-      let subscription = this._feed()
-        .subscribe((data) => {
-          this.setState((prevState) => {
-            return {
-              realtimeAdds: prevState.realtimeAdds.concat(data.new),
-              realtimeDeletes: prevState.realtimeDeletes.concat(data.deleted),
-            };
-          });
-        })
-        .then(
-          () => {
-            console.log(
-              `now listening to changes in realtime ${this.props.feedGroup}:${
-                this.props.user.id
-              }`,
-            );
-          },
-          (err) => {
-            console.error(err);
-          },
-        );
-      this.setState({ subscription });
+      await this.setState(({ subscription }) => {
+        if (subscription) {
+          return {};
+        }
+        subscription = this.feed()
+          .subscribe((data) => {
+            this.setState((prevState) => {
+              let numActivityDiff = data.new.length - data.deleted.length;
+              return {
+                realtimeAdds: prevState.realtimeAdds.concat(data.new),
+                realtimeDeletes: prevState.realtimeDeletes.concat(data.deleted),
+                unread: prevState.unread + numActivityDiff,
+                unseen: prevState.unseen + numActivityDiff,
+              };
+            });
+          })
+          .then(
+            () => {
+              console.log(
+                `now listening to changes in realtime for ${this.feed().id}`,
+              );
+            },
+            (err) => {
+              console.error(err);
+            },
+          );
+        return { subscription };
+      });
     }
-  }
+  };
 
-  async _unsubscribe(subscription) {
+  unsubscribe = async () => {
+    let { subscription } = this.state;
     if (!subscription) {
       return;
     }
     try {
       await subscription.cancel();
+      console.log(
+        `stopped listening to changes in realtime for ${this.feed().id}`,
+      );
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  async componentWillUnmount() {
-    await this._unsubscribe(this.state.subscription);
-  }
-
-  _loadNextPage = async () => {
+  loadNextPage = async () => {
     let lastResponse = this.state.lastResponse;
     if (!lastResponse || !lastResponse.next) {
       return;
@@ -482,10 +466,12 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
     }
 
     let nextURL = new URL(lastResponse.next, true);
-    let response = await this._doFeedRequest(nextURL.query);
+    let options = this.getOptions(nextURL.query);
+
+    let response = await this.doFeedRequest(options);
     return this.setState((prevState) => {
       let activities = prevState.activities.merge(
-        this._responseToActivityMap(response),
+        this.responseToActivityMap(response),
       );
       return {
         activityOrder: prevState.activityOrder.concat(
@@ -498,20 +484,95 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
     });
   };
 
-  getCtx = () => ({
-    onToggleReaction: this._onToggleReaction,
-    onAddReaction: this._onAddReaction,
-    onRemoveReaction: this._onRemoveReaction,
-    refresh: this._refresh,
-    loadNextPage: this._loadNextPage,
-    feedGroup: this.props.feedGroup,
-    userId: this.props.userId,
-    activityOrder: this.state.activityOrder,
-    activities: this.state.activities,
-    realtimeAdds: this.state.realtimeAdds,
-    realtimeDeletes: this.state.realtimeDeletes,
-    refreshing: this.state.refreshing,
-  });
+  refreshUnreadUnseen = async () => {
+    let response = await this.doFeedRequest({ limit: 1 });
+    return this.setState({
+      unread: response.unread || 0,
+      unseen: response.unseen || 0,
+    });
+  };
+}
+
+export class Feed extends React.Component<FeedProps, FeedState> {
+  render() {
+    return (
+      <StreamContext.Consumer>
+        {(appCtx: AppCtx<any>) => {
+          return <FeedInner {...this.props} {...appCtx} />;
+        }}
+      </StreamContext.Consumer>
+    );
+  }
+}
+
+type FeedInnerProps = {| ...FeedProps, ...BaseAppCtx |};
+class FeedInner extends React.Component<FeedInnerProps, FeedState> {
+  constructor(props: FeedInnerProps) {
+    super(props);
+    let feedId = props.session.feed(props.feedGroup, props.userId).id;
+    let manager = props.sharedFeedManagers[feedId];
+    if (!manager) {
+      manager = new FeedManager(props, () => this.forceUpdate());
+    }
+
+    this.state = {
+      manager: manager,
+    };
+  }
+
+  async componentDidMount() {
+    await this.state.manager.subscribe();
+  }
+
+  async componentDidUpdate(prevProps) {
+    let sessionDifferent = this.props.session !== prevProps.session;
+    let notifyDifferent = this.props.notify != prevProps.notify;
+    let feedDifferent =
+      this.props.userId != prevProps.userId ||
+      this.props.feedGroup != prevProps.feedGroup;
+    let optionsDifferent = !_.isEqual(this.props.options, prevProps.options);
+    let doFeedRequestDifferent =
+      this.props.doFeedRequest !== this.props.doFeedRequest;
+
+    if (
+      sessionDifferent ||
+      feedDifferent ||
+      optionsDifferent ||
+      doFeedRequestDifferent
+    ) {
+      await this.state.manager.refresh();
+    }
+    if (sessionDifferent || feedDifferent || notifyDifferent) {
+      this.state.manager.unsubscribe();
+      this.state.manager.subscribe();
+    }
+  }
+
+  async componentWillUnmount() {
+    await this.state.manager.unsubscribe();
+  }
+
+  getCtx = () => {
+    let { manager } = this.state;
+    let state = manager.state;
+    return {
+      onToggleReaction: manager.onToggleReaction,
+      onAddReaction: manager.onAddReaction,
+      onRemoveReaction: manager.onRemoveReaction,
+      refresh: manager.refresh,
+      refreshUnreadUnseen: manager.refreshUnreadUnseen,
+      loadNextPage: manager.loadNextPage,
+      feedGroup: this.props.feedGroup,
+      userId: this.props.userId,
+      activityOrder: state.activityOrder,
+      activities: state.activities,
+      realtimeAdds: state.realtimeAdds,
+      realtimeDeletes: state.realtimeDeletes,
+      refreshing: state.refreshing,
+      unread: state.unread,
+      unseen: state.unseen,
+    };
+  };
 
   render() {
     return (

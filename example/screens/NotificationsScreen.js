@@ -63,7 +63,6 @@ export default class NotificationScreen extends React.Component<Props> {
   render() {
     return (
       <NotificationFeed
-        options={{ mark_read: true }}
         renderGroup={this._renderGroup}
         navigation={this.props.navigation}
         notify

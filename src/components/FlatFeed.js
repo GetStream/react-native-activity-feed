@@ -86,6 +86,10 @@ export default class FlatFeed extends React.Component<Props> {
 
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class FlatFeedInner extends React.Component<PropsInner> {
+  async componentDidMount() {
+    await this.props.refresh(this.props.options);
+  }
+
   _renderWrappedActivity = ({ item }: { item: any }) => {
     return (
       <ImmutableItemWrapper

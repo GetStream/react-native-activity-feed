@@ -30,6 +30,7 @@ async function main() {
 
   let batman = createUserSession('batman');
   let content = 'test2';
+  console.log(await batman.feed('notification').get({ limit: 1 }));
   await batman.feed('notification').addActivity({
     actor: batman.user,
     verb: 'post',

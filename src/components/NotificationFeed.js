@@ -50,7 +50,7 @@ export default class NotificationFeed extends React.Component<Props> {
       <Feed
         feedGroup={this.props.feedGroup}
         userId={this.props.userId}
-        options={this.props.options}
+        options={makeDefaultOptions(this.props.options)}
         notify={this.props.notify}
         doFeedRequest={this.props.doFeedRequest}
       >
@@ -64,8 +64,23 @@ export default class NotificationFeed extends React.Component<Props> {
   }
 }
 
+const makeDefaultOptions = (options) => {
+  let copy = { ...options };
+  if (copy.mark_seen === undefined) {
+    copy.mark_seen = true;
+  }
+  return copy;
+};
+
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class NotificationFeedInner extends React.Component<PropsInner> {
+  _refresh = async () => {
+    await this.props.refresh(makeDefaultOptions(this.props.options));
+  };
+  async componentDidMount() {
+    await this._refresh();
+  }
+
   _renderWrappedGroup = ({ item }: { item: BaseActivityResponse }) => {
     return (
       <ImmutableItemWrapper
@@ -118,7 +133,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
           refreshControl={
             <RefreshControl
               refreshing={this.props.refreshing}
-              onRefresh={this.props.refresh}
+              onRefresh={this._refresh}
             />
           }
           data={this.props.activityOrder.map((id) =>

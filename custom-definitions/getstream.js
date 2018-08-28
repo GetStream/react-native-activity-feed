@@ -98,6 +98,8 @@ declare module 'getstream' {
     target?: string,
   };
 
+  declare type MarkValue = boolean | string;
+
   declare type FeedRequestOptions = {
     withReactionCounts?: boolean,
     withOwnReactions?: boolean,
@@ -109,6 +111,8 @@ declare module 'getstream' {
     id_gt?: string,
     id_gte?: string,
     ranking?: string,
+    mark_seen?: MarkValue,
+    mark_read?: MarkValue,
   };
 
   declare class StreamFeed<UserData, CustomActivityData> {
@@ -156,6 +160,8 @@ declare module 'getstream' {
   } & CustomActivityData;
 
   declare type FeedResponse<UserData, CustomActivityData> = {
+    unread?: number,
+    unseen?: number,
     results: Array<ActivityResponse<UserData, CustomActivityData>>,
     next: string,
     duration: string,
