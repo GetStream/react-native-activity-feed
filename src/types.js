@@ -27,7 +27,7 @@ export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
 
 export type BaseActivityResponse = ActivityResponse<{}, {}>;
 export type BaseAppCtx = AppCtx<{}>;
-export type BaseFeedCtx = FeedCtx<{}>;
+export type BaseFeedCtx = FeedCtx;
 export type BaseUserSession = StreamUserSession<{}>;
 
 export type BaseReactionMap = ReactionKindMap<Object, Object>;
@@ -82,4 +82,3 @@ export type CommentData = {
 };
 
 export type Comment = EnrichedReactionResponse<UserData, CommentData>;
-
