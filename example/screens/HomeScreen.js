@@ -7,7 +7,7 @@ import {
   FlatFeed,
   Activity,
   LikeButton,
-  ReactionToggleIcon,
+  ReactionIcon,
 } from 'expo-activity-feed';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
@@ -81,9 +81,8 @@ class HomeScreen extends React.Component<Props> {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <LikeButton {...props} />
 
-                  <ReactionToggleIcon
-                    activeIcon={require('../images/icons/reply.png')}
-                    inactiveIcon={require('../images/icons/reply.png')}
+                  <ReactionIcon
+                    icon={require('../images/icons/reply.png')}
                     labelSingle="comment"
                     labelPlural="comments"
                     counts={props.activity.reaction_counts}
