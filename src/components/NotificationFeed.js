@@ -1,26 +1,31 @@
 // @flow
 import * as React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
-import URL from 'url-parse';
 
-import { StreamContext } from '../Context';
+import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
+import NewActivitiesNotification from './NewActivitiesNotification';
 
 import type {
   NavigationScreen,
   StyleSheetLike,
   BaseActivityResponse,
-  BaseAppCtx,
+  BaseFeedCtx,
   BaseUserSession,
   ReactComponentFunction,
+  ReactElementCreator,
 } from '../types';
-import type { FeedRequestOptions, FeedResponse, StreamFeed } from 'getstream';
+import type { FeedRequestOptions, FeedResponse } from 'getstream';
 
 type Props = {|
-  feedGroup?: string,
+  feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
   renderGroup: ReactComponentFunction,
+  /** if true, feed shows the NewActivitiesNotification component when new activities are added */
+  notify?: boolean,
+  /** the component to use to render new activities notification */
+  NewActivitiesComponent?: ReactElementCreator,
   doFeedRequest?: (
     session: BaseUserSession,
     feedGroup: string,
@@ -30,116 +35,44 @@ type Props = {|
   analyticsLocation?: string,
   noPagination?: boolean,
   children?: React.Node,
-  styles?: StyleSheetLike,
+  styles: StyleSheetLike,
   navigation?: NavigationScreen,
 |};
 
-export default function NotificationFeed(props: Props) {
-  return (
-    <StreamContext.Consumer>
-      {(appCtx) => <NotificationFeedInner {...props} {...appCtx} />}
-    </StreamContext.Consumer>
-  );
-}
-
-type PropsInner = {| ...Props, ...BaseAppCtx |};
-type State = {
-  groups: Array<Object>,
-  refreshing: boolean,
-  lastResponse: ?FeedResponse<{}, {}>,
-};
-
-class NotificationFeedInner extends React.Component<PropsInner, State> {
-  constructor(props: PropsInner) {
-    super(props);
-    this.state = {
-      groups: [],
-      refreshing: false,
-      lastResponse: null,
-    };
-  }
-
+export default class NotificationFeed extends React.Component<Props> {
   static defaultProps = {
+    feedGroup: 'notification',
     styles: {},
   };
 
-  _feedGroup = () => {
-    return this.props.feedGroup || 'notification';
-  };
-
-  _doFeedRequest = async (extraOptions) => {
-    let options: FeedRequestOptions = {
-      ...this.props.options,
-      ...extraOptions,
-    };
-
-    let { doFeedRequest } = this.props;
-    if (doFeedRequest) {
-      return await doFeedRequest(
-        this.props.session,
-        this._feedGroup(),
-        this.props.userId,
-        options,
-      );
-    }
-
-    let feed: StreamFeed<{}, {}> = this.props.session.feed(
-      this._feedGroup(),
-      this.props.userId,
+  render() {
+    return (
+      <Feed
+        feedGroup={this.props.feedGroup}
+        userId={this.props.userId}
+        options={this.props.options}
+        notify={this.props.notify}
+        doFeedRequest={this.props.doFeedRequest}
+      >
+        <FeedContext.Consumer>
+          {(feedCtx) => {
+            return <NotificationFeedInner {...this.props} {...feedCtx} />;
+          }}
+        </FeedContext.Consumer>
+      </Feed>
     );
-    return await feed.get(options);
-  };
-
-  _refresh = async () => {
-    this.setState({ refreshing: true });
-    let response = await this._doFeedRequest();
-    this.setState({
-      groups: response.results,
-      refreshing: false,
-      lastResponse: response,
-    });
-  };
-
-  _loadNextPage = async () => {
-    let lastResponse = this.state.lastResponse;
-    if (!lastResponse || !lastResponse.next) {
-      return;
-    }
-    let cancel = false;
-    await this.setState((prevState) => {
-      if (prevState.refreshing) {
-        cancel = true;
-        return {};
-      }
-      return { refreshing: true };
-    });
-
-    if (cancel) {
-      return;
-    }
-
-    let nextURL = new URL(lastResponse.next, true);
-    let response = await this._doFeedRequest(nextURL.query);
-    return this.setState((prevState) => {
-      return {
-        groups: prevState.groups.concat(response.results),
-        refreshing: false,
-        lastResponse: response,
-      };
-    });
-  };
-
-  async componentDidMount() {
-    await this._refresh();
   }
+}
 
+type PropsInner = {| ...Props, ...BaseFeedCtx |};
+class NotificationFeedInner extends React.Component<PropsInner> {
   _renderWrappedGroup = ({ item }: { item: BaseActivityResponse }) => {
     return (
-      <PureItemWrapper
+      <ImmutableItemWrapper
         renderItem={this._renderGroup}
         item={item}
         navigation={this.props.navigation}
-        feedGroup={this._feedGroup()}
+        feedGroup={this.props.feedGroup}
         userId={this.props.userId}
       />
     );
@@ -149,42 +82,68 @@ class NotificationFeedInner extends React.Component<PropsInner, State> {
     let args = {
       activityGroup: item,
       navigation: this.props.navigation,
-      feedGroup: this._feedGroup(),
+      feedGroup: this.props.feedGroup,
       userId: this.props.userId,
-      // $FlowFixMe
       styles: this.props.styles.activity,
     };
     return this.props.renderGroup(args);
   };
 
+  getNewActivitiesComponent() {
+    if (this.props.notify || this.props.NewActivitiesComponent) {
+      return this.props.NewActivitiesComponent
+        ? this.props.NewActivitiesComponent
+        : NewActivitiesNotification;
+    }
+  }
+
   render() {
     let styles = buildStylesheet('notificationFeed', this.props.styles);
+    let NewActivitiesComponent = this.getNewActivitiesComponent();
+    if (NewActivitiesComponent) {
+      NewActivitiesComponent = (
+        <NewActivitiesComponent
+          adds={this.props.realtimeAdds}
+          deletes={this.props.realtimeDeletes}
+        />
+      );
+    }
+
     return (
-      <FlatList
-        ListHeaderComponent={this.props.children}
-        style={styles.container}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._refresh}
-          />
-        }
-        data={this.state.groups}
-        keyExtractor={(item) => item.id}
-        renderItem={this._renderWrappedGroup}
-        onEndReached={this.props.noPagination ? undefined : this._loadNextPage}
-      />
+      <React.Fragment>
+        {NewActivitiesComponent}
+        <FlatList
+          ListHeaderComponent={this.props.children}
+          style={styles.container}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.refreshing}
+              onRefresh={this.props.refresh}
+            />
+          }
+          data={this.props.activityOrder.map((id) =>
+            this.props.activities.get(id),
+          )}
+          keyExtractor={(item) => item.get('id')}
+          renderItem={this._renderWrappedGroup}
+          onEndReached={
+            this.props.noPagination ? undefined : this.props.loadNextPage
+          }
+        />
+      </React.Fragment>
     );
   }
 }
 
-type PureItemWrapperProps = {
+type ImmutableItemWrapperProps = {
   renderItem: (item: any) => any,
   item: any,
 };
 
-class PureItemWrapper extends React.PureComponent<PureItemWrapperProps> {
+class ImmutableItemWrapper extends React.PureComponent<
+  ImmutableItemWrapperProps,
+> {
   render() {
-    return this.props.renderItem(this.props.item);
+    return this.props.renderItem(this.props.item.toJS());
   }
 }

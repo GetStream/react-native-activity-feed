@@ -69,6 +69,7 @@ class HomeScreen extends React.Component<Props> {
         options={{
           limit: 10,
         }}
+        notify
         navigation={this.props.navigation}
         renderActivity={(props) => (
           <TouchableOpacity
