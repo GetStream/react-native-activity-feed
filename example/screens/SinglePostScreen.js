@@ -8,7 +8,7 @@ import {
   BackButton,
   Activity,
   LikeButton,
-  ReactionToggleIcon,
+  ReactionIcon,
   CommentList,
   LikesList,
 } from 'expo-activity-feed';
@@ -56,9 +56,8 @@ export default class SinglePostScreen extends React.Component<Props> {
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <LikeButton {...props} />
 
-                    <ReactionToggleIcon
-                      activeIcon={require('../images/icons/reply.png')}
-                      inactiveIcon={require('../images/icons/reply.png')}
+                    <ReactionIcon
+                      icon={require('../images/icons/reply.png')}
                       labelSingle="comment"
                       labelPlural="comments"
                       counts={props.activity.reaction_counts}
