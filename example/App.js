@@ -1,3 +1,4 @@
+//@flow
 import React from 'react';
 import {
   createStackNavigator,
@@ -22,6 +23,7 @@ import {
   LikeButton,
   IconBadge,
 } from 'expo-activity-feed';
+import type { UserResponse } from './types';
 
 // $FlowFixMe
 const NotificationsStack = createStackNavigator({
@@ -63,7 +65,7 @@ const TabNavigator = createBottomTabNavigator(
           return (
             // TODO: Link this to the current user
             <Avatar
-              source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
+              source={(userData: UserResponse) => userData.data.profileImage}
               size={25}
               noShadow
             />

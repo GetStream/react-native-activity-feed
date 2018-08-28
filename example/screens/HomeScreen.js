@@ -9,6 +9,7 @@ import {
   LikeButton,
   ReactionIcon,
 } from 'expo-activity-feed';
+import type { UserResponse } from '../types';
 
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
@@ -34,7 +35,7 @@ class HomeScreen extends React.Component<Props> {
         style={{ paddingLeft: 15 }}
       >
         <Avatar
-          source="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Batman-BenAffleck.jpg/200px-Batman-BenAffleck.jpg"
+          source={(userData: UserResponse) => userData.data.profileImage}
           size={23}
           noShadow
         />
