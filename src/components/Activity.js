@@ -15,11 +15,7 @@ import _ from 'lodash';
 
 import UserBar from './UserBar';
 import Card from './Card';
-import type {
-  ActivityData,
-  ToggleReactionCallbackFunction,
-  StyleSheetLike,
-} from '../types';
+import type { ActivityData, StyleSheetLike } from '../types';
 
 type Props = {
   Header?: React.Element<any>,
@@ -30,7 +26,6 @@ type Props = {
   sub?: string,
   icon?: string,
   activity: ActivityData,
-  onToggleReaction: ToggleReactionCallbackFunction,
   styles?: StyleSheetLike,
   imageWidth?: number,
 };

@@ -10,7 +10,7 @@ import CategoriesIcon from '../images/icons/categories.png';
 // $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
 
-import { Activity } from 'expo-activity-feed';
+import { Activity, LikeButton, ReactionIcon } from 'expo-activity-feed';
 
 import type { NavigationScreen } from 'expo-activity-feed';
 import type { NavigationEventSubscription } from 'react-navigation';
@@ -47,7 +47,7 @@ export default class NotificationScreen extends React.Component<Props> {
   }
   componentDidUpdate() {}
 
-  _renderGroup = ({ activityGroup, ...styles }: any) => {
+  _renderGroup = ({ activityGroup, styles, ...props }: any) => {
     let verb = activityGroup.activities[0].verb;
     if (verb === 'follow') {
       return <Follow activities={activityGroup.activities} styles={styles} />;
@@ -56,7 +56,26 @@ export default class NotificationScreen extends React.Component<Props> {
         <Notification activities={activityGroup.activities} styles={styles} />
       );
     } else {
-      return <Activity activity={activityGroup.activities[0]} />;
+      let activity = activityGroup.activities[0];
+      return (
+        <Activity
+          activity={activity}
+          {...props}
+          Footer={
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <LikeButton activity={activity} {...props} />
+
+              <ReactionIcon
+                icon={require('../images/icons/reply.png')}
+                labelSingle="comment"
+                labelPlural="comments"
+                counts={activityGroup.activities.reaction_counts}
+                kind="comment"
+              />
+            </View>
+          }
+        />
+      );
     }
   };
 

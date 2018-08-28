@@ -210,6 +210,7 @@ type FeedManagerState = {|
   realtimeAdds: Array<{}>,
   realtimeDeletes: Array<{}>,
   subscription: ?any,
+  activityIdToPath: { [string]: Array<string> },
   unread: number,
   unseen: number,
 |};
@@ -223,6 +224,7 @@ class FeedManager {
   state: FeedManagerState = {
     activityOrder: [],
     activities: immutable.Map(),
+    activityIdToPath: {},
     lastResponse: null,
     refreshing: false,
     realtimeAdds: [],
@@ -269,6 +271,14 @@ class FeedManager {
     });
   };
 
+  _getActivityPath(activity, ...rest) {
+    let activityPath = this.state.activityIdToPath[activity.id];
+    if (activityPath === undefined) {
+      return [activity.id, ...rest];
+    }
+    return [...activityPath, ...rest];
+  }
+
   onAddReaction = async (
     kind: string,
     activity: BaseActivityResponse,
@@ -283,13 +293,16 @@ class FeedManager {
 
     this.setState((prevState) => {
       let activities = prevState.activities
-        .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v + 1)
         .updateIn(
-          [activity.id, 'own_reactions', kind],
+          this._getActivityPath(activity, 'reaction_counts', kind),
+          (v = 0) => v + 1,
+        )
+        .updateIn(
+          this._getActivityPath(activity, 'own_reactions', kind),
           (v = immutable.List()) => v.unshift(enrichedReaction),
         )
         .updateIn(
-          [activity.id, 'latest_reactions', kind],
+          this._getActivityPath(activity, 'latest_reactions', kind),
           (v = immutable.List()) => v.unshift(enrichedReaction),
         );
 
@@ -308,14 +321,17 @@ class FeedManager {
 
     return this.setState((prevState) => {
       let activities = prevState.activities
-        .updateIn([activity.id, 'reaction_counts', kind], (v = 0) => v - 1)
         .updateIn(
-          [activity.id, 'own_reactions', kind],
+          this._getActivityPath(activity, 'reaction_counts', kind),
+          (v = 0) => v - 1,
+        )
+        .updateIn(
+          this._getActivityPath(activity, 'own_reactions', kind),
           (v = immutable.List()) =>
             v.remove(v.findIndex((r) => r.get('id') === id)),
         )
         .updateIn(
-          [activity.id, 'latest_reactions', kind],
+          this._getActivityPath(activity, 'latest_reactions', kind),
           (v = immutable.List()) =>
             v.remove(v.findIndex((r) => r.get('id') === id)),
         );
@@ -329,7 +345,7 @@ class FeedManager {
     options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
   ) => {
     let currentReactions = this.state.activities.getIn(
-      [activity.id, 'own_reactions', kind],
+      this._getActivityPath(activity, 'own_reactions', kind),
       immutable.List(),
     );
 
@@ -374,6 +390,22 @@ class FeedManager {
     );
   };
 
+  responseToActivityIdToPath = (response) => {
+    if (
+      !response.results.length ||
+      response.results[0].activities === undefined
+    ) {
+      return {};
+    }
+    let map = {};
+    for (let group of response.results) {
+      group.activities.forEach((act, i) => {
+        map[act.id] = [group.id, 'activities', i];
+      });
+    }
+    return map;
+  };
+
   refresh = async (extraOptions) => {
     let options = this.getOptions(extraOptions);
 
@@ -382,6 +414,7 @@ class FeedManager {
     let newState = {
       activityOrder: response.results.map((a) => a.id),
       activities: this.responseToActivityMap(response),
+      activityIdToPath: this.responseToActivityIdToPath(response),
       refreshing: false,
       lastResponse: response,
       realtimeAdds: [],
@@ -474,11 +507,16 @@ class FeedManager {
       let activities = prevState.activities.merge(
         this.responseToActivityMap(response),
       );
+      let activityIdToPath = {
+        ...prevState.activityIdToPath,
+        ...this.responseToActivityIdToPath(response),
+      };
       return {
         activityOrder: prevState.activityOrder.concat(
           response.results.map((a) => a.id),
         ),
         activities: activities,
+        activityIdToPath: activityIdToPath,
         refreshing: false,
         lastResponse: response,
       };

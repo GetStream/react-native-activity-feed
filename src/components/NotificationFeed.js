@@ -105,6 +105,9 @@ class NotificationFeedInner extends React.Component<PropsInner> {
       feedGroup: this.props.feedGroup,
       userId: this.props.userId,
       styles: this.props.styles.activity,
+      onToggleReaction: this.props.onToggleReaction,
+      onAddReaction: this.props.onAddReaction,
+      onRemoveReaction: this.props.onRemoveReaction,
     };
     return this.props.renderGroup(args);
   };
