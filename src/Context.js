@@ -135,22 +135,17 @@ export class StreamApp extends React.Component<
             >
               <View
                 style={{
-                  width: 200,
-                  height: 200,
-                  margin: 50,
-                  overflow: 'hidden',
+                  width: 300,
+                  height: 100,
+                  margin: 20,
                 }}
                 resizeMode="cover"
-                borderRadius={100}
               >
                 <Image
-                  source={{
-                    uri:
-                      'https://popculturalstudies.files.wordpress.com/2016/02/batman-66-6.gif',
-                  }}
+                  source={require('./images/stream_logo.png')}
                   style={{
-                    width: 200,
-                    height: 200,
+                    width: 300,
+                    height: 100,
                     overflow: 'hidden',
                   }}
                 />
