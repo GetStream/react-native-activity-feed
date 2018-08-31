@@ -3644,9 +3644,9 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@3.21.0-beta.6:
-  version "3.21.0-beta.6"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.6.tgz#a2c5ad13702ab221fa3cd244db0e438f2db12f24"
+getstream@3.21.0-beta.7:
+  version "3.21.0-beta.7"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.7.tgz#7ef623fe839e1e1854b56fbcb31c65fcaa998cea"
   dependencies:
     "@babel/runtime" "^7.0.0"
     Base64 "^1.0.1"
