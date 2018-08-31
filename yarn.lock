@@ -443,6 +443,12 @@
     pirates "^4.0.0"
     source-map-support "^0.4.2"
 
+"@babel/runtime@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0.tgz#adeb78fedfc855aa05bc041640f3f6f98e85424c"
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.44.tgz#f8832f4fdcee5d59bf515e595fc5106c529b394f"
@@ -4209,16 +4215,18 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@3.21.0-beta.4:
-  version "3.21.0-beta.4"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.4.tgz#b59a3d0ffdfb86a5f34c03597f022a3f9855054d"
+getstream@3.21.0-beta.6:
+  version "3.21.0-beta.6"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.6.tgz#a2c5ad13702ab221fa3cd244db0e438f2db12f24"
   dependencies:
+    "@babel/runtime" "^7.0.0"
     Base64 "^1.0.1"
     cross-fetch "^2.2.2"
     faye "^1.2.4"
     form-data "^2.3.2"
     http-signature "~1.2.0"
     jsonwebtoken "^8.3.0"
+    jwt-decode "^2.2.0"
     lodash "^4.17.10"
     qs "^6.5.1"
     request "^2.86.0"
@@ -5443,6 +5451,10 @@ jws@^3.1.4, jws@^3.1.5:
   dependencies:
     jwa "^1.1.5"
     safe-buffer "^5.0.1"
+
+jwt-decode@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
 
 kefir@^3.7.3:
   version "3.8.3"
@@ -7905,6 +7917,10 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
+regenerator-runtime@^0.12.0:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
+
 regenerator-transform@^0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/regenerator-transform/-/regenerator-transform-0.10.1.tgz#1e4996837231da8b7f3cf4114d71b5691a0680dd"
@@ -9822,9 +9838,9 @@ xmldom@0.1.x, xmldom@^0.1.27:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
 
-"xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
+"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"
-  resolved "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 xpipe@^1.0.5:
   version "1.0.5"

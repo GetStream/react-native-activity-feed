@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Image } from 'react-native';
 
 import UploadImage from './UploadImage';
-import { StreamContext } from '../Context';
+import { StreamApp } from '../Context';
 import { buildStylesheet } from '../styles';
 
 import type { StyleSheetLike } from '../types';
@@ -39,7 +39,7 @@ class Avatar extends React.Component<Props> {
     let borderRadius = notRound ? undefined : size / 2;
 
     return (
-      <StreamContext.Consumer>
+      <StreamApp.Consumer>
         {(appCtx) => {
           if (typeof source === 'function') {
             if (appCtx.user.full) {
@@ -80,7 +80,7 @@ class Avatar extends React.Component<Props> {
             </View>
           );
         }}
-      </StreamContext.Consumer>
+      </StreamApp.Consumer>
     );
   };
 }

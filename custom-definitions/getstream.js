@@ -183,10 +183,7 @@ declare module 'getstream' {
   } & BaseReactionResponse<ReactionData>;
 
   declare class StreamCloudClient<UserData> {
-    createUserSession<UserData>(
-      userId: string,
-      token: string,
-    ): StreamUserSession<UserData>;
+    createUserSession<UserData>(token: string): StreamUserSession<UserData>;
   }
 
   declare type ConnectOptions = {

@@ -119,7 +119,6 @@ const App = () => {
       <StreamApp
         apiKey={apiKey}
         appId={appId}
-        userId="batman"
         token={token}
         defaultUserData={{
           name: 'Batman',
@@ -138,15 +137,13 @@ const App = () => {
 
   // eslint-disable-next-line no-unused-vars
   function stepOne() {
-    return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token} />
-    );
+    return <StreamApp apiKey={apiKey} appId={appId} token={token} />;
   }
 
   // eslint-disable-next-line no-unused-vars
   function stepTwo() {
     return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
+      <StreamApp apiKey={apiKey} appId={appId} token={token}>
         <FlatFeed />
       </StreamApp>
     );
@@ -159,7 +156,7 @@ const App = () => {
     };
 
     return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
+      <StreamApp apiKey={apiKey} appId={appId} token={token}>
         <FlatFeed renderActivity={renderActivity} />
       </StreamApp>
     );
@@ -172,7 +169,7 @@ const App = () => {
     };
 
     return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
+      <StreamApp apiKey={apiKey} appId={appId} token={token}>
         <FlatFeed renderActivity={renderActivity} />
         <StatusUpdateForm />
       </StreamApp>
@@ -186,7 +183,7 @@ const App = () => {
     };
 
     return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
+      <StreamApp apiKey={apiKey} appId={appId} token={token}>
         <FlatFeed renderActivity={renderActivity} notify />
         <StatusUpdateForm feedGroup="timeline" />
       </StreamApp>
@@ -194,12 +191,12 @@ const App = () => {
   }
 
   // eslint-disable-next-line no-unused-vars
-  return example();
+  //return example();
   // return stepOne();
   // return stepTwo();
   // return stepThree();
   // return stepFour();
-  // return stepFive();
+  return stepFive();
 };
 
 export default App;

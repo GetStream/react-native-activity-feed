@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import CoverImage from './CoverImage';
 import { Avatar, UploadImage } from 'expo-activity-feed';
 import FormField from './FormField';
-import { StreamContext } from 'expo-activity-feed';
+import { StreamApp } from 'expo-activity-feed';
 import type { UserData, StreamAppCtx } from '../types';
 
 type Props = {|
@@ -15,9 +15,9 @@ type Props = {|
 
 export default function EditProfileForm(props: Props) {
   return (
-    <StreamContext.Consumer>
+    <StreamApp.Consumer>
       {(appCtx) => <EditProfileFormInner {...props} {...appCtx} />}
-    </StreamContext.Consumer>
+    </StreamApp.Consumer>
   );
 }
 

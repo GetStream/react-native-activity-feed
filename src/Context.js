@@ -25,14 +25,10 @@ import type {
   ToggleReactionCallbackFunction,
   AddReactionCallbackFunction,
   RemoveReactionCallbackFunction,
+  ReactElementCreator,
 } from './types';
 
-const emptySession = stream.connectCloud('', '').createUserSession('', '');
-
 export const StreamContext = React.createContext({
-  session: emptySession,
-  user: emptySession.user,
-  userData: undefined,
   changedUserData: () => {},
   sharedFeedManagers: {},
 });
@@ -54,11 +50,10 @@ type StreamAppProps<UserData> = {|
   appId: string,
   apiKey: string,
   token: string,
-  userId: string,
   options?: {},
   analyticsToken?: string,
   sharedFeeds: Array<FeedProps>,
-  defaultUserData: UserData,
+  defaultUserData?: UserData,
   children?: React.Node,
 |};
 
@@ -77,6 +72,28 @@ export class StreamApp extends React.Component<
       },
     ],
   };
+
+  static Consumer = function StreamAppConsumer(props: {
+    children?: ReactElementCreator,
+  }) {
+    return (
+      <StreamContext.Consumer>
+        {(appCtx) => {
+          if (!props.children || !props.children.length) {
+            return null;
+          }
+          if (!appCtx.session || !appCtx.user) {
+            throw new Error(
+              'This component should be a child of a StreamApp component',
+            );
+          }
+          let Child = props.children;
+          return <Child {...appCtx} />;
+        }}
+      </StreamContext.Consumer>
+    );
+  };
+
   constructor(props: StreamAppProps<Object>) {
     super(props);
 
@@ -86,7 +103,7 @@ export class StreamApp extends React.Component<
       this.props.options || {},
     );
 
-    let session = client.createUserSession(this.props.userId, this.props.token);
+    let session = client.createUserSession(this.props.token);
 
     let analyticsClient;
     if (this.props.analyticsToken) {
@@ -94,7 +111,7 @@ export class StreamApp extends React.Component<
         apiKey: this.props.apiKey,
         token: this.props.analyticsToken,
       });
-      analyticsClient.setUser(this.props.userId);
+      analyticsClient.setUser(session.userId);
     }
     this.state = {
       session: session,
@@ -117,7 +134,7 @@ export class StreamApp extends React.Component<
   async componentDidMount() {
     // TODO: Change this to an empty object by default
     // TODO: Maybe move this somewhere else
-    await this.state.user.getOrCreate(this.props.defaultUserData);
+    await this.state.user.getOrCreate(this.props.defaultUserData || {});
     this.state.changedUserData();
   }
 
@@ -530,11 +547,11 @@ class FeedManager {
 export class Feed extends React.Component<FeedProps, FeedState> {
   render() {
     return (
-      <StreamContext.Consumer>
+      <StreamApp.Consumer>
         {(appCtx: AppCtx<any>) => {
           return <FeedInner {...this.props} {...appCtx} />;
         }}
-      </StreamContext.Consumer>
+      </StreamApp.Consumer>
     );
   }
 }

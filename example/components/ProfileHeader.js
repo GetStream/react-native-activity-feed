@@ -4,7 +4,7 @@ import React from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 
-import { StreamContext } from 'expo-activity-feed';
+import { StreamApp } from 'expo-activity-feed';
 import Count from './Count';
 import { Avatar } from 'expo-activity-feed';
 import CoverImage from './CoverImage';
@@ -16,9 +16,9 @@ type Props = {};
 
 export default function ProfileHeader(props: Props) {
   return (
-    <StreamContext.Consumer>
+    <StreamApp.Consumer>
       {(appCtx) => <ProfileHeaderInner {...props} {...appCtx} />}
-    </StreamContext.Consumer>
+    </StreamApp.Consumer>
   );
 }
 

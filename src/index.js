@@ -1,5 +1,5 @@
 // @flow
-export { StreamApp, StreamContext } from './Context';
+export { StreamApp } from './Context';
 
 export * from './types.js';
 

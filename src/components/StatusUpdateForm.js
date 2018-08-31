@@ -8,7 +8,7 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
-import { StreamContext } from '../Context';
+import { StreamApp } from '../Context';
 import UrlPreview from './UrlPreview';
 import { pickImage } from '../native';
 
@@ -50,7 +50,7 @@ export default class StatusUpdateForm extends React.Component {
 
   render() {
     return (
-      <StreamContext.Consumer>
+      <StreamApp.Consumer>
         {(appCtx) => {
           if (this.props.screen) {
             return (
@@ -68,7 +68,7 @@ export default class StatusUpdateForm extends React.Component {
             );
           }
         }}
-      </StreamContext.Consumer>
+      </StreamApp.Consumer>
     );
   }
 }
