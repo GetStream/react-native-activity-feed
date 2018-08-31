@@ -132,8 +132,12 @@ declare module 'getstream' {
     addActivities(
       Array<ActivityArgData<UserData, CustomActivityData>>,
     ): Promise<Array<ActivityResponse<UserData, CustomActivityData>>>;
-    subscribe((any) => void): Promise<any>;
+    subscribe((any) => void): Subscription;
   }
+  declare type Subscription = {
+    then: (success: () => mixed, failure: (err: Error) => mixed) => Promise<{}>,
+    cancel: () => mixed,
+  };
 
   declare type ReactionKindMap<UserData, ReactionData> = {
     [string]: Array<EnrichedReactionResponse<UserData, ReactionData>>,

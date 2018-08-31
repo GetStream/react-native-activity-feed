@@ -124,16 +124,19 @@ export class StreamApp extends React.Component<
       sharedFeedManagers: {},
     };
     for (let feedProps of this.props.sharedFeeds) {
-      let manager = new FeedManager({ ...feedProps, ...this.state }, () =>
-        this.forceUpdate(),
-      );
+      let manager = new FeedManager({ ...feedProps, ...this.state });
       this.state.sharedFeedManagers[manager.feed().id] = manager;
     }
   }
 
+  async componentDidUpdate(prevProps: StreamAppProps<Object>) {
+    let appIdDifferent = this.props.appId !== prevProps.appId;
+    if (appIdDifferent) {
+      //TODO: Implement
+    }
+  }
+
   async componentDidMount() {
-    // TODO: Change this to an empty object by default
-    // TODO: Maybe move this somewhere else
     await this.state.user.getOrCreate(this.props.defaultUserData || {});
     this.state.changedUserData();
   }
@@ -225,6 +228,7 @@ type FeedManagerState = {|
   activityIdToPath: { [string]: Array<string> },
   unread: number,
   unseen: number,
+  numSubscribers: number,
 |};
 
 type FeedState = {|
@@ -244,12 +248,28 @@ class FeedManager {
     subscription: null,
     unread: 0,
     unseen: 0,
+    numSubscribers: 0,
   };
+  registeredCallbacks: Array<() => mixed>;
 
-  triggerUpdate: () => mixed;
-  constructor(props, triggerUpdate) {
+  constructor(props) {
     this.props = props;
-    this.triggerUpdate = triggerUpdate;
+    this.registeredCallbacks = [];
+  }
+
+  register(callback) {
+    this.registeredCallbacks.push(callback);
+    this.subscribe();
+  }
+  unregister(callback) {
+    this.registeredCallbacks.splice(this.registeredCallbacks.indexOf(callback));
+    this.unsubscribe();
+  }
+
+  triggerUpdate() {
+    for (let callback of this.registeredCallbacks) {
+      callback();
+    }
   }
 
   setState = (changed) => {
@@ -447,32 +467,33 @@ class FeedManager {
 
   subscribe = async () => {
     if (this.props.notify) {
-      await this.setState(({ subscription }) => {
-        if (subscription) {
+      let feed = this.feed();
+      await this.setState((prevState) => {
+        if (prevState.subscription) {
           return {};
         }
-        subscription = this.feed()
-          .subscribe((data) => {
-            this.setState((prevState) => {
-              let numActivityDiff = data.new.length - data.deleted.length;
-              return {
-                realtimeAdds: prevState.realtimeAdds.concat(data.new),
-                realtimeDeletes: prevState.realtimeDeletes.concat(data.deleted),
-                unread: prevState.unread + numActivityDiff,
-                unseen: prevState.unseen + numActivityDiff,
-              };
-            });
-          })
-          .then(
-            () => {
-              console.log(
-                `now listening to changes in realtime for ${this.feed().id}`,
-              );
-            },
-            (err) => {
-              console.error(err);
-            },
-          );
+        let subscription = feed.subscribe((data) => {
+          this.setState((prevState) => {
+            let numActivityDiff = data.new.length - data.deleted.length;
+            return {
+              realtimeAdds: prevState.realtimeAdds.concat(data.new),
+              realtimeDeletes: prevState.realtimeDeletes.concat(data.deleted),
+              unread: prevState.unread + numActivityDiff,
+              unseen: prevState.unseen + numActivityDiff,
+            };
+          });
+        });
+
+        subscription.then(
+          () => {
+            console.log(
+              `now listening to changes in realtime for ${this.feed().id}`,
+            );
+          },
+          (err) => {
+            console.error(err);
+          },
+        );
         return { subscription };
       });
     }
@@ -483,13 +504,16 @@ class FeedManager {
     if (!subscription) {
       return;
     }
-    try {
-      await subscription.cancel();
-      console.log(
-        `stopped listening to changes in realtime for ${this.feed().id}`,
-      );
-    } catch (err) {
-      console.log(err);
+    await subscription;
+    if (this.registeredCallbacks.length == 0) {
+      try {
+        await subscription.cancel();
+        console.log(
+          `stopped listening to changes in realtime for ${this.feed().id}`,
+        );
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -563,16 +587,17 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
     let feedId = props.session.feed(props.feedGroup, props.userId).id;
     let manager = props.sharedFeedManagers[feedId];
     if (!manager) {
-      manager = new FeedManager(props, () => this.forceUpdate());
+      manager = new FeedManager(props);
     }
 
     this.state = {
       manager: manager,
     };
   }
+  boundForceUpdate = () => this.forceUpdate();
 
   async componentDidMount() {
-    await this.state.manager.subscribe();
+    this.state.manager.register(this.boundForceUpdate);
   }
 
   async componentDidUpdate(prevProps) {
@@ -591,16 +616,15 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
       optionsDifferent ||
       doFeedRequestDifferent
     ) {
-      await this.state.manager.refresh();
+      // TODO: Implement
     }
     if (sessionDifferent || feedDifferent || notifyDifferent) {
-      this.state.manager.unsubscribe();
-      this.state.manager.subscribe();
+      // TODO: Implement
     }
   }
 
   async componentWillUnmount() {
-    await this.state.manager.unsubscribe();
+    this.state.manager.unregister(this.boundForceUpdate);
   }
 
   getCtx = () => {

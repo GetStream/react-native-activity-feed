@@ -23,7 +23,6 @@ async function main() {
 
   function createUserSession(userId): UserSession {
     return client.createUserSession(
-      userId,
       stream.signing.JWTUserSessionToken(apiSecret, userId),
     );
   }
