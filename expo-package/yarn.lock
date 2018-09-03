@@ -5736,9 +5736,9 @@ react-is@^16.3.1:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
 
-react-native-activity-feed-core@0.5.10:
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.5.10.tgz#4ecee55a81bf0dc7639853e1583d12ab9819ca14"
+react-native-activity-feed-core@0.5.13:
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.5.13.tgz#38052e72b37292b1ecf86d00ac19db0281269916"
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
@@ -5746,6 +5746,7 @@ react-native-activity-feed-core@0.5.10:
     immutable "^4.0.0-rc.9"
     moment "^2.22.2"
     numeral "^2.0.6"
+    react-native-keyboard-spacer "^0.4.1"
     react-native-sticky-keyboard-accessory "^0.1.1"
     stream-analytics "^2.7.1"
     url-parse "^1.4.3"
@@ -5765,6 +5766,10 @@ react-native-gesture-handler@1.0.0-alpha.41:
 react-native-iphone-x-helper@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.3.tgz#7a2f1e0574e899a0f1d426e6167fd98990083214"
+
+react-native-keyboard-spacer@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-spacer/-/react-native-keyboard-spacer-0.4.1.tgz#46f18a320432098a25ea9fa89f5143dd254d332d"
 
 react-native-maps@0.21.0:
   version "0.21.0"
