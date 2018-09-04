@@ -137,7 +137,7 @@ class StatusUpdateFormInner extends React.Component {
     });
   }
 
-  buildActivity() {
+  async addActivity() {
     let attachments = {};
 
     if (this.state.og && Object.keys(this.state.og).length > 0) {
@@ -159,12 +159,9 @@ class StatusUpdateFormInner extends React.Component {
       activity.attachments = attachments;
     }
 
-    this.props.session
+    await this.props.session
       .feed(this.props.feedGroup, this.props.feedUserId)
-      .addActivity(activity)
-      .catch((err) => {
-        console.log(err);
-      });
+      .addActivity(activity);
   }
 
   handleOG(text) {
@@ -232,8 +229,8 @@ class StatusUpdateFormInner extends React.Component {
     );
   };
 
-  onSubmitForm = () => {
-    this.buildActivity();
+  onSubmitForm = async () => {
+    await this.addActivity();
     Keyboard.dismiss();
     this.setState({
       image: null,
