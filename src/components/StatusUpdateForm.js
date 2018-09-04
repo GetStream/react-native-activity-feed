@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Dimensions,
   Keyboard,
 } from 'react-native';
 import { StreamApp } from '../Context';
@@ -52,7 +51,6 @@ type State = {|
   ogLink: ?string,
   textFromInput: string,
   clearInput: boolean,
-  orientation: 'portrait' | 'landscape',
   focused: boolean,
   urls: Array<string>,
   dismissedUrls: Array<string>,
@@ -121,7 +119,6 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     ogLink: null,
     textFromInput: '',
     clearInput: false,
-    orientation: 'portrait',
     focused: false,
     urls: [],
     dismissedUrls: [],
@@ -162,13 +159,6 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
       image: null,
     });
   };
-
-  componentDidMount() {
-    const { width, height } = Dimensions.get('window');
-    this.setState({
-      orientation: width > height ? 'landscape' : 'portrait',
-    });
-  }
 
   _text = () => {
     return this.state.textFromInput.trim();
@@ -291,14 +281,6 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
   render() {
     let styles = buildStylesheet('statusUpdateForm', this.props.styles);
-    Dimensions.addEventListener('change', (dimensions) => {
-      this.setState({
-        orientation:
-          dimensions.window.width > dimensions.window.height
-            ? 'landscape'
-            : 'portrait',
-      });
-    });
     return (
       <View style={this.props.screen ? { flex: 1 } : {}}>
         <View
