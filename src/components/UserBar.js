@@ -45,7 +45,7 @@ const UserBar = ({
   return (
     <View style={styles.container}>
       {avatar ? (
-        <TouchableOpacity onPress={onPressAvatar}>
+        <TouchableOpacity onPress={onPressAvatar} disabled={!onPressAvatar}>
           <Avatar
             source={avatar}
             size={48}

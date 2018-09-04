@@ -35,15 +35,15 @@ type Props = {
  * @example ./examples/Activity.md
  */
 export default class Activity extends React.Component<Props> {
-  _onPress = () => {
+  _getOnPress = () => {
     if (this.props.onPress) {
-      this.props.onPress();
+      return this.props.onPress;
     }
   };
 
-  _onPressAvatar = () => {
+  _getOnPressAvatar = () => {
     if (this.props.activity.actor !== 'NotFound' && this.props.onPressAvatar) {
-      this.props.onPressAvatar();
+      return this.props.onPressAvatar;
     }
   };
 
@@ -68,7 +68,7 @@ export default class Activity extends React.Component<Props> {
           subtitle={this.props.sub}
           timestamp={time}
           icon={this.props.icon}
-          onPressAvatar={this._onPressAvatar}
+          onPressAvatar={this._getOnPressAvatar()}
         />
       </View>
     );
@@ -217,8 +217,8 @@ export default class Activity extends React.Component<Props> {
     return (
       <TouchableOpacity
         style={[styles.container]}
-        onPress={this._onPress}
-        disabled={!this.props.onPress && !this.props.onPressAvatar}
+        onPress={this._getOnPress()}
+        disabled={!this._getOnPress()}
       >
         {smartRender(Header, this.renderHeader)}
         {smartRender(Content, this.renderContent)}

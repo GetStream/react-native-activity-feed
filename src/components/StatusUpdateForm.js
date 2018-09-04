@@ -74,9 +74,6 @@ export default class StatusUpdateForm extends React.Component<Props> {
         textStyle: { fontSize: 14 },
       },
     },
-    options: {
-      limit: 10,
-    },
   };
 
   render() {
