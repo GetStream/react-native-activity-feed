@@ -147,11 +147,12 @@ class StatusUpdateFormInner extends React.Component {
     if (this.state.image_url) {
       attachments.images = [this.state.image_url];
     }
+    let text = this.state.textInput.trim();
 
     let activity = {
       actor: this.props.session.user,
       verb: this.props.activity_verb,
-      object: this.state.textInput,
+      object: text,
     };
 
     if (Object.keys(attachments).length > 0) {
