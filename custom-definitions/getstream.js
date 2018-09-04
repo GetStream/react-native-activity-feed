@@ -58,6 +58,27 @@ declare module 'getstream' {
       activity: string | ActivityResponse<*, *>, // allows activityId and ActivityResponse
       data?: ReactionRequestOptions<ReactionData>,
     ): Promise<ReactionResponse<ReactionData>>;
+    images: StreamImageStore;
+    og: (url: string) => Promise<OgData>;
+  }
+
+  declare type OgData = {
+    title: string,
+    description: string,
+    images: Array<{ image: string }>,
+    url: string,
+  };
+
+  declare class StreamImageStore {
+    upload: (uri: string, name?: string) => Promise<{ file: string }>;
+    delete: (uri: string) => Promise<{}>;
+    process: (uri: string, options?: {}) => Promise<{}>;
+    thumbnail: (
+      uri: string,
+      width: number,
+      height: number,
+      options?: { crop?: string, resize?: string },
+    ) => Promise<{}>;
   }
 
   declare class StreamObjectStore<ObjectData> {
@@ -96,7 +117,7 @@ declare module 'getstream' {
     verb: string,
     object: string | StreamUser<UserData> | StreamObject<{}>,
     target?: string,
-  };
+  } & CustomActivityData;
 
   declare type MarkValue = boolean | string;
 

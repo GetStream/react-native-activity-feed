@@ -3,12 +3,14 @@
 import * as React from 'react';
 import type { NavigationScreenProp } from 'react-navigation';
 import type {
+  ActivityArgData,
   ActivityResponse,
   StreamUserSession,
   ReactionKindMap,
   UserResponse,
   ReactionRequestOptions,
   EnrichedReactionResponse,
+  OgData as OgDataGetStream,
 } from 'getstream';
 import type { AppCtx, FeedCtx } from './Context';
 
@@ -16,6 +18,7 @@ export type NavigationScreen = NavigationScreenProp<{}>;
 
 // Copied from react native source code
 type StyleSheetInternalStyleIdentifier = number;
+
 type StyleSheetInstance = { [string]: StyleSheetInternalStyleIdentifier };
 
 export type StyleSheetLike = { [string]: {} } | StyleSheetInstance;
@@ -39,13 +42,7 @@ export type UserData = {
   profileImage?: string,
 };
 
-export type OgData = {
-  title: string,
-  description: string,
-  images: Array<{ image: string }>,
-  url: string,
-};
-
+export type OgData = OgDataGetStream;
 export type CustomActivityData = {
   text?: string,
   link?: boolean,
@@ -55,6 +52,8 @@ export type CustomActivityData = {
     og?: OgData,
   },
 };
+
+export type CustomActivityArgData = ActivityArgData<{}, CustomActivityData>;
 
 export type ActivityData = ActivityResponse<UserData, CustomActivityData>;
 

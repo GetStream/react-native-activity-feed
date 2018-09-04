@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import {
   View,
@@ -18,6 +19,13 @@ import Symbol from 'es6-symbol';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
+import type {
+  BaseAppCtx,
+  CustomActivityArgData,
+  StyleSheetLike,
+  OgData,
+} from '../types';
+
 const ImageState = Object.freeze({
   NO_IMAGE: Symbol('no_image'),
   UPLOADING: Symbol('uploading'),
@@ -27,10 +35,33 @@ const ImageState = Object.freeze({
 
 const urlRegex = /(https?:\/\/[^\s]+)/gi;
 
-export default class StatusUpdateForm extends React.Component {
+type Props = {|
+  feedGroup: string,
+  userId?: string,
+  activityVerb: string,
+  screen?: boolean,
+  styles: StyleSheetLike,
+|};
+
+type State = {|
+  image: ?string,
+  image_url: ?string,
+  imageState: typeof ImageState,
+  og: ?OgData,
+  ogScraping: boolean,
+  ogLink: ?string,
+  textFromInput: string,
+  clearInput: boolean,
+  orientation: 'portrait' | 'landscape',
+  focused: boolean,
+  urls: Array<string>,
+  dismissedUrls: Array<string>,
+|};
+
+export default class StatusUpdateForm extends React.Component<Props> {
   static defaultProps = {
     feedGroup: 'user',
-    activity_verb: 'post',
+    activityVerb: 'post',
     styles: {
       urlPreview: {
         wrapper: {
@@ -73,20 +104,25 @@ export default class StatusUpdateForm extends React.Component {
   }
 }
 
-class StatusUpdateFormInner extends React.Component {
+type PropsInner = {| ...Props, ...BaseAppCtx |};
+class StatusUpdateFormInner extends React.Component<PropsInner, State> {
+  _handleOgDebounced: (string) => mixed;
+
+  textInputRef = React.createRef();
+
   constructor(props) {
     super(props);
-    this.props.feedUserId = this.props.feedUserId || props.session.userId;
     this._handleOgDebounced = _.debounce(this.handleOG, 250);
   }
 
   state = {
     image: null,
+    image_url: null,
     imageState: ImageState.NO_IMAGE,
     og: null,
     ogScraping: false,
     ogLink: null,
-    textInput: null,
+    textFromInput: '',
     clearInput: false,
     orientation: 'portrait',
     focused: false,
@@ -138,7 +174,7 @@ class StatusUpdateFormInner extends React.Component {
   }
 
   _text = () => {
-    return (this.state.textInput || '').trim();
+    return this.state.textFromInput.trim();
   };
 
   _object = () => {
@@ -149,9 +185,9 @@ class StatusUpdateFormInner extends React.Component {
   };
 
   async addActivity() {
-    let activity = {
+    let activity: CustomActivityArgData = {
       actor: this.props.session.user,
-      verb: this.props.activity_verb,
+      verb: this.props.activityVerb,
       object: this._object(),
     };
 
@@ -171,7 +207,7 @@ class StatusUpdateFormInner extends React.Component {
     }
 
     await this.props.session
-      .feed(this.props.feedGroup, this.props.feedUserId)
+      .feed(this.props.feedGroup, this.props.userId)
       .addActivity(activity);
   }
 
@@ -227,17 +263,12 @@ class StatusUpdateFormInner extends React.Component {
 
   _onPressDismiss = (url) => {
     const oldDismissedUrls = this.state.dismissedUrls;
-    this.setState(
-      {
-        dismissedUrls: [...oldDismissedUrls, url],
-        ogScraping: false,
-        ogLink: null,
-        og: null,
-      },
-      () => {
-        console.log('dismissedUrls: ', this.state.dismissedUrls);
-      },
-    );
+    this.setState({
+      dismissedUrls: [...oldDismissedUrls, url],
+      ogScraping: false,
+      ogLink: null,
+      og: null,
+    });
   };
 
   onSubmitForm = async () => {
@@ -250,11 +281,10 @@ class StatusUpdateFormInner extends React.Component {
       og: null,
       ogScraping: false,
       ogLink: null,
-      textInput: null,
+      textFromInput: '',
       focused: false,
       urls: [],
       dismissedUrls: [],
-      clearInput: true,
     });
   };
 
@@ -282,21 +312,24 @@ class StatusUpdateFormInner extends React.Component {
             <UrlPreview
               onPressDismiss={this._onPressDismiss}
               og={this.state.og}
-              styles={this.props.styles.urlPreview}
+              styles={
+                // $FlowFixMe
+                this.props.styles.urlPreview
+              }
             />
           )}
 
           <View style={styles.newPostContainer}>
             <View style={[styles.textInput]}>
               <TextInput
-                ref={this.textInput}
+                ref={this.textInputRef}
                 style={this.props.screen ? { flex: 1 } : {}}
                 multiline
                 onChangeText={(text) => {
-                  this.setState({ textInput: text, clearInput: false });
+                  this.setState({ textFromInput: text });
                   this._handleOgDebounced(text);
                 }}
-                value={!this.state.clearInput ? this.state.textInput : null}
+                value={this.state.textFromInput}
                 autocorrect={false}
                 placeholder="Share something..."
                 underlineColorAndroid="transparent"
