@@ -245,6 +245,7 @@ class StatusUpdateFormInner extends React.Component {
     Keyboard.dismiss();
     this.setState({
       image: null,
+      image_url: null,
       imageState: ImageState.NO_IMAGE,
       og: null,
       ogScraping: false,
