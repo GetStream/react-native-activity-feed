@@ -137,7 +137,15 @@ export class StreamApp extends React.Component<
   }
 
   async componentDidMount() {
-    await this.state.user.getOrCreate(this.props.defaultUserData || {});
+    try {
+      await this.state.user.getOrCreate(this.props.defaultUserData || {});
+    } catch (e) {
+      alert(
+        'Something went wrong when loading your user information. Is your internet working?',
+      );
+      console.warn(e);
+      return;
+    }
     this.state.changedUserData();
   }
 
@@ -442,7 +450,17 @@ class FeedManager {
     let options = this.getOptions(extraOptions);
 
     await this.setState({ refreshing: true });
-    let response = await this.doFeedRequest(options);
+    let response;
+    try {
+      response = await this.doFeedRequest(options);
+    } catch (e) {
+      this.setState({ refreshing: false });
+      alert(
+        'Something went wrong when loading the feed. Is your internet working?',
+      );
+      console.warn(e);
+      return;
+    }
     let newState = {
       activityOrder: response.results.map((a) => a.id),
       activities: this.responseToActivityMap(response),
@@ -538,7 +556,17 @@ class FeedManager {
     let nextURL = new URL(lastResponse.next, true);
     let options = this.getOptions(nextURL.query);
 
-    let response = await this.doFeedRequest(options);
+    let response;
+    try {
+      response = await this.doFeedRequest(options);
+    } catch (e) {
+      this.setState({ refreshing: false });
+      alert(
+        'Something went wrong when loading the feed. Is your internet working?',
+      );
+      console.warn(e);
+      return;
+    }
     return this.setState((prevState) => {
       let activities = prevState.activities.merge(
         this.responseToActivityMap(response),
@@ -560,7 +588,16 @@ class FeedManager {
   };
 
   refreshUnreadUnseen = async () => {
-    let response = await this.doFeedRequest({ limit: 1 });
+    let response;
+    try {
+      response = await this.doFeedRequest({ limit: 1 });
+    } catch (e) {
+      alert(
+        'Something went wrong when getting your unread notifications. Is your internet working?',
+      );
+      console.warn(e);
+      return;
+    }
     return this.setState({
       unread: response.unread || 0,
       unseen: response.unseen || 0,
