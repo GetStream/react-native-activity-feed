@@ -41,6 +41,7 @@ type Props = {|
   activityVerb: string,
   screen: boolean,
   styles: StyleSheetLike,
+  height: ?number,
   enableAndroidKeyboardHandling: boolean,
 |};
 
@@ -94,9 +95,18 @@ export default class StatusUpdateForm extends React.Component<Props> {
               this.props.enableAndroidKeyboardHandling
             ) {
               return (
-                <KeyboardAccessory>
-                  <StatusUpdateFormInner {...this.props} {...appCtx} />
-                </KeyboardAccessory>
+                <React.Fragment>
+                  <View
+                    style={
+                      this.props.height
+                        ? { height: this.props.height }
+                        : { height: 80 }
+                    }
+                  />
+                  <KeyboardAccessory>
+                    <StatusUpdateFormInner {...this.props} {...appCtx} />
+                  </KeyboardAccessory>
+                </React.Fragment>
               );
             } else {
               return <StatusUpdateFormInner {...this.props} {...appCtx} />;
@@ -291,10 +301,11 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   render() {
     let styles = buildStylesheet('statusUpdateForm', this.props.styles);
     return (
-      <View style={this.props.screen ? { flex: 1 } : {}}>
+      <View style={[this.props.screen ? { flex: 1 } : {}]}>
         <View
           style={[
             styles.container,
+            this.props.height ? { height: this.props.height } : { height: 80 },
             this.state.focused ? styles.containerFocused : {},
             this.state.og ? styles.containerFocusedOg : {},
             this.props.screen ? { flex: 1 } : {},
