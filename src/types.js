@@ -47,7 +47,7 @@ export type OgData = {
 };
 
 export type CustomActivityData = {
-  content: string,
+  text?: string,
   link?: boolean,
   image?: string,
   attachments?: {

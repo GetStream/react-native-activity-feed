@@ -150,17 +150,25 @@ export default class Activity extends React.Component<Props> {
     const width = this.props.imageWidth
       ? this.props.imageWidth
       : Dimensions.get('window').width;
-    let { verb, object, content, image, attachments } = this.props.activity;
+    let { verb, object, text, image, attachments } = this.props.activity;
     let styles = buildStylesheet('activity', this.props.styles);
+
+    if (text === undefined) {
+      if (typeof object === 'string') {
+        text = object;
+      } else {
+        text = '';
+      }
+    }
+    text = text.trim();
+
     return (
       <View>
-        <View style={styles.content}>
-          <Text>
-            {typeof object === 'string'
-              ? this.renderText(object, this.props.activity)
-              : this.renderText(content, this.props.activity)}
-          </Text>
-        </View>
+        {Boolean(text) && (
+          <View style={styles.content}>
+            <Text>{text}</Text>
+          </View>
+        )}
 
         {verb == 'repost' &&
           object instanceof Object && <Card {...object.data} />}

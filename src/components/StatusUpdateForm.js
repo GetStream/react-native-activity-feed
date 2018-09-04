@@ -137,7 +137,24 @@ class StatusUpdateFormInner extends React.Component {
     });
   }
 
+  _text = () => {
+    return (this.state.textInput || '').trim();
+  };
+
+  _object = () => {
+    if (this.state.image_url) {
+      return this.state.image_url;
+    }
+    return this._text();
+  };
+
   async addActivity() {
+    let activity = {
+      actor: this.props.session.user,
+      verb: this.props.activity_verb,
+      object: this._object(),
+    };
+
     let attachments = {};
 
     if (this.state.og && Object.keys(this.state.og).length > 0) {
@@ -146,14 +163,8 @@ class StatusUpdateFormInner extends React.Component {
 
     if (this.state.image_url) {
       attachments.images = [this.state.image_url];
+      activity.text = this._text();
     }
-    let text = this.state.textInput.trim();
-
-    let activity = {
-      actor: this.props.session.user,
-      verb: this.props.activity_verb,
-      object: text,
-    };
 
     if (Object.keys(attachments).length > 0) {
       activity.attachments = attachments;
