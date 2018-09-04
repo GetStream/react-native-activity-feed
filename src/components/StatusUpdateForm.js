@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  Platform,
   Keyboard,
 } from 'react-native';
 import { StreamApp } from '../Context';
@@ -38,8 +39,9 @@ type Props = {|
   feedGroup: string,
   userId?: string,
   activityVerb: string,
-  screen?: boolean,
+  screen: boolean,
   styles: StyleSheetLike,
+  enableAndroidKeyboardHandling: boolean,
 |};
 
 type State = {|
@@ -60,6 +62,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
   static defaultProps = {
     feedGroup: 'user',
     activityVerb: 'post',
+    screen: false,
     styles: {
       urlPreview: {
         wrapper: {
@@ -72,6 +75,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
         textStyle: { fontSize: 14 },
       },
     },
+    enableAndroidKeyboardHandling: false,
   };
 
   render() {
@@ -85,13 +89,18 @@ export default class StatusUpdateForm extends React.Component<Props> {
               </View>
             );
           } else {
-            return (
-              <React.Fragment>
+            if (
+              Platform.OS === 'ios' ||
+              this.props.enableAndroidKeyboardHandling
+            ) {
+              return (
                 <KeyboardAccessory>
                   <StatusUpdateFormInner {...this.props} {...appCtx} />
                 </KeyboardAccessory>
-              </React.Fragment>
-            );
+              );
+            } else {
+              return <StatusUpdateFormInner {...this.props} {...appCtx} />;
+            }
           }
         }}
       </StreamApp.Consumer>
