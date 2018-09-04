@@ -105,11 +105,14 @@ export const styles = {
     actionPanel: {
       justifyContent: 'space-between',
     },
+    actionPanelBlur: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     accessory: {
       borderTopColor: '#DADFE3',
       backgroundColor: '#f6f6f6',
       borderTopWidth: 1,
-
       width: 100 + '%',
       padding: 15,
       flexDirection: 'row',
@@ -118,10 +121,13 @@ export const styles = {
     imageContainer: {
       width: 30,
       height: 30,
-      marginTop: -3,
-      marginBottom: -3,
       overflow: 'hidden',
       borderRadius: 4,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    imageContainerBlur: {
+      marginRight: 8,
     },
     imageOverlay: {
       position: 'absolute',
@@ -144,6 +150,7 @@ export const styles = {
       opacity: 0.5,
     },
     submitImage: {
+      // marginTop: 10,
       width: 24,
       height: 24,
     },
