@@ -181,6 +181,10 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     return this._text();
   };
 
+  _canSubmit = () => {
+    return Boolean(this._object());
+  };
+
   async addActivity() {
     let activity: CustomActivityArgData = {
       actor: this.props.session.user,
@@ -375,9 +379,14 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
               <TouchableOpacity
                 title="Pick an image from camera roll"
                 onPress={this.onSubmitForm}
+                disabled={!this._canSubmit()}
               >
                 <Image
-                  source={require('../images/icons/send.png')}
+                  source={
+                    this._canSubmit()
+                      ? require('../images/icons/send.png')
+                      : require('../images/icons/send-disabled.png')
+                  }
                   style={styles.submitImage}
                 />
               </TouchableOpacity>
