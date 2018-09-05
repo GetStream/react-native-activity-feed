@@ -50,20 +50,14 @@
   "dependencies": {
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-preset-expo": "^4.0.0",
-    "es6-symbol": "^3.1.1",
     "expo": "^27.0.1",
     "faker": "^4.1.0",
-    "immutable": "^4.0.0-rc.9",
-    "lodash": "^4.17.10",
-    "moment": "^2.22.2",
     "numeral": "^2.0.6",
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-activity-feed-core": "link:..",
     "expo-activity-feed": "link:../expo-package",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
-    "react-native-sticky-keyboard-accessory": "^0.1.1",
-    "react-navigation": "^2.3.1",
-    "stream-analytics": "^2.7.0"
+    "react-navigation": "^2.3.1"
   }
 }
