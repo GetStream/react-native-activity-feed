@@ -22,7 +22,7 @@ export default class EditProfileScreen extends React.Component<Props> {
         <Text>Save</Text>
       </TouchableOpacity>
     ),
-    headerLeft: <BackButton pressed={() => navigation.goBack()} color="blue" />,
+    headerLeft: <BackButton pressed={() => navigation.goBack()} blue />,
     headerStyle: {
       paddingLeft: 15,
       paddingRight: 15,

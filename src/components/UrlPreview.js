@@ -8,7 +8,7 @@ import type { OgData, StyleSheetLike } from '../types';
 export type Props = {|
   og: OgData,
   styles?: StyleSheetLike,
-  onPressDismiss: (string) => void,
+  onPressDismiss: (string) => mixed,
 |};
 
 /**

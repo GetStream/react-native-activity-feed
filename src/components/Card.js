@@ -12,8 +12,7 @@ export type Props = {|
   image?: ?string,
   url?: ?string,
   styles?: StyleSheetLike,
-  blue?: boolean,
-  pressed?: () => void,
+  pressed?: () => mixed,
 |};
 
 /**

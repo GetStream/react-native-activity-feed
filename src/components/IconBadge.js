@@ -1,22 +1,18 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { View, Text } from 'react-native';
 import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
 
-import type {
-  BaseFeedCtx,
-  ReactElementCreator,
-  StyleSheetLike,
-} from '../types';
+import type { BaseFeedCtx, StyleSheetLike } from '../types';
 
 export type Props = {|
   feedGroup: string,
   userId?: string,
-  mainElement: ReactElementCreator,
   styles?: StyleSheetLike,
   showNumber?: boolean,
   hidden?: boolean,
+  children: React.Node,
 |};
 
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
@@ -55,13 +51,13 @@ class IconBadgeInner extends React.Component<PropsInner, State> {
   }
 
   render() {
-    const { mainElement, showNumber, hidden } = this.props;
+    const { children, showNumber, hidden } = this.props;
 
     let styles = buildStylesheet('iconBadge', this.props.styles);
 
     return (
       <View style={styles.container}>
-        {mainElement}
+        {children}
         {!hidden &&
           this.props.unseen > 0 && (
             <View style={styles.icon}>

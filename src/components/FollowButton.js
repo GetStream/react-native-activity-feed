@@ -6,7 +6,7 @@ import type { StyleSheetLike } from '../types';
 
 export type Props = {|
   /** callback function used on click */
-  clicked?: () => void,
+  clicked?: () => mixed,
   /** initial follow state */
   followed?: boolean,
   styles?: StyleSheetLike,
