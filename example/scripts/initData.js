@@ -123,9 +123,10 @@ async function main() {
 
     actor: league.user,
     verb: 'post',
-    object: '-',
+    object:
+      'http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg',
 
-    content: 'Wonder Woman is going to be great!',
+    text: 'Wonder Woman is going to be great!',
     image:
       'http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg',
   });
