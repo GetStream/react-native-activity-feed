@@ -290,6 +290,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
         feedGroup: this.props.feedGroup,
         userId: this.props.userId,
       });
+      return;
     }
     Keyboard.dismiss();
     this.setState({
