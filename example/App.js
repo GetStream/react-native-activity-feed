@@ -184,7 +184,7 @@ const App = () => {
 
     return (
       <StreamApp apiKey={apiKey} appId={appId} token={token}>
-        <FlatFeed renderActivity={renderActivity} notify noPagination />
+        <FlatFeed renderActivity={renderActivity} notify />
         <StatusUpdateForm height={70} feedGroup="timeline" />
       </StreamApp>
     );

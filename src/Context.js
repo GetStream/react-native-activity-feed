@@ -26,7 +26,10 @@ import type {
   AddReactionCallbackFunction,
   RemoveReactionCallbackFunction,
   ReactElementCreator,
+  ErrorHandler,
 } from './types';
+
+import { handleError } from './errors';
 
 export const StreamContext = React.createContext({
   changedUserData: () => {},
@@ -44,6 +47,7 @@ export type AppCtx<UserData> = {|
   changeNotificationCounts?: any,
   analyticsClient?: any,
   sharedFeedManagers: { [string]: FeedManager },
+  errorHandler: ErrorHandler,
 |};
 
 type StreamAppProps<UserData> = {|
@@ -54,6 +58,7 @@ type StreamAppProps<UserData> = {|
   analyticsToken?: string,
   sharedFeeds: Array<FeedProps>,
   defaultUserData?: UserData,
+  errorHandler: ErrorHandler,
   children?: React.Node,
 |};
 
@@ -71,6 +76,7 @@ export class StreamApp extends React.Component<
         options: { mark_seen: true },
       },
     ],
+    errorHandler: handleError,
   };
 
   static Consumer = function StreamAppConsumer(props: {
@@ -122,9 +128,13 @@ export class StreamApp extends React.Component<
       },
       analyticsClient: analyticsClient,
       sharedFeedManagers: {},
+      errorHandler: this.props.errorHandler,
     };
     for (let feedProps of this.props.sharedFeeds) {
-      let manager = new FeedManager({ ...feedProps, ...this.state });
+      let manager = new FeedManager({
+        ...feedProps,
+        ...this.state,
+      });
       this.state.sharedFeedManagers[manager.feed().id] = manager;
     }
   }
@@ -140,10 +150,9 @@ export class StreamApp extends React.Component<
     try {
       await this.state.user.getOrCreate(this.props.defaultUserData || {});
     } catch (e) {
-      alert(
-        'Something went wrong when loading your user information. Is your internet working?',
-      );
-      console.warn(e);
+      this.props.errorHandler(e, 'get-user-info', {
+        userId: this.state.user.id,
+      });
       return;
     }
     this.state.changedUserData();
@@ -222,7 +231,7 @@ type FeedProps = {|
     userId?: string,
     options?: FeedRequestOptions,
   ) => Promise<FeedResponse<Object, Object>>,
-  children: React.Node,
+  children?: React.Node,
 |};
 
 type FeedManagerState = {|
@@ -324,7 +333,18 @@ class FeedManager {
     activity: BaseActivityResponse,
     options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
   ) => {
-    let reaction = await this.props.session.react(kind, activity, options);
+    let reaction;
+    try {
+      reaction = await this.props.session.react(kind, activity, options);
+    } catch (e) {
+      this.props.errorHandler(e, 'add-reaction', {
+        kind,
+        activity,
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
+      return;
+    }
     this.trackAnalytics(kind, activity, options.trackAnalytics);
     let enrichedReaction = immutable.fromJS({
       ...reaction,
@@ -356,7 +376,17 @@ class FeedManager {
     id: string,
     options: { trackAnalytics?: boolean } = {},
   ) => {
-    await this.props.session.reactions.delete(id);
+    try {
+      await this.props.session.reactions.delete(id);
+    } catch (e) {
+      this.props.errorHandler(e, 'delete-reaction', {
+        kind,
+        activity,
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
+      return;
+    }
     this.trackAnalytics('un' + kind, activity, options.trackAnalytics);
 
     return this.setState((prevState) => {
@@ -455,10 +485,10 @@ class FeedManager {
       response = await this.doFeedRequest(options);
     } catch (e) {
       this.setState({ refreshing: false });
-      alert(
-        'Something went wrong when loading the feed. Is your internet working?',
-      );
-      console.warn(e);
+      this.props.errorHandler(e, 'get-feed', {
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
       return;
     }
     let newState = {
@@ -561,10 +591,10 @@ class FeedManager {
       response = await this.doFeedRequest(options);
     } catch (e) {
       this.setState({ refreshing: false });
-      alert(
-        'Something went wrong when loading the feed. Is your internet working?',
-      );
-      console.warn(e);
+      this.props.errorHandler(e, 'get-feed-next-page', {
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
       return;
     }
     return this.setState((prevState) => {
@@ -592,10 +622,10 @@ class FeedManager {
     try {
       response = await this.doFeedRequest({ limit: 1 });
     } catch (e) {
-      alert(
-        'Something went wrong when getting your unread notifications. Is your internet working?',
-      );
-      console.warn(e);
+      this.props.errorHandler(e, 'get-notification-counts', {
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
       return;
     }
     return this.setState({

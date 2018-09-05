@@ -158,9 +158,11 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
         imageState: ImageState.UPLOAD_FAILED,
         image: null,
       });
-      alert(
-        'Something went wrong when uploading your image. Is your internet working? If it is, the image is probably too big.',
-      );
+
+      this.props.errorHandler(e, 'upload-image', {
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
       return;
     }
 
@@ -281,7 +283,14 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   };
 
   onSubmitForm = async () => {
-    await this.addActivity();
+    try {
+      await this.addActivity();
+    } catch (e) {
+      this.props.errorHandler(e, 'add-activity', {
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
+    }
     Keyboard.dismiss();
     this.setState({
       image: null,
