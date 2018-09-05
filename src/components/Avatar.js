@@ -25,63 +25,67 @@ export type Props = {|
  * A users' profile picture
  * @example ./examples/Avatar.md
  */
-class Avatar extends React.Component<Props> {
-  render = function() {
-    let {
-      source,
-      size = 200,
-      noShadow,
-      notRound,
-      editButton,
-      onUploadButtonPress,
-    } = this.props;
-    let styles = buildStylesheet('avatar', this.props.styles || {});
-    let borderRadius = notRound ? undefined : size / 2;
-
-    return (
-      <StreamApp.Consumer>
-        {(appCtx) => {
-          if (typeof source === 'function') {
+export default class Avatar extends React.Component<Props> {
+  render() {
+    let { source, ...props } = this.props;
+    if (typeof source === 'function') {
+      let funcSource = source;
+      return (
+        <StreamApp.Consumer>
+          {(appCtx) => {
             if (appCtx.user.full) {
-              source = source(appCtx.user.full);
+              source = funcSource(appCtx.user.full);
             } else {
               source = undefined;
             }
-          }
-          return (
-            <View
-              style={[
-                styles.container,
-                noShadow ? styles.noShadow : null,
-                {
-                  width: size,
-                  height: size,
-                },
-              ]}
-            >
-              <Image
-                style={[
-                  styles.image,
-                  {
-                    width: size,
-                    height: size,
-                    borderRadius: borderRadius,
-                  },
-                ]}
-                source={
-                  source
-                    ? { uri: source }
-                    : require('../images/placeholder.png')
-                }
-              />
-              {editButton ? (
-                <UploadImage onUploadButtonPress={onUploadButtonPress} />
-              ) : null}
-            </View>
-          );
-        }}
-      </StreamApp.Consumer>
-    );
-  };
+            return <AvatarInner {...props} source={source} />;
+          }}
+        </StreamApp.Consumer>
+      );
+    } else {
+      return <AvatarInner {...props} source={source} />;
+    }
+  }
 }
-export default Avatar;
+
+type InnerProps = {| ...Props, source: ?string |};
+
+const AvatarInner = (props: InnerProps) => {
+  let {
+    source,
+    size = 200,
+    noShadow,
+    notRound,
+    editButton,
+    onUploadButtonPress,
+  } = props;
+  let styles = buildStylesheet('avatar', props.styles || {});
+  let borderRadius = notRound ? undefined : size / 2;
+  return (
+    <View
+      style={[
+        styles.container,
+        noShadow ? styles.noShadow : null,
+        {
+          width: size,
+          height: size,
+        },
+      ]}
+    >
+      <Image
+        style={[
+          styles.image,
+          {
+            width: size,
+            height: size,
+            borderRadius: borderRadius,
+          },
+        ]}
+        source={source ? { uri: source } : require('../images/placeholder.png')}
+      />
+      {editButton ? (
+        <UploadImage onUploadButtonPress={onUploadButtonPress} />
+      ) : null}
+    </View>
+  );
+};
