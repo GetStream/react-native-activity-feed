@@ -21,7 +21,7 @@ type Props = {|
 export default function ReactionIcon(props: Props) {
   let count = null;
   if (props.counts && props.kind) {
-    count = props.counts[props.kind];
+    count = props.counts[props.kind] || 0;
   }
   let styles = buildStylesheet('reactionIcon', props.styles);
 
