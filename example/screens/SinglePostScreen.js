@@ -19,7 +19,7 @@ import type { UserResponse } from '../types';
 import type { NavigationScreen } from 'expo-activity-feed';
 
 type Props = {|
-  navigation?: NavigationScreen,
+  navigation: NavigationScreen,
 |};
 
 export default class SinglePostScreen extends React.Component<Props> {

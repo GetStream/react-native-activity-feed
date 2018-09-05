@@ -16,7 +16,7 @@ import type { NavigationScreen } from 'expo-activity-feed';
 import type { NavigationEventSubscription } from 'react-navigation';
 
 type Props = {|
-  navigation?: NavigationScreen,
+  navigation: NavigationScreen,
 |};
 
 export default class NotificationScreen extends React.Component<Props> {
