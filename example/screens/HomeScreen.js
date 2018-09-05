@@ -11,9 +11,7 @@ import {
 } from 'expo-activity-feed';
 import type { UserResponse, ActivityData } from '../types';
 
-// $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
-// $FlowFixMe https://github.com/facebook/flow/issues/345
 import ReplyIcon from '../images/icons/reply.png';
 
 import type { NavigationScreen } from 'expo-activity-feed';

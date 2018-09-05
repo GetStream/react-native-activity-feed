@@ -17,7 +17,7 @@ import RepostList from '../components/RepostList';
 
 import type { UserResponse } from '../types';
 import type { NavigationScreen } from 'expo-activity-feed';
-// $FlowFixMe https://github.com/facebook/flow/issues/345
+
 import ReplyIcon from '../images/icons/reply.png';
 
 type Props = {|

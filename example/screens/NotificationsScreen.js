@@ -5,11 +5,9 @@ import { StatusBar, Image, View } from 'react-native';
 import Notification from '../components/Notification';
 import Follow from '../components/Notifications/Follow';
 import { NotificationFeed } from 'expo-activity-feed';
-// $FlowFixMe https://github.com/facebook/flow/issues/345
+
 import CategoriesIcon from '../images/icons/categories.png';
-// $FlowFixMe https://github.com/facebook/flow/issues/345
 import PostIcon from '../images/icons/post.png';
-// $FlowFixMe https://github.com/facebook/flow/issues/345
 import ReplyIcon from '../images/icons/reply.png';
 
 import { Activity, LikeButton, ReactionIcon } from 'expo-activity-feed';
