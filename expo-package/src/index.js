@@ -13,4 +13,3 @@ registerNativeHandlers({
 });
 
 export * from 'react-native-activity-feed-core';
-export type { AppCtx } from 'react-native-activity-feed-core';
