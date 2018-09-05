@@ -41,13 +41,13 @@ type Props = {|
   activityVerb: string,
   screen: boolean,
   styles: StyleSheetLike,
-  height: ?number,
+  height: number,
   enableAndroidKeyboardHandling: boolean,
 |};
 
 type State = {|
   image: ?string,
-  image_url: ?string,
+  imageUrl: ?string,
   imageState: typeof ImageState,
   og: ?OgData,
   ogScraping: boolean,
@@ -64,6 +64,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
     feedGroup: 'user',
     activityVerb: 'post',
     screen: false,
+    height: 80,
     styles: {
       urlPreview: {
         wrapper: {
@@ -96,13 +97,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
             ) {
               return (
                 <React.Fragment>
-                  <View
-                    style={
-                      this.props.height
-                        ? { height: this.props.height }
-                        : { height: 80 }
-                    }
-                  />
+                  <View style={this.props.height} />
                   <KeyboardAccessory>
                     <StatusUpdateFormInner {...this.props} {...appCtx} />
                   </KeyboardAccessory>
@@ -131,7 +126,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
   state = {
     image: null,
-    image_url: null,
+    imageUrl: null,
     imageState: ImageState.NO_IMAGE,
     og: null,
     ogScraping: false,
@@ -158,23 +153,29 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     try {
       response = await this.props.session.images.upload(result.uri);
     } catch (e) {
-      console.log(e);
+      console.warn(e);
       this.setState({
         imageState: ImageState.UPLOAD_FAILED,
+        image: null,
       });
-      throw e;
+
+      this.props.errorHandler(e, 'upload-image', {
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
+      return;
     }
 
     this.setState({
       imageState: ImageState.UPLOADED,
-      image_url: response.file,
+      imageUrl: response.file,
     });
   };
 
   _removeImage = () => {
     this.setState({
       imageState: ImageState.NO_IMAGE,
-      image_url: null,
+      imageUrl: null,
       image: null,
     });
   };
@@ -184,8 +185,8 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   };
 
   _object = () => {
-    if (this.state.image_url) {
-      return this.state.image_url;
+    if (this.state.imageUrl) {
+      return this.state.imageUrl;
     }
     return this._text();
   };
@@ -207,8 +208,8 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
       attachments.og = this.state.og;
     }
 
-    if (this.state.image_url) {
-      attachments.images = [this.state.image_url];
+    if (this.state.imageUrl) {
+      attachments.images = [this.state.imageUrl];
       activity.text = this._text();
     }
 
@@ -282,11 +283,19 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   };
 
   onSubmitForm = async () => {
-    await this.addActivity();
+    try {
+      await this.addActivity();
+    } catch (e) {
+      this.props.errorHandler(e, 'add-activity', {
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
+      return;
+    }
     Keyboard.dismiss();
     this.setState({
       image: null,
-      image_url: null,
+      imageUrl: null,
       imageState: ImageState.NO_IMAGE,
       og: null,
       ogScraping: false,

@@ -45,7 +45,7 @@ type Props = {|
   //** turns off pagination */
   noPagination?: boolean,
   analyticsLocation?: string,
-  onRefresh?: () => void,
+  onRefresh?: () => mixed,
   children?: React.Node,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,

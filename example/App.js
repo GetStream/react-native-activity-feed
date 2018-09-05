@@ -59,7 +59,9 @@ const TabNavigator = createBottomTabNavigator(
           return <Icon name="search" />;
         } else if (routeName === 'Notifications') {
           return (
-            <IconBadge showNumber mainElement={<Icon name="notifications" />} />
+            <IconBadge showNumber>
+              <Icon name="notifications" />
+            </IconBadge>
           );
         } else if (routeName === 'Profile') {
           return (
@@ -184,7 +186,7 @@ const App = () => {
 
     return (
       <StreamApp apiKey={apiKey} appId={appId} token={token}>
-        <FlatFeed renderActivity={renderActivity} notify noPagination />
+        <FlatFeed renderActivity={renderActivity} notify />
         <StatusUpdateForm height={70} feedGroup="timeline" />
       </StreamApp>
     );

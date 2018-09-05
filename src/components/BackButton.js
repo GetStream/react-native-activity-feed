@@ -7,7 +7,7 @@ import type { StyleSheetLike } from '../types';
 export type Props = {|
   styles?: StyleSheetLike,
   blue?: boolean,
-  pressed?: () => void,
+  pressed?: () => mixed,
 |};
 
 /**
