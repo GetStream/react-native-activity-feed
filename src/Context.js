@@ -246,6 +246,7 @@ type FeedManagerState = {|
   unread: number,
   unseen: number,
   numSubscribers: number,
+  reactionsBeingToggled: { [kind: string]: { [activityId: string]: boolean } },
 |};
 
 type FeedState = {|
@@ -266,6 +267,7 @@ class FeedManager {
     unread: 0,
     unseen: 0,
     numSubscribers: 0,
+    reactionsBeingToggled: {},
   };
   registeredCallbacks: Array<() => mixed>;
 
@@ -414,6 +416,13 @@ class FeedManager {
     activity: BaseActivityResponse,
     options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
   ) => {
+    let togglingReactions = this.state.reactionsBeingToggled[kind] || {};
+    if (togglingReactions[activity.id]) {
+      return;
+    }
+    togglingReactions[activity.id] = true;
+    this.state.reactionsBeingToggled[kind] = togglingReactions;
+
     let currentReactions = this.state.activities.getIn(
       this._getActivityPath(activity, 'own_reactions', kind),
       immutable.List(),
@@ -423,8 +432,9 @@ class FeedManager {
     if (last) {
       await this.onRemoveReaction(kind, activity, last.get('id'), options);
     } else {
-      this.onAddReaction(kind, activity, options);
+      await this.onAddReaction(kind, activity, options);
     }
+    delete togglingReactions[activity.id];
   };
 
   getOptions = (extraOptions?: FeedRequestOptions): FeedRequestOptions => ({
