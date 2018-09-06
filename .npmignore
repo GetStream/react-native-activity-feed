@@ -34,3 +34,4 @@ yarn-error.log*
 /example/
 /native-example/
 /docs/
+yarn.lock
