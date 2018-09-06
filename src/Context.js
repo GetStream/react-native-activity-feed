@@ -646,14 +646,14 @@ class FeedManager {
 }
 
 export class Feed extends React.Component<FeedProps, FeedState> {
+  // Used to avoid unmount-remount behaviour, which causes
+  // unsubscribe-subscribe behaviour.
+  _appCtxWrapperFunc = (appCtx: AppCtx<any>) => {
+    return <FeedInner {...this.props} {...appCtx} />;
+  };
+
   render() {
-    return (
-      <StreamApp.Consumer>
-        {(appCtx: AppCtx<any>) => {
-          return <FeedInner {...this.props} {...appCtx} />;
-        }}
-      </StreamApp.Consumer>
-    );
+    return <StreamApp.Consumer>{this._appCtxWrapperFunc}</StreamApp.Consumer>;
   }
 }
 
