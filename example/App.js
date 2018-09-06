@@ -4,6 +4,7 @@ import {
   createStackNavigator,
   createBottomTabNavigator,
 } from 'react-navigation';
+import SafeAreaView from 'react-native-safe-area-view';
 
 import {
   STREAM_API_KEY,
@@ -133,15 +134,21 @@ const App = () => {
 
   // eslint-disable-next-line no-unused-vars
   function stepOne() {
-    return <StreamApp apiKey={apiKey} appId={appId} token={token} />;
+    return (
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token} />;
+      </SafeAreaView>
+    );
   }
 
   // eslint-disable-next-line no-unused-vars
   function stepTwo() {
     return (
-      <StreamApp apiKey={apiKey} appId={appId} token={token}>
-        <FlatFeed />
-      </StreamApp>
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token}>
+          <FlatFeed />
+        </StreamApp>
+      </SafeAreaView>
     );
   }
 
@@ -152,9 +159,11 @@ const App = () => {
     };
 
     return (
-      <StreamApp apiKey={apiKey} appId={appId} token={token}>
-        <FlatFeed renderActivity={renderActivity} />
-      </StreamApp>
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token}>
+          <FlatFeed renderActivity={renderActivity} />
+        </StreamApp>
+      </SafeAreaView>
     );
   }
 
@@ -165,10 +174,12 @@ const App = () => {
     };
 
     return (
-      <StreamApp apiKey={apiKey} appId={appId} token={token}>
-        <FlatFeed renderActivity={renderActivity} />
-        <StatusUpdateForm />
-      </StreamApp>
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token}>
+          <FlatFeed renderActivity={renderActivity} />
+          <StatusUpdateForm />
+        </StreamApp>
+      </SafeAreaView>
     );
   }
 
@@ -179,10 +190,12 @@ const App = () => {
     };
 
     return (
-      <StreamApp apiKey={apiKey} appId={appId} token={token}>
-        <FlatFeed renderActivity={renderActivity} notify />
-        <StatusUpdateForm feedGroup="timeline" />
-      </StreamApp>
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token}>
+          <FlatFeed renderActivity={renderActivity} notify />
+          <StatusUpdateForm feedGroup="timeline" />
+        </StreamApp>
+      </SafeAreaView>
     );
   }
 

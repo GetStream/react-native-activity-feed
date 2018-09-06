@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { StreamApp } from '../Context';
 import UrlPreview from './UrlPreview';
-import { pickImage } from '../native';
+import { pickImage, androidTranslucentStatusBar } from '../native';
 
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
@@ -42,7 +42,6 @@ type Props = {|
   screen: boolean,
   styles: StyleSheetLike,
   height: number,
-  enableAndroidKeyboardHandling: boolean,
 |};
 
 type State = {|
@@ -77,7 +76,6 @@ export default class StatusUpdateForm extends React.Component<Props> {
         textStyle: { fontSize: 14 },
       },
     },
-    enableAndroidKeyboardHandling: false,
   };
 
   render() {
@@ -91,13 +89,10 @@ export default class StatusUpdateForm extends React.Component<Props> {
               </View>
             );
           } else {
-            if (
-              Platform.OS === 'ios' ||
-              this.props.enableAndroidKeyboardHandling
-            ) {
+            if (Platform.OS === 'ios' || androidTranslucentStatusBar) {
               return (
                 <React.Fragment>
-                  <View style={this.props.height} />
+                  <View style={{ height: this.props.height }} />
                   <KeyboardAccessory>
                     <StatusUpdateFormInner {...this.props} {...appCtx} />
                   </KeyboardAccessory>

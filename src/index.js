@@ -40,4 +40,15 @@ export { default as IconBadge } from './components/IconBadge';
 
 export { updateStyle, getStyle } from './styles';
 export { humanizeTimestamp } from './utils';
-export { registerNativeHandlers } from './native';
+export {
+  registerNativeHandlers,
+  setAndroidTranslucentStatusBar,
+} from './native';
+
+import { setAndroidTranslucentStatusBar } from './native';
+
+if (global.Expo) {
+  setAndroidTranslucentStatusBar(true);
+} else {
+  setAndroidTranslucentStatusBar(false);
+}
