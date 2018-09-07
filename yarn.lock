@@ -7567,6 +7567,10 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-native-esoftplay-fast-image@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-esoftplay-fast-image/-/react-native-esoftplay-fast-image-1.0.8.tgz#d7d094a7340ef6f95e631e3b6e6752b0e862460c"
+
 react-native-iphone-x-helper@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.3.tgz#7a2f1e0574e899a0f1d426e6167fd98990083214"

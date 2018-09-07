@@ -177,6 +177,7 @@ export default class Activity extends React.Component<Props> {
           <Image
             style={{ width: width, height: width }}
             source={{ uri: image }}
+            resizeMethod="resize"
           />
         )}
 
@@ -186,6 +187,7 @@ export default class Activity extends React.Component<Props> {
             <Image
               style={{ width: width, height: width }}
               source={{ uri: attachments.images[0] }}
+              resizeMethod="resize"
             />
           )}
 

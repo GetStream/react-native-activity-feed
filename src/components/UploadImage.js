@@ -2,7 +2,6 @@
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import type { StyleSheetLike } from '../types';
-// $FlowFixMe https://github.com/facebook/flow/issues/345
 import PickPhotoIcon from '../images/icons/pickphoto.png';
 import { buildStylesheet } from '../styles';
 

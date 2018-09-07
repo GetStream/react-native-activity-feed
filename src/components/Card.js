@@ -33,6 +33,7 @@ const Card = (props: Props): any => {
       <Image
         style={styles.image}
         source={image ? { uri: image } : require('../images/placeholder.png')}
+        resizeMethod="resize"
       />
       <View style={styles.content}>
         <Text style={styles.title}>{_.truncate(title, { length: 60 })}</Text>

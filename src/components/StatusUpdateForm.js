@@ -366,6 +366,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                           ? styles.image_loading
                           : styles.image
                       }
+                      resizeMethod="resize"
                     />
                     <View style={styles.imageOverlay}>
                       {this.state.imageState === ImageState.UPLOADING ? (
