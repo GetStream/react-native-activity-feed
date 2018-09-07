@@ -3,12 +3,12 @@ import * as React from 'react';
 import { FlatList } from 'react-native';
 import { buildStylesheet } from '../styles';
 import { smartRender } from '../utils';
-import type { StyleSheetLike, BaseReactionMap, ReactThing } from '../types';
+import type { StyleSheetLike, BaseReactionMap, Renderable } from '../types';
 
 type Props = {|
   reactions: ?BaseReactionMap,
   reactionKind: string,
-  Reaction: ReactThing,
+  Reaction: Renderable,
   flatListProps?: {},
   children?: React.Node,
   styles?: StyleSheetLike,

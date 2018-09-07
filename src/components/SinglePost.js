@@ -7,7 +7,7 @@ import type { FeedRequestOptions } from 'getstream';
 import type {
   NavigationScreen,
   BaseActivityResponse,
-  ReactThing,
+  Renderable,
   StyleSheetLike,
 } from '../types';
 
@@ -17,7 +17,7 @@ type Props = {|
   userId?: string,
   options?: FeedRequestOptions,
   analyticsLocation?: string,
-  Activity?: ReactThing,
+  Activity?: Renderable,
   Footer?: any,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,

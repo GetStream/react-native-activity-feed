@@ -15,13 +15,13 @@ import _ from 'lodash';
 
 import UserBar from './UserBar';
 import Card from './Card';
-import type { ActivityData, StyleSheetLike, ReactThing } from '../types';
+import type { ActivityData, StyleSheetLike, Renderable } from '../types';
 import { smartRender } from '../utils';
 
 type Props = {
-  Header?: ReactThing,
-  Content?: ReactThing,
-  Footer?: ReactThing,
+  Header?: Renderable,
+  Content?: Renderable,
+  Footer?: Renderable,
   onPress?: () => mixed,
   onPressAvatar?: () => mixed,
   sub?: string,

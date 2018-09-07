@@ -43,13 +43,13 @@ export type ErrorHandler = (
 type ReactComponentClass = Class<React.Component<any>>;
 export type ReactComponentFunction = (props: any) => ?React.Element<any>;
 export type ReactElementCreator = ReactComponentClass | ReactComponentFunction;
-export type ReactThingButNotElement = ?(
+export type RenderableButNotElement = ?(
   | ReactElementCreator
   | boolean
   | number
   | string
 );
-export type ReactThing = ReactThingButNotElement | React.Element<any>;
+export type Renderable = RenderableButNotElement | React.Element<any>;
 
 export type BaseActivityResponse = ActivityResponse<{}, {}>;
 export type BaseAppCtx = AppCtx<{}>;

@@ -14,7 +14,7 @@ import type {
   StyleSheetLike,
   BaseFeedCtx,
   BaseUserSession,
-  ReactThing,
+  Renderable,
 } from '../types';
 import type {
   FeedRequestOptions,
@@ -27,13 +27,13 @@ type Props = {|
   userId?: string,
   /** read options for the API client (eg. limit, ranking, ...) */
   options?: FeedRequestOptions,
-  Activity: ReactThing,
+  Activity: Renderable,
   /** the component to use to render new activities notification */
-  Notifier: ReactThing,
+  Notifier: Renderable,
   /** if true, feed shows the Notifier component when new activities are added */
   notify: boolean,
   //** the element that renders the feed footer */
-  Footer?: ReactThing,
+  Footer?: Renderable,
   //** the feed read hander (change only for advanced/complex use-cases) */
   doFeedRequest?: (
     session: BaseUserSession,

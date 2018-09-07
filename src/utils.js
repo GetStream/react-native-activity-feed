@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import moment from 'moment';
-import type { ReactThing, ReactThingButNotElement } from './types';
+import type { Renderable, RenderableButNotElement } from './types';
 
 export function humanizeTimestamp(timestamp: string | number): string {
   let time = moment.utc(timestamp); // parse time as UTC
@@ -11,9 +11,9 @@ export function humanizeTimestamp(timestamp: string | number): string {
 }
 
 export const smartRender = (
-  ElementOrComponentOrLiteral: ReactThing,
+  ElementOrComponentOrLiteral: Renderable,
   props?: {},
-  fallback?: ReactThing,
+  fallback?: Renderable,
 ) => {
   if (ElementOrComponentOrLiteral === undefined) {
     ElementOrComponentOrLiteral = fallback;
@@ -23,7 +23,7 @@ export const smartRender = (
   }
 
   // Flow cast through any to remove React.Element after previous check
-  let ComponentOrLiteral = ((ElementOrComponentOrLiteral: any): ReactThingButNotElement);
+  let ComponentOrLiteral = ((ElementOrComponentOrLiteral: any): RenderableButNotElement);
   if (
     typeof ComponentOrLiteral === 'string' ||
     typeof ComponentOrLiteral === 'number' ||

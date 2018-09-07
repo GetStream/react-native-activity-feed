@@ -13,7 +13,7 @@ import type {
   BaseActivityResponse,
   BaseFeedCtx,
   BaseUserSession,
-  ReactThing,
+  Renderable,
 } from '../types';
 import type { FeedRequestOptions, FeedResponse } from 'getstream';
 
@@ -21,11 +21,11 @@ type Props = {|
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
-  Group: ReactThing,
+  Group: Renderable,
   /** if true, feed shows the NewActivitiesNotification component when new activities are added */
   notify?: boolean,
   /** the component to use to render new activities notification */
-  Notifier: ReactThing,
+  Notifier: Renderable,
   doFeedRequest?: (
     session: BaseUserSession,
     feedGroup: string,
