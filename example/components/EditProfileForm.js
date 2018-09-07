@@ -8,17 +8,20 @@ import { Avatar, UploadImage } from 'expo-activity-feed';
 import FormField from './FormField';
 import { StreamApp } from 'expo-activity-feed';
 import type { UserData, StreamAppCtx } from '../types';
+import type { AppCtx } from 'expo-activity-feed';
 
 type Props = {|
   registerSave: (saveFunc: () => any) => void,
 |};
 
-export default function EditProfileForm(props: Props) {
-  return (
-    <StreamApp.Consumer>
-      {(appCtx) => <EditProfileFormInner {...props} {...appCtx} />}
-    </StreamApp.Consumer>
+export default class EditProfileForm extends React.Component<Props> {
+  _appCtxWrapperFunc = (appCtx: AppCtx<UserData>) => (
+    <EditProfileFormInner {...this.props} {...appCtx} />
   );
+
+  render() {
+    return <StreamApp.Consumer>{this._appCtxWrapperFunc}</StreamApp.Consumer>;
+  }
 }
 
 type PropsInner = {| ...Props, ...StreamAppCtx |};
