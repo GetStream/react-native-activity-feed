@@ -25,7 +25,6 @@ import type {
   ToggleReactionCallbackFunction,
   AddReactionCallbackFunction,
   RemoveReactionCallbackFunction,
-  ReactElementCreator,
   ErrorHandler,
 } from './types';
 
@@ -80,7 +79,7 @@ export class StreamApp extends React.Component<
   };
 
   static Consumer = function StreamAppConsumer(props: {
-    children?: ReactElementCreator,
+    children?: (AppCtx<any>) => ?React.Element<any>,
   }) {
     return (
       <StreamContext.Consumer>
@@ -94,7 +93,7 @@ export class StreamApp extends React.Component<
             );
           }
           let Child = props.children;
-          return <Child {...appCtx} />;
+          return Child(appCtx);
         }}
       </StreamContext.Consumer>
     );

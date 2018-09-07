@@ -14,14 +14,12 @@ import type { UserData } from '../types';
 
 type Props = {};
 
-export default class ProfileHeader extends React.Component<Props> {
-  _appCtxWrapperFunc = (appCtx: AppCtx<UserData>) => (
-    <ProfileHeaderInner {...this.props} {...appCtx} />
+export default function ProfileHeader(props: Props) {
+  return (
+    <StreamApp.Consumer>
+      {(appCtx) => <ProfileHeaderInner {...props} {...appCtx} />}
+    </StreamApp.Consumer>
   );
-
-  render() {
-    return <StreamApp.Consumer>{this._appCtxWrapperFunc}</StreamApp.Consumer>;
-  }
 }
 
 type PropsInner = Props & AppCtx<UserData>;
