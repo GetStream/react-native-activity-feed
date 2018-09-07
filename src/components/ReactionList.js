@@ -2,16 +2,13 @@
 import * as React from 'react';
 import { FlatList } from 'react-native';
 import { buildStylesheet } from '../styles';
-import type {
-  StyleSheetLike,
-  BaseReactionMap,
-  ReactComponentFunction,
-} from '../types';
+import { smartRender } from '../utils';
+import type { StyleSheetLike, BaseReactionMap, ReactThing } from '../types';
 
 type Props = {|
   reactions: ?BaseReactionMap,
   reactionKind: string,
-  renderReaction: ReactComponentFunction,
+  Reaction: ReactThing,
   flatListProps?: {},
   children?: React.Node,
   styles?: StyleSheetLike,
@@ -37,7 +34,7 @@ const ReactionList = ({ reactions, reactionKind, ...props }: Props) => {
         data={reactionsOfKind}
         keyExtractor={(item, i) => item.id || '' + i}
         listKey={reactionKind}
-        renderItem={({ item }) => props.renderReaction(item)}
+        renderItem={({ item }) => smartRender(props.Reaction, item)}
         {...props.flatListProps}
       />
     </React.Fragment>

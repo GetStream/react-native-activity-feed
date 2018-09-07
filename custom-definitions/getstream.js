@@ -42,6 +42,7 @@ declare module 'getstream' {
 
   declare class StreamUserSession<UserData> {
     userId: string;
+    token: string;
     user: StreamUser<UserData>;
     feed<CustomActivityData>(
       feedGroup: string,

@@ -7,7 +7,7 @@ import type { FeedRequestOptions } from 'getstream';
 import type {
   NavigationScreen,
   BaseActivityResponse,
-  ReactComponentFunction,
+  ReactThing,
   StyleSheetLike,
 } from '../types';
 
@@ -17,7 +17,7 @@ type Props = {|
   userId?: string,
   options?: FeedRequestOptions,
   analyticsLocation?: string,
-  renderActivity: ReactComponentFunction,
+  Activity?: ReactThing,
   Footer?: any,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,
@@ -38,7 +38,7 @@ export default class SinglePost extends React.Component<Props> {
             withRecentReactions: true,
             ...this.props.options,
           }}
-          renderActivity={this.props.renderActivity}
+          Activity={this.props.Activity}
           styles={this.props.styles}
           navigation={this.props.navigation}
           doFeedRequest={(session, feedGroup, userId, options) => {

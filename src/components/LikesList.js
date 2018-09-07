@@ -23,7 +23,7 @@ const LikesList = ({ reactions }: Props) => {
       reactions={reactions}
       reactionKind={'like'}
       flatListProps={{ horizontal: true }}
-      renderReaction={(reaction) => (
+      Reaction={(reaction) => (
         <TouchableOpacity style={{ marginRight: 10 }}>
           <Avatar source={reaction.user.data.profileImage} size={25} noShadow />
         </TouchableOpacity>

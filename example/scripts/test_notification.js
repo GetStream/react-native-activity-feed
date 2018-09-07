@@ -2,16 +2,27 @@
 import stream from 'getstream';
 import type { UserSession, CloudClient } from '../types';
 
-async function main() {
-  // let apiKey = process.env['STREAM_API_KEY'] || '';
-  // let apiSecret = process.env['STREAM_API_SECRET'] || '';
-  // let appId = process.env['STREAM_APP_ID'] || '';
-  // let apiUrl = process.env['STREAM_API_URL'];
+import dotenv from 'dotenv';
+dotenv.config();
 
-  let apiKey = '6hwxyxcq4rpe';
-  let appId = '35808';
-  let apiSecret =
-    '8mdkn9n6vqe4dngtjznnm66n2e9vq3x6a2ep5e82gdxntbqbftmqmtxwqee47rjt';
+async function main() {
+  let apiKey = process.env.STREAM_API_KEY;
+  let apiSecret = process.env.STREAM_API_SECRET;
+  let appId = process.env.STREAM_APP_ID;
+  if (!apiKey) {
+    console.error('STREAM_API_KEY should be set');
+    return;
+  }
+
+  if (!appId) {
+    console.error('STREAM_APP_ID should be set');
+    return;
+  }
+
+  if (!apiSecret) {
+    console.error('STREAM_SECRET should be set');
+    return;
+  }
 
   console.log(apiKey, apiSecret);
   let client: CloudClient = stream.connectCloud(apiKey, appId, {

@@ -7,14 +7,14 @@ import NewActivitiesNotification from './NewActivitiesNotification';
 
 import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
+import { smartRender } from '../utils';
 
 import type {
   NavigationScreen,
   StyleSheetLike,
-  ReactElementCreator,
   BaseFeedCtx,
   BaseUserSession,
-  ReactComponentFunction,
+  ReactThing,
 } from '../types';
 import type {
   FeedRequestOptions,
@@ -27,14 +27,13 @@ type Props = {|
   userId?: string,
   /** read options for the API client (eg. limit, ranking, ...) */
   options?: FeedRequestOptions,
-  renderActivity?: ReactComponentFunction,
-  ActivityComponent?: ReactElementCreator,
+  Activity: ReactThing,
   /** the component to use to render new activities notification */
-  NewActivitiesComponent?: ReactElementCreator,
-  /** if true, feed shows the NewActivitiesNotification component when new activities are added */
-  notify?: boolean,
+  Notifier: ReactThing,
+  /** if true, feed shows the Notifier component when new activities are added */
+  notify: boolean,
   //** the element that renders the feed footer */
-  Footer?: ReactElementCreator,
+  Footer?: ReactThing,
   //** the feed read hander (change only for advanced/complex use-cases) */
   doFeedRequest?: (
     session: BaseUserSession,
@@ -60,6 +59,8 @@ export default class FlatFeed extends React.Component<Props> {
     styles: {},
     feedGroup: 'timeline',
     notify: false,
+    Activity: Activity,
+    Notifier: NewActivitiesNotification,
   };
 
   render() {
@@ -124,47 +125,20 @@ class FlatFeedInner extends React.Component<PropsInner> {
       ...this._childProps(),
     };
 
-    if (this.props.renderActivity) {
-      return this.props.renderActivity(args);
-    }
-
-    if (this.props.ActivityComponent) {
-      let ActivityComponent = this.props.ActivityComponent;
-      return <ActivityComponent {...args} />;
-    }
-
-    if (!this.props.renderActivity && !this.props.ActivityComponent) {
-      return <Activity {...args} />;
-    }
-
-    return null;
+    return smartRender(this.props.Activity, { ...args });
   };
 
-  getNewActivitiesComponent() {
-    if (this.props.notify || this.props.NewActivitiesComponent) {
-      return this.props.NewActivitiesComponent
-        ? this.props.NewActivitiesComponent
-        : NewActivitiesNotification;
-    }
-  }
-
   render() {
-    let { Footer } = this.props;
     let styles = buildStylesheet('flatFeed', this.props.styles);
-    let NewActivitiesComponent = this.getNewActivitiesComponent();
-    if (NewActivitiesComponent) {
-      NewActivitiesComponent = (
-        <NewActivitiesComponent
-          adds={this.props.realtimeAdds}
-          deletes={this.props.realtimeDeletes}
-          onPress={this._refresh}
-        />
-      );
-    }
+    let notifierProps = {
+      adds: this.props.realtimeAdds,
+      deletes: this.props.realtimeDeletes,
+      onPress: this._refresh,
+    };
 
     return (
       <React.Fragment>
-        {NewActivitiesComponent}
+        {smartRender(this.props.Notifier, notifierProps)}
         <FlatList
           ListHeaderComponent={this.props.children}
           style={styles.container}
@@ -184,11 +158,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
           }
           ref={this.listRef}
         />
-        {!Footer || React.isValidElement(Footer) ? (
-          Footer
-        ) : (
-          <Footer {...this._childProps()} />
-        )}
+        {smartRender(this.props.Footer, this._childProps())}
       </React.Fragment>
     );
   }

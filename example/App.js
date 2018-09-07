@@ -161,7 +161,7 @@ const App = () => {
     return (
       <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
         <StreamApp apiKey={apiKey} appId={appId} token={token}>
-          <FlatFeed renderActivity={renderActivity} />
+          <FlatFeed Activity={renderActivity} />
         </StreamApp>
       </SafeAreaView>
     );
@@ -176,7 +176,7 @@ const App = () => {
     return (
       <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
         <StreamApp apiKey={apiKey} appId={appId} token={token}>
-          <FlatFeed renderActivity={renderActivity} />
+          <FlatFeed Activity={renderActivity} />
           <StatusUpdateForm />
         </StreamApp>
       </SafeAreaView>
@@ -192,7 +192,7 @@ const App = () => {
     return (
       <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
         <StreamApp apiKey={apiKey} appId={appId} token={token}>
-          <FlatFeed renderActivity={renderActivity} notify />
+          <FlatFeed Activity={renderActivity} notify />
           <StatusUpdateForm feedGroup="timeline" />
         </StreamApp>
       </SafeAreaView>
@@ -200,12 +200,12 @@ const App = () => {
   }
 
   // eslint-disable-next-line no-unused-vars
-  // return example();
+  return example();
   // return stepOne();
   // return stepTwo();
   // return stepThree();
   // return stepFour();
-  return stepFive();
+  // return stepFive();
 };
 
 export default App;

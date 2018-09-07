@@ -15,12 +15,13 @@ import _ from 'lodash';
 
 import UserBar from './UserBar';
 import Card from './Card';
-import type { ActivityData, StyleSheetLike } from '../types';
+import type { ActivityData, StyleSheetLike, ReactThing } from '../types';
+import { smartRender } from '../utils';
 
 type Props = {
-  Header?: React.Element<any>,
-  Content?: React.Element<any>,
-  Footer?: React.Element<any>,
+  Header?: ReactThing,
+  Content?: ReactThing,
+  Footer?: ReactThing,
   onPress?: () => mixed,
   onPressAvatar?: () => mixed,
   sub?: string,
@@ -222,20 +223,10 @@ export default class Activity extends React.Component<Props> {
         onPress={this._getOnPress()}
         disabled={!this._getOnPress()}
       >
-        {smartRender(Header, this.renderHeader)}
-        {smartRender(Content, this.renderContent)}
-        {smartRender(Footer, this.renderFooter)}
+        {smartRender(Header, {}, this.renderHeader)}
+        {smartRender(Content, {}, this.renderContent)}
+        {smartRender(Footer, {}, this.renderFooter)}
       </TouchableOpacity>
     );
   }
-}
-
-function smartRender(MaybeElement: any, fallback) {
-  if (MaybeElement !== undefined) {
-    if (!MaybeElement) {
-      return null;
-    }
-    return React.isValidElement(MaybeElement) ? MaybeElement : <MaybeElement />;
-  }
-  return fallback && fallback();
 }

@@ -5,6 +5,7 @@ import { FlatList, RefreshControl } from 'react-native';
 import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
 import NewActivitiesNotification from './NewActivitiesNotification';
+import { smartRender } from '../utils';
 
 import type {
   NavigationScreen,
@@ -12,8 +13,7 @@ import type {
   BaseActivityResponse,
   BaseFeedCtx,
   BaseUserSession,
-  ReactComponentFunction,
-  ReactElementCreator,
+  ReactThing,
 } from '../types';
 import type { FeedRequestOptions, FeedResponse } from 'getstream';
 
@@ -21,11 +21,11 @@ type Props = {|
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
-  renderGroup: ReactComponentFunction,
+  Group: ReactThing,
   /** if true, feed shows the NewActivitiesNotification component when new activities are added */
   notify?: boolean,
   /** the component to use to render new activities notification */
-  NewActivitiesComponent?: ReactElementCreator,
+  Notifier: ReactThing,
   doFeedRequest?: (
     session: BaseUserSession,
     feedGroup: string,
@@ -43,6 +43,7 @@ export default class NotificationFeed extends React.Component<Props> {
   static defaultProps = {
     feedGroup: 'notification',
     styles: {},
+    Notifier: NewActivitiesNotification,
   };
 
   render() {
@@ -109,33 +110,19 @@ class NotificationFeedInner extends React.Component<PropsInner> {
       onAddReaction: this.props.onAddReaction,
       onRemoveReaction: this.props.onRemoveReaction,
     };
-    return this.props.renderGroup(args);
+    return smartRender(this.props.Group, args);
   };
-
-  getNewActivitiesComponent() {
-    if (this.props.notify || this.props.NewActivitiesComponent) {
-      return this.props.NewActivitiesComponent
-        ? this.props.NewActivitiesComponent
-        : NewActivitiesNotification;
-    }
-  }
 
   render() {
     let styles = buildStylesheet('notificationFeed', this.props.styles);
-    let NewActivitiesComponent = this.getNewActivitiesComponent();
-    if (NewActivitiesComponent) {
-      NewActivitiesComponent = (
-        <NewActivitiesComponent
-          adds={this.props.realtimeAdds}
-          deletes={this.props.realtimeDeletes}
-          onPress={this._refresh}
-        />
-      );
-    }
-
+    let notifierProps = {
+      adds: this.props.realtimeAdds,
+      deletes: this.props.realtimeDeletes,
+      onPress: this._refresh,
+    };
     return (
       <React.Fragment>
-        {NewActivitiesComponent}
+        {smartRender(this.props.Notifier, notifierProps)}
         <FlatList
           ListHeaderComponent={this.props.children}
           style={styles.container}

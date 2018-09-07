@@ -20,7 +20,7 @@ const CommentList = ({ reactions }: Props) => {
     <ReactionList
       reactions={reactions}
       reactionKind={'comment'}
-      renderReaction={(reaction) => <CommentItem comment={reaction} />}
+      Reaction={(reaction) => <CommentItem comment={reaction} />}
     >
       <SectionHeader>Comments</SectionHeader>
     </ReactionList>
