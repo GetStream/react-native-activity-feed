@@ -1,6 +1,8 @@
 Stream React Native Activity Feed Components
 ============================================
 
+![react native activity feed](./src/images/githubhero.png)
+
 The official React Native integration library for Stream, a web service for building scalable newsfeeds and activity streams.
 
 ## TL;DR built-in components short list
