@@ -39,7 +39,7 @@ type Props = {|
   feedGroup: string,
   userId?: string,
   activityVerb: string,
-  screen: boolean,
+  fullscreen: boolean,
   styles: StyleSheetLike,
   height: number,
 |};
@@ -62,7 +62,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
   static defaultProps = {
     feedGroup: 'user',
     activityVerb: 'post',
-    screen: false,
+    fullscreen: false,
     height: 80,
     styles: {
       urlPreview: {
@@ -82,7 +82,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
     return (
       <StreamApp.Consumer>
         {(appCtx) => {
-          if (this.props.screen) {
+          if (this.props.fullscreen) {
             return (
               <View style={{ flex: 1 }}>
                 <StatusUpdateFormInner {...this.props} {...appCtx} />
@@ -305,14 +305,14 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   render() {
     let styles = buildStylesheet('statusUpdateForm', this.props.styles);
     return (
-      <View style={[this.props.screen ? { flex: 1 } : {}]}>
+      <View style={[this.props.fullscreen ? { flex: 1 } : {}]}>
         <View
           style={[
             styles.container,
             this.props.height ? { height: this.props.height } : { height: 80 },
             this.state.focused ? styles.containerFocused : {},
             this.state.og ? styles.containerFocusedOg : {},
-            this.props.screen ? { flex: 1 } : {},
+            this.props.fullscreen ? { flex: 1 } : {},
           ]}
         >
           {this.state.og && (
@@ -330,7 +330,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
             <View style={[styles.textInput]}>
               <TextInput
                 ref={this.textInputRef}
-                style={this.props.screen ? { flex: 1 } : {}}
+                style={this.props.fullscreen ? { flex: 1 } : {}}
                 multiline
                 onChangeText={(text) => {
                   this.setState({ textFromInput: text });
@@ -410,7 +410,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
             </View>
           </View>
         </View>
-        {this.props.screen ? <KeyboardSpacer /> : null}
+        {this.props.fullscreen ? <KeyboardSpacer /> : null}
       </View>
     );
   }
