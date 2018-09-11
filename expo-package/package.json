@@ -1,6 +1,6 @@
 {
   "name": "expo-activity-feed",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "license": "BSD-3-Clause",
   "author": {
     "company": "Stream.io Inc"
@@ -45,7 +45,7 @@
     "postpack": "../bin/postpack.sh && rm README.md"
   },
   "dependencies": {
-    "react-native-activity-feed-core": "0.6.0"
+    "react-native-activity-feed-core": "0.6.1"
   },
   "peerDependencies": {
     "expo": "^27.0.0"
