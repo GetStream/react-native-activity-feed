@@ -1,12 +1,47 @@
 // @flow
 
 import type { FlowRequestTypes } from './types';
+import stream from 'getstream';
 export const handleError = (
   error: Error,
   type: FlowRequestTypes,
   detail: Object,
 ) => {
   console.warn(error);
+  alert(getErrorMessage(error, type, detail));
+};
+
+export const getErrorMessage = (
+  error: Error,
+  type: FlowRequestTypes,
+  detail: Object,
+): string => {
+  console.warn(error);
+  if (!(error instanceof stream.errors.StreamApiError)) {
+    return fallbackErrorMessage(error, type, detail);
+  }
+  let response = error.response;
+
+  if (!response.statusCode || !response.body || !response.body.detail) {
+    return fallbackErrorMessage(error, type, detail);
+  }
+  let statusCode = response.statusCode;
+  let text = response.body.detail;
+
+  if (statusCode >= 400 && statusCode < 500) {
+    return text;
+  } else if (statusCode >= 500 && statusCode < 600) {
+    return text;
+  }
+
+  return fallbackErrorMessage(error, type, detail);
+};
+
+export const fallbackErrorMessage = (
+  error: Error,
+  type: FlowRequestTypes,
+  detail: Object,
+): string => {
   let text = 'Something went wrong';
   let suffix = '';
   switch (type) {
@@ -38,5 +73,5 @@ export const handleError = (
   }
 
   text += '. Is your internet working?' + suffix;
-  alert(text);
+  return text;
 };
