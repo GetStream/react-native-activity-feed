@@ -5830,9 +5830,9 @@ react-is@^16.3.1:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
 
-react-native-activity-feed-core@0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.1.tgz#788295ebf60018b2af70a2675dbf86104386113b"
+react-native-activity-feed-core@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.2.tgz#4580d6cd508b858e907c701b76dde75132ccec63"
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
