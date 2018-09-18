@@ -167,7 +167,7 @@ export default class Activity extends React.Component<Props> {
       <View>
         {Boolean(text) && (
           <View style={styles.content}>
-            <Text>{text}</Text>
+            <Text>{this.renderText(text, this.props.activity)}</Text>
           </View>
         )}
 
