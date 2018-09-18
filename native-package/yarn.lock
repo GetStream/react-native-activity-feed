@@ -3255,9 +3255,9 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@3.21.0-beta.7:
-  version "3.21.0-beta.7"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.7.tgz#7ef623fe839e1e1854b56fbcb31c65fcaa998cea"
+getstream@3.21.0:
+  version "3.21.0"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0.tgz#5526dc706d3ec232984ed7eba1f574d996ff5a56"
   dependencies:
     "@babel/runtime" "^7.0.0"
     Base64 "^1.0.1"
@@ -5453,13 +5453,13 @@ react-is@^16.3.1:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
 
-react-native-activity-feed-core@0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.2.tgz#4580d6cd508b858e907c701b76dde75132ccec63"
+react-native-activity-feed-core@0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.3.tgz#e7577337b915aeee851956ea2dd40124beea4e56"
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
-    getstream "3.21.0-beta.7"
+    getstream "3.21.0"
     immutable "^4.0.0-rc.9"
     moment "^2.22.2"
     numeral "^2.0.6"
@@ -7007,9 +7007,9 @@ xmldom@0.1.x, xmldom@^0.1.27:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
 
-"xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
+"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"
-  resolved "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 xpipe@^1.0.5:
   version "1.0.5"
