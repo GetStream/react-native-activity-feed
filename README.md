@@ -5,7 +5,7 @@ Stream React Native Activity Feed Components
 
 The official React Native integration library for Stream, a web service for building scalable newsfeeds and activity streams.
 
-## TL;DR built-in components short list
+## TL;DR built-in components for social networks and regular apps
 
 - Flat feeds
 - Notification feed
@@ -84,7 +84,7 @@ buildscript {
 ```
 
 
-## Usage
+## Usage & Activity Feed setup
 
 ### Setup StreamApp component
 
