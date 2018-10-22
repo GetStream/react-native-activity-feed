@@ -38,7 +38,7 @@ export {
 } from './components/NewActivitiesNotification';
 export { default as IconBadge } from './components/IconBadge';
 
-export { updateStyle, getStyle } from './styles';
+export { updateStyle, getStyle, buildStylesheet } from './styles';
 export { humanizeTimestamp } from './utils';
 export {
   registerNativeHandlers,

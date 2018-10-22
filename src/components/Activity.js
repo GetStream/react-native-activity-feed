@@ -56,7 +56,7 @@ export default class Activity extends React.Component<Props> {
       updated_at: '',
       data: { name: 'Unknown', profileImage: '' },
     };
-    if (actor === 'NotFound') {
+    if (actor === 'NotFound' || actor == null || actor.error != null) {
       actor = notFound;
     }
     let styles = buildStylesheet('activity', this.props.styles);
