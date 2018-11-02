@@ -86,12 +86,17 @@ type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class FlatFeedInner extends React.Component<PropsInner> {
   listRef = React.createRef();
   _refresh = async () => {
+    this._scrollToTop();
     await this.props.refresh(this.props.options);
+    this._scrollToTop();
+  };
+
+  _scrollToTop() {
     let ref = this.listRef;
     if (ref && ref.current) {
       ref.current.scrollToOffset({ offset: 0 });
     }
-  };
+  }
   async componentDidMount() {
     await this._refresh();
   }

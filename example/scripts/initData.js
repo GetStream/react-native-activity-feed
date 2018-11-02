@@ -157,7 +157,7 @@ async function main() {
   let activities = [];
   for (let i = 1; i < 41; i++) {
     activities.push({
-      foreign_id: 'filler-i',
+      foreign_id: `filler-${i}`,
       time: '2018-07-10T01:23:' + (60 - i),
 
       actor: batman.user,
