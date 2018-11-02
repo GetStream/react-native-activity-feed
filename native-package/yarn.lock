@@ -3731,10 +3731,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@3.21.0:
-  version "3.21.0"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0.tgz#5526dc706d3ec232984ed7eba1f574d996ff5a56"
-  integrity sha512-vRMpcTgz1tHmPDse941yjWU4QAJxmfLlR9t7W3k98vycpb5pojR0CmvcSfhFjjck2YZ0DamhGro8c8DLfSScEA==
+getstream@^3.23.0:
+  version "3.23.0"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.23.0.tgz#aa3bc62707bd5ca40aeb31c7d648ad60530345b0"
+  integrity sha512-dZCfidxf4p+U+ibcmcq1QHi6cFLztr7kDZD54E79JPf+IoRTIKMaGdFgCQOerNrpgOlk/2cz+ACo/U6osWTRLQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     Base64 "^1.0.1"
@@ -6295,14 +6295,14 @@ react-is@^16.3.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
   integrity sha512-rI3cGFj/obHbBz156PvErrS5xc6f1eWyTwyV4mo0vF2lGgXgS+mm7EKD5buLJq6jNgIagQescGSVG2YzgXt8Yg==
 
-react-native-activity-feed-core@0.6.4:
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.4.tgz#5d55339b4847ab1c7573e602ca3ab49755635d8f"
-  integrity sha512-sd6gtj4R/qYHCTeOUxu8Tv1CiAkId+aFPdHewPrFmjAkKbwxXf/fvxwEwY8nnEiTXP1zvQjaHOGKYmI8vD309A==
+react-native-activity-feed-core@v0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.6.tgz#fb229f9f983938aa11bb3504c71756c2597c5341"
+  integrity sha512-pees5rdC+iFluyxPZRYlpgELeeoUsRWF7RndU9SmtlE67LUGNC/tHjNhLjC3J/UWC9jOqkitEgtTeulJ1Vmh3g==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
-    getstream "3.21.0"
+    getstream "^3.23.0"
     immutable "^4.0.0-rc.9"
     moment "^2.22.2"
     numeral "^2.0.6"
@@ -8087,9 +8087,9 @@ xmldom@0.1.x, xmldom@^0.1.27:
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
   integrity sha1-1QH5ezvbQDr4757MIFcxh6rawOk=
 
-"xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
+"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"
-  resolved "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 xpipe@^1.0.5:
   version "1.0.5"
