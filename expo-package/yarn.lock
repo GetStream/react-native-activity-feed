@@ -6724,10 +6724,10 @@ react-is@^16.3.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
   integrity sha512-rI3cGFj/obHbBz156PvErrS5xc6f1eWyTwyV4mo0vF2lGgXgS+mm7EKD5buLJq6jNgIagQescGSVG2YzgXt8Yg==
 
-react-native-activity-feed-core@v0.6.6:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.6.tgz#fb229f9f983938aa11bb3504c71756c2597c5341"
-  integrity sha512-pees5rdC+iFluyxPZRYlpgELeeoUsRWF7RndU9SmtlE67LUGNC/tHjNhLjC3J/UWC9jOqkitEgtTeulJ1Vmh3g==
+react-native-activity-feed-core@v0.6.7:
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.7.tgz#bc5d8478c5de0dbdd652b8d786b7dd17dffe0623"
+  integrity sha512-ZUyOurRHHCApv8QlQxYGIB+eevx3UazmGcUgPLe49+FvQ7E/lf+C1b1w+DxTKar8UPn6tHt8nBUx0bSb+kOpAA==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
@@ -8580,9 +8580,9 @@ xmldom@0.1.x, xmldom@^0.1.27:
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
   integrity sha1-1QH5ezvbQDr4757MIFcxh6rawOk=
 
-"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
+"xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"
-  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+  resolved "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 xpipe@^1.0.5:
   version "1.0.5"
