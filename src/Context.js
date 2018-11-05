@@ -461,8 +461,7 @@ class FeedManager {
     } else {
       response = this.feed().get(options);
     }
-
-    if (Platform === 'ios') {
+    if (Platform.OS === 'ios') {
       // Workaround for this issue: https://github.com/facebook/react-native/issues/5839
       const requestTime = Date.now() - requestWasSentAt;
       const MINIMUM_TIME_BETWEEN_REFRESHING_PROP_UPDATES = 350;
