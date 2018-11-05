@@ -34,3 +34,7 @@ export const smartRender = (
   }
   return <ComponentOrLiteral {...props} />;
 };
+
+export function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

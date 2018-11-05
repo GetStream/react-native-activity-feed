@@ -1,11 +1,14 @@
 // @flow
 
 import * as React from 'react';
+import { Platform } from 'react-native';
 import { View, Text, Image } from 'react-native';
 import immutable from 'immutable';
 import stream from 'getstream';
 import URL from 'url-parse';
 import _ from 'lodash';
+
+import { sleep } from './utils';
 
 import StreamAnalytics from 'stream-analytics';
 import type {
@@ -445,15 +448,31 @@ class FeedManager {
   });
 
   doFeedRequest = async (options: FeedRequestOptions) => {
+    const requestWasSentAt = Date.now();
+    let response;
+
     if (this.props.doFeedRequest) {
-      return this.props.doFeedRequest(
+      response = this.props.doFeedRequest(
         this.props.session,
         this.props.feedGroup,
         this.props.userId,
         options,
       );
+    } else {
+      response = this.feed().get(options);
     }
-    return this.feed().get(options);
+
+    if (Platform === 'ios') {
+      // Workaround for this issue: https://github.com/facebook/react-native/issues/5839
+      const requestTime = Date.now() - requestWasSentAt;
+      const MINIMUM_TIME_BETWEEN_REFRESHING_PROP_UPDATES = 350;
+      const waitTime =
+        MINIMUM_TIME_BETWEEN_REFRESHING_PROP_UPDATES - requestTime;
+      if (waitTime > 0) {
+        await sleep(waitTime);
+      }
+    }
+    return response;
   };
 
   feed = () => {
