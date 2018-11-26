@@ -192,7 +192,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
   async addActivity() {
     let activity: CustomActivityArgData = {
-      actor: this.props.session.user,
+      actor: this.props.session.currentUser,
       verb: this.props.activityVerb,
       object: this._object(),
     };

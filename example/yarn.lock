@@ -3658,9 +3658,27 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@3.21.0-beta.7:
-  version "3.21.0-beta.7"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.21.0-beta.7.tgz#7ef623fe839e1e1854b56fbcb31c65fcaa998cea"
+getstream@^3.23.0:
+  version "3.23.1"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-3.23.1.tgz#5f73dcb1382aab9c6407e11aa5c61ca3853006da"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    Base64 "^1.0.1"
+    cross-fetch "^2.2.2"
+    faye "^1.2.4"
+    form-data "^2.3.2"
+    http-signature "~1.2.0"
+    jsonwebtoken "^8.3.0"
+    jwt-decode "^2.2.0"
+    lodash "^4.17.10"
+    qs "^6.5.1"
+    request "^2.86.0"
+    whatwg-fetch "^2.0.4"
+    xmlhttp-request "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+
+getstream@^4.0.0-0:
+  version "4.0.0-0"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.0-0.tgz#5291a14ed14ded52b092a3a45cfb2eb2a400c4c3"
   dependencies:
     "@babel/runtime" "^7.0.0"
     Base64 "^1.0.1"
@@ -6449,13 +6467,17 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-native-activity-feed-core@0.5.17:
-  version "0.5.17"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.5.17.tgz#edf67b11b05112d4480a91d3b1798e99cf016723"
+"react-native-activity-feed-core@link:..":
+  version "0.0.0"
+  uid ""
+
+react-native-activity-feed-core@v0.6.8:
+  version "0.6.8"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.8.tgz#5ab1cf9268402320401ef5db8bbddb5add155618"
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
-    getstream "3.21.0-beta.7"
+    getstream "^3.23.0"
     immutable "^4.0.0-rc.9"
     moment "^2.22.2"
     numeral "^2.0.6"
@@ -6464,10 +6486,6 @@ react-native-activity-feed-core@0.5.17:
     react-native-sticky-keyboard-accessory "^0.1.1"
     stream-analytics "^2.7.1"
     url-parse "^1.4.3"
-
-"react-native-activity-feed-core@link:..":
-  version "0.0.0"
-  uid ""
 
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
@@ -8379,9 +8397,9 @@ xmldom@0.1.x, xmldom@^0.1.27:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
 
-"xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
+"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"
-  resolved "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 xpipe@^1.0.5:
   version "1.0.5"

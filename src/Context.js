@@ -11,11 +11,7 @@ import _ from 'lodash';
 import { sleep } from './utils';
 
 import StreamAnalytics from 'stream-analytics';
-import type {
-  StreamCloudClient,
-  StreamUser,
-  StreamUserSession,
-} from 'getstream';
+import type { StreamClient, StreamUser } from 'getstream';
 import type {
   FeedRequestOptions,
   FeedResponse,
@@ -105,26 +101,27 @@ export class StreamApp extends React.Component<
   constructor(props: StreamAppProps<Object>) {
     super(props);
 
-    let client: StreamCloudClient<Object> = stream.connectCloud(
+    let client: StreamClient<Object> = stream.connect(
       this.props.apiKey,
+      this.props.token,
       this.props.appId,
       this.props.options || {},
     );
 
-    let session = client.createUserSession(this.props.token);
-
     let analyticsClient;
+
     if (this.props.analyticsToken) {
       analyticsClient = new StreamAnalytics({
         apiKey: this.props.apiKey,
         token: this.props.analyticsToken,
       });
-      analyticsClient.setUser(session.userId);
+      analyticsClient.setUser(client.userId);
     }
     this.state = {
-      session: session,
-      user: session.user,
-      userData: session.user.data,
+      session: client,
+      user: client.currentUser,
+      userId: client.currentUser.id,
+      userData: client.currentUser.data,
       changedUserData: () => {
         this.setState({ userData: this.state.user.data });
       },
@@ -339,7 +336,11 @@ class FeedManager {
   ) => {
     let reaction;
     try {
-      reaction = await this.props.session.react(kind, activity, options);
+      reaction = await this.props.session.reactions.add(
+        kind,
+        activity,
+        options,
+      );
     } catch (e) {
       this.props.errorHandler(e, 'add-reaction', {
         kind,
@@ -450,7 +451,6 @@ class FeedManager {
   doFeedRequest = async (options: FeedRequestOptions) => {
     const requestWasSentAt = Date.now();
     let response;
-
     if (this.props.doFeedRequest) {
       response = this.props.doFeedRequest(
         this.props.session,
@@ -505,7 +505,6 @@ class FeedManager {
 
   refresh = async (extraOptions) => {
     let options = this.getOptions(extraOptions);
-
     await this.setState({ refreshing: true });
     let response;
     try {
