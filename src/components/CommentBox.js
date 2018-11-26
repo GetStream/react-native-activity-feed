@@ -4,8 +4,8 @@ import { View, TextInput } from 'react-native';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 
 import Avatar from './Avatar';
-
-import type { StyleSheetLike } from '../types';
+import { NativeSyntheticEvent } from 'react-native';
+import type { StyleSheetLike, ActivityData } from '../types';
 import type { Props as AvatarProps } from './Avatar';
 import { buildStylesheet } from '../styles';
 
@@ -20,6 +20,10 @@ type Props = {|
   noAvatar?: boolean,
   /** style changes to default */
   styles?: StyleSheetLike,
+  /** activity */
+  activity: ActivityData,
+  /** event callback handler fired when the enter button is pressed */
+  onAddReaction: (string, ActivityData, any) => void,
 |};
 
 type State = {|
@@ -28,6 +32,8 @@ type State = {|
 
 /**
  * Comment box with keyboard control, avatar and text input
+ * All props are fulfilled automatically if used as a child element
+ * of an activity.
  */
 export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
@@ -36,6 +42,16 @@ export default class CommentBox extends React.Component<Props, State> {
   state = {
     text: '',
   };
+
+  postComment(event: NativeSyntheticEvent<>) {
+    if (this.props.onSubmit !== undefined) {
+      this.props.onSubmit(event.nativeEvent.text);
+    } else {
+      this.props.onAddReaction('comment', this.props.activity, {
+        text: event.nativeEvent.text,
+      });
+    }
+  }
 
   render() {
     let styles = buildStylesheet('commentBox', this.props.styles);
@@ -63,7 +79,7 @@ export default class CommentBox extends React.Component<Props, State> {
               onChangeText={(text) => this.setState({ text })}
               onSubmitEditing={async (event) => {
                 this.setState({ text: '' });
-                this.props.onSubmit(event.nativeEvent.text);
+                this.postComment(event);
               }}
             />
           </View>
