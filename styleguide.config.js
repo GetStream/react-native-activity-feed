@@ -26,7 +26,7 @@ module.exports = {
       name: 'UI Components',
       content: 'docs/other-components.md',
       components: 'src/components/[A-Z]*.js',
-      ignore: ['**/FlatFeed.js', '**/NotificationFeed.js', '**/SinglePost.js'],
+      ignore: ['**/FlatFeed.js', '**/NotificationFeed.js', '**/SinglePost.js', '**/CommentsContainer.js'],
       exampleMode: 'collapse',
       usageMode: 'expand',
     },
