@@ -115,7 +115,7 @@ The authentication user token cannot be generated client-side (that would requir
 
 ```js
 var client = stream.connect(API_KEY, API_SECRET);
-var userToken = client.createUserSessionToken(userId);
+var userToken = client.createUserToken(userId);
 ```
 
 #### Generating analytics token

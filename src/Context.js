@@ -35,7 +35,7 @@ export const StreamContext = React.createContext({
 });
 
 export type AppCtx<UserData> = {|
-  session: StreamUserSession<UserData>,
+  client: StreamUserSession<UserData>,
   user: StreamUser<UserData>,
   // We cannot simply take userData from user.data, since the reference to user
   // will stay the same all the time. Because of this react won't notice that
@@ -86,7 +86,7 @@ export class StreamApp extends React.Component<
           if (!props.children || !props.children.length) {
             return null;
           }
-          if (!appCtx.session || !appCtx.user) {
+          if (!appCtx.client || !appCtx.user) {
             throw new Error(
               'This component should be a child of a StreamApp component',
             );
@@ -118,7 +118,7 @@ export class StreamApp extends React.Component<
       analyticsClient.setUser(client.userId);
     }
     this.state = {
-      session: client,
+      client: client,
       user: client.currentUser,
       userId: client.currentUser.id,
       userData: client.currentUser.data,
@@ -225,7 +225,7 @@ type FeedProps = {|
   notify?: boolean,
   //** the feed read hander (change only for advanced/complex use-cases) */
   doFeedRequest?: (
-    session: BaseUserSession,
+    client: BaseUserSession,
     feedGroup: string,
     userId?: string,
     options?: FeedRequestOptions,
@@ -309,7 +309,7 @@ class FeedManager {
       return;
     }
 
-    let feed = this.props.session.feed(this.props.feedGroup, this.props.userId);
+    let feed = this.props.client.feed(this.props.feedGroup, this.props.userId);
 
     analyticsClient.trackEngagement({
       label: label,
@@ -336,11 +336,7 @@ class FeedManager {
   ) => {
     let reaction;
     try {
-      reaction = await this.props.session.reactions.add(
-        kind,
-        activity,
-        options,
-      );
+      reaction = await this.props.client.reactions.add(kind, activity, options);
     } catch (e) {
       this.props.errorHandler(e, 'add-reaction', {
         kind,
@@ -382,7 +378,7 @@ class FeedManager {
     options: { trackAnalytics?: boolean } = {},
   ) => {
     try {
-      await this.props.session.reactions.delete(id);
+      await this.props.client.reactions.delete(id);
     } catch (e) {
       this.props.errorHandler(e, 'delete-reaction', {
         kind,
@@ -454,7 +450,7 @@ class FeedManager {
     let response;
     if (this.props.doFeedRequest) {
       response = this.props.doFeedRequest(
-        this.props.session,
+        this.props.client,
         this.props.feedGroup,
         this.props.userId,
         options,
@@ -476,7 +472,7 @@ class FeedManager {
   };
 
   feed = () => {
-    return this.props.session.feed(this.props.feedGroup, this.props.userId);
+    return this.props.client.feed(this.props.feedGroup, this.props.userId);
   };
 
   responseToActivityMap = (response) => {
@@ -678,7 +674,7 @@ type FeedInnerProps = {| ...FeedProps, ...BaseAppCtx |};
 class FeedInner extends React.Component<FeedInnerProps, FeedState> {
   constructor(props: FeedInnerProps) {
     super(props);
-    let feedId = props.session.feed(props.feedGroup, props.userId).id;
+    let feedId = props.client.feed(props.feedGroup, props.userId).id;
     let manager = props.sharedFeedManagers[feedId];
     if (!manager) {
       manager = new FeedManager(props);
@@ -695,7 +691,7 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
   }
 
   async componentDidUpdate(prevProps) {
-    let sessionDifferent = this.props.session !== prevProps.session;
+    let sessionDifferent = this.props.client !== prevProps.client;
     let notifyDifferent = this.props.notify != prevProps.notify;
     let feedDifferent =
       this.props.userId != prevProps.userId ||

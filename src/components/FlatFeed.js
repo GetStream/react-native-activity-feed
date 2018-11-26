@@ -36,7 +36,7 @@ type Props = {|
   Footer?: Renderable,
   //** the feed read hander (change only for advanced/complex use-cases) */
   doFeedRequest?: (
-    session: BaseUserSession,
+    client: BaseUserSession,
     feedGroup: string,
     userId?: string,
     options?: FeedRequestOptions,

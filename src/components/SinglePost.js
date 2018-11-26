@@ -41,8 +41,8 @@ export default class SinglePost extends React.Component<Props> {
           Activity={this.props.Activity}
           styles={this.props.styles}
           navigation={this.props.navigation}
-          doFeedRequest={(session, feedGroup, userId, options) => {
-            return session
+          doFeedRequest={(client, feedGroup, userId, options) => {
+            return client
               .feed(feedGroup, userId)
               .getActivityDetail(this.props.activity.id, options);
           }}

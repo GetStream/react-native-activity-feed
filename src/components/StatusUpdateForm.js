@@ -146,7 +146,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
     let response;
     try {
-      response = await this.props.session.images.upload(result.uri);
+      response = await this.props.client.images.upload(result.uri);
     } catch (e) {
       console.warn(e);
       this.setState({
@@ -192,7 +192,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
   async addActivity() {
     let activity: CustomActivityArgData = {
-      actor: this.props.session.currentUser,
+      actor: this.props.client.currentUser,
       verb: this.props.activityVerb,
       object: this._object(),
     };
@@ -212,7 +212,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
       activity.attachments = attachments;
     }
 
-    await this.props.session
+    await this.props.client
       .feed(this.props.feedGroup, this.props.userId)
       .addActivity(activity);
   }
@@ -243,7 +243,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
           ogLink: url,
           og: url === this.state.ogLink ? this.state.og : null,
         });
-        this.props.session
+        this.props.client
           .og(url)
           .then((resp) => {
             const oldStateUrls = this.state.urls;

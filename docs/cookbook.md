@@ -37,7 +37,7 @@ receiving its props and do all the heavy lifting.
 class ShareButtonInner extends React.Component {
 
     async onPress() {
-        await this.props.session.react('share', this.props.activity);
+        await this.props.client.reactions.add('share', this.props.activity);
     }
 
     render() {

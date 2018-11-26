@@ -27,7 +27,7 @@ type Props = {|
   /** the component to use to render new activities notification */
   Notifier: Renderable,
   doFeedRequest?: (
-    session: BaseUserSession,
+    client: BaseUserSession,
     feedGroup: string,
     userId?: string,
     options?: FeedRequestOptions,
