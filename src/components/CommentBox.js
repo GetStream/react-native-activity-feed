@@ -11,7 +11,7 @@ import { buildStylesheet } from '../styles';
 
 type Props = {|
   /** callback function called when the text is submitted */
-  onSubmit: (string) => mixed,
+  onSubmit?: (string) => mixed,
   /** height in pixels for the whole component */
   height?: number,
   /** props used to render the Avatar component */

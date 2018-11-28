@@ -83,11 +83,8 @@ export default class SinglePostScreen extends React.Component<Props> {
           Footer={(props) => {
             return (
               <CommentBox
-                onSubmit={(text) =>
-                  props.onAddReaction('comment', activity, {
-                    data: { text: text },
-                  })
-                }
+                activity={activity}
+                onAddReaction={props.onAddReaction}
                 avatarProps={{
                   source: (userData: UserResponse) =>
                     userData.data.profileImage,
