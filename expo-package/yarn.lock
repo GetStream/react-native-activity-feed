@@ -4064,7 +4064,7 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@4.0.1-5:
+getstream@^4.0.1-5:
   version "4.0.1-5"
   resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.1-5.tgz#b75006201182ef910812cd5dcdfe80cb17bae3e8"
   integrity sha512-+DAlkOPe/oQUtZonzGGx/bE5/Nnule+ik8pANgghhsb6O9P0KCgO2Nuxbz4rRLpr1JQlnzzS2hSgQSKJ2HWAFw==
@@ -6699,9 +6699,22 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-native-activity-feed-core@link:..":
-  version "0.0.0"
-  uid ""
+react-native-activity-feed-core@v0.7.0-beta.1:
+  version "0.7.0-beta.1"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.7.0-beta.1.tgz#c53f1b03cadef3b52cb7070a4fed2c5f5c94cfe0"
+  integrity sha512-ulW71oVeNaHBXr2b014mqCi1NGND/URf/TT0sPCEclDCNPKFLkiGbU3XhOfDKwbMmkN4TRPvPd3T6KFQAnMOfw==
+  dependencies:
+    es6-symbol "^3.1.1"
+    faker "^4.1.0"
+    getstream "^4.0.1-5"
+    immutable "^4.0.0-rc.9"
+    moment "^2.22.2"
+    numeral "^2.0.6"
+    react-native-keyboard-spacer "^0.4.1"
+    react-native-safe-area-view "0.9.0"
+    react-native-sticky-keyboard-accessory "^0.1.1"
+    stream-analytics "^2.7.1"
+    url-parse "^1.4.3"
 
 react-native-branch@2.2.5:
   version "2.2.5"

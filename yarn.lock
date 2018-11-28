@@ -4238,7 +4238,7 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@4.0.1-5:
+getstream@^4.0.1-5:
   version "4.0.1-5"
   resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.1-5.tgz#b75006201182ef910812cd5dcdfe80cb17bae3e8"
   integrity sha512-+DAlkOPe/oQUtZonzGGx/bE5/Nnule+ik8pANgghhsb6O9P0KCgO2Nuxbz4rRLpr1JQlnzzS2hSgQSKJ2HWAFw==
