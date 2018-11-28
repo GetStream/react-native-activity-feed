@@ -1,9 +1,8 @@
 // @flow
 
 import type {
-  StreamCloudClient,
   StreamUser,
-  StreamUserSession,
+  StreamClient,
   ActivityResponse,
   StreamFeed,
   UserResponse as StreamUserResponse,
@@ -20,9 +19,7 @@ export type UserData = {
   coverImage?: string,
 };
 
-export type CloudClient = StreamCloudClient<UserData>;
-
-export type UserSession = StreamUserSession<UserData>;
+export type Client = StreamClient<UserData>;
 
 export type StreamAppCtx = AppCtx<UserData>;
 

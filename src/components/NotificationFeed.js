@@ -12,7 +12,7 @@ import type {
   StyleSheetLike,
   BaseActivityResponse,
   BaseFeedCtx,
-  BaseUserSession,
+  BaseClient,
   Renderable,
 } from '../types';
 import type { FeedRequestOptions, FeedResponse } from 'getstream';
@@ -27,7 +27,7 @@ type Props = {|
   /** the component to use to render new activities notification */
   Notifier: Renderable,
   doFeedRequest?: (
-    client: BaseUserSession,
+    client: BaseClient,
     feedGroup: string,
     userId?: string,
     options?: FeedRequestOptions,

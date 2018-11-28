@@ -5,7 +5,7 @@ import type { NavigationScreenProp } from 'react-navigation';
 import type {
   ActivityArgData,
   ActivityResponse,
-  StreamUserSession,
+  StreamClient,
   ReactionKindMap,
   UserResponse,
   ReactionRequestOptions,
@@ -54,7 +54,7 @@ export type Renderable = RenderableButNotElement | React.Element<any>;
 export type BaseActivityResponse = ActivityResponse<{}, {}>;
 export type BaseAppCtx = AppCtx<{}>;
 export type BaseFeedCtx = FeedCtx;
-export type BaseUserSession = StreamUserSession<{}>;
+export type BaseClient = StreamClient<{}>;
 
 export type BaseReactionMap = ReactionKindMap<Object, Object>;
 
@@ -83,20 +83,22 @@ export type ActivityData = ActivityResponse<UserData, CustomActivityData>;
 export type ToggleReactionCallbackFunction = (
   kind: string,
   activity: BaseActivityResponse,
-  options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
+  data?: {},
+  options?: { trackAnalytics?: boolean } & ReactionRequestOptions,
 ) => void | Promise<mixed>;
 
 export type AddReactionCallbackFunction = (
   kind: string,
   activity: BaseActivityResponse,
-  options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
+  data?: {},
+  options?: { trackAnalytics?: boolean } & ReactionRequestOptions,
 ) => void | Promise<mixed>;
 
 export type RemoveReactionCallbackFunction = (
   kind: string,
   activity: BaseActivityResponse,
   id: string,
-  options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}>,
+  options?: { trackAnalytics?: boolean },
 ) => void | Promise<mixed>;
 
 export type CommentData = {

@@ -13,7 +13,7 @@ import type {
   NavigationScreen,
   StyleSheetLike,
   BaseFeedCtx,
-  BaseUserSession,
+  BaseClient,
   Renderable,
 } from '../types';
 import type {
@@ -36,7 +36,7 @@ type Props = {|
   Footer?: Renderable,
   //** the feed read hander (change only for advanced/complex use-cases) */
   doFeedRequest?: (
-    client: BaseUserSession,
+    client: BaseClient,
     feedGroup: string,
     userId?: string,
     options?: FeedRequestOptions,

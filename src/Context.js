@@ -20,7 +20,7 @@ import type {
 import type {
   BaseActivityResponse,
   BaseAppCtx,
-  BaseUserSession,
+  BaseClient,
   ToggleReactionCallbackFunction,
   AddReactionCallbackFunction,
   RemoveReactionCallbackFunction,
@@ -35,8 +35,9 @@ export const StreamContext = React.createContext({
 });
 
 export type AppCtx<UserData> = {|
-  client: StreamUserSession<UserData>,
+  client: StreamClient<UserData>,
   user: StreamUser<UserData>,
+  userId: string,
   // We cannot simply take userData from user.data, since the reference to user
   // will stay the same all the time. Because of this react won't notice that
   // the internal fields changed so it thinks it doesn't need to rerender.
@@ -120,7 +121,7 @@ export class StreamApp extends React.Component<
     this.state = {
       client: client,
       user: client.currentUser,
-      userId: client.currentUser.id,
+      userId: client.userId,
       userData: client.currentUser.data,
       changedUserData: () => {
         this.setState({ userData: this.state.user.data });
@@ -225,7 +226,7 @@ type FeedProps = {|
   notify?: boolean,
   //** the feed read hander (change only for advanced/complex use-cases) */
   doFeedRequest?: (
-    client: BaseUserSession,
+    client: BaseClient,
     feedGroup: string,
     userId?: string,
     options?: FeedRequestOptions,
@@ -332,7 +333,7 @@ class FeedManager {
   onAddReaction = async (
     kind: string,
     activity: BaseActivityResponse,
-    options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
+    options: { trackAnalytics?: boolean } & ReactionRequestOptions = {},
   ) => {
     let reaction;
     try {
@@ -413,7 +414,7 @@ class FeedManager {
   onToggleReaction = async (
     kind: string,
     activity: BaseActivityResponse,
-    options: { trackAnalytics?: boolean } & ReactionRequestOptions<{}> = {},
+    options: { trackAnalytics?: boolean } & ReactionRequestOptions = {},
   ) => {
     let togglingReactions = this.state.reactionsBeingToggled[kind] || {};
     if (togglingReactions[activity.id]) {
@@ -492,7 +493,8 @@ class FeedManager {
       return {};
     }
     let map = {};
-    for (let group of response.results) {
+    let aggregatedResponse = (response: any);
+    for (let group of aggregatedResponse.results) {
       group.activities.forEach((act, i) => {
         map[act.id] = [group.id, 'activities', i];
       });
