@@ -21,12 +21,12 @@ git add {expo,native}-package/package.json
 npm version "$1" --force
 
 
-npm publish
+npm publish --tag beta
 
 cd native-package
-npm publish
+npm publish --tag beta
 
 cd ../expo-package
-npm publish
+npm publish --tag beta
 
 git push --follow-tags
