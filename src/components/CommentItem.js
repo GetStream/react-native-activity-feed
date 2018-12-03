@@ -1,14 +1,15 @@
 // @flow
 import React from 'react';
 import { View, Text } from 'react-native';
-import { humanizeTimestamp } from '../utils';
+import { humanizeTimestamp, smartRender } from '../utils';
 import Avatar from './Avatar';
 import { buildStylesheet } from '../styles';
 
-import type { Comment, StyleSheetLike } from '../types';
+import type { Comment, StyleSheetLike, Renderable } from '../types';
 
 type Props = {
   comment: Comment,
+  Footer?: Renderable,
   styles?: StyleSheetLike,
 };
 
@@ -32,6 +33,7 @@ export default class CommentItem extends React.Component<Props> {
             </Text>
           </Text>
         </View>
+        {smartRender(this.props.Footer)}
       </View>
     );
   }
