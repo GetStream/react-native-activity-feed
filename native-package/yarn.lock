@@ -3698,10 +3698,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@^4.0.1-5:
-  version "4.0.1-5"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.1-5.tgz#b75006201182ef910812cd5dcdfe80cb17bae3e8"
-  integrity sha512-+DAlkOPe/oQUtZonzGGx/bE5/Nnule+ik8pANgghhsb6O9P0KCgO2Nuxbz4rRLpr1JQlnzzS2hSgQSKJ2HWAFw==
+getstream@^4.0.1-6:
+  version "4.0.1-6"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.1-6.tgz#9ade3d9be766c4b2b8db06cdb7c7f413e141b9fb"
+  integrity sha512-M+NxHEdCfUITjDcYK8i8vlm2uaOSc12a+hq3o2ImnW66H7Yxdxm1y6Gs3f9ohpNBXfW+VfgPefzlp1NGwZy5Zg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@stream-io/xmlhttp-request" "^0.4.0"
@@ -6258,14 +6258,14 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v0.7.0-beta.1:
-  version "0.7.0-beta.1"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.7.0-beta.1.tgz#c53f1b03cadef3b52cb7070a4fed2c5f5c94cfe0"
-  integrity sha512-ulW71oVeNaHBXr2b014mqCi1NGND/URf/TT0sPCEclDCNPKFLkiGbU3XhOfDKwbMmkN4TRPvPd3T6KFQAnMOfw==
+react-native-activity-feed-core@v0.7.0-beta.2:
+  version "0.7.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.7.0-beta.2.tgz#0cef183b17005c3dc707ac4638f39445d54f7ff8"
+  integrity sha512-3Xo6Gk8SkiDdj3nLfl+kMleUE00gUqjAqYw7CO6SDXF94vjvjP//z+Q7AYd82uCZc3GoTvG+3322yyLEo/OkdQ==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
-    getstream "^4.0.1-5"
+    getstream "^4.0.1-6"
     immutable "^4.0.0-rc.9"
     moment "^2.22.2"
     numeral "^2.0.6"
