@@ -4,27 +4,42 @@ import React from 'react';
 import SectionHeader from './SectionHeader';
 import CommentItem from './CommentItem';
 import ReactionList from './ReactionList';
+import { smartRender } from '../utils';
 
-import type { BaseReactionMap } from '../types';
+import type { Renderable, Comment } from '../types';
 
-type Props = {
-  reactions: BaseReactionMap,
-};
+export type Props = {|
+  /** The ID of the activity for which these comments are */
+  activityId: string,
+  /** The component that should render the comment */
+  CommentItem: Renderable,
+  /** Only needed for reposted activities where you want to show the comments of the original activity, not of the repost */
+  activityPath?: ?Array<string>,
+|};
 
 /**
- * A container for a list of comments
+ * CommentList uses ReactionList under the hood to render a list of comments.
+ *
  * @example ./examples/CommentList.md
  */
-const CommentList = ({ reactions }: Props) => {
-  return (
-    <ReactionList
-      reactions={reactions}
-      reactionKind={'comment'}
-      Reaction={(reaction) => <CommentItem comment={reaction} />}
-    >
-      <SectionHeader>Comments</SectionHeader>
-    </ReactionList>
-  );
-};
+export default class CommentList extends React.PureComponent<Props> {
+  static defaultProps = {
+    CommentItem,
+  };
 
-export default CommentList;
+  _Reaction = ({ reaction }: { reaction: Comment }) =>
+    smartRender(this.props.CommentItem, { comment: reaction });
+  render() {
+    const { activityId, activityPath } = this.props;
+    return (
+      <ReactionList
+        activityId={activityId}
+        reactionKind={'comment'}
+        Reaction={this._Reaction}
+        activityPath={activityPath}
+      >
+        <SectionHeader>Comments</SectionHeader>
+      </ReactionList>
+    );
+  }
+}

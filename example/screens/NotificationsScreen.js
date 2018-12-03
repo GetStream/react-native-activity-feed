@@ -63,7 +63,7 @@ export default class NotificationScreen extends React.Component<Props> {
           {...props}
           Footer={
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <LikeButton activity={activity} {...props} />
+              <LikeButton reactionKind="heart" activity={activity} {...props} />
 
               <ReactionIcon
                 icon={ReplyIcon}

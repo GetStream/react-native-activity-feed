@@ -2,43 +2,141 @@
 import * as React from 'react';
 import { FlatList } from 'react-native';
 import { buildStylesheet } from '../styles';
+import { FeedContext } from '../Context';
+import type { Renderable, BaseFeedCtx, StyleSheetLike } from '../types';
 import { smartRender } from '../utils';
-import type { StyleSheetLike, BaseReactionMap, Renderable } from '../types';
+import immutable from 'immutable';
+import LoadMoreButton from './LoadMoreButton';
 
 type Props = {|
-  reactions: ?BaseReactionMap,
+  /** The ID of the activity for which these reactions are */
+  activityId: string,
+  /** The reaction kind that you want to display in this list, e.g `like` or
+   * `comment` */
   reactionKind: string,
+  /** The component that should render the reaction */
   Reaction: Renderable,
+  /** The component that should render the reaction */
+  LoadMoreButton: Renderable,
+  /** By default pagination is done with a "Load more" button, you can use
+   * InifiniteScrollPaginator to enable infinite scrolling */
+  // Paginator: Renderable,
+  /** Only needed for reposted activities where you want to show the comments of the original activity, not of the repost */
+  activityPath?: ?Array<string>,
+  /** Any props the react native FlatList accepts */
   flatListProps?: {},
+  noPagination: boolean,
   children?: React.Node,
   styles?: StyleSheetLike,
 |};
 
-const ReactionList = ({ reactions, reactionKind, ...props }: Props) => {
-  let styles = buildStylesheet('reactionList', props.styles);
+export default class ReactionList extends React.PureComponent<Props> {
+  static defaultProps = {
+    noPagination: false,
+    LoadMoreButton,
+  };
+  render() {
+    return (
+      <FeedContext.Consumer>
+        {(appCtx) => <ReactionListInner {...this.props} {...appCtx} />}
+      </FeedContext.Consumer>
+    );
+  }
+}
 
-  if (!reactions) {
-    return null;
+type PropsInner = {| ...Props, ...BaseFeedCtx |};
+class ReactionListInner extends React.Component<PropsInner> {
+  render() {
+    const {
+      activityId,
+      activities,
+      reactionKind,
+      getActivityPath,
+    } = this.props;
+    const activityPath = this.props.activityPath || getActivityPath(activityId);
+
+    const reactionsOfKind = activities.getIn(
+      [...activityPath, 'latest_reactions', reactionKind],
+      immutable.List(),
+    );
+
+    const nextUrl = activities.getIn(
+      [...activityPath, 'latest_reactions_extra', reactionKind, 'next'],
+      '',
+    );
+
+    const refreshing = activities.getIn(
+      [...activityPath, 'latest_reactions_extra', reactionKind, 'refreshing'],
+      false,
+    );
+
+    let styles = buildStylesheet('reactionList', this.props.styles);
+    console.log(reactionsOfKind);
+
+    if (!reactionsOfKind.size) {
+      return null;
+    }
+
+    return (
+      <React.Fragment>
+        {this.props.children}
+        <FlatList
+          style={styles.container}
+          refreshing={refreshing}
+          data={reactionsOfKind.toArray()}
+          keyExtractor={(item) => item.get('id')}
+          listKey={reactionKind}
+          renderItem={this._renderWrappedReaction}
+          onEndReached={
+            this.props.noPagination
+              ? undefined
+              : () =>
+                  this.props.loadNextReactions(
+                    activityId,
+                    reactionKind,
+                    activityPath,
+                  )
+          }
+          {...this.props.flatListProps}
+        />
+        {this.props.noPagination || !nextUrl ? null : (
+          <LoadMoreButton
+            refreshing={refreshing}
+            styles={styles}
+            onPress={() =>
+              this.props.loadNextReactions(
+                activityId,
+                reactionKind,
+                activityPath,
+              )
+            }
+          />
+        )}
+      </React.Fragment>
+    );
   }
 
-  let reactionsOfKind = reactions[reactionKind] || [];
-  if (!reactionsOfKind.length) {
-    return null;
-  }
+  _renderReaction = (reaction) => {
+    const { Reaction } = this.props;
+    return smartRender(Reaction, { reaction });
+  };
 
-  return (
-    <React.Fragment>
-      {props.children}
-      <FlatList
-        style={styles.container}
-        data={reactionsOfKind}
-        keyExtractor={(item, i) => item.id || '' + i}
-        listKey={reactionKind}
-        renderItem={({ item }) => smartRender(props.Reaction, item)}
-        {...props.flatListProps}
-      />
-    </React.Fragment>
-  );
+  _renderWrappedReaction = ({ item }: { item: any }) => {
+    return (
+      <ImmutableItemWrapper renderItem={this._renderReaction} item={item} />
+    );
+  };
+}
+
+type ImmutableItemWrapperProps = {
+  renderItem: (item: any) => any,
+  item: any,
 };
 
-export default ReactionList;
+class ImmutableItemWrapper extends React.PureComponent<
+  ImmutableItemWrapperProps,
+> {
+  render() {
+    return this.props.renderItem(this.props.item.toJS());
+  }
+}

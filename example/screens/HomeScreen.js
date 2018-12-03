@@ -80,7 +80,7 @@ class HomeScreen extends React.Component<Props> {
               {...props}
               Footer={
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <LikeButton {...props} />
+                  <LikeButton reactionKind="heart" {...props} />
 
                   <ReactionIcon
                     icon={ReplyIcon}

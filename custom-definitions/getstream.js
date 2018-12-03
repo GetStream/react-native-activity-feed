@@ -104,13 +104,19 @@ declare module 'getstream' {
       activity: string | ActivityResponse<*, *>, // Allows activityId and ActivityResponse
       data?: ReactionData,
       optionalArgs?: ReactionRequestOptions,
-    ): Promise<ReactionResponse<ReactionData>>;
+    ): Promise<ReactionResponse<UserData, ReactionData>>;
+    addChild(
+      kind: string,
+      reaction: string | ReactionResponse<*, *>, // Allows activityId and ActivityResponse
+      data?: ReactionData,
+      optionalArgs?: ReactionRequestOptions,
+    ): Promise<ReactionResponse<UserData, ReactionData>>;
     delete(id: string): Promise<{}>;
     update(
       id: string,
       data?: ReactionData,
       optionalArgs?: ReactionRequestOptions,
-    ): Promise<ReactionResponse<ReactionData>>;
+    ): Promise<ReactionResponse<UserData, ReactionData>>;
     filter(
       params: ReactionFilterOptions,
     ): Promise<ReactionFilterResponse<UserData, ReactionData>>;
@@ -137,7 +143,7 @@ declare module 'getstream' {
   }
 
   declare type ReactionFilterResponse<UserData, ReactionData> = {
-    results: Array<EnrichedReactionResponse<UserData, ReactionData>>,
+    results: Array<ReactionResponse<UserData, ReactionData>>,
     next: string,
   };
 
@@ -216,7 +222,7 @@ declare module 'getstream' {
   };
 
   declare type ReactionKindMap<UserData, ReactionData> = {
-    [string]: Array<EnrichedReactionResponse<UserData, ReactionData>>,
+    [string]: Array<ReactionResponse<UserData, ReactionData>>,
   };
 
   declare type ReactionExtra = {
@@ -244,7 +250,6 @@ declare module 'getstream' {
 
     reaction_counts?: ReactionCounts,
     own_reactions?: ReactionKindMap<UserData, Object>,
-    own_reactions_extra?: ReactionExtraKindMap,
     latest_reactions?: ReactionKindMap<UserData, Object>,
     latest_reactions_extra?: ReactionExtraKindMap,
     activities: ?mixed, //
@@ -269,23 +274,22 @@ declare module 'getstream' {
     seen?: boolean,
   };
 
-  declare type BaseReactionResponse<ReactionData> = {
+  declare type ReactionResponse<UserData, ReactionData> = {
     id: string,
     kind: string,
     activity_id: string,
     data: ReactionData,
-  } & TimestampedResponse;
-
-  declare type ReactionResponse<ReactionData> = {
     user_id: string,
-  } & BaseReactionResponse<ReactionData>;
-
-  declare type EnrichedReactionResponse<UserData, ReactionData> = {
     user: UserResponse<UserData>,
-  } & BaseReactionResponse<ReactionData>;
+    children_counts?: ReactionCounts,
+    own_children?: ReactionKindMap<UserData, Object>,
+    latest_children?: ReactionKindMap<UserData, Object>,
+    latest_children_extra?: ReactionExtraKindMap,
+  } & TimestampedResponse;
 
   declare type ConnectOptions = {
     location?: string,
+    local: boolean,
     urlOverride?: {
       api?: string,
     },

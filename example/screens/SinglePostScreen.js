@@ -56,7 +56,7 @@ export default class SinglePostScreen extends React.Component<Props> {
                 {...props}
                 Footer={
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <LikeButton {...props} />
+                    <LikeButton reactionKind="heart" {...props} />
 
                     <ReactionIcon
                       icon={ReplyIcon}
@@ -68,16 +68,16 @@ export default class SinglePostScreen extends React.Component<Props> {
                   </View>
                 }
               />
-              <CommentList reactions={props.activity.latest_reactions} />
-              <RepostList reactions={props.activity.latest_reactions} />
-
-              <View style={styles.sectionHeader} />
               <View style={styles.likesContainer}>
                 <LikesList
-                  reactions={props.activity.latest_reactions}
+                  activityId={props.activity.id}
                   reactionKind="heart"
                 />
               </View>
+              <RepostList activityId={props.activity.id} />
+              <CommentList activityId={props.activity.id} />
+
+              <View style={styles.sectionHeader} />
             </React.Fragment>
           )}
           Footer={(props) => {

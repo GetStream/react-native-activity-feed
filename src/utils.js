@@ -19,11 +19,13 @@ export const smartRender = (
     ElementOrComponentOrLiteral = fallback;
   }
   if (React.isValidElement(ElementOrComponentOrLiteral)) {
-    return ElementOrComponentOrLiteral;
+    // Flow cast through any, to make flow believe it's a React.Element
+    const element = ((ElementOrComponentOrLiteral: any): React.Element<any>);
+    return element;
   }
 
   // Flow cast through any to remove React.Element after previous check
-  let ComponentOrLiteral = ((ElementOrComponentOrLiteral: any): RenderableButNotElement);
+  const ComponentOrLiteral = ((ElementOrComponentOrLiteral: any): RenderableButNotElement);
   if (
     typeof ComponentOrLiteral === 'string' ||
     typeof ComponentOrLiteral === 'number' ||
