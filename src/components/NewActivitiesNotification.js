@@ -10,8 +10,6 @@ type Props = {|
   deletes: Array<{}>,
   labelSingular?: string,
   labelPlural?: string,
-  labelStart?: string,
-  labelNew?: string,
   styles?: StyleSheetLike,
   onPress?: () => mixed,
 |};
@@ -24,8 +22,6 @@ export default class NewActivitiesNotification extends React.Component<Props> {
   static defaultProps = {
     labelSingular: 'activity',
     labelPlural: 'activities',
-    labelStart: 'You have',
-    labelNew: 'new',
   };
 
   render() {
@@ -37,7 +33,7 @@ export default class NewActivitiesNotification extends React.Component<Props> {
     return count ? (
       <TouchableOpacity style={[styles.container]} onPress={this.props.onPress}>
         <Text style={[styles.text]}>
-      {laberStart} {count} {labelNew} {count > 1 ? labelPlural : labelSingular}
+          You have {count} new {count > 1 ? labelPlural : labelSingular}
         </Text>
       </TouchableOpacity>
     ) : null;
