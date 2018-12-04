@@ -11,7 +11,8 @@ type Props = {|
   labelSingular?: string,
   labelPlural?: string,
   labelStart?: string,
-  labelNew?: string,
+  labelNewSingular?: string,
+  labelNewPlural?: string,
   styles?: StyleSheetLike,
   onPress?: () => mixed,
 |};
@@ -25,7 +26,8 @@ export default class NewActivitiesNotification extends React.Component<Props> {
     labelSingular: 'activity',
     labelPlural: 'activities',
     labelStart: 'You have',
-    labelNew: 'new',
+    labelNewSingular: 'new',
+    labelNewPlural: 'new',
   };
 
   render() {
@@ -37,7 +39,7 @@ export default class NewActivitiesNotification extends React.Component<Props> {
     return count ? (
       <TouchableOpacity style={[styles.container]} onPress={this.props.onPress}>
         <Text style={[styles.text]}>
-      {laberStart} {count} {labelNew} {count > 1 ? labelPlural : labelSingular}
+      {laberStart} {count} {count > 1 ? labelNewPlural : labelNewSingular} {count > 1 ? labelPlural : labelSingular}
         </Text>
       </TouchableOpacity>
     ) : null;
