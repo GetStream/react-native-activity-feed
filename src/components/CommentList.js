@@ -15,6 +15,8 @@ export type Props = {|
   CommentItem: Renderable,
   /** Only needed for reposted activities where you want to show the comments of the original activity, not of the repost */
   activityPath?: ?Array<string>,
+  /** If the CommentList should paginate when scrolling, by default it shows a "Load more" button  */
+  infiniteScroll: boolean,
 |};
 
 /**
@@ -30,13 +32,14 @@ export default class CommentList extends React.PureComponent<Props> {
   _Reaction = ({ reaction }: { reaction: Comment }) =>
     smartRender(this.props.CommentItem, { comment: reaction });
   render() {
-    const { activityId, activityPath } = this.props;
+    const { activityId, activityPath, infiniteScroll } = this.props;
     return (
       <ReactionList
         activityId={activityId}
         reactionKind={'comment'}
         Reaction={this._Reaction}
         activityPath={activityPath}
+        infiniteScroll={infiniteScroll}
       >
         <SectionHeader>Comments</SectionHeader>
       </ReactionList>

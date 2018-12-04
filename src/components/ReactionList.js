@@ -18,13 +18,14 @@ type Props = {|
   Reaction: Renderable,
   /** The component that should render the reaction */
   LoadMoreButton: Renderable,
-  /** By default pagination is done with a "Load more" button, you can use
-   * InifiniteScrollPaginator to enable infinite scrolling */
   // Paginator: Renderable,
   /** Only needed for reposted activities where you want to show the comments of the original activity, not of the repost */
   activityPath?: ?Array<string>,
+  /** If the ReactionList should paginate when scrolling, by default it shows a "Load more" button  */
+  infiniteScroll: boolean,
   /** Any props the react native FlatList accepts */
   flatListProps?: {},
+  /** Set to true when the ReactionList shouldn't paginate at all */
   noPagination: boolean,
   children?: React.Node,
   styles?: StyleSheetLike,
@@ -33,6 +34,7 @@ type Props = {|
 export default class ReactionList extends React.PureComponent<Props> {
   static defaultProps = {
     noPagination: false,
+    infiniteScroll: false,
     LoadMoreButton,
   };
   render() {
@@ -88,7 +90,7 @@ class ReactionListInner extends React.Component<PropsInner> {
           listKey={reactionKind}
           renderItem={this._renderWrappedReaction}
           onEndReached={
-            this.props.noPagination
+            this.props.noPagination || !this.props.infiniteScroll
               ? undefined
               : () =>
                   this.props.loadNextReactions(
@@ -99,7 +101,9 @@ class ReactionListInner extends React.Component<PropsInner> {
           }
           {...this.props.flatListProps}
         />
-        {this.props.noPagination || !nextUrl ? null : (
+        {this.props.noPagination ||
+        !nextUrl ||
+        this.props.infiniteScroll ? null : (
           <LoadMoreButton
             refreshing={refreshing}
             styles={styles}
