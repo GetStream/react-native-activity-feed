@@ -8,11 +8,7 @@ import type { StyleSheetLike } from '../types';
 type Props = {|
   adds: Array<{}>,
   deletes: Array<{}>,
-  labelSingular?: string,
-  labelPlural?: string,
-  labelStart?: string,
-  labelNewSingular?: string,
-  labelNewPlural?: string,
+  labelFunction?: func,
   styles?: StyleSheetLike,
   onPress?: () => mixed,
 |};
@@ -22,12 +18,15 @@ type Props = {|
  * @example ./examples/NewActivitiesNotification.md
  */
 export default class NewActivitiesNotification extends React.Component<Props> {
-  static defaultProps = {
-    labelSingular: 'activity',
-    labelPlural: 'activities',
-    labelStart: 'You have',
-    labelNewSingular: 'new',
-    labelNewPlural: 'new',
+  
+  const labelFunction = (labelStart, labelNewSingular, labelNewPlural, count, labelSingular, labelPlural) => {
+    return (
+      {count > 1 ? 
+        (laberStart||'You have') count (labelNewPlural||'new') (labelPlural||'activities')
+       : 
+       (laberStart||'You have') count (labelNewSingular||'new') (labelSingular||'activity')
+      }
+    );
   };
 
   render() {
@@ -39,7 +38,7 @@ export default class NewActivitiesNotification extends React.Component<Props> {
     return count ? (
       <TouchableOpacity style={[styles.container]} onPress={this.props.onPress}>
         <Text style={[styles.text]}>
-      {laberStart} {count} {count > 1 ? labelNewPlural : labelNewSingular} {count > 1 ? labelPlural : labelSingular}
+          {this.labelFunction}
         </Text>
       </TouchableOpacity>
     ) : null;
