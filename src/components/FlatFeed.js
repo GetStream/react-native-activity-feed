@@ -48,6 +48,8 @@ type Props = {|
   children?: React.Node,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,
+  /** Any props the react native FlatList accepts */
+  flatListProps?: {},
 |};
 
 /**
@@ -162,6 +164,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
             this.props.noPagination ? undefined : this.props.loadNextPage
           }
           ref={this.listRef}
+          {...this.props.flatListProps}
         />
         {smartRender(this.props.Footer, this._childProps())}
       </React.Fragment>
