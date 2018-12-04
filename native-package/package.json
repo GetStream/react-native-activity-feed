@@ -1,6 +1,6 @@
 {
   "name": "react-native-activity-feed",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "license": "BSD-3-Clause",
   "author": {
     "company": "Stream.io Inc"
@@ -44,7 +44,7 @@
     "postpack": "../bin/postpack.sh && rm README.md"
   },
   "dependencies": {
-    "react-native-activity-feed-core": "v0.6.8",
+    "react-native-activity-feed-core": "v0.6.9",
     "react-native-image-picker": "0.26.10"
   }
 }
