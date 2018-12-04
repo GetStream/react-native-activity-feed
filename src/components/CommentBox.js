@@ -32,6 +32,7 @@ type State = {|
 export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
     styles: {},
+    height: 80,
   };
   state = {
     text: '',
