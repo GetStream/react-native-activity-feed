@@ -10,6 +10,9 @@ type Props = {|
   deletes: Array<{}>,
   labelSingular: string,
   labelPlural: string,
+  labelStart: string,
+  labelNewSingular: string,
+  labelNewPlural: string,
   /** A function that returns either the string to display or null in case no
    * notification should be displayed */
   labelFunction?: ({
@@ -18,6 +21,9 @@ type Props = {|
     addCount: number,
     labelPlural: string,
     labelSingular: string,
+    labelStart: string,
+    labelNewSingular: string,
+    labelNewPlural: string,
   }) => string | null,
   styles?: StyleSheetLike,
   onPress?: () => mixed,
@@ -31,6 +37,9 @@ export default class NewActivitiesNotification extends React.Component<Props> {
   static defaultProps = {
     labelSingular: 'activity',
     labelPlural: 'activities',
+    labelStart: 'You have ',
+    labelNewSingular: 'new',
+    labelNewPlural: 'new',
   };
 
   _labelFunction = () => {
@@ -40,6 +49,9 @@ export default class NewActivitiesNotification extends React.Component<Props> {
       labelSingular,
       labelPlural,
       labelFunction,
+      labelStart,
+      labelNewSingular,
+      labelNewPlural,
     } = this.props;
     let addCount = (adds || []).length;
     let deleteCount = (deletes || []).length;
@@ -51,13 +63,18 @@ export default class NewActivitiesNotification extends React.Component<Props> {
         deleteCount,
         labelSingular,
         labelPlural,
+        labelStart,
+        labelNewSingular,
+        labelNewPlural,
       });
     }
     if (addCount == 0) {
       return null;
     }
-    return `You have ${addCount} new ${
-      addCount > 1 ? labelPlural : labelSingular
+    return `${
+      addCount > 1 
+      ? labelStart addCount labelNewPlural labelPlural 
+      : labelStart addCount labelNewSingular labelSingular
     }`;
   };
 
