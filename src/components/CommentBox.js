@@ -20,6 +20,12 @@ type Props = {|
   noAvatar?: boolean,
   /** style changes to default */
   styles?: StyleSheetLike,
+  /** removes KeyboardAccessory if in FlatFeed */       
+  isFlatFeed: boolean,
+  /** styles placeholder */       
+  placeholder: string,
+  /** styles returnKeyType */       
+  returnKeyType: string,
 |};
 
 type State = {|
@@ -33,10 +39,19 @@ export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
     styles: {},
     height: 80,
+    isFlatFeed: false,
+    placeholder: "Your comment...",
+    returnKeyType: "send",
   };
   state = {
     text: '',
   };
+
+  let {
+      isFlatFeed,
+      placeholder,
+      returnKeyType,
+    } = this.props;
 
   render() {
     let styles = buildStylesheet('commentBox', this.props.styles);
@@ -45,7 +60,7 @@ export default class CommentBox extends React.Component<Props, State> {
       <React.Fragment>
         <View style={{ height: this.props.height }} />
 
-        <KeyboardAccessory>
+      { !isFlatFeed && <KeyboardAccessory> }
           <View style={styles.container}>
             {this.props.noAvatar || (
               <Avatar
@@ -58,9 +73,9 @@ export default class CommentBox extends React.Component<Props, State> {
             <TextInput
               value={this.state.text}
               style={styles.textInput}
-              placeholder="Your comment..."
+              placeholder={placeholder}
               underlineColorAndroid="transparent"
-              returnKeyType="send"
+              returnKeyType={returnKeyType}
               onChangeText={(text) => this.setState({ text })}
               onSubmitEditing={async (event) => {
                 this.setState({ text: '' });
@@ -68,7 +83,7 @@ export default class CommentBox extends React.Component<Props, State> {
               }}
             />
           </View>
-        </KeyboardAccessory>
+        { !isFlatFeed && </KeyboardAccessory> }
       </React.Fragment>
     );
   }
