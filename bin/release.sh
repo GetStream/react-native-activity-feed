@@ -18,6 +18,10 @@ sed -e 's|"react-native-activity-feed-core": "[^"]\+"|"react-native-activity-fee
 rm package.json.bak
 cd ..
 git add {expo,native}-package/package.json
+yarn docs
+git add docs
+git add expo-package/yarn.lock
+git add native-package/yarn.lock
 npm version "$1" --force
 
 
