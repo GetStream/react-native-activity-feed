@@ -6710,10 +6710,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v0.6.9:
-  version "0.6.9"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.9.tgz#9f560231ae2f8616c514da1b5d776b8078df4fde"
-  integrity sha512-xDsRFbw2f6lvrJG7GZct372SIM25qUQfpELRj/bHCdxSl5Phv0nc3WmF5c8rFdLS9Of5D5w8iMQL31WwlRpVQw==
+react-native-activity-feed-core@v0.6.10:
+  version "0.6.10"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.10.tgz#0a95317e10fdf412ffce0abaa0511c85e99fe81e"
+  integrity sha512-o+VgpaoTm6m+fdKKGkOGZT6yZgmMETf1vjQbGX5199HIqXdVpVDftgs4h3fnE4Gel9KtSw21yjUb8EPMRQc01A==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
@@ -8547,9 +8547,9 @@ xmldom@0.1.x, xmldom@^0.1.27:
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
   integrity sha1-1QH5ezvbQDr4757MIFcxh6rawOk=
 
-"xmlhttp-request@git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd":
+"xmlhttp-request@https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd":
   version "0.4.0"
-  resolved "git+https://github.com/GetStream/xmlhttp-request.git#2474db1c2829697bcf2788fee49156b62ad8bcfd"
+  resolved "https://github.com/GetStream/xmlhttp-request#2474db1c2829697bcf2788fee49156b62ad8bcfd"
 
 xpipe@^1.0.5:
   version "1.0.5"
