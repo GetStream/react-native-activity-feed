@@ -10,22 +10,20 @@ import type { Props as AvatarProps } from './Avatar';
 import { buildStylesheet } from '../styles';
 
 type Props = {|
-  /** callback function called when the text is submitted */
+  /** Callback function called when the text is submitted */
   onSubmit: (string) => mixed,
-  /** height in pixels for the whole component */
+  /** Height in pixels for the whole component */
   height?: number,
-  /** props used to render the Avatar component */
+  /** Props used to render the Avatar component */
   avatarProps?: AvatarProps,
-  /** skips the Avatar component when provided */
+  /** Skips the Avatar component when provided */
   noAvatar?: boolean,
-  /** style changes to default */
+  /** Style changes to default */
   styles?: StyleSheetLike,
-  /** removes KeyboardAccessory if in FlatFeed */       
-  isFlatFeed: boolean,
-  /** styles placeholder */       
-  placeholder: string,
-  /** styles returnKeyType */       
-  returnKeyType: string,
+  /** Removes KeyboardAccessory if in FlatFeed */
+  noKeyboardAccessory: boolean,
+  /** Any props the React Native TextInput accepts */
+  textInputProps?: {},
 |};
 
 type State = {|
@@ -39,51 +37,49 @@ export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
     styles: {},
     height: 80,
-    isFlatFeed: false,
-    placeholder: "Your comment...",
-    returnKeyType: "send",
+    noKeyboardAccessory: false,
   };
+
   state = {
     text: '',
   };
 
-  let {
-      isFlatFeed,
-      placeholder,
-      returnKeyType,
-    } = this.props;
-
   render() {
+    let { noKeyboardAccessory, textInputProps } = this.props;
+
     let styles = buildStylesheet('commentBox', this.props.styles);
+    let input = (
+      <View style={styles.container}>
+        {this.props.noAvatar || (
+          <Avatar
+            size={48}
+            styles={styles.avatar}
+            {...this.props.avatarProps}
+          />
+        )}
+        <TextInput
+          value={this.state.text}
+          style={styles.textInput}
+          underlineColorAndroid="transparent"
+          onChangeText={(text) => this.setState({ text })}
+          onSubmitEditing={async (event) => {
+            this.setState({ text: '' });
+            this.props.onSubmit(event.nativeEvent.text);
+          }}
+          placeholder="Your comment..."
+          returnKeyType="send"
+          {...textInputProps}
+        />
+      </View>
+    );
+    if (noKeyboardAccessory) {
+      return input;
+    }
 
     return (
       <React.Fragment>
         <View style={{ height: this.props.height }} />
-
-      { !isFlatFeed && <KeyboardAccessory> }
-          <View style={styles.container}>
-            {this.props.noAvatar || (
-              <Avatar
-                size={48}
-                // $FlowFixMe
-                styles={this.props.styles.avatar}
-                {...this.props.avatarProps}
-              />
-            )}
-            <TextInput
-              value={this.state.text}
-              style={styles.textInput}
-              placeholder={placeholder}
-              underlineColorAndroid="transparent"
-              returnKeyType={returnKeyType}
-              onChangeText={(text) => this.setState({ text })}
-              onSubmitEditing={async (event) => {
-                this.setState({ text: '' });
-                this.props.onSubmit(event.nativeEvent.text);
-              }}
-            />
-          </View>
-        { !isFlatFeed && </KeyboardAccessory> }
+        <KeyboardAccessory>{input}</KeyboardAccessory>
       </React.Fragment>
     );
   }
