@@ -35,6 +35,9 @@ class StatusUpdateScreen extends React.Component {
       <StatusUpdateForm
         fullscreen
         {...this.props}
+        onSuccess={() => {
+          this.props.navigation.goBack();
+        }}
         registerSubmit={(submitFunc) => {
           this.props.navigation.setParams({ submitFunc });
         }}

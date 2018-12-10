@@ -26,6 +26,8 @@ import type {
   OgData,
 } from '../types';
 
+import type { ActivityArgData } from 'getstream';
+
 const ImageState = Object.freeze({
   NO_IMAGE: Symbol('no_image'),
   UPLOADING: Symbol('uploading'),
@@ -36,12 +38,36 @@ const ImageState = Object.freeze({
 const urlRegex = /(https?:\/\/[^\s]+)/gi;
 
 type Props = {|
+  /** The feed group part of the feed that the activity should be posted to */
   feedGroup: string,
+  /** The user_id part of the feed that the activity should be posted to  */
   userId?: string,
+  /** The verb that should be used to post the activity */
   activityVerb: string,
+  /** Make the form full screen. This can be useful when you have a separate
+   * screen for posting. */
   fullscreen: boolean,
   styles: StyleSheetLike,
+  /** Height of the form. This is ignored when fullscreen is `true` */
   height: number,
+  /** If you want to change something about the activity data that this form
+   * sends to stream you can do that with this function. This function gets the
+   * activity data that the form would send normally and should return the
+   * modified activity data that should be posted instead.
+   *
+   * For instance, this would add a target field to the activity:
+   *
+   * ```javascript
+   * &lt;StatusUpdateForm
+   *   modifyActivityData={(data) => ({...data, target: 'Group:1'})}
+   * />
+   * ```
+   * */
+  modifyActivityData: (activityData: {}) => ActivityArgData<{}, {}>,
+  /** A callback to run after the activity is posted successfully */
+  onSuccess?: () => mixed,
+  /** A callback that receives a function that submits the form */
+  registerSubmit?: (() => mixed) => mixed,
 |};
 
 type State = {|
@@ -63,6 +89,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
     feedGroup: 'user',
     activityVerb: 'post',
     fullscreen: false,
+    modifyActivityData: (d: {}) => d,
     height: 80,
     styles: {
       urlPreview: {
@@ -114,11 +141,6 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
   textInputRef = React.createRef();
 
-  constructor(props) {
-    super(props);
-    this._handleOgDebounced = _.debounce(this.handleOG, 250);
-  }
-
   state = {
     image: null,
     imageUrl: null,
@@ -132,6 +154,19 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     urls: [],
     dismissedUrls: [],
   };
+
+  constructor(props) {
+    super(props);
+    this._handleOgDebounced = _.debounce(this.handleOG, 250);
+  }
+
+  componentDidMount() {
+    if (this.props.registerSubmit) {
+      this.props.registerSubmit(async () => {
+        return this.onSubmitForm();
+      });
+    }
+  }
 
   _pickImage = async () => {
     let result = await pickImage();
@@ -212,9 +247,10 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
       activity.attachments = attachments;
     }
 
+    const modifiedActivity = this.props.modifyActivityData(activity);
     await this.props.session
       .feed(this.props.feedGroup, this.props.userId)
-      .addActivity(activity);
+      .addActivity(modifiedActivity);
   }
 
   handleOG(text) {
@@ -300,6 +336,9 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
       urls: [],
       dismissedUrls: [],
     });
+    if (this.props.onSuccess) {
+      this.props.onSuccess();
+    }
   };
 
   render() {
