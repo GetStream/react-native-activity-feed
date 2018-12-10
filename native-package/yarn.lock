@@ -6269,10 +6269,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v0.6.10:
-  version "0.6.10"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.10.tgz#0a95317e10fdf412ffce0abaa0511c85e99fe81e"
-  integrity sha512-o+VgpaoTm6m+fdKKGkOGZT6yZgmMETf1vjQbGX5199HIqXdVpVDftgs4h3fnE4Gel9KtSw21yjUb8EPMRQc01A==
+react-native-activity-feed-core@v0.6.11:
+  version "0.6.11"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.11.tgz#2b490700e32cfdabb8fa131027cc836ecfdced64"
+  integrity sha512-bwClYfi2ELIYU0E4LIElpe0X8CweMvVWKX6OUwm5NU1MGgqmMRuZGkJ1xXmj6s4Y3iN/MN52p4eA+ic/CcQUJA==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
