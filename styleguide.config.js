@@ -1,3 +1,8 @@
+// @noflow
+/* globals __dirname */
+/* eslint-env commonjs*/
+
+const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
@@ -5,6 +10,13 @@ module.exports = {
   require: ['babel-polyfill'],
   styleguideDir: 'docs',
   sortProps: (props) => props,
+  styleguideComponents: {
+    PathlineRenderer: path.join(
+      __dirname,
+      'src/styleguideComponents/PathlineRenderer.js',
+    ),
+  },
+
   sections: [
     {
       name: 'Introduction',

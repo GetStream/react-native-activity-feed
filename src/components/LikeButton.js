@@ -5,12 +5,17 @@ import ReactionToggleIcon from './ReactionToggleIcon';
 import type {
   BaseActivityResponse,
   ToggleReactionCallbackFunction,
+  StyleSheetLike,
 } from '../types';
 
 type Props = {|
+  /** The activity received for stream for which to show the like buton. This is
+   * used to initalize the toggle state and the counter. */
   activity: BaseActivityResponse,
+  /** The function that toggles the reaction. */
   onToggleReaction: ToggleReactionCallbackFunction,
-  styles: any,
+  /** Styling of the button */
+  styles?: StyleSheetLike,
 |};
 
 /**

@@ -7,14 +7,23 @@ import { buildStylesheet } from '../styles';
 import type { StyleSheetLike } from '../types';
 
 type Props = {|
+  /** The icon to display */
   icon: string | number,
+  /** The reaction counts for the activity */
   counts?: ReactionCounts,
-  kind?: string,
+  /** The kind of reaction that this displays */
+  kind: string,
+  /** The height of the icon */
   height?: number,
+  /** The width of the icon */
   width?: number,
-  onPress?: (kind: ?string) => any,
+  /** Function to call when pressed, usually this should call `props.onToggleReaction` */
+  onPress?: (kind: string) => any,
+  /** The label to display if the count is one (e.g "like") */
   labelSingle?: string,
+  /** The label to display if the count is more than one (e.g "likes") */
   labelPlural?: string,
+  /** Styling of the icon */
   styles?: StyleSheetLike,
 |};
 

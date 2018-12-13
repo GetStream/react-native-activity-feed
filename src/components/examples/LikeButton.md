@@ -1,3 +1,8 @@
+A version of [ReactionToggleIcon](#reactiontoggleicon) that's preconfigured for
+likes. If you need more freedom to configure it use
+[ReactionToggleIcon](#reactiontoggleicon) directly. Look at the source of this
+component for reference.
+
 ```js
 <LikeButton 
     // this is just a mock of the data to render the example
