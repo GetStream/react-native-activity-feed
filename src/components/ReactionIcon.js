@@ -25,7 +25,31 @@ type Props = {|
   labelPlural?: string,
   /** Styling of the icon */
   styles?: StyleSheetLike,
+  /** A function that returns either the string to display next to the icon or
+   * null in case no string should be displayed. This can be used for
+   * internationalization. */
+  labelFunction?: ({
+    count: number,
+    labelPlural: ?string,
+    labelSingle: ?string,
+  }) => string | null,
 |};
+
+function defaultLabelFunction(count, props) {
+  let { labelSingle, labelPlural, labelFunction } = props;
+  if (labelFunction) {
+    return labelFunction({
+      count,
+      labelSingle,
+      labelPlural,
+    });
+  }
+  let label = count === 1 ? labelSingle : labelPlural;
+  if (!label) {
+    return '' + count;
+  }
+  return `${count} ${label}`;
+}
 
 export default function ReactionIcon(props: Props) {
   let count = null;
@@ -41,16 +65,12 @@ export default function ReactionIcon(props: Props) {
   if (props.width !== undefined) {
     dimensions.width = props.width;
   }
-  let label = count === 1 ? props.labelSingle : props.labelPlural;
 
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <Image source={props.icon} style={[styles.image, dimensions]} />
       {count != null ? (
-        <Text style={styles.text}>
-          {count}
-          {label && ' ' + label}
-        </Text>
+        <Text style={styles.text}>{defaultLabelFunction(count, props)}</Text>
       ) : null}
     </TouchableOpacity>
   );

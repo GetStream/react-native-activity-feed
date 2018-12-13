@@ -27,6 +27,14 @@ type Props = {|
   labelPlural?: string,
   /** Styling of the icon */
   styles?: StyleSheetLike,
+  /** A function that returns either the string to display next to the icon or
+   * null in case no string should be displayed. This can be used for
+   * internationalization. */
+  labelFunction?: ({
+    count: number,
+    labelPlural: ?string,
+    labelSingle: ?string,
+  }) => string | null,
 |};
 
 /**
