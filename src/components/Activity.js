@@ -18,7 +18,7 @@ import Card from './Card';
 import type { ActivityData, StyleSheetLike, Renderable } from '../types';
 import { smartRender } from '../utils';
 
-type Props = {
+type Props = {|
   Header?: Renderable,
   Content?: Renderable,
   Footer?: Renderable,
@@ -27,15 +27,31 @@ type Props = {
   sub?: string,
   icon?: string,
   activity: ActivityData,
-  styles?: StyleSheetLike,
+  /** Width of an image that's displayed, by default this is
+   * the width of the screen */
   imageWidth?: number,
-};
+  /** Styling of the component */
+  styles?: StyleSheetLike,
+  /** Handle errors in the render method in a custom way, by
+   * default this component logs the error in the console **/
+  componentDidCatch?: (error: Error, info: {}, props: Props) => mixed,
+|};
 
 /**
  * Renders feed activities
  * @example ./examples/Activity.md
  */
 export default class Activity extends React.Component<Props> {
+  componentDidCatch(error: Error, info: {}) {
+    if (this.props.componentDidCatch) {
+      this.props.componentDidCatch(error, info, this.props);
+    } else {
+      console.error(error);
+      console.error('The following activity caused the previous error');
+      console.error(this.props.activity);
+    }
+  }
+
   _getOnPress = () => {
     if (this.props.onPress) {
       return this.props.onPress;
