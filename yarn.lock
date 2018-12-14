@@ -8777,10 +8777,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-iphone-x-helper@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.3.tgz#7a2f1e0574e899a0f1d426e6167fd98990083214"
-  integrity sha512-QHzpx4fv9u30VVU1DMgotiZsUB+m4BRjypca2rOczyj3cZBny5I+QDplrpFIBhzsa1iADNkziWa7kInzmKs00Q==
+react-native-iphone-x-helper@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"
+  integrity sha512-xIeTo4s77wwKgBZLVRIZC9tM9/PkXS46Ul76NXmvmixEb3ZwqGdQesR3zRiLMOoIdfOURB6N9bba9po7+x9Bag==
 
 react-native-keyboard-spacer@^0.4.1:
   version "0.4.1"
@@ -8815,12 +8815,12 @@ react-native-scripts@1.14.0:
     rimraf "^2.6.1"
     xdl "48.1.4"
 
-react-native-sticky-keyboard-accessory@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-sticky-keyboard-accessory/-/react-native-sticky-keyboard-accessory-0.1.1.tgz#176c29932a7e929b6af142c2d5651e6b9ceb547e"
-  integrity sha512-QgblDb4zyytv75enS+fvjTp9Bb01Rq6sItSy7YXJQIKHw0hXAZen/UoZhbdPwN0IrMe5moYPjfN4a0nnulHB6w==
+react-native-sticky-keyboard-accessory@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/react-native-sticky-keyboard-accessory/-/react-native-sticky-keyboard-accessory-0.1.3.tgz#1647d12f30ec78d8ee0f08a2271da6dac6155377"
+  integrity sha512-Bcwq9P0xgbQWXRLfxJq0sddA7AAZ03RUX2rSwIy6ecWUGH8EvCBrpl233S/QjyK5Mm7zsNBLBLqsBEbyw9mRyQ==
   dependencies:
-    react-native-iphone-x-helper "^1.0.2"
+    react-native-iphone-x-helper "^1.2.0"
 
 react-native-web@^0.8.9:
   version "0.8.9"
