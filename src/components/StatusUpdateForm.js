@@ -50,6 +50,8 @@ type Props = {|
   styles: StyleSheetLike,
   /** Height of the form. This is ignored when fullscreen is `true` */
   height: number,
+  /** custom verticalOffset  */
+  verticalOffset: number,
   /** If you want to change something about the activity data that this form
    * sends to stream you can do that with this function. This function gets the
    * activity data that the form would send normally and should return the
@@ -91,6 +93,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
     fullscreen: false,
     modifyActivityData: (d: {}) => d,
     height: 80,
+    verticalOffset: 0,
     styles: {
       urlPreview: {
         wrapper: {
@@ -120,7 +123,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
               return (
                 <React.Fragment>
                   <View style={{ height: this.props.height }} />
-                  <KeyboardAccessory>
+                  <KeyboardAccessory verticalOffset={this.props.verticalOffset}>
                     <StatusUpdateFormInner {...this.props} {...appCtx} />
                   </KeyboardAccessory>
                 </React.Fragment>

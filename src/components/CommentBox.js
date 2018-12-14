@@ -14,6 +14,7 @@ type Props = {|
   onSubmit: (string) => mixed,
   /** Height in pixels for the whole component */
   height?: number,
+  verticalOffset?: number,
   /** Props used to render the Avatar component */
   avatarProps?: AvatarProps,
   /** Skips the Avatar component when provided */
@@ -37,6 +38,7 @@ export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
     styles: {},
     height: 80,
+    verticalOffset: 0,
     noKeyboardAccessory: false,
   };
 
@@ -79,7 +81,7 @@ export default class CommentBox extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <View style={{ height: this.props.height }} />
-        <KeyboardAccessory>{input}</KeyboardAccessory>
+        <KeyboardAccessory verticalOffset={this.props.verticalOffset}>{input}</KeyboardAccessory>
       </React.Fragment>
     );
   }
