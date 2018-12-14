@@ -25,6 +25,7 @@ yarn-error.log*
 #ide
 .idea
 **/.tern-port
+package-lock.json
 
 
 

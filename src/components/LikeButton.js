@@ -11,11 +11,21 @@ import type {
 } from '../types';
 
 type Props = {|
+  /** The activity received from Stream that should be liked when pressing the
+   * LikeButton. */
   activity: BaseActivityResponse,
+  /** The reaction received from Stream that should be liked when pressing the
+   * LikeButton. Liking a reaction requires to pass both this field and
+   * the `onToggleChildReaction` as well. */
   reaction?: BaseReaction,
+  /** The reactionKind that is used to like, you can for instance set this to
+   * `heart`. */
   reactionKind: string,
+  /** The function that toggles reactions on activities. */
   onToggleReaction: ToggleReactionCallbackFunction,
+  /** The function that toggles reactions on reactions. */
   onToggleChildReaction?: ToggleChildReactionCallbackFunction,
+  /** Styling of the button */
   styles?: StyleSheetLike,
 |};
 

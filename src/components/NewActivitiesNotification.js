@@ -8,8 +8,17 @@ import type { StyleSheetLike } from '../types';
 type Props = {|
   adds: Array<{}>,
   deletes: Array<{}>,
-  labelSingular?: string,
-  labelPlural?: string,
+  labelSingular: string,
+  labelPlural: string,
+  /** A function that returns either the string to display or null in case no
+   * notification should be displayed */
+  labelFunction?: ({
+    count: number,
+    deleteCount: number,
+    addCount: number,
+    labelPlural: string,
+    labelSingular: string,
+  }) => string | null,
   styles?: StyleSheetLike,
   onPress?: () => mixed,
 |};
@@ -24,17 +33,40 @@ export default class NewActivitiesNotification extends React.Component<Props> {
     labelPlural: 'activities',
   };
 
-  render() {
-    let { adds, deletes, labelSingular, labelPlural } = this.props;
-    let styles = buildStylesheet('pagerBlock', this.props.styles);
+  _labelFunction = () => {
+    let {
+      adds,
+      deletes,
+      labelSingular,
+      labelPlural,
+      labelFunction,
+    } = this.props;
     let addCount = (adds || []).length;
     let deleteCount = (deletes || []).length;
     let count = addCount + deleteCount;
-    return count ? (
+    if (labelFunction) {
+      return labelFunction({
+        count,
+        addCount,
+        deleteCount,
+        labelSingular,
+        labelPlural,
+      });
+    }
+    if (addCount == 0) {
+      return null;
+    }
+    return `You have ${addCount} new ${
+      addCount > 1 ? labelPlural : labelSingular
+    }`;
+  };
+
+  render() {
+    let styles = buildStylesheet('pagerBlock', this.props.styles);
+    let label = this._labelFunction();
+    return label != null ? (
       <TouchableOpacity style={[styles.container]} onPress={this.props.onPress}>
-        <Text style={[styles.text]}>
-          You have {count} new {count > 1 ? labelPlural : labelSingular}
-        </Text>
+        <Text style={[styles.text]}>{label}</Text>
       </TouchableOpacity>
     ) : null;
   }

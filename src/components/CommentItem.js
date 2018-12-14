@@ -8,9 +8,16 @@ import { buildStylesheet } from '../styles';
 import type { Comment, StyleSheetLike, Renderable } from '../types';
 
 type Props = {
+  /** The comment that should be displayed */
   comment: Comment,
+  /** Something that should be displayed in the Footer of the component, such
+   * as a like button */
   Footer?: Renderable,
+  /** Styling of the component */
   styles?: StyleSheetLike,
+  /** Handle errors in the render method in a custom way, by default this
+   * component logs the error in the console **/
+  componentDidCatch?: (error: Error, info: {}, props: Props) => mixed,
 };
 
 /**
@@ -18,6 +25,16 @@ type Props = {
  * @example ./examples/CommentItem.md
  */
 export default class CommentItem extends React.Component<Props> {
+  componentDidCatch(error: Error, info: {}) {
+    if (this.props.componentDidCatch) {
+      this.props.componentDidCatch(error, info, this.props);
+    } else {
+      console.error(error);
+      console.error('The following comment caused the previous error');
+      console.error(this.props.comment);
+    }
+  }
+
   render() {
     let { comment } = this.props;
     let styles = buildStylesheet('commentItem', this.props.styles || {});

@@ -137,9 +137,7 @@ type ImmutableItemWrapperProps = {
   item: any,
 };
 
-class ImmutableItemWrapper extends React.PureComponent<
-  ImmutableItemWrapperProps,
-> {
+class ImmutableItemWrapper extends React.PureComponent<ImmutableItemWrapperProps> {
   render() {
     return this.props.renderItem(this.props.item.toJS());
   }

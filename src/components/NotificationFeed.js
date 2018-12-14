@@ -37,6 +37,8 @@ type Props = {|
   children?: React.Node,
   styles: StyleSheetLike,
   navigation?: NavigationScreen,
+  /** Any props the react native FlatList accepts */
+  flatListProps?: {},
 |};
 
 export default class NotificationFeed extends React.Component<Props> {
@@ -141,6 +143,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
             this.props.noPagination ? undefined : this.props.loadNextPage
           }
           ref={this.listRef}
+          {...this.props.flatListProps}
         />
       </React.Fragment>
     );
@@ -152,9 +155,7 @@ type ImmutableItemWrapperProps = {
   item: any,
 };
 
-class ImmutableItemWrapper extends React.PureComponent<
-  ImmutableItemWrapperProps,
-> {
+class ImmutableItemWrapper extends React.PureComponent<ImmutableItemWrapperProps> {
   render() {
     return this.props.renderItem(this.props.item.toJS());
   }

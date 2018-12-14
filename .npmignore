@@ -22,6 +22,7 @@ yarn-error.log*
 #ide
 .idea
 **/.tern-port
+package-lock.json
 
 
 # Don't submit src to npm to avoid confusion about which file is used

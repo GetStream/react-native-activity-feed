@@ -26,6 +26,8 @@ import type {
   OgData,
 } from '../types';
 
+import type { ActivityArgData } from 'getstream';
+
 const ImageState = Object.freeze({
   NO_IMAGE: Symbol('no_image'),
   UPLOADING: Symbol('uploading'),
@@ -36,12 +38,49 @@ const ImageState = Object.freeze({
 const urlRegex = /(https?:\/\/[^\s]+)/gi;
 
 type Props = {|
+  /** The feed group part of the feed that the activity should be posted to */
   feedGroup: string,
+  /** The user_id part of the feed that the activity should be posted to  */
   userId?: string,
+  /** The verb that should be used to post the activity */
   activityVerb: string,
+  /** Make the form full screen. This can be useful when you have a separate
+   * screen for posting. */
   fullscreen: boolean,
   styles: StyleSheetLike,
+  /** Height in pixels for the whole component, if this is not set correctly
+   * it will be displayed on top of other components.
+   * This is ignored when fullscreen is `true` */
   height: number,
+  /** If you want to change something about the activity data that this form
+   * sends to stream you can do that with this function. This function gets the
+   * activity data that the form would send normally and should return the
+   * modified activity data that should be posted instead.
+   *
+   * For instance, this would add a target field to the activity:
+   *
+   * ```javascript
+   * &lt;StatusUpdateForm
+   *   modifyActivityData={(data) => ({...data, target: 'Group:1'})}
+   * />
+   * ```
+   * */
+  modifyActivityData: (activityData: {}) => ActivityArgData<{}, {}>,
+  /** A callback to run after the activity is posted successfully */
+  onSuccess?: () => mixed,
+  /** A callback that receives a function that submits the form */
+  registerSubmit?: (() => mixed) => mixed,
+  /** Removes KeyboardAccessory. When disabling this keep in mind that the
+   * input won't move with the keyboard anymore. */
+  noKeyboardAccessory: boolean,
+  /** Custom verticalOffset for the KeyboardAccessory if for some reason the
+   * component is positioned wrongly when the keyboard opens. If the item is
+   * positioned too high this should be a negative number, if it's positioned
+   * too low it should be positive. One known case where this happens is when
+   * using react-navigation with `tabBarPosition: 'bottom'`.  */
+  verticalOffset: number,
+  /** Any props the React Native TextInput accepts */
+  textInputProps?: {},
 |};
 
 type State = {|
@@ -63,7 +102,10 @@ export default class StatusUpdateForm extends React.Component<Props> {
     feedGroup: 'user',
     activityVerb: 'post',
     fullscreen: false,
+    modifyActivityData: (d: {}) => d,
     height: 80,
+    verticalOffset: 0,
+    noKeyboardAccessory: false,
     styles: {
       urlPreview: {
         wrapper: {
@@ -89,11 +131,14 @@ export default class StatusUpdateForm extends React.Component<Props> {
               </View>
             );
           } else {
-            if (Platform.OS === 'ios' || androidTranslucentStatusBar) {
+            if (
+              (Platform.OS === 'ios' || androidTranslucentStatusBar) &&
+              !this.props.noKeyboardAccessory
+            ) {
               return (
                 <React.Fragment>
                   <View style={{ height: this.props.height }} />
-                  <KeyboardAccessory>
+                  <KeyboardAccessory verticalOffset={this.props.verticalOffset}>
                     <StatusUpdateFormInner {...this.props} {...appCtx} />
                   </KeyboardAccessory>
                 </React.Fragment>
@@ -114,11 +159,6 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
   textInputRef = React.createRef();
 
-  constructor(props) {
-    super(props);
-    this._handleOgDebounced = _.debounce(this.handleOG, 250);
-  }
-
   state = {
     image: null,
     imageUrl: null,
@@ -132,6 +172,19 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     urls: [],
     dismissedUrls: [],
   };
+
+  constructor(props) {
+    super(props);
+    this._handleOgDebounced = _.debounce(this.handleOG, 250);
+  }
+
+  componentDidMount() {
+    if (this.props.registerSubmit) {
+      this.props.registerSubmit(async () => {
+        return this.onSubmitForm();
+      });
+    }
+  }
 
   _pickImage = async () => {
     let result = await pickImage();
@@ -212,9 +265,10 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
       activity.attachments = attachments;
     }
 
+    const modifiedActivity = this.props.modifyActivityData(activity);
     await this.props.client
       .feed(this.props.feedGroup, this.props.userId)
-      .addActivity(activity);
+      .addActivity(modifiedActivity);
   }
 
   handleOG(text) {
@@ -300,6 +354,9 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
       urls: [],
       dismissedUrls: [],
     });
+    if (this.props.onSuccess) {
+      this.props.onSuccess();
+    }
   };
 
   render() {
@@ -342,6 +399,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                 underlineColorAndroid="transparent"
                 onBlur={() => this.setState({ focused: false })}
                 onFocus={() => this.setState({ focused: true })}
+                {...this.props.textInputProps}
               />
             </View>
 

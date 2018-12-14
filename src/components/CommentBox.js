@@ -10,20 +10,32 @@ import type { Props as AvatarProps } from './Avatar';
 import { buildStylesheet } from '../styles';
 
 type Props = {|
-  /** callback function called when the text is submitted */
+  /** Callback function called when the text is submitted, by default it adds a
+   * comment reaction to the provided activity */
   onSubmit?: (string) => mixed,
-  /** height in pixels for the whole component */
+  /** Height in pixels for the whole component */
   height?: number,
-  /** props used to render the Avatar component */
+  /** Props used to render the Avatar component */
   avatarProps?: AvatarProps,
-  /** skips the Avatar component when provided */
+  /** Skips the Avatar component when provided */
   noAvatar?: boolean,
-  /** style changes to default */
+  /** Style changes to default */
   styles?: StyleSheetLike,
   /** activity */
   activity: ActivityData,
   /** event callback handler fired when the enter button is pressed */
   onAddReaction: (string, ActivityData, any) => void,
+  /** Removes KeyboardAccessory. When disabling this keep in mind that the
+   * input won't move with the keyboard anymore. */
+  noKeyboardAccessory: boolean,
+  /** Custom verticalOffset for the KeyboardAccessory if for some reason the
+   * component is positioned wrongly when the keyboard opens. If the item is
+   * positioned too high this should be a negative number, if it's positioned
+   * too low it should be positive. One known case where this happens is when
+   * using react-navigation with `tabBarPosition: 'bottom'`.  */
+  verticalOffset: number,
+  /** Any props the React Native TextInput accepts */
+  textInputProps?: {},
 |};
 
 type State = {|
@@ -39,7 +51,10 @@ export default class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
     styles: {},
     height: 80,
+    verticalOffset: 0,
+    noKeyboardAccessory: false,
   };
+
   state = {
     text: '',
   };
@@ -55,35 +70,42 @@ export default class CommentBox extends React.Component<Props, State> {
   }
 
   render() {
+    let { noKeyboardAccessory, textInputProps } = this.props;
+
     let styles = buildStylesheet('commentBox', this.props.styles);
+    let input = (
+      <View style={styles.container}>
+        {this.props.noAvatar || (
+          <Avatar
+            size={48}
+            styles={styles.avatar}
+            {...this.props.avatarProps}
+          />
+        )}
+        <TextInput
+          value={this.state.text}
+          style={styles.textInput}
+          underlineColorAndroid="transparent"
+          onChangeText={(text) => this.setState({ text })}
+          onSubmitEditing={async (event) => {
+            this.setState({ text: '' });
+            this.postComment(event);
+          }}
+          placeholder="Your comment..."
+          returnKeyType="send"
+          {...textInputProps}
+        />
+      </View>
+    );
+    if (noKeyboardAccessory) {
+      return input;
+    }
 
     return (
       <React.Fragment>
         <View style={{ height: this.props.height }} />
-
-        <KeyboardAccessory>
-          <View style={styles.container}>
-            {this.props.noAvatar || (
-              <Avatar
-                size={48}
-                // $FlowFixMe
-                styles={this.props.styles.avatar}
-                {...this.props.avatarProps}
-              />
-            )}
-            <TextInput
-              value={this.state.text}
-              style={styles.textInput}
-              placeholder="Your comment..."
-              underlineColorAndroid="transparent"
-              returnKeyType="send"
-              onChangeText={(text) => this.setState({ text })}
-              onSubmitEditing={async (event) => {
-                this.setState({ text: '' });
-                this.postComment(event);
-              }}
-            />
-          </View>
+        <KeyboardAccessory verticalOffset={this.props.verticalOffset}>
+          {input}
         </KeyboardAccessory>
       </React.Fragment>
     );
