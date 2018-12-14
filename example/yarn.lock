@@ -4163,6 +4163,25 @@ getstream@^4.0.1-6:
     request "^2.88.0"
     whatwg-fetch "^2.0.4"
 
+getstream@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.7.tgz#7534dbb8ed6911e7a4d7541457ec0f4c4b46735d"
+  integrity sha512-noR+Rl/2xuPbJvhPvbBvJjkS8QFS/0II6tVwazCkuUniXPtOzCoJmrqadsxDvPRWn66H5lztygXAZ3rNQaRIjg==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@stream-io/xmlhttp-request" "^0.4.0"
+    Base64 "^1.0.1"
+    cross-fetch "^2.2.2"
+    faye "^1.2.4"
+    form-data "^2.3.2"
+    http-signature "~1.2.0"
+    jsonwebtoken "^8.4.0"
+    jwt-decode "^2.2.0"
+    lodash "^4.17.10"
+    qs "^6.5.1"
+    request "^2.88.0"
+    whatwg-fetch "^2.0.4"
+
 glob-base@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/glob-base/-/glob-base-0.3.0.tgz#dbb164f6221b1c0b1ccf82aea328b497df0ea3c4"
@@ -5572,7 +5591,7 @@ jsonwebtoken@^7.2.1:
     ms "^2.0.0"
     xtend "^4.0.1"
 
-jsonwebtoken@^8.3.0:
+jsonwebtoken@^8.3.0, jsonwebtoken@^8.4.0:
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.4.0.tgz#8757f7b4cb7440d86d5e2f3becefa70536c8e46a"
   integrity sha512-coyXjRTCy0pw5WYBpMvWOMN+Kjaik2MwTUIq9cna/W7NpO9E+iYbumZONAz3hcr+tXFJECoQVrtmIoC3Oz0gvg==
@@ -7337,10 +7356,10 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.0, react-lifecycles-com
   version "0.0.0"
   uid ""
 
-react-native-activity-feed-core@v0.7.0-beta.2:
-  version "0.7.0-beta.2"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.7.0-beta.2.tgz#0cef183b17005c3dc707ac4638f39445d54f7ff8"
-  integrity sha512-3Xo6Gk8SkiDdj3nLfl+kMleUE00gUqjAqYw7CO6SDXF94vjvjP//z+Q7AYd82uCZc3GoTvG+3322yyLEo/OkdQ==
+react-native-activity-feed-core@v0.7.0-beta.4:
+  version "0.7.0-beta.4"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.7.0-beta.4.tgz#4aa479f4c0b13d071075e92e817a28a361a848d5"
+  integrity sha512-ixgDmaxD+wpbHki6uSfhMiNXAKhydy7isWmKlENXT49RNnYAm3TUtD/6YyEe7bqAXTV6rSrSVYm3TjciM6HkIg==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
@@ -7394,7 +7413,7 @@ react-native-gesture-handler@1.0.0-alpha.41:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-iphone-x-helper@^1.0.1, react-native-iphone-x-helper@^1.0.2:
+react-native-iphone-x-helper@^1.0.1, react-native-iphone-x-helper@^1.0.2, react-native-iphone-x-helper@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"
   integrity sha512-xIeTo4s77wwKgBZLVRIZC9tM9/PkXS46Ul76NXmvmixEb3ZwqGdQesR3zRiLMOoIdfOURB6N9bba9po7+x9Bag==
@@ -7473,6 +7492,13 @@ react-native-sticky-keyboard-accessory@^0.1.1:
   integrity sha512-QgblDb4zyytv75enS+fvjTp9Bb01Rq6sItSy7YXJQIKHw0hXAZen/UoZhbdPwN0IrMe5moYPjfN4a0nnulHB6w==
   dependencies:
     react-native-iphone-x-helper "^1.0.2"
+
+react-native-sticky-keyboard-accessory@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/react-native-sticky-keyboard-accessory/-/react-native-sticky-keyboard-accessory-0.1.3.tgz#1647d12f30ec78d8ee0f08a2271da6dac6155377"
+  integrity sha512-Bcwq9P0xgbQWXRLfxJq0sddA7AAZ03RUX2rSwIy6ecWUGH8EvCBrpl233S/QjyK5Mm7zsNBLBLqsBEbyw9mRyQ==
+  dependencies:
+    react-native-iphone-x-helper "^1.2.0"
 
 react-native-svg-web@^1.0.1:
   version "1.0.1"
