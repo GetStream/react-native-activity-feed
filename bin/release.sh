@@ -25,12 +25,12 @@ git add native-package/yarn.lock
 npm version "$1" --force
 
 
-npm publish --tag beta
+npm publish
 
 cd native-package
-npm publish --tag beta
+npm publish
 
 cd ../expo-package
-npm publish --tag beta
+npm publish
 
 git push --follow-tags
