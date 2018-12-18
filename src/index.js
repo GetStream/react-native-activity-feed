@@ -28,7 +28,7 @@ export { default as CommentBox } from './components/CommentBox';
 export { default as CommentItem } from './components/CommentItem';
 export { default as CommentList } from './components/CommentList';
 
-export { default as LikesList } from './components/LikesList';
+export { default as LikeList } from './components/LikeList';
 
 export { default as BackButton } from './components/BackButton';
 export { default as Activity } from './components/Activity';

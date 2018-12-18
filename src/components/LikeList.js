@@ -17,7 +17,7 @@ export type Props = {|
 /**
  * LikeList uses ReactionList under the hood to render a list of likes.
  *
- * @example ./examples/LikesList.md
+ * @example ./examples/LikeList.md
  */
 export default class LikeList extends React.PureComponent<Props> {
   static defaultProps = {

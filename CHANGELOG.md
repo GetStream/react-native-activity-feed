@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 Nothing yet
 
+## 0.8.0 - 2018-12-18
+
+### Breaking Changes
+
+- `LikesList` is renamed to `LikeList`
+
+
 ## 0.7.0 - 2018-12-14
 
 ### Breaking Changes

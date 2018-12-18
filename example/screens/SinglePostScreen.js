@@ -11,7 +11,7 @@ import {
   ReactionIcon,
   CommentList,
   CommentItem,
-  LikesList,
+  LikeList,
 } from 'expo-activity-feed';
 
 import RepostList from '../components/RepostList';
@@ -71,10 +71,7 @@ export default class SinglePostScreen extends React.Component<Props> {
                 }
               />
               <View style={styles.likesContainer}>
-                <LikesList
-                  activityId={props.activity.id}
-                  reactionKind="heart"
-                />
+                <LikeList activityId={props.activity.id} reactionKind="heart" />
               </View>
               <RepostList activityId={props.activity.id} />
               <CommentList
