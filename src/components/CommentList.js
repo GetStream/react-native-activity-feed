@@ -27,6 +27,7 @@ export type Props = {|
 export default class CommentList extends React.PureComponent<Props> {
   static defaultProps = {
     CommentItem,
+    infiniteScroll: false,
   };
 
   _Reaction = ({ reaction }: { reaction: Comment }) =>
