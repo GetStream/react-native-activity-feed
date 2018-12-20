@@ -6269,10 +6269,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v0.6.15:
-  version "0.6.15"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.15.tgz#80769870eeb46b583e5eebf348c995648a8b8e8a"
-  integrity sha512-fr6L11MQQOtuodoic84RTnztOpEbxY+t5fMuwiQAD1kxjHa0WkjQGqfA/fuvjk6kvnsgcOmRHcuUbgaayMYT7g==
+react-native-activity-feed-core@v0.6.16:
+  version "0.6.16"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.6.16.tgz#e036204c42b5bee063f23f24be601a46186f0f0b"
+  integrity sha512-f0dKSIrUHWAXD3Mb7rJB/RJUeubf88xNuQxkyDdNft68Xp9dRVJX1I0uEovxEwJeaZCDyx5MNUNP/4F7FDWLNA==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
@@ -6282,7 +6282,7 @@ react-native-activity-feed-core@v0.6.15:
     numeral "^2.0.6"
     react-native-keyboard-spacer "^0.4.1"
     react-native-safe-area-view "0.9.0"
-    react-native-sticky-keyboard-accessory "^0.1.1"
+    react-native-sticky-keyboard-accessory "^0.1.3"
     stream-analytics "^2.7.1"
     url-parse "^1.4.3"
 
@@ -6329,10 +6329,10 @@ react-native-scripts@1.14.0:
     rimraf "^2.6.1"
     xdl "48.1.4"
 
-react-native-sticky-keyboard-accessory@^0.1.1:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-sticky-keyboard-accessory/-/react-native-sticky-keyboard-accessory-0.1.2.tgz#23412eb387311de38e6a4de4da1e893ee33aad7f"
-  integrity sha512-Og9X6Io1hs7gNVlROAbBdNkkOCyMxwhwNM5FCL9VKC/lLIILTstihzV3uNvkdhc/dnsBzl5n/nzjqCdiEpfPiA==
+react-native-sticky-keyboard-accessory@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/react-native-sticky-keyboard-accessory/-/react-native-sticky-keyboard-accessory-0.1.3.tgz#1647d12f30ec78d8ee0f08a2271da6dac6155377"
+  integrity sha512-Bcwq9P0xgbQWXRLfxJq0sddA7AAZ03RUX2rSwIy6ecWUGH8EvCBrpl233S/QjyK5Mm7zsNBLBLqsBEbyw9mRyQ==
   dependencies:
     react-native-iphone-x-helper "^1.2.0"
 
