@@ -4,7 +4,11 @@
     "development": {
       "plugins": [
         "transform-react-jsx-source",
-        "transform-inline-environment-variables"
+        "transform-inline-environment-variables",
+        ["transform-runtime", {
+          "polyfill": false,
+          "regenerator": true
+        }]
       ]
     }
   }

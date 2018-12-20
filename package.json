@@ -19,6 +19,7 @@
     "babel-plugin-react-native-web": "^0.8.9",
     "babel-plugin-root-import": "^6.1.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
@@ -58,6 +59,7 @@
     "postpack": "bin/postpack.sh"
   },
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "es6-symbol": "^3.1.1",
     "faker": "^4.1.0",
     "getstream": "^3.23.1",

@@ -17,6 +17,7 @@
 .env.production.local
 secrets*.*sh
 /change-permissions.js
+/test_stuff.js
 
 npm-debug.log*
 yarn-debug.log*
