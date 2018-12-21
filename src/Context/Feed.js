@@ -51,6 +51,8 @@ export type FeedCtx = {|
   ) => Promise<mixed>,
   loadNextPage: () => Promise<mixed>,
   hasNextPage: boolean,
+  loadReverseNextPage: () => Promise<mixed>,
+  hasReverseNextPage: boolean,
   refreshing: boolean,
   realtimeAdds: Array<{}>,
   realtimeDeletes: Array<{}>,
@@ -88,6 +90,7 @@ type FeedManagerState = {|
   activities: any,
   refreshing: boolean,
   lastResponse: ?FR,
+  lastReverseResponse: ?{ next: string },
   realtimeAdds: Array<{}>,
   realtimeDeletes: Array<{}>,
   subscription: ?any,
@@ -117,6 +120,7 @@ export class FeedManager {
     reactionIdToPaths: {},
     reactionActivities: {},
     lastResponse: null,
+    lastReverseResponse: null,
     refreshing: false,
     realtimeAdds: [],
     realtimeDeletes: [],
@@ -131,7 +135,19 @@ export class FeedManager {
 
   constructor(props: FeedInnerProps) {
     this.props = props;
+    const initialOptions = this.getOptions();
     this.registeredCallbacks = [];
+    let previousUrl = '';
+    if (initialOptions.id_gte) {
+      previousUrl = `?id_lt=${initialOptions.id_gte}`;
+    } else if (initialOptions.id_gt) {
+      previousUrl = `?id_lte=${initialOptions.id_gt}`;
+    } else if (initialOptions.id_lte) {
+      previousUrl = `?id_gt=${initialOptions.id_lte}`;
+    } else if (initialOptions.id_lt) {
+      previousUrl = `?id_gte=${initialOptions.id_lt}`;
+    }
+    this.state.lastReverseResponse = { next: previousUrl };
   }
 
   register(callback: () => mixed) {
@@ -515,17 +531,30 @@ export class FeedManager {
     return this._removeActivityFromState(activityId);
   };
 
-  getOptions = (extraOptions?: FeedRequestOptions): FeedRequestOptions => ({
-    withReactionCounts: true,
-    withOwnReactions: true,
-    limit: 10,
-    ...this.props.options,
-    ...extraOptions,
-  });
+  getOptions = (extraOptions?: FeedRequestOptions = {}): FeedRequestOptions => {
+    const propOpts = { ...this.props.options };
+    const { id_gt, id_gte, id_lt, id_lte, offset } = extraOptions;
+    if (id_gt || id_gte || id_lt || id_lte || offset != null) {
+      delete propOpts.id_gt;
+      delete propOpts.id_gte;
+      delete propOpts.id_lt;
+      delete propOpts.id_lte;
+      delete propOpts.offset;
+    }
+
+    return {
+      withReactionCounts: true,
+      withOwnReactions: true,
+      limit: 10,
+      ...propOpts,
+      ...extraOptions,
+    };
+  };
 
   doFeedRequest = async (options: FeedRequestOptions): Promise<FR> => {
     const requestWasSentAt = Date.now();
     let response;
+
     if (this.props.doFeedRequest) {
       response = await this.props.doFeedRequest(
         this.props.client,
@@ -882,6 +911,11 @@ export class FeedManager {
     return Boolean(lastResponse && lastResponse.next);
   };
 
+  hasReverseNextPage = () => {
+    const { lastReverseResponse } = this.state;
+    return Boolean(lastReverseResponse && lastReverseResponse.next);
+  };
+
   loadNextPage = async () => {
     const lastResponse = this.state.lastResponse;
     if (!lastResponse || !lastResponse.next) {
@@ -946,6 +980,70 @@ export class FeedManager {
     });
   };
 
+  loadReverseNextPage = async () => {
+    const { lastReverseResponse } = this.state;
+    if (!lastReverseResponse || !lastReverseResponse.next) {
+      return;
+    }
+    let cancel = false;
+    await this.setState((prevState) => {
+      if (prevState.refreshing) {
+        cancel = true;
+        return {};
+      }
+      return { refreshing: true };
+    });
+
+    if (cancel) {
+      return;
+    }
+
+    const nextURL = new URL(lastReverseResponse.next, true);
+    const options = this.getOptions(nextURL.query);
+
+    let response: FR;
+    try {
+      response = await this.doFeedRequest(options);
+    } catch (e) {
+      this.setState({ refreshing: false });
+      this.props.errorHandler(e, 'get-feed-next-page', {
+        feedGroup: this.props.feedGroup,
+        userId: this.props.userId,
+      });
+      return;
+    }
+    return this.setState((prevState) => {
+      const activities = prevState.activities.merge(
+        this.responseToActivityMap(response),
+      );
+      const activityIdToPath = {
+        ...prevState.activityIdToPath,
+        ...this.responseToActivityIdToPath(response),
+      };
+      return {
+        activityOrder: response.results
+          .map((a) => a.id)
+          .concat(prevState.activityOrder),
+        activities,
+        activityIdToPath,
+        activityIdToPaths: this.responseToActivityIdToPaths(
+          response,
+          prevState.activityIdToPaths,
+        ),
+        reactionIdToPaths: this.feedResponseToReactionIdToPaths(
+          response,
+          prevState.reactionIdToPaths,
+        ),
+        reactionActivities: {
+          ...prevState.reactionActivities,
+          ...this.responseToReactionActivities(response),
+        },
+        refreshing: false,
+        lastReverseResponse: response,
+      };
+    });
+  };
+
   loadNextReactions = async (
     activityId: string,
     kind: string,
@@ -979,7 +1077,6 @@ export class FeedManager {
     }));
 
     const options = {
-      ...this.props.options,
       ...URL(nextUrl, true).query,
       activity_id: activityId,
       kind,
@@ -1107,6 +1204,8 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
       loadNextReactions: manager.loadNextReactions,
       loadNextPage: manager.loadNextPage,
       hasNextPage: manager.hasNextPage(),
+      loadReverseNextPage: manager.loadReverseNextPage,
+      hasReverseNextPage: manager.hasReverseNextPage(),
       feedGroup: this.props.feedGroup,
       userId: this.props.userId,
       activityOrder: state.activityOrder,
