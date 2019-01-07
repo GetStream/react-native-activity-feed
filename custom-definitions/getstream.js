@@ -79,7 +79,8 @@ declare module 'getstream' {
   declare class StreamImageStore {
     upload: (
       uri: string | Blob | File,
-      name?: string,
+      name?: ?string,
+      contentType?: ?string,
     ) => Promise<{ file: string }>;
     delete: (uri: string) => Promise<{}>;
     process: (uri: string, options?: {}) => Promise<{}>;
@@ -94,7 +95,8 @@ declare module 'getstream' {
   declare class StreamFileStore {
     upload: (
       uri: string | Blob | File,
-      name?: string,
+      name?: ?string,
+      contentType?: ?string,
     ) => Promise<{ file: string }>;
     delete: (uri: string) => Promise<{}>;
   }

@@ -1,4 +1,4 @@
 {
-  "presets": ["react-native"],
+  "presets": ["react-native", "module:react-native-dotenv"],
   "plugins": ["transform-inline-environment-variables"]
 }

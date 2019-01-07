@@ -1,21 +1,24 @@
 import React from 'react';
-import { View, SafeAreaView, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
-import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
+import {
+  STREAM_API_KEY,
+  STREAM_API_TOKEN,
+  STREAM_APP_ID,
+} from 'react-native-dotenv';
 
 import {
   StreamApp,
   FlatFeed,
-  BaseActivity,
-  StatusUpdateFormSimple,
+  Activity,
+  StatusUpdateForm,
   LikeButton,
-  FeedNotification,
 } from 'react-native-activity-feed';
 
 const App = () => {
-  let apiKey = process.env['STREAM_API_KEY'];
-  let appId = process.env['STREAM_APP_ID'];
-  let token = process.env['STREAM_TOKEN'];
+  let apiKey = STREAM_API_KEY;
+  let appId = STREAM_APP_ID;
+  let token = STREAM_API_TOKEN;
 
   if (!apiKey) {
     console.error('STREAM_API_KEY should be set');
@@ -35,123 +38,69 @@ const App = () => {
   // eslint-disable-next-line no-unused-vars
   function stepOne() {
     return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token} />
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token} />;
+      </SafeAreaView>
     );
   }
 
   // eslint-disable-next-line no-unused-vars
   function stepTwo() {
     return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FlatFeed />
-      </StreamApp>
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token}>
+          <FlatFeed />
+        </StreamApp>
+      </SafeAreaView>
     );
   }
 
   // eslint-disable-next-line no-unused-vars
   function stepThree() {
-    return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FlatFeed
-          renderActivity={(props) => {
-            return (
-              <BaseActivity
-                {...props}
-                Footer={
-                  <LikeButton
-                    activity={props.activity}
-                    onToggleReaction={props.onToggleReaction}
-                  />
-                }
-              />
-            );
-          }}
-        />
-      </StreamApp>
-    );
-  }
+    const renderActivity = (props) => {
+      return <Activity {...props} Footer={<LikeButton {...props} />} />;
+    };
 
-  function statusUpdateForm() {
-    if (Platform.OS === 'android') {
-      return (
-        <StatusUpdateFormSimple
-          styles={{
-            urlPreview: {
-              wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
-            },
-          }}
-        />
-      );
-    } else {
-      return (
-        <KeyboardAccessory>
-          <StatusUpdateFormSimple
-            styles={{
-              urlPreview: {
-                wrapper: { padding: 8, paddingLeft: 15, paddingRight: 15 },
-              },
-            }}
-          />
-        </KeyboardAccessory>
-      );
-    }
+    return (
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token}>
+          <FlatFeed Activity={renderActivity} />
+        </StreamApp>
+      </SafeAreaView>
+    );
   }
 
   // eslint-disable-next-line no-unused-vars
   function stepFour() {
+    const renderActivity = (props) => {
+      return <Activity {...props} Footer={<LikeButton {...props} />} />;
+    };
+
     return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FlatFeed
-          renderActivity={(props) => {
-            return (
-              <BaseActivity
-                {...props}
-                Footer={
-                  <View style={{ paddingLeft: 15 }}>
-                    <LikeButton
-                      activity={props.activity}
-                      onToggleReaction={props.onToggleReaction}
-                    />
-                  </View>
-                }
-              />
-            );
-          }}
-        />
-        {statusUpdateForm()}
-      </StreamApp>
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token}>
+          <FlatFeed Activity={renderActivity} />
+          <StatusUpdateForm />
+        </StreamApp>
+      </SafeAreaView>
     );
   }
 
   // eslint-disable-next-line no-unused-vars
   function stepFive() {
     const renderActivity = (props) => {
-      return (
-        <BaseActivity
-          {...props}
-          Footer={
-            <View style={{ paddingLeft: 15 }}>
-              <LikeButton
-                activity={props.activity}
-                onToggleReaction={props.onToggleReaction}
-              />
-            </View>
-          }
-        />
-      );
+      return <Activity {...props} Footer={<LikeButton {...props} />} />;
     };
 
     return (
-      <StreamApp apiKey={apiKey} appId={appId} userId="batman" token={token}>
-        <FeedNotification />
-
-        <FlatFeed renderActivity={renderActivity} />
-
-        {statusUpdateForm()}
-      </StreamApp>
+      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+        <StreamApp apiKey={apiKey} appId={appId} token={token}>
+          <FlatFeed Activity={renderActivity} notify />
+          <StatusUpdateForm feedGroup="timeline" />
+        </StreamApp>
+      </SafeAreaView>
     );
   }
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {/* {stepOne()} */}

@@ -10,7 +10,7 @@ registerNativeHandlers({
 
         resolve({
           cancelled: response.didCancel,
-          uri: response.uri,
+          uri: 'file://' + response.path,
         });
       });
     });

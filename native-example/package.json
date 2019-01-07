@@ -17,6 +17,8 @@
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "babel-preset-react-native": "^5",
     "jest": "23.5.0",
+    "dotenv": "^6.0.0",
+    "react-native-dotenv": "^0.2.0",
     "react-test-renderer": "16.4.1"
   },
   "jest": {

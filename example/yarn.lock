@@ -744,6 +744,14 @@
   resolved "https://registry.yarnpkg.com/@stream-io/browser-request/-/browser-request-0.3.2.tgz#b63a5304b544ab671689c9fa1e46cb290328034f"
   integrity sha512-MdbAFi59YJo4cgRJKTlHC1cwWwToqEqI2uRERhdQDkQO0oKXi8pbUEs1CRAd/ZhSIR94PGksx+G2wgSBmQIkDw==
 
+"@stream-io/cross-fetch@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@stream-io/cross-fetch/-/cross-fetch-3.0.1.tgz#0d8563464b065e7e3c70014e478ac72425a460dc"
+  integrity sha512-hl32BT/i3QrZ6KyyQfnE92rSpMporVwE22oZhkM3mZUFlQZq3mmDHjD0EtAFS3qrcOIHb8dia32NBwTAzWt/ag==
+  dependencies:
+    node-fetch "2.3.0"
+    whatwg-fetch "3.0.0"
+
 "@stream-io/xmlhttp-request@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@stream-io/xmlhttp-request/-/xmlhttp-request-0.4.0.tgz#704c103adbb00c360ae74062340deaf225c4ef2b"
@@ -2840,14 +2848,6 @@ create-react-context@0.2.2:
     fbjs "^0.8.0"
     gud "^1.0.0"
 
-cross-fetch@^2.2.2:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.2.3.tgz#e8a0b3c54598136e037f8650f8e823ccdfac198e"
-  integrity sha512-PrWWNH3yL2NYIb/7WF/5vFG3DCQiXDOVf8k3ijatbrtnwNuhMWLC7YF7uqf53tbTFDzHIUD8oITw4Bxt8ST3Nw==
-  dependencies:
-    node-fetch "2.1.2"
-    whatwg-fetch "2.0.4"
-
 cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -4144,34 +4144,15 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@^4.0.1-6:
-  version "4.0.1-6"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.1-6.tgz#9ade3d9be766c4b2b8db06cdb7c7f413e141b9fb"
-  integrity sha512-M+NxHEdCfUITjDcYK8i8vlm2uaOSc12a+hq3o2ImnW66H7Yxdxm1y6Gs3f9ohpNBXfW+VfgPefzlp1NGwZy5Zg==
+getstream@^4.0.8:
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.9.tgz#a4f639b1fd6fe7c7302b90e0285902b263d9d284"
+  integrity sha512-UG3MYWkMadj+b+RArK4GyX2MjcN5zGJdZKFQyfGv/lRZtu8qDmJTtXSuaswaLI1XT8DjqGRR3RFmXFhzJW9qDA==
   dependencies:
     "@babel/runtime" "^7.0.0"
+    "@stream-io/cross-fetch" "^3.0.1"
     "@stream-io/xmlhttp-request" "^0.4.0"
     Base64 "^1.0.1"
-    cross-fetch "^2.2.2"
-    faye "^1.2.4"
-    form-data "^2.3.2"
-    http-signature "~1.2.0"
-    jsonwebtoken "^8.3.0"
-    jwt-decode "^2.2.0"
-    lodash "^4.17.10"
-    qs "^6.5.1"
-    request "^2.88.0"
-    whatwg-fetch "^2.0.4"
-
-getstream@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.7.tgz#7534dbb8ed6911e7a4d7541457ec0f4c4b46735d"
-  integrity sha512-noR+Rl/2xuPbJvhPvbBvJjkS8QFS/0II6tVwazCkuUniXPtOzCoJmrqadsxDvPRWn66H5lztygXAZ3rNQaRIjg==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    "@stream-io/xmlhttp-request" "^0.4.0"
-    Base64 "^1.0.1"
-    cross-fetch "^2.2.2"
     faye "^1.2.4"
     form-data "^2.3.2"
     http-signature "~1.2.0"
@@ -5591,7 +5572,7 @@ jsonwebtoken@^7.2.1:
     ms "^2.0.0"
     xtend "^4.0.1"
 
-jsonwebtoken@^8.3.0, jsonwebtoken@^8.4.0:
+jsonwebtoken@^8.4.0:
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.4.0.tgz#8757f7b4cb7440d86d5e2f3becefa70536c8e46a"
   integrity sha512-coyXjRTCy0pw5WYBpMvWOMN+Kjaik2MwTUIq9cna/W7NpO9E+iYbumZONAz3hcr+tXFJECoQVrtmIoC3Oz0gvg==
@@ -6243,7 +6224,7 @@ mime-types@2.1.11:
   dependencies:
     mime-db "~1.23.0"
 
-mime-types@^2.1.12, mime-types@~2.1.18, mime-types@~2.1.19:
+mime-types@^2.1.12, mime-types@^2.1.21, mime-types@~2.1.18, mime-types@~2.1.19:
   version "2.1.21"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.21.tgz#28995aa1ecb770742fe6ae7e58f9181c744b3f96"
   integrity sha512-3iL6DbwpyLzjR3xHSFNFeb9Nz/M8WDkX33t1GFQnFOllWk8pOrh/LSrB5OXlnlW5P9LH73X6loW/eogc+F5lJg==
@@ -6259,6 +6240,11 @@ mime@^1.3.4, mime@^1.4.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
+
+mime@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.0.tgz#e051fd881358585f3279df333fe694da0bcffdd6"
+  integrity sha512-ikBcWwyqXQSHKtciCcctu9YfPbFYZ4+gbHEmE0Q8jzcTYQg5dHCr3g2wwAZjPoJfQVXZq6KXAjpXOTf5/cjT7w==
 
 mimic-fn@^1.0.0:
   version "1.2.0"
@@ -6446,10 +6432,10 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-node-fetch@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
-  integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
+node-fetch@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
+  integrity sha512-MOd8pV3fxENbryESLgVIeaGKrdl+uaYhCSSVkjeOb/31/njTpcis5aWfdqgNlHIrKOLRbMnfPINPOML2CIFeXA==
 
 node-fetch@^1.0.1, node-fetch@^1.3.3:
   version "1.7.3"
@@ -6959,6 +6945,14 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
+path@^0.12.7:
+  version "0.12.7"
+  resolved "https://registry.yarnpkg.com/path/-/path-0.12.7.tgz#d4dc2a506c4ce2197eb481ebfcd5b36c0140b10f"
+  integrity sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=
+  dependencies:
+    process "^0.11.1"
+    util "^0.10.3"
+
 pegjs@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/pegjs/-/pegjs-0.10.0.tgz#cf8bafae6eddff4b5a7efb185269eaaf4610ddbd"
@@ -7133,6 +7127,11 @@ process-nextick-args@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
   integrity sha512-MtEC1TqN0EU5nephaJ4rAtThHtC86dNN9qCuEhtshvpVBkAW5ZO7BASN9REnF9eoXGcRub+pFuKEpOHE+HbEMw==
+
+process@^0.11.1:
+  version "0.11.10"
+  resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
+  integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
 process@~0.5.1:
   version "0.5.2"
@@ -7356,20 +7355,20 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.0, react-lifecycles-com
   version "0.0.0"
   uid ""
 
-react-native-activity-feed-core@v0.7.0-beta.4:
-  version "0.7.0-beta.4"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.7.0-beta.4.tgz#4aa479f4c0b13d071075e92e817a28a361a848d5"
-  integrity sha512-ixgDmaxD+wpbHki6uSfhMiNXAKhydy7isWmKlENXT49RNnYAm3TUtD/6YyEe7bqAXTV6rSrSVYm3TjciM6HkIg==
+react-native-activity-feed-core@v0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.1.tgz#5fb81e906dd1fffd0ff6d96dd98e788653885e4d"
+  integrity sha512-8N6+gjxDhfQ3HPU0Hu/pnu+q9STaAhngGZSUnvJyt/e5nDrzH6YZsq6litRD6TSRuWQ/ZwlQjoFPGlDRrhK9bw==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
-    getstream "^4.0.1-6"
+    getstream "^4.0.8"
     immutable "^4.0.0-rc.9"
     moment "^2.22.2"
     numeral "^2.0.6"
     react-native-keyboard-spacer "^0.4.1"
     react-native-safe-area-view "0.9.0"
-    react-native-sticky-keyboard-accessory "^0.1.1"
+    react-native-sticky-keyboard-accessory "^0.1.3"
     stream-analytics "^2.7.1"
     url-parse "^1.4.3"
 
@@ -7413,7 +7412,7 @@ react-native-gesture-handler@1.0.0-alpha.41:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-iphone-x-helper@^1.0.1, react-native-iphone-x-helper@^1.0.2, react-native-iphone-x-helper@^1.2.0:
+react-native-iphone-x-helper@^1.0.1, react-native-iphone-x-helper@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"
   integrity sha512-xIeTo4s77wwKgBZLVRIZC9tM9/PkXS46Ul76NXmvmixEb3ZwqGdQesR3zRiLMOoIdfOURB6N9bba9po7+x9Bag==
@@ -7485,13 +7484,6 @@ react-native-scripts@1.14.0:
     qrcode-terminal "^0.11.0"
     rimraf "^2.6.1"
     xdl "48.1.4"
-
-react-native-sticky-keyboard-accessory@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-sticky-keyboard-accessory/-/react-native-sticky-keyboard-accessory-0.1.1.tgz#176c29932a7e929b6af142c2d5651e6b9ceb547e"
-  integrity sha512-QgblDb4zyytv75enS+fvjTp9Bb01Rq6sItSy7YXJQIKHw0hXAZen/UoZhbdPwN0IrMe5moYPjfN4a0nnulHB6w==
-  dependencies:
-    react-native-iphone-x-helper "^1.0.2"
 
 react-native-sticky-keyboard-accessory@^0.1.3:
   version "0.1.3"
@@ -9149,6 +9141,13 @@ util.promisify@^1.0.0:
     define-properties "^1.1.2"
     object.getownpropertydescriptors "^2.0.3"
 
+util@^0.10.3:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/util/-/util-0.10.4.tgz#3aa0125bfe668a4672de58857d3ace27ecb76901"
+  integrity sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==
+  dependencies:
+    inherits "2.0.3"
+
 utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
@@ -9267,12 +9266,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@2.0.4, whatwg-fetch@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
-  integrity sha512-dcQ1GWpOD/eEQ97k66aiEVpNnapVj90/+R+SXTPYGHpYBBypfKJEQjLrvMZ7YXbKm21gXd4NcuxUTjiv1YtLng==
-
-whatwg-fetch@>=0.10.0:
+whatwg-fetch@3.0.0, whatwg-fetch@>=0.10.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
   integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
@@ -9281,6 +9275,11 @@ whatwg-fetch@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-1.1.1.tgz#ac3c9d39f320c6dce5339969d054ef43dd333319"
   integrity sha1-rDydOfMgxtzlM5lp0FTvQ90zMxk=
+
+whatwg-fetch@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
+  integrity sha512-dcQ1GWpOD/eEQ97k66aiEVpNnapVj90/+R+SXTPYGHpYBBypfKJEQjLrvMZ7YXbKm21gXd4NcuxUTjiv1YtLng==
 
 whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0:
   version "2.3.0"

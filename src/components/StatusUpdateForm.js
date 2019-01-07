@@ -12,6 +12,7 @@ import {
 import { StreamApp } from '../Context';
 import UrlPreview from './UrlPreview';
 import { pickImage, androidTranslucentStatusBar } from '../native';
+import mime from 'mime-types';
 
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
@@ -198,8 +199,17 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     });
 
     let response;
+    let contentType;
+    if (Platform.OS === 'android') {
+      let filename = result.uri.replace(/^(file:\/\/|content:\/\/)/, '');
+      contentType = mime.lookup(filename) || 'application/octet-stream';
+    }
     try {
-      response = await this.props.client.images.upload(result.uri);
+      response = await this.props.client.images.upload(
+        result.uri,
+        null,
+        contentType,
+      );
     } catch (e) {
       console.warn(e);
       this.setState({
