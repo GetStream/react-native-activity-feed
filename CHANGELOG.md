@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 Nothing yet
 
+## 0.8.2 - 2019-01-07
+
+### Fixes
+
+- Uploading images with the `StatusUpdateForm` now works on android with
+  `react-native-activity-feed`.
+
+
+## 0.8.1 - 2018-12-21
+
+### Additions
+
+- Add basic support for 2-way pagination
+
+
 ## 0.8.0 - 2018-12-18
 
 ### Breaking Changes
