@@ -6268,10 +6268,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.0.tgz#74ff227d8b8afd56fa249bff7f9c9ce4a4983f85"
-  integrity sha512-fJxfOxdiOKwDay9euuzrkoTpSHL27eQrOVB69SFhg0t06qO6ldLj93Eum5WgeuLF1RisiH5qEUF0dQMAMcjRkA==
+react-native-activity-feed-core@v0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.1.tgz#5fb81e906dd1fffd0ff6d96dd98e788653885e4d"
+  integrity sha512-8N6+gjxDhfQ3HPU0Hu/pnu+q9STaAhngGZSUnvJyt/e5nDrzH6YZsq6litRD6TSRuWQ/ZwlQjoFPGlDRrhK9bw==
   dependencies:
     es6-symbol "^3.1.1"
     faker "^4.1.0"
