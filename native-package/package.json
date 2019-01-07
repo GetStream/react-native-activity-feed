@@ -46,5 +46,8 @@
   "dependencies": {
     "react-native-activity-feed-core": "v0.8.1",
     "react-native-image-picker": "0.26.10"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }
