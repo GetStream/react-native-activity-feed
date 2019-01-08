@@ -1,5 +1,6 @@
 import { registerNativeHandlers } from 'react-native-activity-feed-core';
 import ImagePicker from 'react-native-image-picker';
+import { Platform } from 'react-native';
 registerNativeHandlers({
   pickImage: async () => {
     return new Promise((resolve, reject) => {
@@ -7,10 +8,14 @@ registerNativeHandlers({
         if (response.error) {
           reject(Error(response.error));
         }
+        let { uri } = response;
+        if (Platform.OS === 'android') {
+          uri = 'file://' + response.path;
+        }
 
         resolve({
           cancelled: response.didCancel,
-          uri: 'file://' + response.path,
+          uri,
         });
       });
     });
