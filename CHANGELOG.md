@@ -8,11 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 Nothing yet
 
+## 0.8.3 - 2019-01-08
+
+### Fixes
+
+- Uploading images with the `StatusUpdateForm` now works on iOS with
+  `react-native-activity-feed` again. This was a regression in 0.8.2
+
 ## 0.8.2 - 2019-01-07
 
 ### Fixes
 
-- Uploading images with the `StatusUpdateForm` now works on android with
+- Uploading images with the `StatusUpdateForm` now works on Android with
   `react-native-activity-feed`.
 
 
