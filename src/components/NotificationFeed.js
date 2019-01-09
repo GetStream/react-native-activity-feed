@@ -101,16 +101,24 @@ class NotificationFeedInner extends React.Component<PropsInner> {
     );
   };
 
+  _childProps = () => ({
+    onRemoveActivity: this.props.onRemoveActivity,
+    onToggleReaction: this.props.onToggleReaction,
+    onAddReaction: this.props.onAddReaction,
+    onRemoveReaction: this.props.onRemoveReaction,
+    onToggleChildReaction: this.props.onToggleChildReaction,
+    onAddChildReaction: this.props.onAddChildReaction,
+    onRemoveChildReaction: this.props.onRemoveChildReaction,
+    navigation: this.props.navigation,
+    feedGroup: this.props.feedGroup,
+    userId: this.props.userId,
+  });
+
   _renderGroup = (item: BaseActivityResponse) => {
     let args = {
       activityGroup: item,
-      navigation: this.props.navigation,
-      feedGroup: this.props.feedGroup,
-      userId: this.props.userId,
       styles: this.props.styles.activity,
-      onToggleReaction: this.props.onToggleReaction,
-      onAddReaction: this.props.onAddReaction,
-      onRemoveReaction: this.props.onRemoveReaction,
+      ...this._childProps(),
     };
     return smartRender(this.props.Group, args);
   };
