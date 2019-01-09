@@ -2091,10 +2091,6 @@ extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
 
-faker@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
-
 fancy-log@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/fancy-log/-/fancy-log-1.3.2.tgz#f41125e3d84f2e7d89a43d06d958c8f78be16be1"
@@ -2355,10 +2351,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@^4.0.8:
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.9.tgz#a4f639b1fd6fe7c7302b90e0285902b263d9d284"
-  integrity sha512-UG3MYWkMadj+b+RArK4GyX2MjcN5zGJdZKFQyfGv/lRZtu8qDmJTtXSuaswaLI1XT8DjqGRR3RFmXFhzJW9qDA==
+getstream@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.1.0.tgz#7ecfd65f030776af5d0319b05da70ed48eab1f4f"
+  integrity sha512-2+EO/AnNlSYdcgDFUPy7V0WfF1aipnuR7Fn0AcpMXiJfxYXgzr29lUT+f9IPZv9ITvnn7EAEoBZV6Sec6UspZQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@stream-io/cross-fetch" "^3.0.1"
@@ -4457,7 +4453,7 @@ react-is@^16.4.1:
   version "0.0.0"
   uid ""
 
-react-native-activity-feed-core@v0.8.1:
+react-native-activity-feed-core@v0.8.3:
   version "0.0.0"
   uid ""
 
