@@ -40,3 +40,13 @@ export const smartRender = (
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+// https://stackoverflow.com/a/6860916/2570866
+export function generateRandomId() {
+  // prettier-ignore
+  return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
+function S4() {
+  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+}

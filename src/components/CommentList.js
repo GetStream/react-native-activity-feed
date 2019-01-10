@@ -1,11 +1,11 @@
-// @flow
+//@flow
 import React from 'react';
 
 import SectionHeader from './SectionHeader';
 import CommentItem from './CommentItem';
 import ReactionList from './ReactionList';
+import LoadMoreButton from './LoadMoreButton';
 import { smartRender } from '../utils';
-
 import type { Renderable, Comment } from '../types';
 
 export type Props = {|
@@ -13,10 +13,25 @@ export type Props = {|
   activityId: string,
   /** The component that should render the comment */
   CommentItem: Renderable,
-  /** Only needed for reposted activities where you want to show the comments of the original activity, not of the repost */
+  /** Only needed for reposted activities where you want to show the comments
+   * of the original activity, not of the repost */
   activityPath?: ?Array<string>,
-  /** If the CommentList should paginate when scrolling, by default it shows a "Load more" button  */
+  /** The component that should render the reaction */
+  LoadMoreButton: Renderable,
+  /** If the CommentList should paginate when scrolling, by default it shows a
+   * "Load more" button  */
   infiniteScroll: boolean,
+  /** Show and load reactions starting with the oldest reaction first, instead
+   * of the default where reactions are displayed and loaded most recent first.
+   * */
+  /** Any props the react native FlatList accepts */
+  flatListProps?: {},
+  /** Show and load reactions starting with the oldest reaction first, instead
+   * of the default where reactions are displayed and loaded most recent first.
+   * */
+  oldestToNewest: boolean,
+  /** Reverse the order the reactions are displayed in. */
+  reverseOrder: boolean,
 |};
 
 /**
@@ -27,13 +42,23 @@ export type Props = {|
 export default class CommentList extends React.PureComponent<Props> {
   static defaultProps = {
     CommentItem,
+    LoadMoreButton,
     infiniteScroll: false,
+    oldestToNewest: false,
+    reverseOrder: false,
   };
 
   _Reaction = ({ reaction }: { reaction: Comment }) =>
     smartRender(this.props.CommentItem, { comment: reaction });
   render() {
-    const { activityId, activityPath, infiniteScroll } = this.props;
+    const {
+      activityId,
+      activityPath,
+      infiniteScroll,
+      oldestToNewest,
+      reverseOrder,
+      flatListProps,
+    } = this.props;
     return (
       <ReactionList
         activityId={activityId}
@@ -41,6 +66,9 @@ export default class CommentList extends React.PureComponent<Props> {
         Reaction={this._Reaction}
         activityPath={activityPath}
         infiniteScroll={infiniteScroll}
+        oldestToNewest={oldestToNewest}
+        flatListProps={flatListProps}
+        reverseOrder={reverseOrder}
       >
         <SectionHeader>Comments</SectionHeader>
       </ReactionList>

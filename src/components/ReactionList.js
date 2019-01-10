@@ -16,27 +16,37 @@ type Props = {|
   reactionKind: string,
   /** The component that should render the reaction */
   Reaction: Renderable,
+  /** Only needed for reposted activities where you want to show the comments
+   * of the original activity, not of the repost */
+  activityPath?: ?Array<string>,
   /** The component that should render the reaction */
   LoadMoreButton: Renderable,
-  // Paginator: Renderable,
-  /** Only needed for reposted activities where you want to show the comments of the original activity, not of the repost */
-  activityPath?: ?Array<string>,
-  /** If the ReactionList should paginate when scrolling, by default it shows a "Load more" button  */
+  /** If the ReactionList should paginate when scrolling, by default it shows a
+   * "Load more" button  */
   infiniteScroll: boolean,
   /** Any props the react native FlatList accepts */
   flatListProps?: {},
   /** Set to true when the ReactionList shouldn't paginate at all */
   noPagination: boolean,
+  /** Show and load reactions starting with the oldest reaction first, instead
+   * of the default where reactions are displayed and loaded most recent first.
+   * */
+  oldestToNewest: boolean,
+  /** Reverse the order the reactions are displayed in. */
+  reverseOrder: boolean,
   children?: React.Node,
   styles?: StyleSheetLike,
 |};
 
 export default class ReactionList extends React.PureComponent<Props> {
   static defaultProps = {
-    noPagination: false,
-    infiniteScroll: false,
     LoadMoreButton,
+    infiniteScroll: false,
+    noPagination: false,
+    oldestToNewest: false,
+    reverseOrder: false,
   };
+
   render() {
     return (
       <FeedContext.Consumer>
@@ -48,40 +58,109 @@ export default class ReactionList extends React.PureComponent<Props> {
 
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class ReactionListInner extends React.Component<PropsInner> {
+  initReactions() {
+    const {
+      activityId,
+      activities,
+      reactionKind,
+      getActivityPath,
+      oldestToNewest,
+    } = this.props;
+    if (!oldestToNewest) {
+      return;
+    }
+
+    const activityPath = this.props.activityPath || getActivityPath(activityId);
+    const orderPrefix = 'oldest';
+    const reactions_extra = activities.getIn([
+      ...activityPath,
+      orderPrefix + '_reactions_extra',
+    ]);
+    if (reactions_extra) {
+      return;
+    }
+    return this.props.loadNextReactions(
+      activityId,
+      reactionKind,
+      activityPath,
+      oldestToNewest,
+    );
+  }
+
+  componentDidMount() {
+    this.initReactions();
+  }
+
+  componentDidUpdate() {
+    this.initReactions();
+  }
+
   render() {
     const {
       activityId,
       activities,
       reactionKind,
       getActivityPath,
+      oldestToNewest,
+      reverseOrder,
     } = this.props;
     const activityPath = this.props.activityPath || getActivityPath(activityId);
+    let orderPrefix = 'latest';
+    if (oldestToNewest) {
+      orderPrefix = 'oldest';
+    }
 
-    const reactionsOfKind = activities.getIn(
-      [...activityPath, 'latest_reactions', reactionKind],
+    let reactionsOfKind = activities.getIn(
+      [...activityPath, orderPrefix + '_reactions', reactionKind],
       immutable.List(),
     );
 
-    const nextUrl = activities.getIn(
-      [...activityPath, 'latest_reactions_extra', reactionKind, 'next'],
-      '',
-    );
+    const reactions_extra = activities.getIn([
+      ...activityPath,
+      orderPrefix + '_reactions_extra',
+    ]);
+    let nextUrl = 'https://api.stream-io-api.com/';
+    if (reactions_extra) {
+      nextUrl = reactions_extra.getIn([reactionKind, 'next'], '');
+    }
 
     const refreshing = activities.getIn(
-      [...activityPath, 'latest_reactions_extra', reactionKind, 'refreshing'],
+      [
+        ...activityPath,
+        orderPrefix + '_reactions_extra',
+        reactionKind,
+        'refreshing',
+      ],
       false,
     );
 
     let styles = buildStylesheet('reactionList', this.props.styles);
-    console.log(reactionsOfKind);
 
     if (!reactionsOfKind.size) {
       return null;
     }
+    const loadMoreButton =
+      this.props.noPagination ||
+      !nextUrl ||
+      this.props.infiniteScroll ? null : (
+        <LoadMoreButton
+          refreshing={refreshing}
+          styles={styles}
+          onPress={() =>
+            this.props.loadNextReactions(
+              activityId,
+              reactionKind,
+              activityPath,
+              oldestToNewest,
+            )
+          }
+        />
+      );
 
     return (
       <React.Fragment>
         {this.props.children}
+        {reverseOrder && loadMoreButton}
         <FlatList
           style={styles.container}
           refreshing={refreshing}
@@ -89,6 +168,7 @@ class ReactionListInner extends React.Component<PropsInner> {
           keyExtractor={(item) => item.get('id')}
           listKey={reactionKind}
           renderItem={this._renderWrappedReaction}
+          inverted={reverseOrder}
           onEndReached={
             this.props.noPagination || !this.props.infiniteScroll
               ? undefined
@@ -97,25 +177,12 @@ class ReactionListInner extends React.Component<PropsInner> {
                     activityId,
                     reactionKind,
                     activityPath,
+                    oldestToNewest,
                   )
           }
           {...this.props.flatListProps}
         />
-        {this.props.noPagination ||
-        !nextUrl ||
-        this.props.infiniteScroll ? null : (
-          <LoadMoreButton
-            refreshing={refreshing}
-            styles={styles}
-            onPress={() =>
-              this.props.loadNextReactions(
-                activityId,
-                reactionKind,
-                activityPath,
-              )
-            }
-          />
-        )}
+        {!reverseOrder && loadMoreButton}
       </React.Fragment>
     );
   }

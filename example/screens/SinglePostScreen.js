@@ -76,6 +76,8 @@ export default class SinglePostScreen extends React.Component<Props> {
               <RepostList activityId={props.activity.id} />
               <CommentList
                 activityId={props.activity.id}
+                infiniteScroll
+                reverseOrder
                 CommentItem={({ comment }) => (
                   <React.Fragment>
                     <CommentItem
