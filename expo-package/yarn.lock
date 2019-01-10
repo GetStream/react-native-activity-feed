@@ -3636,11 +3636,6 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-faker@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
-  integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
-
 fancy-log@^1.3.2:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/fancy-log/-/fancy-log-1.3.3.tgz#dbc19154f558690150a23953a0adbd035be45fc7"
@@ -4074,10 +4069,10 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-getstream@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.0.8.tgz#ecbc0abb550dabdb485ef9a0e61cdfa0d906b750"
-  integrity sha512-0ePT7tWgAs2BxBeokrkcWBEgUIqwid+N8VnAwwsY7dNbLgynCTJNmzJgh5BZ+gNjbbB3vwouIHMl5WUSEvBcOQ==
+getstream@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-4.1.0.tgz#7ecfd65f030776af5d0319b05da70ed48eab1f4f"
+  integrity sha512-2+EO/AnNlSYdcgDFUPy7V0WfF1aipnuR7Fn0AcpMXiJfxYXgzr29lUT+f9IPZv9ITvnn7EAEoBZV6Sec6UspZQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@stream-io/cross-fetch" "^3.0.1"
@@ -6722,14 +6717,13 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v0.8.3:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.3.tgz#58a886599f679918b774e836dc58553b9f68a7d1"
-  integrity sha512-H/JRTodpU5Mc5xlxI538TvGTdQUgiyuieRI/u0UXaP4CU8FQ3gids/MlbW6nW5BxW9KkDKGyFNqhB3ymqu4JbQ==
+react-native-activity-feed-core@v0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.4.tgz#e4b5f99eaaf86cce0b6e167f62d5a4fa1af8858e"
+  integrity sha512-Fx+lffOzNDqXujLDa0qD2snihzf+VnbIWq3x8ZtQWr54TUQgkdWUbLgGumS/z8BM65TfEH1ux3A7pXoPk30Nag==
   dependencies:
     es6-symbol "^3.1.1"
-    faker "^4.1.0"
-    getstream "^4.0.8"
+    getstream "^4.1.0"
     immutable "^4.0.0-rc.9"
     mime-types "^2.1.21"
     moment "^2.22.2"
