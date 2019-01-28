@@ -174,8 +174,13 @@ declare module 'getstream' {
 
   declare type FeedRequestOptions = {
     withReactionCounts?: boolean,
+    withRecentReactions?: boolean,
     withOwnReactions?: boolean,
-    withOwnReactions?: boolean,
+    reactions?: {
+      recent?: boolean,
+      own?: boolean,
+      counts?: boolean,
+    },
     limit?: number,
     offset?: number,
     id_lt?: string,

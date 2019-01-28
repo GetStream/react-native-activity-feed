@@ -38,6 +38,13 @@ type Props = {|
   styles?: StyleSheetLike,
 |};
 
+/**
+ * To use this component in a `FlatFeed` you have to provide the following
+ * props to `FlatFeed`:
+ * ```
+ * options={{withOwnReactions: true}}
+ * ```
+ */
 export default class ReactionList extends React.PureComponent<Props> {
   static defaultProps = {
     LoadMoreButton,

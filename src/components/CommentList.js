@@ -36,6 +36,11 @@ export type Props = {|
 
 /**
  * CommentList uses ReactionList under the hood to render a list of comments.
+ * To use this component in a `FlatFeed` you have to provide the following
+ * props to `FlatFeed`:
+ * ```
+ * options={{withOwnReactions: true}}
+ * ```
  *
  * @example ./examples/CommentList.md
  */
