@@ -17,11 +17,11 @@ export default class ShareButton extends React.Component {
 
   render() {
     return (
-      <StreamContext.Consumer>
+      <StreamApp.Consumer>
         {(appCtx) => {
           return <ShareButtonInner activity={this.props.activity} {...this.props} {...appCtx} />;
         }}
-      </StreamContext.Consumer>
+      </StreamApp.Consumer>
     );
   }
 
@@ -30,7 +30,7 @@ export default class ShareButton extends React.Component {
 
 #### Create an internal component that handles all logic
 
-In order to keep code clean, we suggest splitting the code in two separate components; one subscribing to StreamContext and another
+In order to keep code clean, we suggest splitting the code in two separate components; one subscribing to `StreamApp.Consumer` and another
 receiving its props and do all the heavy lifting.
 
 ```jsx static
