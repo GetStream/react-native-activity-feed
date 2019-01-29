@@ -22,6 +22,7 @@ type Props = {|
   Header?: Renderable,
   Content?: Renderable,
   Footer?: Renderable,
+  URLPreview?: Renderable,
   onPress?: () => mixed,
   onPressAvatar?: () => mixed,
   sub?: string,
@@ -169,7 +170,7 @@ export default class Activity extends React.Component<Props> {
       : Dimensions.get('window').width;
     let { verb, object, text, image, attachments } = this.props.activity;
     let styles = buildStylesheet('activity', this.props.styles);
-
+    let { URLPreview } = this.props;
     if (text === undefined) {
       if (typeof object === 'string') {
         text = object;
@@ -208,22 +209,34 @@ export default class Activity extends React.Component<Props> {
             />
           )}
 
-        {attachments &&
-          attachments.og &&
-          Object.keys(attachments.og).length > 0 && (
-            <Card
-              title={attachments.og.title}
-              description={attachments.og.description}
-              image={
-                attachments.og.images && attachments.og.images.length > 0
-                  ? attachments.og.images[0].image
-                  : null
-              }
-              url={attachments.og.url}
-            />
-          )}
+        {smartRender(URLPreview, {}, this.renderCard())}
       </View>
     );
+  };
+
+  renderCard = () => {
+    let { attachments } = this.props.activity;
+
+    if (
+      attachments &&
+      attachments.og &&
+      Object.keys(attachments.og).length > 0
+    ) {
+      return (
+        <Card
+          title={attachments.og.title}
+          description={attachments.og.description}
+          image={
+            attachments.og.images && attachments.og.images.length > 0
+              ? attachments.og.images[0].image
+              : null
+          }
+          url={attachments.og.url}
+        />
+      );
+    } else {
+      return null;
+    }
   };
 
   renderFooter = () => {
