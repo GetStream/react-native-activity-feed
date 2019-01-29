@@ -12,6 +12,7 @@ export type Props = {|
   image?: ?string,
   url?: ?string,
   styles?: StyleSheetLike,
+  URLPreview?: string,
   pressed?: () => mixed,
 |};
 
@@ -22,6 +23,7 @@ export type Props = {|
 const Card = (props: Props): any => {
   let { title, description, image, url } = props;
   let styles = buildStylesheet('card', props.styles);
+  const placeholder = this.props.URLPreview || require('../images/placeholder.png');
 
   return (
     <TouchableOpacity
@@ -32,7 +34,7 @@ const Card = (props: Props): any => {
     >
       <Image
         style={styles.image}
-        source={image ? { uri: image } : require('../images/placeholder.png')}
+        source={image ? { uri: image } : placeholder }
         resizeMethod="resize"
       />
       <View style={styles.content}>

@@ -32,6 +32,8 @@ type Props = {|
   imageWidth?: number,
   /** Styling of the component */
   styles?: StyleSheetLike,
+  /** Default image if no OG image is found */
+  URLPreview?: string,
   /** Handle errors in the render method in a custom way, by
    * default this component logs the error in the console **/
   componentDidCatch?: (error: Error, info: {}, props: Props) => mixed,
@@ -219,6 +221,7 @@ export default class Activity extends React.Component<Props> {
                   ? attachments.og.images[0].image
                   : null
               }
+              URLPreview={this.props.URLPreview || null}
               url={attachments.og.url}
             />
           )}
