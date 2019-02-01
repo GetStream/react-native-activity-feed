@@ -10,6 +10,8 @@ import { buildStylesheet } from '../styles';
 import { smartRender } from '../utils';
 
 import type {
+  BaseActivityResponse,
+  BaseReaction,
   NavigationScreen,
   StyleSheetLike,
   BaseFeedCtx,
@@ -41,6 +43,24 @@ type Props = {|
     userId?: string,
     options?: FeedRequestOptions,
   ) => Promise<FeedResponse<{}, {}>>,
+  /** Override reaction add request */
+  doReactionAddRequest?: (
+    kind: string,
+    activity: BaseActivityResponse,
+    data?: {},
+    options: {},
+  ) => mixed,
+  /** Override reaction delete request */
+  doReactionDeleteRequest?: (id: string) => mixed,
+  /** Override child reaction add request */
+  doChildReactionAddRequest?: (
+    kind: string,
+    activity: BaseReaction,
+    data?: {},
+    options: {},
+  ) => mixed,
+  /** Override child reaction delete request */
+  doChildReactionDeleteRequest?: (id: string) => mixed,
   //** turns off pagination */
   noPagination?: boolean,
   analyticsLocation?: string,
@@ -73,6 +93,10 @@ export default class FlatFeed extends React.Component<Props> {
         options={this.props.options}
         notify={this.props.notify}
         doFeedRequest={this.props.doFeedRequest}
+        doReactionAddRequest={this.props.doReactionAddRequest}
+        doReactionDeleteRequest={this.props.doReactionDeleteRequest}
+        doChildReactionAddRequest={this.props.doChildReactionAddRequest}
+        doChildReactionDeleteRequest={this.props.doChildReactionDeleteRequest}
       >
         <FeedContext.Consumer>
           {(feedCtx) => {
