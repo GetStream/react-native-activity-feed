@@ -12,8 +12,8 @@ declare module 'getstream' {
   declare type UserResponse<Data> = {|
     id: string,
     data: Data,
-    ...TimestampedResponse
-  |}
+    ...TimestampedResponse,
+  |};
 
   declare type FollowCounts = {
     following_count: number,
@@ -136,6 +136,10 @@ declare module 'getstream' {
       entryId: ?string,
       data: EntryData,
     ): Promise<CollectionEntry<EntryData>>;
+    get(
+      collection: string,
+      entryId: string,
+    ): Promise<CollectionEntry<EntryData>>;
     delete(collection: string, entryId: string): Promise<{}>;
     update(
       collection: string,
@@ -167,7 +171,7 @@ declare module 'getstream' {
     time?: string,
     actor: StreamUser<UserData>,
     verb: string,
-    object: string | StreamUser<UserData> | CollectionEntry<mixed>,
+    object: string | StreamUser<UserData> | CollectionEntry<{}>,
     target?: string,
   } & CustomActivityData;
 
@@ -205,6 +209,10 @@ declare module 'getstream' {
     id_gte?: string,
   };
 
+  declare type FollowRequestOptions = {
+    limit?: number,
+  };
+
   declare class StreamFeed<UserData, CustomActivityData> {
     id: string;
     slug: string;
@@ -224,6 +232,11 @@ declare module 'getstream' {
     ): Promise<Array<ActivityResponse<UserData, CustomActivityData>>>;
     subscribe((any) => void): Subscription;
     removeActivity(id: string | { foreignId: string }): Promise<{}>;
+    follow(
+      targetFeedGroup: string,
+      targetUserId: string | StreamUser<UserData>,
+      options?: FollowRequestOptions,
+    ): Promise<DurationResponse>;
   }
   declare type Subscription = {
     then: (success: () => mixed, failure: (err: Error) => mixed) => Promise<{}>,

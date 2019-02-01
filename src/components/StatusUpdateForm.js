@@ -66,7 +66,9 @@ type Props = {|
    * />
    * ```
    * */
-  modifyActivityData: (activityData: {}) => ActivityArgData<{}, {}>,
+  modifyActivityData: (
+    activityData: ActivityArgData<Object, Object>,
+  ) => ActivityArgData<{}, {}>,
   /** A callback to run after the activity is posted successfully */
   onSuccess?: () => mixed,
   /** A callback that receives a function that submits the form */
@@ -103,7 +105,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
     feedGroup: 'user',
     activityVerb: 'post',
     fullscreen: false,
-    modifyActivityData: (d: {}) => d,
+    modifyActivityData: (d: ActivityArgData<{}, {}>) => d,
     height: 80,
     verticalOffset: 0,
     noKeyboardAccessory: false,

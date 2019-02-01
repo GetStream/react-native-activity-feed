@@ -181,9 +181,10 @@ export default class Activity extends React.Component<Props> {
 
   renderContent = () => {
     // return null;
-    const width = this.props.imageWidth != null
-      ? this.props.imageWidth
-      : Dimensions.get('window').width;
+    const width =
+      this.props.imageWidth != null
+        ? this.props.imageWidth
+        : Dimensions.get('window').width;
     let { object, text, image, attachments } = this.props.activity;
     let styles = buildStylesheet('activity', this.props.styles);
     let { Card } = this.props;

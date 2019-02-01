@@ -1,6 +1,5 @@
 // @flow
 import stream from 'getstream';
-import type { UserSession, CloudClient } from '../types';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -25,24 +24,25 @@ async function main() {
   }
 
   console.log(apiKey, apiSecret);
-  let client: CloudClient = stream.connectCloud(apiKey, appId, {
-    // urlOverride: {
-    //   api: apiUrl,
-    // },
-    keepAlive: false,
-  });
+  let serverClient = stream.connect(
+    apiKey,
+    apiSecret,
+    appId,
+  );
 
-  function createUserSession(userId): UserSession {
-    return client.createUserSession(
-      stream.signing.JWTUserSessionToken(apiSecret, userId),
+  function createUserClient(userId) {
+    return stream.connect(
+      apiKey,
+      serverClient.createUserToken(userId),
+      appId,
     );
   }
 
-  let batman = createUserSession('batman');
+  let batman = createUserClient('batman');
   let content = 'test2';
   console.log(await batman.feed('notification').get({ limit: 1 }));
   await batman.feed('notification').addActivity({
-    actor: batman.user,
+    actor: batman.currentUser,
     verb: 'post',
     object: content,
 
