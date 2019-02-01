@@ -15,13 +15,20 @@ import _ from 'lodash';
 
 import UserBar from './UserBar';
 import Card from './Card';
-import type { ActivityData, StyleSheetLike, Renderable } from '../types';
+import type {
+  ActivityData,
+  StyleSheetLike,
+  Renderable,
+  BaseUserResponse,
+} from '../types';
 import { smartRender } from '../utils';
 
 type Props = {|
   Header?: Renderable,
   Content?: Renderable,
   Footer?: Renderable,
+  // The component that displays the url preview
+  Card: Renderable,
   onPress?: () => mixed,
   onPressAvatar?: () => mixed,
   sub?: string,
@@ -42,6 +49,9 @@ type Props = {|
  * @example ./examples/Activity.md
  */
 export default class Activity extends React.Component<Props> {
+  static defaultProps = {
+    Card,
+  };
   componentDidCatch(error: Error, info: {}) {
     if (this.props.componentDidCatch) {
       this.props.componentDidCatch(error, info, this.props);
@@ -65,16 +75,23 @@ export default class Activity extends React.Component<Props> {
   };
 
   renderHeader = () => {
-    let { time, actor } = this.props.activity;
+    let { time, actor: activityActor } = this.props.activity;
     let notFound = {
       id: '!not-found',
       created_at: '',
       updated_at: '',
       data: { name: 'Unknown', profileImage: '' },
     };
-    if (actor === 'NotFound' || actor == null || actor.error != null) {
+    let actor: BaseUserResponse;
+    if (
+      typeof activityActor === 'string' ||
+      typeof activityActor.error === 'string'
+    ) {
+      actor = notFound;
+    } else {
       actor = notFound;
     }
+
     let styles = buildStylesheet('activity', this.props.styles);
 
     return (
@@ -164,12 +181,13 @@ export default class Activity extends React.Component<Props> {
 
   renderContent = () => {
     // return null;
-    const width = this.props.imageWidth
-      ? this.props.imageWidth
-      : Dimensions.get('window').width;
-    let { verb, object, text, image, attachments } = this.props.activity;
+    const width =
+      this.props.imageWidth != null
+        ? this.props.imageWidth
+        : Dimensions.get('window').width;
+    let { object, text, image, attachments } = this.props.activity;
     let styles = buildStylesheet('activity', this.props.styles);
-
+    let { Card } = this.props;
     if (text === undefined) {
       if (typeof object === 'string') {
         text = object;
@@ -187,9 +205,6 @@ export default class Activity extends React.Component<Props> {
           </View>
         )}
 
-        {verb == 'repost' &&
-          object instanceof Object && <Card {...object.data} />}
-
         {Boolean(image) && (
           <Image
             style={{ width: width, height: width }}
@@ -200,28 +215,28 @@ export default class Activity extends React.Component<Props> {
 
         {attachments &&
           attachments.images &&
-          Boolean(attachments.images.length) && (
+          attachments.images.length > 0 && (
             <Image
               style={{ width: width, height: width }}
               source={{ uri: attachments.images[0] }}
               resizeMethod="resize"
             />
           )}
-
         {attachments &&
           attachments.og &&
-          Object.keys(attachments.og).length > 0 && (
-            <Card
-              title={attachments.og.title}
-              description={attachments.og.description}
-              image={
-                attachments.og.images && attachments.og.images.length > 0
-                  ? attachments.og.images[0].image
-                  : null
-              }
-              url={attachments.og.url}
-            />
-          )}
+          Object.keys(attachments.og).length > 0 &&
+          smartRender(Card, {
+            title: attachments.og.title,
+            description: attachments.og.description,
+            image:
+              attachments.og.images && attachments.og.images.length > 0
+                ? attachments.og.images[0].image
+                : null,
+            url: attachments.og.url,
+            og: attachments.og,
+          })}
+
+        {}
       </View>
     );
   };

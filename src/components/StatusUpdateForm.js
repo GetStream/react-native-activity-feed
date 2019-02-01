@@ -66,7 +66,9 @@ type Props = {|
    * />
    * ```
    * */
-  modifyActivityData: (activityData: {}) => ActivityArgData<{}, {}>,
+  modifyActivityData: (
+    activityData: ActivityArgData<Object, Object>,
+  ) => ActivityArgData<{}, {}>,
   /** Override Post request */
   doRequest?: (activityData: {}) => mixed,
   /** A callback to run after the activity is posted successfully */
@@ -105,7 +107,7 @@ export default class StatusUpdateForm extends React.Component<Props> {
     feedGroup: 'user',
     activityVerb: 'post',
     fullscreen: false,
-    modifyActivityData: (d: {}) => d,
+    modifyActivityData: (d: ActivityArgData<{}, {}>) => d,
     height: 80,
     verticalOffset: 0,
     noKeyboardAccessory: false,

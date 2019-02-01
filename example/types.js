@@ -6,7 +6,7 @@ import type {
   ActivityResponse,
   StreamFeed,
   UserResponse as StreamUserResponse,
-  EnrichedReactionResponse,
+  ReactionResponse,
 } from 'getstream';
 
 import type { AppCtx } from 'expo-activity-feed';
@@ -56,10 +56,10 @@ export type RepostData = {
   text: string,
 };
 
-export type Comment = EnrichedReactionResponse<UserData, CommentData>;
+export type Comment = ReactionResponse<UserData, CommentData>;
 
-export type Heart = EnrichedReactionResponse<UserData, {}>;
-export type Repost = EnrichedReactionResponse<UserData, RepostData>;
+export type Heart = ReactionResponse<UserData, {}>;
+export type Repost = ReactionResponse<UserData, RepostData>;
 
 export type ReactionMap = {
   comment?: Array<Comment>,
