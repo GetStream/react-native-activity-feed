@@ -7,6 +7,7 @@ import type { FeedRequestOptions } from 'getstream';
 import type {
   NavigationScreen,
   BaseActivityResponse,
+  BaseReaction,
   Renderable,
   StyleSheetLike,
 } from '../types';
@@ -21,6 +22,24 @@ type Props = {|
   Footer?: any,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,
+  /** Override reaction add request */
+  doReactionAddRequest?: (
+    kind: string,
+    activity: BaseActivityResponse,
+    data?: {},
+    options: {},
+  ) => mixed,
+  /** Override reaction delete request */
+  doReactionDeleteRequest?: (id: string) => mixed,
+  /** Override child reaction add request */
+  doChildReactionAddRequest?: (
+    kind: string,
+    activity: BaseReaction,
+    data?: {},
+    options: {},
+  ) => mixed,
+  /** Override child reaction delete request */
+  doChildReactionDeleteRequest?: (id: string) => mixed,
 |};
 
 /**
@@ -46,6 +65,10 @@ export default class SinglePost extends React.Component<Props> {
               .feed(feedGroup, userId)
               .getActivityDetail(this.props.activity.id, options);
           }}
+          doReactionAddRequest={this.props.doReactionAddRequest}
+          doReactionDeleteRequest={this.props.doReactionDeleteRequest}
+          doChildReactionAddRequest={this.props.doChildReactionAddRequest}
+          doChildReactionDeleteRequest={this.props.doChildReactionDeleteRequest}
           Footer={this.props.Footer}
           noPagination
         />
