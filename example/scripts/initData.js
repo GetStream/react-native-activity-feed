@@ -7,9 +7,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 async function main() {
-  let apiKey = process.env.STREAM_API_KEY;
-  let apiSecret = process.env.STREAM_API_SECRET;
-  let appId = process.env.STREAM_APP_ID;
+  const apiKey = process.env.STREAM_API_KEY;
+  const apiSecret = process.env.STREAM_API_SECRET;
+  const appId = process.env.STREAM_APP_ID;
   if (!apiKey) {
     console.error('STREAM_API_KEY should be set');
     return;
@@ -25,7 +25,7 @@ async function main() {
     return;
   }
 
-  let serverClient = stream.connect(
+  const serverClient = stream.connect(
     apiKey,
     apiSecret,
     appId,
@@ -39,10 +39,10 @@ async function main() {
     );
   }
 
-  let batman = createUserClient('batman');
-  let fluff = createUserClient('fluff');
-  let league = createUserClient('justiceleague');
-  let bowie = createUserClient('davidbowie');
+  const batman = createUserClient('batman');
+  const fluff = createUserClient('fluff');
+  const league = createUserClient('justiceleague');
+  const bowie = createUserClient('davidbowie');
 
   console.log('Add the following line to your .env file');
   console.log('STREAM_API_TOKEN=' + batman.token);
@@ -78,10 +78,10 @@ async function main() {
       'http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?',
   });
 
-  let randomUsers = [];
-  let randomUsersPromises = [];
+  const randomUsers = [];
+  const randomUsersPromises = [];
   for (let i = 0; i < 30; i++) {
-    let session = createUserClient(`random-${i}`);
+    const session = createUserClient(`random-${i}`);
     randomUsers.push(session);
     randomUsersPromises.push(
       session.currentUser.getOrCreate({
@@ -98,7 +98,7 @@ async function main() {
   await batman.feed('timeline').follow('user', league.currentUser);
   await league.feed('timeline').follow('user', batman.currentUser);
 
-  let batmanActivity = await batman.feed('user').addActivity({
+  const batmanActivity = await batman.feed('user').addActivity({
     foreign_id: 'batman-3',
     time: '2018-08-13T01:23:47',
 
@@ -110,7 +110,7 @@ async function main() {
       'Just beat the joker again. Will he ever give me a real challenge?',
   });
 
-  let fluffActivity = await fluff.feed('user').addActivity({
+  const fluffActivity = await fluff.feed('user').addActivity({
     foreign_id: 'fluff-3',
     time: '2018-07-19T13:23:47',
 
@@ -121,7 +121,7 @@ async function main() {
     content: 'Great podcast with @getstream and @feeds! Thanks guys!',
   });
 
-  let wonderWomenActivity = await league.feed('user').addActivity({
+  const wonderWomenActivity = await league.feed('user').addActivity({
     foreign_id: 'league-2',
     time: '2018-07-19T13:15:12',
 
@@ -145,7 +145,7 @@ async function main() {
     podcast = await bowie.collections.get('podcast', 'hello-world-podcast');
   }
 
-  let bowieActivity = await bowie.feed('user').addActivity({
+  const bowieActivity = await bowie.feed('user').addActivity({
     foreign_id: 'bowie-2',
     time: '2018-07-19T13:12:29',
 
@@ -156,7 +156,7 @@ async function main() {
     content: 'Great podcast with @getstream and @feeds! Thanks guys!',
   });
 
-  let activities = [];
+  const activities = [];
   for (let i = 1; i < 41; i++) {
     activities.push({
       foreign_id: `filler-${i}`,
@@ -292,7 +292,7 @@ async function ignore409(asyncfn) {
   } catch (e) {
     if (
       !(e instanceof stream.errors.StreamApiError) ||
-      e.response.statusCode != 409
+      e.response.statusCode !== 409
     ) {
       throw e;
     }

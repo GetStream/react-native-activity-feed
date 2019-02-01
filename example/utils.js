@@ -9,7 +9,7 @@ export function userOrDefault(
   user: UserResponse | string | { error: string },
 ): UserResponse {
   let actor: UserResponse;
-  let notFound = {
+  const notFound = {
     id: '!not-found',
     created_at: '',
     updated_at: '',

@@ -4,8 +4,8 @@ import moment from 'moment';
 import type { Renderable, RenderableButNotElement } from './types';
 
 export function humanizeTimestamp(timestamp: string | number): string {
-  let time = moment.utc(timestamp); // parse time as UTC
-  let now = moment();
+  const time = moment.utc(timestamp); // parse time as UTC
+  const now = moment();
   // Not in future humanized time
   return moment.min(time, now).from(now);
 }

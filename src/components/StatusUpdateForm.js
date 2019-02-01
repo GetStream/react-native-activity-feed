@@ -185,14 +185,12 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
   componentDidMount() {
     if (this.props.registerSubmit) {
-      this.props.registerSubmit(async () => {
-        return this.onSubmitForm();
-      });
+      this.props.registerSubmit(() => this.onSubmitForm());
     }
   }
 
   _pickImage = async () => {
-    let result = await pickImage();
+    const result = await pickImage();
     if (result.cancelled) {
       return;
     }
@@ -205,7 +203,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     let response;
     let contentType;
     if (Platform.OS === 'android') {
-      let filename = result.uri.replace(/^(file:\/\/|content:\/\/)/, '');
+      const filename = result.uri.replace(/^(file:\/\/|content:\/\/)/, '');
       contentType = mime.lookup(filename) || 'application/octet-stream';
     }
     try {
@@ -242,9 +240,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     });
   };
 
-  _text = () => {
-    return this.state.textFromInput.trim();
-  };
+  _text = () => this.state.textFromInput.trim();
 
   _object = () => {
     if (this.state.imageUrl) {
@@ -253,18 +249,16 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     return this._text();
   };
 
-  _canSubmit = () => {
-    return Boolean(this._object());
-  };
+  _canSubmit = () => Boolean(this._object());
 
   async addActivity() {
-    let activity: CustomActivityArgData = {
+    const activity: CustomActivityArgData = {
       actor: this.props.client.currentUser,
       verb: this.props.activityVerb,
       object: this._object(),
     };
 
-    let attachments = {};
+    const attachments = {};
 
     if (this.state.og && Object.keys(this.state.og).length > 0) {
       attachments.og = this.state.og;
@@ -322,7 +316,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
             const oldStateUrls = this.state.urls;
             this.setState(
               {
-                og: Object.keys(resp).length > 0 ? { ...resp, url: url } : null, // Added url manually from the entered URL
+                og: Object.keys(resp).length > 0 ? { ...resp, url } : null, // Added url manually from the entered URL
                 ogScraping: false,
                 urls: [...oldStateUrls, url],
               },
@@ -379,7 +373,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   };
 
   render() {
-    let styles = buildStylesheet('statusUpdateForm', this.props.styles);
+    const styles = buildStylesheet('statusUpdateForm', this.props.styles);
     return (
       <View style={[this.props.fullscreen ? { flex: 1 } : {}]}>
         <View

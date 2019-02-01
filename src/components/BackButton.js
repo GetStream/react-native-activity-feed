@@ -16,8 +16,8 @@ export type Props = {|
  */
 export default class BackButton extends React.Component<Props> {
   render() {
-    let styles = buildStylesheet('backButton', this.props.styles);
-    let { blue, pressed } = this.props;
+    const styles = buildStylesheet('backButton', this.props.styles);
+    const { blue, pressed } = this.props;
 
     return (
       <TouchableOpacity style={styles.backButton} onPress={pressed}>

@@ -14,7 +14,7 @@ type Props = {
  * @example ./examples/SectionHeader.md
  */
 export default function SectionHeader(props: Props) {
-  let styles = buildStylesheet('sectionHeader', props.styles);
+  const styles = buildStylesheet('sectionHeader', props.styles);
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{props.children}</Text>

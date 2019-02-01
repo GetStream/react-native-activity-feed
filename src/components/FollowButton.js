@@ -31,8 +31,8 @@ export default class FollowButton extends React.Component<Props, State> {
   };
 
   render() {
-    let { clicked } = this.props;
-    let styles = buildStylesheet('followButton', this.props.styles);
+    const { clicked } = this.props;
+    const styles = buildStylesheet('followButton', this.props.styles);
 
     return (
       <TouchableOpacity onClick={clicked}>

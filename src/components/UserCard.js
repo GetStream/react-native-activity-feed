@@ -15,8 +15,8 @@ export type Props = {
 export default class UserCard extends React.Component<Props> {
   static defaultProps = {};
   render() {
-    let styles = buildStylesheet('userCard', this.props.styles);
-    let { user } = this.props;
+    const styles = buildStylesheet('userCard', this.props.styles);
+    const { user } = this.props;
     return (
       <View style={styles.container}>
         <Avatar source={user.profileImage} size={42} noShadow />

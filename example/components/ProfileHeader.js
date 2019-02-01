@@ -40,14 +40,14 @@ class ProfileHeaderInner extends React.Component<PropsInner, State> {
   }
 
   async componentDidMount() {
-    let data = await this.props.user.profile();
+    const data = await this.props.user.profile();
     this.props.changedUserData();
     this.setState({ user: data });
   }
 
   render() {
-    let { following_count, followers_count } = this.state.user;
-    let { name, url, desc, profileImage, coverImage } =
+    const { following_count, followers_count } = this.state.user;
+    const { name, url, desc, profileImage, coverImage } =
       this.props.userData || {};
 
     coverImage ? StatusBar.setBarStyle('light-content', true) : null;

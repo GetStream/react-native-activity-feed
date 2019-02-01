@@ -36,9 +36,7 @@ export default class IconBadge extends React.Component<Props> {
     return (
       <Feed feedGroup={this.props.feedGroup} userId={this.props.userId} notify>
         <FeedContext.Consumer>
-          {(feedCtx) => {
-            return <IconBadgeInner {...this.props} {...feedCtx} />;
-          }}
+          {(feedCtx) => <IconBadgeInner {...this.props} {...feedCtx} />}
         </FeedContext.Consumer>
       </Feed>
     );
@@ -53,7 +51,7 @@ class IconBadgeInner extends React.Component<PropsInner, State> {
   render() {
     const { children, showNumber, hidden } = this.props;
 
-    let styles = buildStylesheet('iconBadge', this.props.styles);
+    const styles = buildStylesheet('iconBadge', this.props.styles);
 
     return (
       <View style={styles.container}>

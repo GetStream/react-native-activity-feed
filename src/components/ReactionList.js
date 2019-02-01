@@ -117,7 +117,7 @@ class ReactionListInner extends React.Component<PropsInner> {
       orderPrefix = 'oldest';
     }
 
-    let reactionsOfKind = activities.getIn(
+    const reactionsOfKind = activities.getIn(
       [...activityPath, orderPrefix + '_reactions', reactionKind],
       immutable.List(),
     );
@@ -141,7 +141,7 @@ class ReactionListInner extends React.Component<PropsInner> {
       false,
     );
 
-    let styles = buildStylesheet('reactionList', this.props.styles);
+    const styles = buildStylesheet('reactionList', this.props.styles);
 
     if (!reactionsOfKind.size) {
       return null;
@@ -199,11 +199,9 @@ class ReactionListInner extends React.Component<PropsInner> {
     return smartRender(Reaction, { reaction });
   };
 
-  _renderWrappedReaction = ({ item }: { item: any }) => {
-    return (
-      <ImmutableItemWrapper renderItem={this._renderReaction} item={item} />
-    );
-  };
+  _renderWrappedReaction = ({ item }: { item: any }) => (
+    <ImmutableItemWrapper renderItem={this._renderReaction} item={item} />
+  );
 }
 
 type ImmutableItemWrapperProps = {

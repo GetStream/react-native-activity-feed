@@ -27,18 +27,17 @@ export type Props = {|
  */
 export default class Avatar extends React.Component<Props> {
   render() {
-    let { source, ...props } = this.props;
+    const { source, ...props } = this.props;
     if (typeof source === 'function') {
-      let funcSource = source;
+      const funcSource = source;
       return (
         <StreamApp.Consumer>
           {(appCtx) => {
+            let newSource;
             if (appCtx.user.full) {
-              source = funcSource(appCtx.user.full);
-            } else {
-              source = undefined;
+              newSource = funcSource(appCtx.user.full);
             }
-            return <AvatarInner {...props} source={source} />;
+            return <AvatarInner {...props} source={newSource} />;
           }}
         </StreamApp.Consumer>
       );
@@ -51,7 +50,7 @@ export default class Avatar extends React.Component<Props> {
 type InnerProps = {| ...Props, source: ?string |};
 
 const AvatarInner = (props: InnerProps) => {
-  let {
+  const {
     source,
     size = 200,
     noShadow,
@@ -59,8 +58,8 @@ const AvatarInner = (props: InnerProps) => {
     editButton,
     onUploadButtonPress,
   } = props;
-  let styles = buildStylesheet('avatar', props.styles || {});
-  let borderRadius = notRound ? undefined : size / 2;
+  const styles = buildStylesheet('avatar', props.styles || {});
+  const borderRadius = notRound ? undefined : size / 2;
   return (
     <View
       style={[
@@ -78,7 +77,7 @@ const AvatarInner = (props: InnerProps) => {
           {
             width: size,
             height: size,
-            borderRadius: borderRadius,
+            borderRadius,
           },
         ]}
         source={source ? { uri: source } : require('../images/placeholder.png')}

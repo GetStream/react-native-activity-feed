@@ -36,7 +36,7 @@ type Props = {|
 |};
 
 function defaultLabelFunction(count, props) {
-  let { labelSingle, labelPlural, labelFunction } = props;
+  const { labelSingle, labelPlural, labelFunction } = props;
   if (labelFunction) {
     return labelFunction({
       count,
@@ -44,7 +44,7 @@ function defaultLabelFunction(count, props) {
       labelPlural,
     });
   }
-  let label = count === 1 ? labelSingle : labelPlural;
+  const label = count === 1 ? labelSingle : labelPlural;
   if (!label) {
     return '' + count;
   }
@@ -56,9 +56,9 @@ export default function ReactionIcon(props: Props) {
   if (props.counts && props.kind) {
     count = props.counts[props.kind] || 0;
   }
-  let styles = buildStylesheet('reactionIcon', props.styles);
+  const styles = buildStylesheet('reactionIcon', props.styles);
 
-  let dimensions = {};
+  const dimensions = {};
   if (props.height !== undefined) {
     dimensions.height = props.height;
   }

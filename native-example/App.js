@@ -16,9 +16,9 @@ import {
 } from 'react-native-activity-feed';
 
 const App = () => {
-  let apiKey = STREAM_API_KEY;
-  let appId = STREAM_APP_ID;
-  let token = STREAM_API_TOKEN;
+  const apiKey = STREAM_API_KEY;
+  const appId = STREAM_APP_ID;
+  const token = STREAM_API_TOKEN;
 
   if (!apiKey) {
     console.error('STREAM_API_KEY should be set');
@@ -57,9 +57,9 @@ const App = () => {
 
   // eslint-disable-next-line no-unused-vars
   function stepThree() {
-    const renderActivity = (props) => {
-      return <Activity {...props} Footer={<LikeButton {...props} />} />;
-    };
+    const renderActivity = (props) => (
+      <Activity {...props} Footer={<LikeButton {...props} />} />
+    );
 
     return (
       <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
@@ -72,9 +72,9 @@ const App = () => {
 
   // eslint-disable-next-line no-unused-vars
   function stepFour() {
-    const renderActivity = (props) => {
-      return <Activity {...props} Footer={<LikeButton {...props} />} />;
-    };
+    const renderActivity = (props) => (
+      <Activity {...props} Footer={<LikeButton {...props} />} />
+    );
 
     return (
       <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
@@ -88,9 +88,9 @@ const App = () => {
 
   // eslint-disable-next-line no-unused-vars
   function stepFive() {
-    const renderActivity = (props) => {
-      return <Activity {...props} Footer={<LikeButton {...props} />} />;
-    };
+    const renderActivity = (props) => (
+      <Activity {...props} Footer={<LikeButton {...props} />} />
+    );
 
     return (
       <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>

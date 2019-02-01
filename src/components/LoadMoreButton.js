@@ -17,7 +17,7 @@ export default class LoadMoreButton extends React.Component<Props> {
   };
 
   render() {
-    let { children, refreshing, onPress } = this.props;
+    const { children, refreshing, onPress } = this.props;
 
     const styles = buildStylesheet('loadMoreButton', this.props.styles);
     return (

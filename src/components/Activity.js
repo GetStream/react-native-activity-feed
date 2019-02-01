@@ -75,8 +75,8 @@ export default class Activity extends React.Component<Props> {
   };
 
   renderHeader = () => {
-    let { time, actor: activityActor } = this.props.activity;
-    let notFound = {
+    const { time, actor: activityActor } = this.props.activity;
+    const notFound = {
       id: '!not-found',
       created_at: '',
       updated_at: '',
@@ -92,7 +92,7 @@ export default class Activity extends React.Component<Props> {
       actor = notFound;
     }
 
-    let styles = buildStylesheet('activity', this.props.styles);
+    const styles = buildStylesheet('activity', this.props.styles);
 
     return (
       <View style={styles.header}>
@@ -122,7 +122,7 @@ export default class Activity extends React.Component<Props> {
       activity.attachments.og &&
       Object.keys(activity.attachments.og).length > 0
     ) {
-      let textWithoutUrl = _.replace(text, activity.attachments.og.url, ' ');
+      const textWithoutUrl = _.replace(text, activity.attachments.og.url, ' ');
       return textWithoutUrl.split(' ');
     } else {
       return text.split(' ');
@@ -130,9 +130,9 @@ export default class Activity extends React.Component<Props> {
   };
 
   renderText = (text: string, activity: ActivityData) => {
-    let tokens = text.split(' ');
-    let rendered = [];
-    let styles = buildStylesheet('activity', this.props.styles);
+    const tokens = text.split(' ');
+    const rendered = [];
+    const styles = buildStylesheet('activity', this.props.styles);
 
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i][0] === '@') {
@@ -165,7 +165,7 @@ export default class Activity extends React.Component<Props> {
         Object.keys(activity.attachments.og).length > 0 &&
         tokens[i] === activity.attachments.og.url
       ) {
-        let url = activity.attachments.og.url;
+        const url = activity.attachments.og.url;
         rendered.push(
           <Text key={i} onPress={() => Linking.openURL(url)} style={styles.url}>
             {tokens[i].slice(0, 20)}
@@ -185,9 +185,10 @@ export default class Activity extends React.Component<Props> {
       this.props.imageWidth != null
         ? this.props.imageWidth
         : Dimensions.get('window').width;
-    let { object, text, image, attachments } = this.props.activity;
-    let styles = buildStylesheet('activity', this.props.styles);
-    let { Card } = this.props;
+    const { object, image, attachments } = this.props.activity;
+    let { text } = this.props.activity;
+    const styles = buildStylesheet('activity', this.props.styles);
+    const { Card } = this.props;
     if (text === undefined) {
       if (typeof object === 'string') {
         text = object;
@@ -207,7 +208,7 @@ export default class Activity extends React.Component<Props> {
 
         {Boolean(image) && (
           <Image
-            style={{ width: width, height: width }}
+            style={{ width, height: width }}
             source={{ uri: image }}
             resizeMethod="resize"
           />
@@ -217,7 +218,7 @@ export default class Activity extends React.Component<Props> {
           attachments.images &&
           attachments.images.length > 0 && (
             <Image
-              style={{ width: width, height: width }}
+              style={{ width, height: width }}
               source={{ uri: attachments.images[0] }}
               resizeMethod="resize"
             />
@@ -241,14 +242,12 @@ export default class Activity extends React.Component<Props> {
     );
   };
 
-  renderFooter = () => {
-    return null;
-  };
+  renderFooter = () => null;
 
   render() {
-    let { Header, Content, Footer } = this.props;
+    const { Header, Content, Footer } = this.props;
 
-    let styles = buildStylesheet('activity', this.props.styles);
+    const styles = buildStylesheet('activity', this.props.styles);
 
     return (
       <TouchableOpacity

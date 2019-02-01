@@ -36,8 +36,8 @@ export default class CommentItem extends React.Component<Props> {
   }
 
   render() {
-    let { comment } = this.props;
-    let styles = buildStylesheet('commentItem', this.props.styles || {});
+    const { comment } = this.props;
+    const styles = buildStylesheet('commentItem', this.props.styles || {});
     return (
       <View style={styles.container}>
         <Avatar source={comment.user.data.profileImage} size={25} noShadow />

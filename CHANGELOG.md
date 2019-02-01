@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
 Nothing yet
 
 ## 0.8.3 - 2019-01-08
@@ -22,20 +23,17 @@ Nothing yet
 - Uploading images with the `StatusUpdateForm` now works on Android with
   `react-native-activity-feed`.
 
-
 ## 0.8.1 - 2018-12-21
 
 ### Additions
 
 - Add basic support for 2-way pagination
 
-
 ## 0.8.0 - 2018-12-18
 
 ### Breaking Changes
 
 - `LikesList` is renamed to `LikeList`
-
 
 ## 0.7.0 - 2018-12-14
 

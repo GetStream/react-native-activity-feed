@@ -81,9 +81,7 @@ export default class NotificationFeed extends React.Component<Props> {
         doChildReactionDeleteRequest={this.props.doChildReactionDeleteRequest}
       >
         <FeedContext.Consumer>
-          {(feedCtx) => {
-            return <NotificationFeedInner {...this.props} {...feedCtx} />;
-          }}
+          {(feedCtx) => <NotificationFeedInner {...this.props} {...feedCtx} />}
         </FeedContext.Consumer>
       </Feed>
     );
@@ -91,7 +89,7 @@ export default class NotificationFeed extends React.Component<Props> {
 }
 
 const makeDefaultOptions = (options) => {
-  let copy = { ...options };
+  const copy = { ...options };
   if (copy.mark_seen === undefined) {
     copy.mark_seen = true;
   }
@@ -103,7 +101,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
   listRef = React.createRef();
   _refresh = async () => {
     await this.props.refresh(makeDefaultOptions(this.props.options));
-    let ref = this.listRef;
+    const ref = this.listRef;
     if (ref && ref.current) {
       ref.current.scrollToOffset({ offset: 0 });
     }
@@ -112,17 +110,15 @@ class NotificationFeedInner extends React.Component<PropsInner> {
     await this._refresh();
   }
 
-  _renderWrappedGroup = ({ item }: { item: BaseActivityResponse }) => {
-    return (
-      <ImmutableItemWrapper
-        renderItem={this._renderGroup}
-        item={item}
-        navigation={this.props.navigation}
-        feedGroup={this.props.feedGroup}
-        userId={this.props.userId}
-      />
-    );
-  };
+  _renderWrappedGroup = ({ item }: { item: BaseActivityResponse }) => (
+    <ImmutableItemWrapper
+      renderItem={this._renderGroup}
+      item={item}
+      navigation={this.props.navigation}
+      feedGroup={this.props.feedGroup}
+      userId={this.props.userId}
+    />
+  );
 
   _childProps = () => ({
     onRemoveActivity: this.props.onRemoveActivity,
@@ -138,7 +134,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
   });
 
   _renderGroup = (item: BaseActivityResponse) => {
-    let args = {
+    const args = {
       activityGroup: item,
       styles: this.props.styles.activity,
       ...this._childProps(),
@@ -147,8 +143,8 @@ class NotificationFeedInner extends React.Component<PropsInner> {
   };
 
   render() {
-    let styles = buildStylesheet('notificationFeed', this.props.styles);
-    let notifierProps = {
+    const styles = buildStylesheet('notificationFeed', this.props.styles);
+    const notifierProps = {
       adds: this.props.realtimeAdds,
       deletes: this.props.realtimeDeletes,
       onPress: this._refresh,

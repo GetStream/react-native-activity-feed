@@ -48,7 +48,7 @@ export default class NotificationScreen extends React.Component<Props> {
   componentDidUpdate() {}
 
   _renderGroup = ({ activityGroup, styles, ...props }: any) => {
-    let verb = activityGroup.activities[0].verb;
+    const verb = activityGroup.activities[0].verb;
     if (verb === 'follow') {
       return <Follow activities={activityGroup.activities} styles={styles} />;
     } else if (verb === 'heart' || verb === 'repost') {
@@ -56,7 +56,7 @@ export default class NotificationScreen extends React.Component<Props> {
         <Notification activities={activityGroup.activities} styles={styles} />
       );
     } else {
-      let activity = activityGroup.activities[0];
+      const activity = activityGroup.activities[0];
       return (
         <Activity
           activity={activity}

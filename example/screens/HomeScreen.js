@@ -59,7 +59,7 @@ class HomeScreen extends React.Component<Props> {
 
   _onPressActivity = (activity: ActivityData) => {
     this.props.navigation.navigate('SinglePost', {
-      activity: activity,
+      activity,
     });
   };
 

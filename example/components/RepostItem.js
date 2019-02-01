@@ -22,7 +22,7 @@ export default class RepostItem extends React.Component<Props> {
   };
 
   render() {
-    let { repost } = this.props;
+    const { repost } = this.props;
     return (
       <View style={styles.repostItem}>
         <View style={styles.repostAvatar}>

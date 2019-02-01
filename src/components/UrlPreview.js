@@ -17,7 +17,7 @@ export type Props = {|
  */
 export default class UrlPreview extends React.Component<Props> {
   render() {
-    let styles = buildStylesheet('urlPreview', this.props.styles);
+    const styles = buildStylesheet('urlPreview', this.props.styles);
 
     return (
       <View style={styles.wrapper}>

@@ -1,13 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const LargeHeading = ({ children }) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>{children}</Text>
-    </View>
-  );
-};
+const LargeHeading = ({ children }) => (
+  <View style={styles.container}>
+    <Text style={styles.header}>{children}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
