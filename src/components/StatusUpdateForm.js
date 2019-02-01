@@ -67,6 +67,8 @@ type Props = {|
    * ```
    * */
   modifyActivityData: (activityData: {}) => ActivityArgData<{}, {}>,
+  /** Override Post request */
+  doRequest?: (activityData: {}) => mixed,
   /** A callback to run after the activity is posted successfully */
   onSuccess?: () => mixed,
   /** A callback that receives a function that submits the form */
@@ -276,9 +278,14 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     }
 
     const modifiedActivity = this.props.modifyActivityData(activity);
-    await this.props.client
-      .feed(this.props.feedGroup, this.props.userId)
-      .addActivity(modifiedActivity);
+
+    if (this.props.doRequest) {
+      await this.props.doRequest(modifiedActivity);
+    } else {
+      await this.props.client
+        .feed(this.props.feedGroup, this.props.userId)
+        .addActivity(modifiedActivity);
+    }
   }
 
   handleOG(text) {
