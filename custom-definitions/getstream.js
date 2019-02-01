@@ -1,18 +1,19 @@
 // @flow
 declare module 'getstream' {
-  declare type TimestampedResponse = {
+  declare type TimestampedResponse = {|
     created_at: string,
     updated_at: string,
-  };
+  |};
 
-  declare type DurationResponse = {
+  declare type DurationResponse = {|
     duration: string,
-  };
+  |};
 
-  declare type UserResponse<Data> = {
+  declare type UserResponse<Data> = {|
     id: string,
     data: Data,
-  } & TimestampedResponse;
+    ...TimestampedResponse
+  |}
 
   declare type FollowCounts = {
     following_count: number,
@@ -248,7 +249,7 @@ declare module 'getstream' {
     foreign_id: string,
     time: string,
 
-    actor: UserResponse<UserData> | 'NotFound',
+    actor: UserResponse<UserData> | string | {| error: string |},
     verb: string,
     object: string | Object, // Limit this type more
     target: string,
