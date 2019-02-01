@@ -1,5 +1,8 @@
 # Stream React Native Activity Feed Components
 
+[![NPM](https://img.shields.io/npm/v/react-native-activity-feed.svg)](https://www.npmjs.com/package/react-native-activity-feed)
+[![Build Status](https://travis-ci.org/GetStream/react-native-activity-feed.svg?branch=master)](https://travis-ci.org/GetStream/react-native-activity-feed)
+
 ![react native activity feed](./src/images/githubhero.png)
 
 The official React Native integration library for Stream, a web service for building scalable newsfeeds and activity streams.
