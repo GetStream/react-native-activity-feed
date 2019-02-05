@@ -128,6 +128,8 @@ class NotificationFeedInner extends React.Component<PropsInner> {
     onToggleChildReaction: this.props.onToggleChildReaction,
     onAddChildReaction: this.props.onAddChildReaction,
     onRemoveChildReaction: this.props.onRemoveChildReaction,
+    onMarkAsRead: this.props.onMarkAsRead,
+    onMarkAsSeen: this.props.onMarkAsSeen,
     navigation: this.props.navigation,
     feedGroup: this.props.feedGroup,
     userId: this.props.userId,
