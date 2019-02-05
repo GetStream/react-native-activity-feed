@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing yet
 
+## 0.8.8 - 2019-02-05
+
+### Added
+
+- Support marking notification groups as read and seen through the
+  `onMarkAsSeen` and `onMarkAsRead` handlers.
+
+### Fixed
+
+- Calling `onRemoveActivity` on a notification feed now updates the state
+  correctly.
+
 ## 0.8.7 - 2019-02-05
 
 ### Fixes
