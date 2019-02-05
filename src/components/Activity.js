@@ -89,7 +89,8 @@ export default class Activity extends React.Component<Props> {
     ) {
       actor = notFound;
     } else {
-      actor = notFound;
+      //$FlowBug
+      actor = (activityActor: any);
     }
 
     const styles = buildStylesheet('activity', this.props.styles);

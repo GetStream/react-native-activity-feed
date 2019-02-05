@@ -6,7 +6,7 @@ export function goToProfile(id: string) {
 }
 
 export function userOrDefault(
-  user: UserResponse | string | { error: string },
+  user: UserResponse | string | {| error: string |},
 ): UserResponse {
   let actor: UserResponse;
   const notFound = {
@@ -16,9 +16,10 @@ export function userOrDefault(
     data: { name: 'Unknown', profileImage: '' },
   };
   if (typeof user === 'string' || typeof user.error === 'string') {
-    return notFound;
-  } else {
     actor = notFound;
+  } else {
+    //$FlowBug
+    actor = (user: any);
   }
   return actor;
 }
