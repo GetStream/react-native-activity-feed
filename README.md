@@ -10,6 +10,7 @@ The official React Native integration library for Stream, a web service for buil
 ## TL;DR built-in components for social networks and regular apps
 
 - Flat feeds
+- Timelines and Newsfeeds
 - Notification feed
 - Likes
 - Comments
