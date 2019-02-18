@@ -33,6 +33,7 @@ type Props = {|
   onPressAvatar?: () => mixed,
   sub?: string,
   icon?: string,
+  avatarPlaceholder?: string,
   activity: ActivityData,
   /** Width of an image that's displayed, by default this is
    * the width of the screen */
@@ -100,6 +101,7 @@ export default class Activity extends React.Component<Props> {
         <UserBar
           username={actor.data.name}
           avatar={actor.data.profileImage}
+          avatarPlaceholder={this.props.avatarPlaceholder}
           subtitle={this.props.sub}
           timestamp={time}
           icon={this.props.icon}

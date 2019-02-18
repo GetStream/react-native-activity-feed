@@ -11,6 +11,7 @@ import { buildStylesheet } from '../styles';
 type Props = {|
   username: ?string,
   avatar?: string,
+  avatarPlaceholder?: string,
   subtitle?: string,
   time?: string, // text that should be displayed as the time
   timestamp?: string | number, // a timestamp that should be humanized
@@ -31,6 +32,7 @@ const UserBar = ({
   avatar,
   follow,
   onPressAvatar,
+  avatarPlaceholder,
   icon,
   ...props
 }: Props) => {
@@ -48,6 +50,7 @@ const UserBar = ({
         <TouchableOpacity onPress={onPressAvatar} disabled={!onPressAvatar}>
           <Avatar
             source={avatar}
+            avatarPlaceholder={avatarPlaceholder}
             size={48}
             noShadow
             styles={
