@@ -36,6 +36,8 @@ type Props = {|
   reverseOrder: boolean,
   children?: React.Node,
   styles?: StyleSheetLike,
+  /** Custom placeholder */
+  avatarPlaceholder?: string,
 |};
 
 /**
