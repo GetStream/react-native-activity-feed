@@ -51,14 +51,13 @@ export default class Avatar extends React.Component<Props> {
 type InnerProps = {| ...Props, source: ?string |};
 
 
-class AvatarInner extends React.Component {
+class AvatarInner extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
       isImageError: false
     };
   }
-
   render() {
     let {
       source,
