@@ -49,7 +49,7 @@ export default class Avatar extends React.Component<Props> {
 }
 
 type InnerProps = {| ...Props, source: ?string |};
-type State = { isImageError: Boolean };
+type State = { isImageError: boolean };
 
 class AvatarInner extends React.Component<InnerProps, State> {
   constructor(props) {
