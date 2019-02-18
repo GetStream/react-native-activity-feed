@@ -10,6 +10,7 @@ export type Props = {|
   /** The ID of the activity for which these comments are */
   activityId: string,
   reactionKind: string,
+  avatarPlaceholder?: string,
   /** Only needed for reposted activities where you want to show the likes of the original activity, not of the repost */
   activityPath?: ?Array<string>,
 |};
@@ -24,7 +25,7 @@ export default class LikeList extends React.PureComponent<Props> {
     reactionKind: 'like',
   };
   render() {
-    const { activityId, activityPath } = this.props;
+    const { activityId, activityPath, avatarPlaceholder } = this.props;
     return (
       <ReactionList
         activityId={activityId}
@@ -38,6 +39,7 @@ export default class LikeList extends React.PureComponent<Props> {
           <TouchableOpacity style={{ marginRight: 10 }}>
             <Avatar
               source={reaction.user.data.profileImage}
+              avatarPlaceholder={avatarPlaceholder}
               size={25}
               noShadow
             />

@@ -32,6 +32,8 @@ export type Props = {|
   oldestToNewest: boolean,
   /** Reverse the order the reactions are displayed in. */
   reverseOrder: boolean,
+  /** Custom placeholder */
+  avatarPlaceholder?: string,
 |};
 
 /**
@@ -63,6 +65,7 @@ export default class CommentList extends React.PureComponent<Props> {
       oldestToNewest,
       reverseOrder,
       flatListProps,
+      avatarPlaceholder,
     } = this.props;
     return (
       <ReactionList
@@ -74,6 +77,7 @@ export default class CommentList extends React.PureComponent<Props> {
         oldestToNewest={oldestToNewest}
         flatListProps={flatListProps}
         reverseOrder={reverseOrder}
+        avatarPlaceholder={avatarPlaceholder}
       >
         <SectionHeader>Comments</SectionHeader>
       </ReactionList>

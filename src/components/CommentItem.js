@@ -15,6 +15,8 @@ type Props = {
   Footer?: Renderable,
   /** Styling of the component */
   styles?: StyleSheetLike,
+  /** Custom placeholder */
+  avatarPlaceholder?: string,
   /** Handle errors in the render method in a custom way, by default this
    * component logs the error in the console **/
   componentDidCatch?: (error: Error, info: {}, props: Props) => mixed,
@@ -36,11 +38,12 @@ export default class CommentItem extends React.Component<Props> {
   }
 
   render() {
-    const { comment } = this.props;
+    const { comment, avatarPlaceholder } = this.props;
     const styles = buildStylesheet('commentItem', this.props.styles || {});
     return (
       <View style={styles.container}>
-        <Avatar source={comment.user.data.profileImage} size={25} noShadow />
+        <Avatar source={comment.user.data.profileImage} size={25} noShadow 
+            avatarPlaceholder={avatarPlaceholder}/>
         <View style={styles.commentText}>
           <Text>
             <Text style={styles.commentAuthor}>{comment.user.data.name} </Text>
