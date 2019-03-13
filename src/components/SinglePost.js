@@ -40,6 +40,8 @@ type Props = {|
   ) => mixed,
   /** Override child reaction delete request */
   doChildReactionDeleteRequest?: (id: string) => mixed,
+  /** Override reactions filter request */
+  doReactionsFilterRequest?: (options: {}) => Promise<Object>,
 |};
 
 /**
@@ -69,6 +71,7 @@ export default class SinglePost extends React.Component<Props> {
           doReactionDeleteRequest={this.props.doReactionDeleteRequest}
           doChildReactionAddRequest={this.props.doChildReactionAddRequest}
           doChildReactionDeleteRequest={this.props.doChildReactionDeleteRequest}
+          doReactionsFilterRequest={this.props.doReactionsFilterRequest}
           Footer={this.props.Footer}
           noPagination
         />
