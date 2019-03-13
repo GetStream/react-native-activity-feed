@@ -61,6 +61,8 @@ type Props = {|
   ) => mixed,
   /** Override child reaction delete request */
   doChildReactionDeleteRequest?: (id: string) => mixed,
+  /** Override reactions filter request */
+  doReactionsFilterRequest?: (options: {}) => Promise<Object>,
   //** turns off pagination */
   noPagination?: boolean,
   analyticsLocation?: string,
@@ -97,6 +99,7 @@ export default class FlatFeed extends React.Component<Props> {
         doReactionDeleteRequest={this.props.doReactionDeleteRequest}
         doChildReactionAddRequest={this.props.doChildReactionAddRequest}
         doChildReactionDeleteRequest={this.props.doChildReactionDeleteRequest}
+        doReactionsFilterRequest={this.props.doReactionsFilterRequest}
       >
         <FeedContext.Consumer>
           {(feedCtx) => <FlatFeedInner {...this.props} {...feedCtx} />}
