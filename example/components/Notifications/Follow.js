@@ -13,53 +13,49 @@ type Props = {
   activities: NotificationActivities,
 };
 
-const Follow = ({ activities }: Props) => {
-  return (
-    <View style={styles.item}>
-      {activities.length !== 1 ? (
-        <Image style={styles.icon} source={FollowersIcon} />
-      ) : (
-        <TouchableOpacity>
-          <Avatar
-            source={userOrDefault(activities[0].actor).data.profileImage}
-            size={48}
-            noShadow
-          />
-        </TouchableOpacity>
-      )}
+const Follow = ({ activities }: Props) => (
+  <View style={styles.item}>
+    {activities.length !== 1 ? (
+      <Image style={styles.icon} source={FollowersIcon} />
+    ) : (
+      <TouchableOpacity>
+        <Avatar
+          source={userOrDefault(activities[0].actor).data.profileImage}
+          size={48}
+          noShadow
+        />
+      </TouchableOpacity>
+    )}
 
-      <View style={{ flex: 1, paddingLeft: 15 }}>
-        <View style={{ flexDirection: 'row' }}>
-          {activities.length > 1
-            ? activities.map((activity) => {
-                return (
-                  <TouchableOpacity style={styles.follow} key={activity.id}>
-                    <Avatar
-                      source={userOrDefault(activity.actor).data.profileImage}
-                      size={29}
-                      noShadow
-                    />
-                  </TouchableOpacity>
-                );
-              })
-            : null}
-        </View>
+    <View style={{ flex: 1, paddingLeft: 15 }}>
+      <View style={{ flexDirection: 'row' }}>
+        {activities.length > 1
+          ? activities.map((activity) => (
+              <TouchableOpacity style={styles.follow} key={activity.id}>
+                <Avatar
+                  source={userOrDefault(activity.actor).data.profileImage}
+                  size={29}
+                  noShadow
+                />
+              </TouchableOpacity>
+            ))
+          : null}
+      </View>
 
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            <Text style={styles.footerTextBold}>
-              @{userOrDefault(activities[0].actor).data.name}
-            </Text>
-            {activities.length > 1
-              ? ' and ' + (activities.length - 1) + ' others'
-              : null}{' '}
-            followed you
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          <Text style={styles.footerTextBold}>
+            @{userOrDefault(activities[0].actor).data.name}
           </Text>
-        </View>
+          {activities.length > 1
+            ? ' and ' + (activities.length - 1) + ' others'
+            : null}{' '}
+          followed you
+        </Text>
       </View>
     </View>
-  );
-};
+  </View>
+);
 
 const styles = StyleSheet.create({
   item: {

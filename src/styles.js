@@ -443,13 +443,13 @@ export const styles = {
 };
 
 const depthOf = function(object) {
-  var level = 1;
-  var key;
+  let level = 1;
+  let key;
   for (key in object) {
     if (!object.hasOwnProperty(key)) continue;
 
     if (typeof object[key] == 'object') {
-      var depth = depthOf(object[key]) + 1;
+      const depth = depthOf(object[key]) + 1;
       level = Math.max(depth, level);
     }
   }
@@ -469,16 +469,12 @@ export function buildStylesheet(styleName: string, styleOverwrites: any): any {
   if (!styleOverwrites || Object.keys(styleOverwrites).length === 0) {
     return baseStyle;
   }
-  let falseObj = {};
-  let base = Object.keys(baseStyle)
-    .map((k) => {
-      return { [k]: StyleSheet.flatten(baseStyle[k]) };
-    })
-    .reduce((accumulated, v) => {
-      return Object.assign(accumulated, v);
-    }, {});
+  const falseObj = {};
+  const base = Object.keys(baseStyle)
+    .map((k) => ({ [k]: StyleSheet.flatten(baseStyle[k]) }))
+    .reduce((accumulated, v) => Object.assign(accumulated, v), {});
 
-  let topLevelOverwrites = Object.keys(styleOverwrites)
+  const topLevelOverwrites = Object.keys(styleOverwrites)
     .map((k) => {
       if (depthOf(styleOverwrites[k]) === 1) {
         return { [k]: StyleSheet.flatten(styleOverwrites[k]) };
@@ -486,9 +482,7 @@ export function buildStylesheet(styleName: string, styleOverwrites: any): any {
       return falseObj;
     })
     .filter((v) => v !== falseObj)
-    .reduce((accumulated, v) => {
-      return Object.assign(accumulated, v);
-    }, {});
+    .reduce((accumulated, v) => Object.assign(accumulated, v), {});
 
   // console.log(_.defaultsDeep(topLevelOverwrites, base));
   return StyleSheet.create(_.defaultsDeep(topLevelOverwrites, base));

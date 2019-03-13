@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function ReactionIconBar(props: Props) {
-  let styles = buildStylesheet('reactionIconBar', props.styles);
+  const styles = buildStylesheet('reactionIconBar', props.styles);
 
   return <View style={styles.container}>{props.children}</View>;
 }

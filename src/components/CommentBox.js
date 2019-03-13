@@ -70,10 +70,10 @@ export default class CommentBox extends React.Component<Props, State> {
   }
 
   render() {
-    let { noKeyboardAccessory, textInputProps } = this.props;
+    const { noKeyboardAccessory, textInputProps } = this.props;
 
-    let styles = buildStylesheet('commentBox', this.props.styles);
-    let input = (
+    const styles = buildStylesheet('commentBox', this.props.styles);
+    const input = (
       <View style={styles.container}>
         {this.props.noAvatar || (
           <Avatar
@@ -87,7 +87,7 @@ export default class CommentBox extends React.Component<Props, State> {
           style={styles.textInput}
           underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({ text })}
-          onSubmitEditing={async (event) => {
+          onSubmitEditing={(event) => {
             this.setState({ text: '' });
             this.postComment(event);
           }}

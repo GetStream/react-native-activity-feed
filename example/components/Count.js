@@ -2,18 +2,16 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import numeral from 'numeral';
 
-const Count = ({ num, children }) => {
-  return (
-    <View style={styles.count}>
-      <Text style={styles.num}>
-        {numeral(num)
-          .format('0a')
-          .toUpperCase()}
-      </Text>
-      <Text style={styles.name}>{children}</Text>
-    </View>
-  );
-};
+const Count = ({ num, children }) => (
+  <View style={styles.count}>
+    <Text style={styles.num}>
+      {numeral(num)
+        .format('0a')
+        .toUpperCase()}
+    </Text>
+    <Text style={styles.name}>{children}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   count: {

@@ -40,9 +40,24 @@ type StreamAppProps<UserData> = {|
   token: string,
   /** Any options that [`stream.connect()`](https://getstream.io/docs/#setup) accepts */
   options?: {},
+  /** The access token used for analytics requests */
   analyticsToken?: string,
+  /** Normaly feed state is local to the feed component, such as FlatFeed and
+   * NotificationFeed. This means that changes in one feed don't affect the
+   * other. However in some cases you want the state to be shared in multiple
+   * components. In the case of the NotificationDropdown you need state shared
+   * between the NotificationFeed and the dropdown badge. This prop should be
+   * used in those cases. Each element in the array provided to `sharedFeeds`
+   * will create one globally managed feed. The default of this prop makes sure
+   * that the NotificationDropdown works correctly. If you want need to change
+   * some props on the NotificationDropdown, you should change them here
+   * instead.
+   */
   sharedFeeds: Array<FeedProps>,
+  /** The data a user should get when no data is present in stream for this user yet */
   defaultUserData: UserData,
+  /** A callback to handle errors produced by the components. This should
+   * probably hook into your own notification system. */
   errorHandler: ErrorHandler,
   children?: React.Node,
 |};

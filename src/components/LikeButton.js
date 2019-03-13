@@ -53,8 +53,8 @@ export default class LikeButton extends React.Component<Props> {
   };
 
   render() {
-    let { activity, reaction, reactionKind } = this.props;
-    let styles = buildStylesheet('likeButton', this.props.styles);
+    const { activity, reaction, reactionKind } = this.props;
+    const styles = buildStylesheet('likeButton', this.props.styles);
     let counts, own_reactions;
     if (reaction && this.props.onToggleChildReaction) {
       counts = reaction.children_counts;

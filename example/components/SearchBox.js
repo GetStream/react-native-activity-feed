@@ -23,7 +23,7 @@ class SearchBox extends React.Component {
   };
 
   render() {
-    let { fadeAnim } = this.state;
+    const { fadeAnim } = this.state;
 
     return (
       <View style={styles.searchbox}>

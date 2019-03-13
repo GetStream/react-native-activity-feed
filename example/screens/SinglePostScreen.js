@@ -91,19 +91,16 @@ export default class SinglePostScreen extends React.Component<Props> {
               <View style={styles.sectionHeader} />
             </React.Fragment>
           )}
-          Footer={(props) => {
-            return (
-              <CommentBox
-                activity={activity}
-                onAddReaction={props.onAddReaction}
-                avatarProps={{
-                  source: (userData: UserResponse) =>
-                    userData.data.profileImage,
-                }}
-                styles={{ container: { height: 78 } }}
-              />
-            );
-          }}
+          Footer={(props) => (
+            <CommentBox
+              activity={activity}
+              onAddReaction={props.onAddReaction}
+              avatarProps={{
+                source: (userData: UserResponse) => userData.data.profileImage,
+              }}
+              styles={{ container: { height: 78 } }}
+            />
+          )}
         />
       </SafeAreaView>
     );

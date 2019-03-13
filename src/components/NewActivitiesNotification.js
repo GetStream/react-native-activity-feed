@@ -34,16 +34,16 @@ export default class NewActivitiesNotification extends React.Component<Props> {
   };
 
   _labelFunction = () => {
-    let {
+    const {
       adds,
       deletes,
       labelSingular,
       labelPlural,
       labelFunction,
     } = this.props;
-    let addCount = (adds || []).length;
-    let deleteCount = (deletes || []).length;
-    let count = addCount + deleteCount;
+    const addCount = (adds || []).length;
+    const deleteCount = (deletes || []).length;
+    const count = addCount + deleteCount;
     if (labelFunction) {
       return labelFunction({
         count,
@@ -53,7 +53,7 @@ export default class NewActivitiesNotification extends React.Component<Props> {
         labelPlural,
       });
     }
-    if (addCount == 0) {
+    if (addCount === 0) {
       return null;
     }
     return `You have ${addCount} new ${
@@ -62,8 +62,8 @@ export default class NewActivitiesNotification extends React.Component<Props> {
   };
 
   render() {
-    let styles = buildStylesheet('pagerBlock', this.props.styles);
-    let label = this._labelFunction();
+    const styles = buildStylesheet('pagerBlock', this.props.styles);
+    const label = this._labelFunction();
     return label != null ? (
       <TouchableOpacity style={[styles.container]} onPress={this.props.onPress}>
         <Text style={[styles.text]}>{label}</Text>

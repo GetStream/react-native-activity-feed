@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const blacklist = require('metro/src/blacklist');
-let repoDir = path.dirname(__dirname);
+const repoDir = path.dirname(__dirname);
 
 module.exports = {
   getBlacklistRE() {

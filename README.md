@@ -1,5 +1,7 @@
-Stream React Native Activity Feed Components
-============================================
+# Stream React Native Activity Feed Components
+
+[![NPM](https://img.shields.io/npm/v/react-native-activity-feed.svg)](https://www.npmjs.com/package/react-native-activity-feed)
+[![Build Status](https://travis-ci.org/GetStream/react-native-activity-feed.svg?branch=master)](https://travis-ci.org/GetStream/react-native-activity-feed)
 
 ![react native activity feed](./src/images/githubhero.png)
 
@@ -8,6 +10,7 @@ The official React Native integration library for Stream, a web service for buil
 ## TL;DR built-in components for social networks and regular apps
 
 - Flat feeds
+- Timelines and Newsfeeds
 - Notification feed
 - Likes
 - Comments
@@ -54,6 +57,7 @@ react-native link react-native-image-picker
 
 2.
 Add the following permissions to `android/app/src/main/AndroidManifest.xml`:
+
 ```xml
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -61,6 +65,7 @@ Add the following permissions to `android/app/src/main/AndroidManifest.xml`:
 
 3.
 Add the following key/value pairs to `ios/{app-name-here}/Info.plist`:
+
 ```xml
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
@@ -74,6 +79,7 @@ Add the following key/value pairs to `ios/{app-name-here}/Info.plist`:
 
 4. Make sure that the gradle version inside `android/build.gradle` is 2.2.0 or
    higher:
+
 ```
 buildscript {
     // ....
@@ -82,7 +88,6 @@ buildscript {
     }
 }
 ```
-
 
 ## Usage & Activity Feed setup
 
@@ -98,9 +103,10 @@ In order to use Stream React Components in your application, you first need to i
   token="{TOKEN}"
   analyticsToken="{ANALYTICS_TOKEN}"
 >
-{/* everything from your application interacting with Stream should be nested here */}
+  {/* everything from your application interacting with Stream should be nested here */}
 </StreamApp>
 ```
+
 1. **API_KEY** your Stream application API_KEY
 2. **API_ID** your Stream application ID
 3. **USER_ID** current user's ID
@@ -114,8 +120,12 @@ You can find your `API_KEY` and `APP_ID` on Stream's dashboard.
 The authentication user token cannot be generated client-side (that would require sharing your API secret). You should provision a user token as part of the sign-up / login flow to your application from your backend.
 
 ```js
-var client = stream.connect(API_KEY, API_SECRET);
-var userToken = client.createUserToken(userId);
+const client = stream.connect(
+  API_KEY,
+  API_SECRET,
+);
+const userToken = client.createUserToken(userId);
+console.log(userToken);
 ```
 
 #### Generating analytics token
@@ -123,12 +133,16 @@ var userToken = client.createUserToken(userId);
 React components have analytics instrumentation built-in, this simplifies the integration with Stream. In order to enable analytics tracking, you need to initialize `StreamApp` with a valid analytics token. You can generate this server-side as well.
 
 ```js
-var client = stream.connect(API_KEY, API_SECRET);
-var userToken = client.getAnalyticsToken();
+const client = stream.connect(
+  API_KEY,
+  API_SECRET,
+);
+const analyticsToken = client.getAnalyticsToken();
+console.log(analyticsToken);
 ```
 
 ## Copyright and License Information
 
-Copyright (c) 2015-2018 Stream.io Inc, and individual contributors. All rights reserved.
+Copyright (c) 2015-2019 Stream.io Inc, and individual contributors. All rights reserved.
 
 See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.

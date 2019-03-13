@@ -11,7 +11,7 @@ type Props = {|
 |};
 
 const UploadImage = ({ onUploadButtonPress, ...props }: Props) => {
-  let styles = buildStylesheet('uploadImage', props.styles || {});
+  const styles = buildStylesheet('uploadImage', props.styles || {});
 
   return (
     <View style={styles.container}>

@@ -6,7 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
 Nothing yet
+
+## 0.8.8 - 2019-02-05
+
+### Added
+
+- Support marking notification groups as read and seen through the
+  `onMarkAsSeen` and `onMarkAsRead` handlers.
+
+### Fixed
+
+- Calling `onRemoveActivity` on a notification feed now updates the state
+  correctly.
+
+## 0.8.7 - 2019-02-05
+
+### Fixes
+
+- Always display "Unknown" as the user which was a regression in 0.8.6
 
 ## 0.8.3 - 2019-01-08
 
@@ -22,20 +41,17 @@ Nothing yet
 - Uploading images with the `StatusUpdateForm` now works on Android with
   `react-native-activity-feed`.
 
-
 ## 0.8.1 - 2018-12-21
 
 ### Additions
 
 - Add basic support for 2-way pagination
 
-
 ## 0.8.0 - 2018-12-18
 
 ### Breaking Changes
 
 - `LikesList` is renamed to `LikeList`
-
 
 ## 0.7.0 - 2018-12-14
 

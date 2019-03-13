@@ -15,13 +15,20 @@ import _ from 'lodash';
 
 import UserBar from './UserBar';
 import Card from './Card';
-import type { ActivityData, StyleSheetLike, Renderable } from '../types';
+import type {
+  ActivityData,
+  StyleSheetLike,
+  Renderable,
+  BaseUserResponse,
+} from '../types';
 import { smartRender } from '../utils';
 
 type Props = {|
   Header?: Renderable,
   Content?: Renderable,
   Footer?: Renderable,
+  // The component that displays the url preview
+  Card: Renderable,
   onPress?: () => mixed,
   onPressAvatar?: () => mixed,
   sub?: string,
@@ -42,6 +49,9 @@ type Props = {|
  * @example ./examples/Activity.md
  */
 export default class Activity extends React.Component<Props> {
+  static defaultProps = {
+    Card,
+  };
   componentDidCatch(error: Error, info: {}) {
     if (this.props.componentDidCatch) {
       this.props.componentDidCatch(error, info, this.props);
@@ -65,17 +75,25 @@ export default class Activity extends React.Component<Props> {
   };
 
   renderHeader = () => {
-    let { time, actor } = this.props.activity;
-    let notFound = {
+    const { time, actor: activityActor } = this.props.activity;
+    const notFound = {
       id: '!not-found',
       created_at: '',
       updated_at: '',
       data: { name: 'Unknown', profileImage: '' },
     };
-    if (actor === 'NotFound' || actor == null || actor.error != null) {
+    let actor: BaseUserResponse;
+    if (
+      typeof activityActor === 'string' ||
+      typeof activityActor.error === 'string'
+    ) {
       actor = notFound;
+    } else {
+      //$FlowBug
+      actor = (activityActor: any);
     }
-    let styles = buildStylesheet('activity', this.props.styles);
+
+    const styles = buildStylesheet('activity', this.props.styles);
 
     return (
       <View style={styles.header}>
@@ -105,7 +123,7 @@ export default class Activity extends React.Component<Props> {
       activity.attachments.og &&
       Object.keys(activity.attachments.og).length > 0
     ) {
-      let textWithoutUrl = _.replace(text, activity.attachments.og.url, ' ');
+      const textWithoutUrl = _.replace(text, activity.attachments.og.url, ' ');
       return textWithoutUrl.split(' ');
     } else {
       return text.split(' ');
@@ -113,9 +131,9 @@ export default class Activity extends React.Component<Props> {
   };
 
   renderText = (text: string, activity: ActivityData) => {
-    let tokens = text.split(' ');
-    let rendered = [];
-    let styles = buildStylesheet('activity', this.props.styles);
+    const tokens = text.split(' ');
+    const rendered = [];
+    const styles = buildStylesheet('activity', this.props.styles);
 
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i][0] === '@') {
@@ -148,7 +166,7 @@ export default class Activity extends React.Component<Props> {
         Object.keys(activity.attachments.og).length > 0 &&
         tokens[i] === activity.attachments.og.url
       ) {
-        let url = activity.attachments.og.url;
+        const url = activity.attachments.og.url;
         rendered.push(
           <Text key={i} onPress={() => Linking.openURL(url)} style={styles.url}>
             {tokens[i].slice(0, 20)}
@@ -164,12 +182,14 @@ export default class Activity extends React.Component<Props> {
 
   renderContent = () => {
     // return null;
-    const width = this.props.imageWidth
-      ? this.props.imageWidth
-      : Dimensions.get('window').width;
-    let { verb, object, text, image, attachments } = this.props.activity;
-    let styles = buildStylesheet('activity', this.props.styles);
-
+    const width =
+      this.props.imageWidth != null
+        ? this.props.imageWidth
+        : Dimensions.get('window').width;
+    const { object, image, attachments } = this.props.activity;
+    let { text } = this.props.activity;
+    const styles = buildStylesheet('activity', this.props.styles);
+    const { Card } = this.props;
     if (text === undefined) {
       if (typeof object === 'string') {
         text = object;
@@ -187,12 +207,9 @@ export default class Activity extends React.Component<Props> {
           </View>
         )}
 
-        {verb == 'repost' &&
-          object instanceof Object && <Card {...object.data} />}
-
         {Boolean(image) && (
           <Image
-            style={{ width: width, height: width }}
+            style={{ width, height: width }}
             source={{ uri: image }}
             resizeMethod="resize"
           />
@@ -200,40 +217,38 @@ export default class Activity extends React.Component<Props> {
 
         {attachments &&
           attachments.images &&
-          Boolean(attachments.images.length) && (
+          attachments.images.length > 0 && (
             <Image
-              style={{ width: width, height: width }}
+              style={{ width, height: width }}
               source={{ uri: attachments.images[0] }}
               resizeMethod="resize"
             />
           )}
-
         {attachments &&
           attachments.og &&
-          Object.keys(attachments.og).length > 0 && (
-            <Card
-              title={attachments.og.title}
-              description={attachments.og.description}
-              image={
-                attachments.og.images && attachments.og.images.length > 0
-                  ? attachments.og.images[0].image
-                  : null
-              }
-              url={attachments.og.url}
-            />
-          )}
+          Object.keys(attachments.og).length > 0 &&
+          smartRender(Card, {
+            title: attachments.og.title,
+            description: attachments.og.description,
+            image:
+              attachments.og.images && attachments.og.images.length > 0
+                ? attachments.og.images[0].image
+                : null,
+            url: attachments.og.url,
+            og: attachments.og,
+          })}
+
+        {}
       </View>
     );
   };
 
-  renderFooter = () => {
-    return null;
-  };
+  renderFooter = () => null;
 
   render() {
-    let { Header, Content, Footer } = this.props;
+    const { Header, Content, Footer } = this.props;
 
-    let styles = buildStylesheet('activity', this.props.styles);
+    const styles = buildStylesheet('activity', this.props.styles);
 
     return (
       <TouchableOpacity

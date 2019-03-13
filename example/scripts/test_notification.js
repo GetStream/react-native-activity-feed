@@ -1,14 +1,13 @@
 // @flow
 import stream from 'getstream';
-import type { UserSession, CloudClient } from '../types';
 
 import dotenv from 'dotenv';
 dotenv.config();
 
 async function main() {
-  let apiKey = process.env.STREAM_API_KEY;
-  let apiSecret = process.env.STREAM_API_SECRET;
-  let appId = process.env.STREAM_APP_ID;
+  const apiKey = process.env.STREAM_API_KEY;
+  const apiSecret = process.env.STREAM_API_SECRET;
+  const appId = process.env.STREAM_APP_ID;
   if (!apiKey) {
     console.error('STREAM_API_KEY should be set');
     return;
@@ -25,28 +24,29 @@ async function main() {
   }
 
   console.log(apiKey, apiSecret);
-  let client: CloudClient = stream.connectCloud(apiKey, appId, {
-    // urlOverride: {
-    //   api: apiUrl,
-    // },
-    keepAlive: false,
-  });
+  const serverClient = stream.connect(
+    apiKey,
+    apiSecret,
+    appId,
+  );
 
-  function createUserSession(userId): UserSession {
-    return client.createUserSession(
-      stream.signing.JWTUserSessionToken(apiSecret, userId),
+  function createUserClient(userId) {
+    return stream.connect(
+      apiKey,
+      serverClient.createUserToken(userId),
+      appId,
     );
   }
 
-  let batman = createUserSession('batman');
-  let content = 'test2';
+  const batman = createUserClient('batman');
+  const content = 'test2';
   console.log(await batman.feed('notification').get({ limit: 1 }));
   await batman.feed('notification').addActivity({
-    actor: batman.user,
+    actor: batman.currentUser,
     verb: 'post',
     object: content,
 
-    content: content,
+    content,
   });
   console.log(await batman.feed('notification').get({ limit: 1 }));
 }

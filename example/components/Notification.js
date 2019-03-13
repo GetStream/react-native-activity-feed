@@ -16,11 +16,11 @@ type Props = {
 
 const Notification = ({ activities }: Props) => {
   let headerText, headerSubtext, icon;
-  let lastActivity = activities[0];
-  let lastActor = userOrDefault(lastActivity.actor);
-  if (activities.length == 1) {
+  const lastActivity = activities[0];
+  const lastActor = userOrDefault(lastActivity.actor);
+  if (activities.length === 1) {
     headerText = lastActor.data.name;
-  } else if (activities.length == 2) {
+  } else if (activities.length === 2) {
     headerText = `${lastActor.data.name} and 1 other`;
   } else {
     headerText = `${lastActor.data.name} and ${activities.length - 1} others `;

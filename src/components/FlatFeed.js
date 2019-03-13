@@ -81,7 +81,7 @@ export default class FlatFeed extends React.Component<Props> {
     styles: {},
     feedGroup: 'timeline',
     notify: false,
-    Activity: Activity,
+    Activity,
     Notifier: NewActivitiesNotification,
   };
 
@@ -99,9 +99,7 @@ export default class FlatFeed extends React.Component<Props> {
         doChildReactionDeleteRequest={this.props.doChildReactionDeleteRequest}
       >
         <FeedContext.Consumer>
-          {(feedCtx) => {
-            return <FlatFeedInner {...this.props} {...feedCtx} />;
-          }}
+          {(feedCtx) => <FlatFeedInner {...this.props} {...feedCtx} />}
         </FeedContext.Consumer>
       </Feed>
     );
@@ -118,7 +116,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
   };
 
   _scrollToTop() {
-    let ref = this.listRef;
+    const ref = this.listRef;
     if (ref && ref.current) {
       ref.current.scrollToOffset({ offset: 0 });
     }
@@ -127,17 +125,15 @@ class FlatFeedInner extends React.Component<PropsInner> {
     await this._refresh();
   }
 
-  _renderWrappedActivity = ({ item }: { item: any }) => {
-    return (
-      <ImmutableItemWrapper
-        renderItem={this._renderActivity}
-        item={item}
-        navigation={this.props.navigation}
-        feedGroup={this.props.feedGroup}
-        userId={this.props.userId}
-      />
-    );
-  };
+  _renderWrappedActivity = ({ item }: { item: any }) => (
+    <ImmutableItemWrapper
+      renderItem={this._renderActivity}
+      item={item}
+      navigation={this.props.navigation}
+      feedGroup={this.props.feedGroup}
+      userId={this.props.userId}
+    />
+  );
 
   _childProps = () => ({
     onRemoveActivity: this.props.onRemoveActivity,
@@ -153,7 +149,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
   });
 
   _renderActivity = (item: ActivityResponse<Object, Object>) => {
-    let args = {
+    const args = {
       activity: item,
       // $FlowFixMe
       styles: this.props.styles.activity,
@@ -164,8 +160,8 @@ class FlatFeedInner extends React.Component<PropsInner> {
   };
 
   render() {
-    let styles = buildStylesheet('flatFeed', this.props.styles);
-    let notifierProps = {
+    const styles = buildStylesheet('flatFeed', this.props.styles);
+    const notifierProps = {
       adds: this.props.realtimeAdds,
       deletes: this.props.realtimeDeletes,
       onPress: this._refresh,

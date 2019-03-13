@@ -40,7 +40,7 @@ const UserBar = ({
     time = humanizeTimestamp(props.timestamp);
   }
 
-  let styles = buildStylesheet('userBar', props.styles);
+  const styles = buildStylesheet('userBar', props.styles);
 
   return (
     <View style={styles.container}>

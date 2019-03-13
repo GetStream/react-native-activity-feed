@@ -20,13 +20,13 @@ export const getErrorMessage = (
   if (!(error instanceof stream.errors.StreamApiError)) {
     return fallbackErrorMessage(error, type, detail);
   }
-  let response = error.response;
+  const response = error.response;
 
   if (!response.statusCode || !response.body || !response.body.detail) {
     return fallbackErrorMessage(error, type, detail);
   }
-  let statusCode = response.statusCode;
-  let text = response.body.detail;
+  const statusCode = response.statusCode;
+  const text = response.body.detail;
 
   if (statusCode >= 400 && statusCode < 500) {
     return text;
@@ -69,6 +69,8 @@ export const fallbackErrorMessage = (
       break;
     case 'delete-reaction':
       text += ' when removing your ' + detail.kind;
+      break;
+    default:
       break;
   }
 

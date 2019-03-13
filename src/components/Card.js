@@ -20,8 +20,8 @@ export type Props = {|
  * @example ./examples/Card.md
  */
 const Card = (props: Props): any => {
-  let { title, description, image, url } = props;
-  let styles = buildStylesheet('card', props.styles);
+  const { title, description, image, url } = props;
+  const styles = buildStylesheet('card', props.styles);
 
   return (
     <TouchableOpacity

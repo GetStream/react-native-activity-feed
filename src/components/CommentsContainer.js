@@ -7,13 +7,11 @@ const CommentsContainer = ({
   renderMoreLink,
   maxComments,
   // ...props
-}) => {
-  return (
-    <View>
-      {data.slice(0, maxComments).map(renderComment)}
-      {data.length > 0 && data.length > maxComments ? renderMoreLink() : null}
-    </View>
-  );
-};
+}) => (
+  <View>
+    {data.slice(0, maxComments).map(renderComment)}
+    {data.length > 0 && data.length > maxComments ? renderMoreLink() : null}
+  </View>
+);
 
 export default CommentsContainer;
