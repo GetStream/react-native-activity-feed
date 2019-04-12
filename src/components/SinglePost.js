@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 
-import { FlatFeed } from '..';
+import FlatFeed from './FlatFeed';
 
 import type { FeedRequestOptions } from 'getstream';
 import type {
