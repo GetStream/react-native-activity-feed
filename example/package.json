@@ -61,8 +61,5 @@
     "react-native-dotenv": "^0.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
     "react-navigation": "^2.3.1"
-  },
-  "resolutions": {
-    "**/fsevents": ">=1.2.4"
   }
 }
