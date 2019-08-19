@@ -1,6 +1,7 @@
 [ignore]
 <PROJECT_ROOT>/example/
 <PROJECT_ROOT>/native-example/
+<PROJECT_ROOT>/examples/
 <PROJECT_ROOT>/native-package/
 <PROJECT_ROOT>/expo-package/
 <PROJECT_ROOT>/node_modules/react-native/Libraries/.*.ios.js
