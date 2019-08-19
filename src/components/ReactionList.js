@@ -163,17 +163,17 @@ class ReactionListInner extends React.Component<PropsInner> {
           }
         />
       );
-
+    console.log();
     return (
       <React.Fragment>
         {this.props.children}
         {reverseOrder && loadMoreButton}
         <FlatList
+          listKey={reactionKind + '-' + activityId}
           style={styles.container}
           refreshing={refreshing}
           data={reactionsOfKind.toArray()}
-          keyExtractor={(item) => item.get('id')}
-          listKey={reactionKind}
+          keyExtractor={(item) => item.get('id') + activityPath}
           renderItem={this._renderWrappedReaction}
           inverted={reverseOrder}
           onEndReached={

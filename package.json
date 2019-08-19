@@ -47,7 +47,7 @@
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir lib --compact=false && cp -R src/images/ lib/ && flow-copy-source src lib",
     "eslint": "eslint '**/*.{js,md}' --max-warnings 0",
-    "flow": "flow && cd example && flow",
+    "flow": "flow",
     "prettier": "prettier --list-different '**/*.{js,ts,md,json}' .eslintrc.json .prettierrc .babelrc",
     "prettier-fix": "prettier --write '**/*.{js,ts,md,json}' .eslintrc.json .prettierrc .babelrc",
     "lint": "prettier --list-different '**/*.{js,ts,md,json}' .eslintrc.json .prettierrc .babelrc && eslint '**/*.{js,md}' --max-warnings 0",

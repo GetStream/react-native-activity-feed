@@ -10,6 +10,7 @@
 <PROJECT_ROOT>/node_modules/*/test/
 <PROJECT_ROOT>/node_modules/*/tests/
 <PROJECT_ROOT>/docs/
+<PROJECT_ROOT>/lib/
 
 [include]
 
