@@ -11,6 +11,7 @@
 <PROJECT_ROOT>/node_modules/*/tests/
 <PROJECT_ROOT>/docs/
 <PROJECT_ROOT>/lib/
+<PROJECT_ROOT>/node_modules/metro/
 
 [include]
 
