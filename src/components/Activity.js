@@ -31,6 +31,8 @@ type Props = {|
   Card: Renderable,
   onPress?: () => mixed,
   onPressAvatar?: () => mixed,
+  onPressMention?: (text: string, activity: {}) => mixed,
+  onPressHashtag?: (text: string, activity: {}) => mixed,
   sub?: string,
   icon?: string,
   activity: ActivityData,
@@ -110,10 +112,18 @@ export default class Activity extends React.Component<Props> {
   };
 
   onPressMention = (text: string, activity: ActivityData) => {
+    if (this.props.onPressMention !== undefined) {
+      this.props.onPressMention(text, activity);
+      return;
+    }
     console.log(`pressed on ${text} mention of ${activity.id}`);
   };
 
   onPressHashtag = (text: string, activity: ActivityData) => {
+    if (this.props.onPressHashtag !== undefined) {
+      this.props.onPressHashtag(text, activity);
+      return;
+    }
     console.log(`pressed on ${text} hashtag of ${activity.id}`);
   };
 

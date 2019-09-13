@@ -141,28 +141,39 @@ class ReactionListInner extends React.Component<PropsInner> {
       false,
     );
 
+    const LoadMoreButton = this.props.LoadMoreButton;
+
     const styles = buildStylesheet('reactionList', this.props.styles);
 
     if (!reactionsOfKind.size) {
       return null;
     }
     const loadMoreButton =
-      this.props.noPagination ||
-      !nextUrl ||
-      this.props.infiniteScroll ? null : (
-        <LoadMoreButton
-          refreshing={refreshing}
-          styles={styles}
-          onPress={() =>
-            this.props.loadNextReactions(
-              activityId,
-              reactionKind,
-              activityPath,
-              oldestToNewest,
-            )
-          }
-        />
-      );
+      this.props.noPagination || !nextUrl || this.props.infiniteScroll
+        ? null
+        : smartRender(LoadMoreButton, {
+            refreshing,
+            styles,
+            onPress: () =>
+              this.props.loadNextReactions(
+                activityId,
+                reactionKind,
+                activityPath,
+                oldestToNewest,
+              ),
+          });
+    // <LoadMoreButton
+    //   refreshing={refreshing}
+    //   styles={styles}
+    //   onPress={() =>
+    //     this.props.loadNextReactions(
+    //       activityId,
+    //       reactionKind,
+    //       activityPath,
+    //       oldestToNewest,
+    //     )
+    //   }
+    // />
     console.log();
     return (
       <React.Fragment>

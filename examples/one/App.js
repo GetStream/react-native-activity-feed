@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet,TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import {
   Avatar,
   StreamApp,
@@ -90,7 +90,8 @@ class SinglePostScreen extends React.Component<Props> {
             activity={activity}
             feedGroup={feedGroup}
             options={{
-              withOwnChildren: true
+              withOwnChildren: true,
+              // recentReactionsLimit: 10,
             }}
             userId={userId}
             navigation={this.props.navigation}
@@ -98,6 +99,7 @@ class SinglePostScreen extends React.Component<Props> {
               <React.Fragment>
                 <Activity
                   {...props}
+                  onPressMention={(text, activity) => console.log(text, activity)}
                   Footer={
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <LikeButton {...props} />
@@ -112,6 +114,7 @@ class SinglePostScreen extends React.Component<Props> {
                   }
                 />
                 <CommentList
+                  // oldestToNewest={true}
                   CommentItem={({ comment }) => (
                     <React.Fragment>
                       <CommentItem
@@ -120,6 +123,7 @@ class SinglePostScreen extends React.Component<Props> {
                       />
                     </React.Fragment>
                   )}
+                  LoadMoreButton={(props) => <TouchableOpacity onPress={props.onPress}><Text>test</Text></TouchableOpacity>}
                   activityId={props.activity.id}
                   reactions={props.activity.latest_reactions} />
                 {/* <RepostList reactions={props.activity.latest_reactions} /> */}
@@ -155,6 +159,49 @@ class SinglePostScreen extends React.Component<Props> {
   }
 }
 
+const CustomActivity = ( data) => {
+return (
+    <Activity
+      {... data}
+      Content= {
+        <View
+          style= {{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#cccddd', borderTopLeftRadius: 5, borderTopRightRadius: 5 } }
+          {... data } /> }
+      Footer= {
+        <View style= {{ marginTop: 15 } }>
+          <View style= {{ flexDirection: 'row', alignItems: 'center' } }>
+          <LikeButton reactionKind= "like" {... data } />
+          <ReactionIcon
+            labelSingle= "comment"
+            labelPlural= "comments"
+            counts= { data. activity. reaction_counts }
+            kind= "comment"
+          />
+          </View>
+          { <CommentList style= {{ marginTop: 15} } activityId= { data. activity. id } /> }
+          { <CommentBox style= {{ marginTop: 15} } noKeyboardAccessory= {true} activity= { data. activity } onAddReaction= { data. onAddReaction } /> }
+          <View style= {{ backgroundColor: '#DCDCDC', height: 10 } } ></View>
+        </View>
+      }
+    />
+  );
+};
+
+const App2 = () => {
+  return (
+    <StreamApp
+      apiKey={ apiKey }
+      appId={ appId }
+      token={ token }>
+      <StatusUpdateForm noKeyboardAccessory= {true} feedGroup= "timeline"
+        onSuccess= {() => {
+          this.onPostCreate()
+        }}
+      />
+      <FlatFeed notify Activity= { CustomActivity } />
+      </StreamApp>
+  );
+}
 
 
 const Navigation = createStackNavigator({

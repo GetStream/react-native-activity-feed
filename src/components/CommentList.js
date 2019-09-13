@@ -63,6 +63,7 @@ export default class CommentList extends React.PureComponent<Props> {
       oldestToNewest,
       reverseOrder,
       flatListProps,
+      LoadMoreButton,
     } = this.props;
     return (
       <ReactionList
@@ -74,6 +75,7 @@ export default class CommentList extends React.PureComponent<Props> {
         oldestToNewest={oldestToNewest}
         flatListProps={flatListProps}
         reverseOrder={reverseOrder}
+        LoadMoreButton={LoadMoreButton}
       >
         <SectionHeader>Comments</SectionHeader>
       </ReactionList>
