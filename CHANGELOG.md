@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing yet
 
+## 0.8.17 - 2019-09-19
+
+### Fixed
+
+- Fixed an issue with reactions on reactions creating duplicates in `latest_children`
+
+## 0.8.16 - 2019-09-13
+
+### Added
+
+- Added two props to the Activity component to handle onPress events on hashtags and mentions:
+  - `onPressHashtag={(hashtagText, activity) => console.log(hashtagText, activity)}`
+  - `onPressMention={(mentionText, activity) => console.log(mentionText, activity)}`
+
 ## 0.8.8 - 2019-02-05
 
 ### Added
