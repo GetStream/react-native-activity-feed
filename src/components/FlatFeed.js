@@ -169,7 +169,6 @@ class FlatFeedInner extends React.Component<PropsInner> {
       deletes: this.props.realtimeDeletes,
       onPress: this._refresh,
     };
-
     return (
       <React.Fragment>
         {smartRender(this.props.Notifier, notifierProps)}

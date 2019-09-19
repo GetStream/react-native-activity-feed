@@ -70,7 +70,6 @@ class SinglePostScreen extends React.Component<Props> {
     const activity = navigation.getParam('activity');
     const feedGroup = navigation.getParam('feedGroup');
     const userId = navigation.getParam('userId');
-    console.log(activity)
     return (
        <StreamApp
         apiKey={'6hwxyxcq4rpe'}
@@ -86,7 +85,8 @@ class SinglePostScreen extends React.Component<Props> {
             'https://i0.wp.com/photos.smugmug.com/Portfolio/Full/i-mwrhZK2/0/ea7f1268/X2/GothamCity-X2.jpg?resize=1280%2C743&ssl=1',
         }}
       >
-          <SinglePost
+
+            <SinglePost
             activity={activity}
             feedGroup={feedGroup}
             options={{

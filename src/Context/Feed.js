@@ -540,8 +540,10 @@ export class FeedManager {
           .updateIn([...path, 'own_children', kind], (v = immutable.List()) =>
             v.remove(v.findIndex((r) => r.get('id') === id)),
           )
-          .updateIn([...path, 'children', kind], (v = immutable.List()) =>
-            v.remove(v.findIndex((r) => r.get('id') === id)),
+          .updateIn(
+            [...path, 'latest_children', kind],
+            (v = immutable.List()) =>
+              v.remove(v.findIndex((r) => r.get('id') === id)),
           );
       }
 
