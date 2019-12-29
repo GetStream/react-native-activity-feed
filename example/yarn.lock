@@ -2729,7 +2729,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^2.11.0, commander@^2.9.0, commander@~2.20.0:
+commander@^2.11.0, commander@^2.9.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
   integrity sha512-7j2y+40w61zy6YC2iRNpUe/NwhNyoXrYpHMrSunaMG64nRnaf96zO/KMQR4OyN/UnE5KLyEBnKHd4aG3rskjpQ==
@@ -2738,6 +2738,11 @@ commander@~2.13.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
   integrity sha512-MVuS359B+YzaWqjCL/c+22gfryv+mCBPHAv3zyVI2GN8EY6IRP8VwtasXn8jyyhvvq84R4ImN1OKRtcbIasjYA==
+
+commander@~2.20.3:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -3649,8 +3654,9 @@ expect@^22.4.0:
     jest-regex-util "^22.4.3"
 
 "expo-activity-feed@link:../expo-package":
-  version "0.0.0"
-  uid ""
+  version "0.8.17"
+  dependencies:
+    react-native-activity-feed-core "0.8.17"
 
 expo@^27.0.1:
   version "27.1.1"
@@ -4398,9 +4404,9 @@ gud@^1.0.0:
   integrity sha512-zGEOVKFM5sVPPrYs7J5/hYEw2Pof8KCyOwyhG8sAF26mCAeUFAcYPu1mwB7hhpIP29zOIBaDqwuHdLp0jvZXjw==
 
 handlebars@^4.0.3:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.2.tgz#b6b37c1ced0306b221e094fc7aca3ec23b131b67"
-  integrity sha512-nvfrjqvt9xQ8Z/w0ijewdD/vvWDTOweBUm96NTr66Wfvo1mJenBLwcYmPs3TIBP5ruzYGD7Hx/DaM9RmhroGPw==
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.3.tgz#5cf75bd8714f7605713511a56be7c349becb0482"
+  integrity sha512-3yPecJoJHK/4c6aZhSvxOyG4vJKDshV36VHp0iVCDVh7o9w2vwi3NSnL2MMPj3YdduqaBcu7cGbggJQM0br9xA==
   dependencies:
     neo-async "^2.6.0"
     optimist "^0.6.1"
@@ -7569,14 +7575,28 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.0, react-lifecycles-com
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-native-activity-feed-core@link:..":
-  version "0.0.0"
-  uid ""
+react-native-activity-feed-core@0.8.17:
+  version "0.8.17"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.17.tgz#3954a08abad5b1e4f1e358c463a0d47233f00f08"
+  integrity sha512-h6+DDCxUVDuvsaoUVqyVSk0aIVljmQThpWOZHIuyE3UCIpKn/ul3VKAhd4DJdYLyE37w/9earkuGNGxjdb7rQg==
+  dependencies:
+    es6-symbol "^3.1.1"
+    eslint-plugin-babel "^5.3.0"
+    eslint-plugin-markdown "^1.0.0"
+    getstream "^4.1.0"
+    immutable "^4.0.0-rc.9"
+    mime-types "^2.1.21"
+    moment "^2.22.2"
+    numeral "^2.0.6"
+    path "^0.12.7"
+    react-native-keyboard-spacer "^0.4.1"
+    react-native-safe-area-view "0.9.0"
+    react-native-sticky-keyboard-accessory "^0.1.3"
+    stream-analytics "^2.7.1"
+    url-parse "^1.4.3"
 
-react-native-activity-feed-core@v0.8.9:
-  version "0.8.9"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.9.tgz#25bf4b5a867a618441ebca06d76262db6c836cad"
-  integrity sha512-sDZTddrZNqgBPrhJAP+iSqV4zp158UZXBs3fCjv47ZJWovKalayGA5aXbXfayCCwZ0CvCWiCkdIgANzz/xwIcw==
+"react-native-activity-feed-core@link:..":
+  version "0.8.17"
   dependencies:
     es6-symbol "^3.1.1"
     eslint-plugin-babel "^5.3.0"
@@ -9346,11 +9366,11 @@ uglify-es@^3.1.9:
     source-map "~0.6.1"
 
 uglify-js@^3.1.4:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.6.0.tgz#704681345c53a8b2079fb6cec294b05ead242ff5"
-  integrity sha512-W+jrUHJr3DXKhrsS7NUVxn3zqMOFn0hL/Ei6v0anCIMoKC93TjcflTagwIHLW7SfMFfiQuktQyFVCFHGUE0+yg==
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.7.3.tgz#f918fce9182f466d5140f24bb0ff35c2d32dcc6a"
+  integrity sha512-7tINm46/3puUA4hCkKYo4Xdts+JDaVC9ZPRcG8Xw9R4nhO/gZgUM3TENq8IF4Vatk8qCig4MzP/c8G4u2BkVQg==
   dependencies:
-    commander "~2.20.0"
+    commander "~2.20.3"
     source-map "~0.6.1"
 
 ultron@1.0.x:
