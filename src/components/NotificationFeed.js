@@ -58,6 +58,7 @@ type Props = {|
   navigation?: NavigationScreen,
   /** Any props the react native FlatList accepts */
   flatListProps?: {},
+  setListRef?: (ref: any) => any,
 |};
 
 export default class NotificationFeed extends React.Component<Props> {
@@ -98,12 +99,12 @@ const makeDefaultOptions = (options) => {
 
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class NotificationFeedInner extends React.Component<PropsInner> {
-  listRef = React.createRef();
   _refresh = async () => {
     await this.props.refresh(makeDefaultOptions(this.props.options));
+    // $FlowFixMe
     const ref = this.listRef;
-    if (ref && ref.current) {
-      ref.current.scrollToOffset({ offset: 0 });
+    if (ref) {
+      ref.scrollToOffset({ offset: 0 });
     }
   };
   async componentDidMount() {
@@ -171,7 +172,13 @@ class NotificationFeedInner extends React.Component<PropsInner> {
           onEndReached={
             this.props.noPagination ? undefined : this.props.loadNextPage
           }
-          ref={this.listRef}
+          ref={(ref) => {
+            this.props.setListRef === undefined
+              ? null
+              : this.props.setListRef(ref);
+            // $FlowFixMe
+            this.listRef = ref;
+          }}
           {...this.props.flatListProps}
         />
       </React.Fragment>

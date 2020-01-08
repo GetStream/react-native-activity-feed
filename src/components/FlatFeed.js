@@ -72,6 +72,7 @@ type Props = {|
   navigation?: NavigationScreen,
   /** Any props the react native FlatList accepts */
   flatListProps?: {},
+  setListRef?: (ref: any) => any,
 |};
 
 /**
@@ -111,7 +112,6 @@ export default class FlatFeed extends React.Component<Props> {
 
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class FlatFeedInner extends React.Component<PropsInner> {
-  listRef = React.createRef();
   _refresh = async () => {
     this._scrollToTop();
     await this.props.refresh(this.props.options);
@@ -119,9 +119,10 @@ class FlatFeedInner extends React.Component<PropsInner> {
   };
 
   _scrollToTop() {
+    // $FlowFixMe
     const ref = this.listRef;
-    if (ref && ref.current) {
-      ref.current.scrollToOffset({ offset: 0 });
+    if (ref) {
+      ref.scrollToOffset({ offset: 0 });
     }
   }
   async componentDidMount() {
@@ -185,7 +186,13 @@ class FlatFeedInner extends React.Component<PropsInner> {
           onEndReached={
             this.props.noPagination ? undefined : this.props.loadNextPage
           }
-          ref={this.listRef}
+          ref={(ref) => {
+            this.props.setListRef === undefined
+              ? null
+              : this.props.setListRef(ref);
+            // $FlowFixMe
+            this.listRef = ref;
+          }}
           {...this.props.flatListProps}
         />
         {smartRender(this.props.Footer, this._childProps())}
