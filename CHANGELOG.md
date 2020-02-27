@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing yet
 
+## 0.8.19 - 2020-02-27
+
+- Adding style customization support for text of Activity component - [97130d8](https://github.com/GetStream/react-native-activity-feed/commit/97130d8fa7584ac53fefbe93c818a1587634f49f)
+
+## 0.8.18 - 2020-01-08
+
+- Fixing `ref` variables in FlatFeed and NotificationFeed
+
 ## 0.8.17 - 2019-09-19
 
 ### Fixed
