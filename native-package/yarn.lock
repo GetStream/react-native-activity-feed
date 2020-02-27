@@ -6472,10 +6472,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@0.8.17:
-  version "0.8.17"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.17.tgz#3954a08abad5b1e4f1e358c463a0d47233f00f08"
-  integrity sha512-h6+DDCxUVDuvsaoUVqyVSk0aIVljmQThpWOZHIuyE3UCIpKn/ul3VKAhd4DJdYLyE37w/9earkuGNGxjdb7rQg==
+react-native-activity-feed-core@0.8.18:
+  version "0.8.18"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.18.tgz#12ea6388fc33c947795c6b6dfb2f84753fa30b41"
+  integrity sha512-jyyWq/73/G455CI8tLNu5tnzWTeYYd8P9371KL5qpkwpnKZP//BVwDFhdUksgwdc3Lr1fuoYchJ6GFFsPTZHqg==
   dependencies:
     es6-symbol "^3.1.1"
     eslint-plugin-babel "^5.3.0"
