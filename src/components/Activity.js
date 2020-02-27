@@ -184,10 +184,10 @@ export default class Activity extends React.Component<Props> {
           </Text>,
         );
       } else {
-        rendered.push(tokens[i] + ' ');
+        rendered.push(<Text style={styles.text}>{tokens[i] + ' '}</Text>);
       }
     }
-    return <Text>{rendered}</Text>;
+    return rendered;
   };
 
   renderContent = () => {
