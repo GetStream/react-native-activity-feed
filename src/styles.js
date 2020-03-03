@@ -275,7 +275,9 @@ export const styles = {
     url: {
       color: '#666',
     },
-    text: {},
+    text: {
+      color: '#000',
+    },
   }),
   button: StyleSheet.create({
     container: {

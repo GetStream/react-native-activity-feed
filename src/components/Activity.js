@@ -208,12 +208,14 @@ export default class Activity extends React.Component<Props> {
       }
     }
     text = text.trim();
-
+    console.log(styles.text);
     return (
       <View>
         {Boolean(text) && (
           <View style={styles.content}>
-            <Text>{this.renderText(text, this.props.activity)}</Text>
+            <Text style={styles.text}>
+              {this.renderText(text, this.props.activity)}
+            </Text>
           </View>
         )}
 
