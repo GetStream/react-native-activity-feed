@@ -116,7 +116,6 @@ export default class Activity extends React.Component<Props> {
       this.props.onPressMention(text, activity);
       return;
     }
-    console.log(`pressed on ${text} mention of ${activity.id}`);
   };
 
   onPressHashtag = (text: string, activity: ActivityData) => {
@@ -124,7 +123,6 @@ export default class Activity extends React.Component<Props> {
       this.props.onPressHashtag(text, activity);
       return;
     }
-    console.log(`pressed on ${text} hashtag of ${activity.id}`);
   };
 
   getAndTrimUrl = (text: string, activity: ActivityData) => {
@@ -208,7 +206,7 @@ export default class Activity extends React.Component<Props> {
       }
     }
     text = text.trim();
-    console.log(styles.text);
+
     return (
       <View>
         {Boolean(text) && (
