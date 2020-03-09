@@ -42,6 +42,7 @@ type Props = {|
   doChildReactionDeleteRequest?: (id: string) => mixed,
   /** Override reactions filter request */
   doReactionsFilterRequest?: (options: {}) => Promise<Object>,
+  setListRef?: (ref: any) => any,
 |};
 
 /**
@@ -73,6 +74,7 @@ export default class SinglePost extends React.Component<Props> {
           doChildReactionDeleteRequest={this.props.doChildReactionDeleteRequest}
           doReactionsFilterRequest={this.props.doReactionsFilterRequest}
           Footer={this.props.Footer}
+          setListRef={this.props.setListRef}
           noPagination
         />
       </React.Fragment>
