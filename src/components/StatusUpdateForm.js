@@ -110,6 +110,10 @@ export default class StatusUpdateForm extends React.Component<Props> {
     modifyActivityData: (d: ActivityArgData<{}, {}>) => d,
     height: 80,
     verticalOffset: 0,
+    textInputProps: {
+  		padding: 0,
+		  margin: 0,
+    },
     noKeyboardAccessory: false,
     styles: {
       urlPreview: {
