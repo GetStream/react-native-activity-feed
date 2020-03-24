@@ -72,6 +72,15 @@ type Props = {|
   navigation?: NavigationScreen,
   /** Any props the react native FlatList accepts */
   flatListProps?: {},
+  /**
+   Using `setListRef` you can set your own reference to the FlatList that's being used inside the FlatFeed. This works as follows:
+
+   `setListRef={(ref) => this.yourRef = ref}`
+
+   One example where this might be needed is when you want to refresh the feed when something happens. Then you can run:
+
+   `this.yourRef.onRefresh(true)`
+   */
   setListRef?: (ref: any) => any,
 |};
 
