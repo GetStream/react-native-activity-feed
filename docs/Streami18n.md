@@ -63,9 +63,10 @@ Streami18n - Wrapper around [i18next](https://www.i18next.com/) class for Stream
     streami18n.registerTranslation(
       'mr',
       {
-        'Nothing yet...': 'काहीही नाही  ...',
-        '{{ firstUser }} and {{ secondUser }} are typing...':
-            '{{ firstUser }} आणि {{ secondUser }} टीपी करत आहेत ',
+        "Start Typing...": "टाइप करना शुरू करें ...",
+        "Type your post...": "अपनी पोस्ट लिखें ...",
+        "You have 1 new notification": "आपके पास 1 नई नोटिफिकेशन है",
+        "You have {{ notificationCount }} new notifications": "आपके पास {{ notificationCount }} नई नोटिफिकेशन्स है",
       },
       {
         months: [...],
@@ -116,9 +117,10 @@ Stream provides following list of in-built translations:
   const i18n = new Streami18n({
     language: 'nl',
     translationsForLanguage: {
-      'Nothing yet...': 'Nog Niet ...',
-      '{{ firstUser }} and {{ secondUser }} are typing...':
-        '{{ firstUser }} en {{ secondUser }} zijn aan het typen...',
+      "Type your post...": "Type je bericht...",
+      "You have 1 new notification": "Je hebt 1 nieuw melding",
+      "You have {{ notificationCount }} new notifications": "Je hebt {{ notificationCount }} nieuwe meldingen",
+      "{{ actorName }} and 1 other commented on your {{ activityVerb }}": "{{ actorName }} en 1 ander reageerden op je {{ activityVerb }}",
     },
   });
   ```
@@ -127,9 +129,10 @@ Stream provides following list of in-built translations:
 
   ```js static
   i18n.registerTranslation('zh', {
-    'Nothing yet...': 'Nog Niet ...',
-    '{{ firstUser }} and {{ secondUser }} are typing...':
-      '{{ firstUser }} en {{ secondUser }} zijn aan het typen...',
+    "Type your post...": "Type je bericht...",
+    "You have 1 new notification": "Je hebt 1 nieuw melding",
+    "You have {{ notificationCount }} new notifications": "Je hebt {{ notificationCount }} nieuwe meldingen",
+    "{{ actorName }} and 1 other commented on your {{ activityVerb }}": "{{ actorName }} en 1 ander reageerden op je {{ activityVerb }}",
   });
 
   <StreamApp apiKey={apiKey} appId={appId} token={token} i18nInstance={i18n}>
@@ -142,10 +145,11 @@ Stream provides following list of in-built translations:
   ```js static
   const i18n = new Streami18n();
 
-  i18n.registerTranslation('mr', {
-    'Nothing yet...': 'काहीही नाही  ...',
-    '{{ firstUser }} and {{ secondUser }} are typing...':
-      '{{ firstUser }} आणि {{ secondUser }} टीपी करत आहेत ',
+  i18n.registerTranslation('hi', {
+    "Start Typing...": "टाइप करना शुरू करें ...",
+    "Type your post...": "अपनी पोस्ट लिखें ...",
+    "You have 1 new notification": "आपके पास 1 नई नोटिफिकेशन है",
+    "You have {{ notificationCount }} new notifications": "आपके पास {{ notificationCount }} नई नोटिफिकेशन्स है",
   });
 
   // Make sure to call setLanguage to reflect new language in UI.
@@ -229,10 +233,12 @@ e.g.,
 const i18n = new Streami18n();
 
 i18n.registerTranslation(
- 'mr',
+ 'hi',
  {
-   'Nothing yet...': 'काहीही नाही  ...',
-   '{{ firstUser }} and {{ secondUser }} are typing...': '{{ firstUser }} आणि {{ secondUser }} टीपी करत आहेत ',
+    "Start Typing...": "टाइप करना शुरू करें ...",
+    "Type your post...": "अपनी पोस्ट लिखें ...",
+    "You have 1 new notification": "आपके पास 1 नई नोटिफिकेशन है",
+    "You have {{ notificationCount }} new notifications": "आपके पास {{ notificationCount }} नई नोटिफिकेशन्स है",
  },
  {
    months: [...],
