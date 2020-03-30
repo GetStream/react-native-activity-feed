@@ -53,5 +53,4 @@ class LikeList extends React.PureComponent<Props> {
   }
 }
 
-LikeList = withTranslationContext(LikeList);
-export default LikeList;
+export default withTranslationContext(LikeList);

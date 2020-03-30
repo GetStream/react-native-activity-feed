@@ -114,6 +114,4 @@ class CommentBox extends React.Component<Props, State> {
   }
 }
 
-CommentBox = withTranslationContext(CommentBox);
-
-export default CommentBox;
+export default withTranslationContext(CommentBox);

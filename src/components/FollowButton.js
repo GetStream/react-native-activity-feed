@@ -53,5 +53,4 @@ class FollowButton extends React.Component<Props, State> {
   }
 }
 
-FollowButton = withTranslationContext(FollowButton);
-export default FollowButton;
+export default withTranslationContext(FollowButton);

@@ -98,5 +98,4 @@ class NewActivitiesNotification extends React.Component<Props> {
   }
 }
 
-NewActivitiesNotification = withTranslationContext(NewActivitiesNotification);
-export default NewActivitiesNotification;
+export default withTranslationContext(NewActivitiesNotification);

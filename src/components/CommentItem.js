@@ -58,5 +58,4 @@ class CommentItem extends React.Component<Props> {
   }
 }
 
-CommentItem = withTranslationContext(CommentItem);
-export default CommentItem;
+export default withTranslationContext(CommentItem);

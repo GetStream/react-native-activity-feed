@@ -34,5 +34,4 @@ class LoadMoreButton extends React.Component<Props> {
   }
 }
 
-LoadMoreButton = withTranslationContext(LoadMoreButton);
-export default LoadMoreButton;
+export default withTranslationContext(LoadMoreButton);

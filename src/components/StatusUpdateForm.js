@@ -489,5 +489,4 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   }
 }
 
-StatusUpdateForm = withTranslationContext(StatusUpdateForm);
-export default StatusUpdateForm;
+export default withTranslationContext(StatusUpdateForm);
