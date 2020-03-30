@@ -57,6 +57,10 @@ module.exports = {
       content: 'docs/cookbook.md',
     },
     {
+      name: 'Internationalisation (i18n)',
+      content: 'docs/Streami18n.md',
+    },
+    {
       name: 'Styles',
       content: 'docs/styles.md',
     },
