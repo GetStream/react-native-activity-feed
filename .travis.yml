@@ -12,3 +12,4 @@ script:
   - yarn lint
   - yarn flow
   - yarn docs
+  - yarn validate-translations
