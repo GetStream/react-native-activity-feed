@@ -33,9 +33,7 @@ export { default as LikeList } from './components/LikeList';
 export { default as BackButton } from './components/BackButton';
 export { default as Activity } from './components/Activity';
 export { default as LikeButton } from './components/LikeButton';
-export {
-  default as NewActivitiesNotification,
-} from './components/NewActivitiesNotification';
+export { default as NewActivitiesNotification } from './components/NewActivitiesNotification';
 export { default as IconBadge } from './components/IconBadge';
 
 export { updateStyle, getStyle, buildStylesheet } from './styles';

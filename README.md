@@ -124,10 +124,7 @@ You can find your `API_KEY` and `APP_ID` on Stream's dashboard.
 The authentication user token cannot be generated client-side (that would require sharing your API secret). You should provision a user token as part of the sign-up / login flow to your application from your backend.
 
 ```js
-const client = stream.connect(
-  API_KEY,
-  API_SECRET,
-);
+const client = stream.connect(API_KEY, API_SECRET);
 const userToken = client.createUserToken(userId);
 console.log(userToken);
 ```
@@ -137,10 +134,7 @@ console.log(userToken);
 React components have analytics instrumentation built-in, this simplifies the integration with Stream. In order to enable analytics tracking, you need to initialize `StreamApp` with a valid analytics token. You can generate this server-side as well.
 
 ```js
-const client = stream.connect(
-  API_KEY,
-  API_SECRET,
-);
+const client = stream.connect(API_KEY, API_SECRET);
 const analyticsToken = client.getAnalyticsToken();
 console.log(analyticsToken);
 ```

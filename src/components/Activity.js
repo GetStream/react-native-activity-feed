@@ -225,15 +225,13 @@ export default class Activity extends React.Component<Props> {
           />
         )}
 
-        {attachments &&
-          attachments.images &&
-          attachments.images.length > 0 && (
-            <Image
-              style={{ width, height: width }}
-              source={{ uri: attachments.images[0] }}
-              resizeMethod="resize"
-            />
-          )}
+        {attachments && attachments.images && attachments.images.length > 0 && (
+          <Image
+            style={{ width, height: width }}
+            source={{ uri: attachments.images[0] }}
+            resizeMethod="resize"
+          />
+        )}
         {attachments &&
           attachments.og &&
           Object.keys(attachments.og).length > 0 &&

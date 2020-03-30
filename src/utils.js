@@ -1,13 +1,20 @@
 // @flow
 import * as React from 'react';
-import moment from 'moment';
 import type { Renderable, RenderableButNotElement } from './types';
+import Dayjs from 'dayjs';
 
-export function humanizeTimestamp(timestamp: string | number): string {
-  const time = moment.utc(timestamp); // parse time as UTC
-  const now = moment();
-  // Not in future humanized time
-  return moment.min(time, now).from(now);
+export function humanizeTimestamp(
+  timestamp: string | number,
+  tDateTimeParser: (input?: string | number) => Function = Dayjs,
+): string {
+  // Following calculation is based on assumption that tDateTimeParser()
+  // either returns momentjs or dayjs object.
+  const time = tDateTimeParser(timestamp).add(
+    Dayjs(timestamp).utcOffset(),
+    'minute',
+  ); // parse time as UTC
+  const now = tDateTimeParser();
+  return time.from(now);
 }
 
 export const smartRender = (

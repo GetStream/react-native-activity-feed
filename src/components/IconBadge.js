@@ -56,16 +56,15 @@ class IconBadgeInner extends React.Component<PropsInner, State> {
     return (
       <View style={styles.container}>
         {children}
-        {!hidden &&
-          this.props.unseen > 0 && (
-            <View style={styles.icon}>
-              <View style={styles.iconInner}>
-                {showNumber && (
-                  <Text style={styles.text}>{this.props.unseen}</Text>
-                )}
-              </View>
+        {!hidden && this.props.unseen > 0 && (
+          <View style={styles.icon}>
+            <View style={styles.iconInner}>
+              {showNumber && (
+                <Text style={styles.text}>{this.props.unseen}</Text>
+              )}
             </View>
-          )}
+          </View>
+        )}
       </View>
     );
   }

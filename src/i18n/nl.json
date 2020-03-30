@@ -1,0 +1,17 @@
+{
+  "1 comment": "1 reactie",
+  "1 like": "1 vind-ik-leuk",
+  "1 repost": "1 keer gedeeld",
+  "Follow": "",
+  "Following": "",
+  "Likes": "",
+  "Load more": "Meer laden",
+  "Pick an image from camera roll": "",
+  "Start Typing...": "Begin met typen...",
+  "Type your post...": "Type je bericht...",
+  "You have 1 new notification": "Je hebt 1 nieuw melding",
+  "You have {{ notificationCount }} new notifications": "Je hebt {{ notificationCount }} nieuwe meldingen",
+  "{{ countComments }} comments": "{{ countComments }} reacties",
+  "{{ countLikes }} likes": "{{ countLikes }} vind-ik-leuks",
+  "{{ countReposts }} reposts": "{{ countReposts }} keer gedeeld"
+}

@@ -2,9 +2,11 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
 import type { ReactionCounts } from 'getstream';
+import type { Streami18Ctx } from '../Context';
 import { buildStylesheet } from '../styles';
 
 import type { StyleSheetLike } from '../types';
+import { withTranslationContext } from '../Context';
 
 type Props = {|
   /** The icon to display */
@@ -33,10 +35,10 @@ type Props = {|
     labelPlural: ?string,
     labelSingle: ?string,
   }) => string | null,
-|};
+|} & Streami18Ctx;
 
 function defaultLabelFunction(count, props) {
-  const { labelSingle, labelPlural, labelFunction } = props;
+  const { labelSingle, labelPlural, labelFunction, kind, t } = props;
   if (labelFunction) {
     return labelFunction({
       count,
@@ -44,14 +46,42 @@ function defaultLabelFunction(count, props) {
       labelPlural,
     });
   }
-  const label = count === 1 ? labelSingle : labelPlural;
-  if (!label) {
-    return '' + count;
+
+  let label;
+
+  if (labelSingle && labelPlural) {
+    label = count === 1 ? `1 ${labelSingle}` : `${count} ${labelPlural}`;
   }
-  return `${count} ${label}`;
+
+  if (!labelSingle || !labelPlural) {
+    switch (kind) {
+      case 'like':
+        label =
+          count === 1
+            ? t('1 like')
+            : t('{{ countLikes }} likes', { countLikes: count });
+        break;
+      case 'repost':
+        label =
+          count === 1
+            ? t('1 repost')
+            : t('{{ countReposts }} reposts', { countReposts: count });
+        break;
+      case 'comment':
+        label =
+          count === 1
+            ? t('1 comment')
+            : t('{{ countComments }} comments', { countComments: count });
+        break;
+      default:
+        break;
+    }
+  }
+
+  return label;
 }
 
-export default function ReactionIcon(props: Props) {
+const ReactionIcon = withTranslationContext((props: Props) => {
   let count = null;
   if (props.counts && props.kind) {
     count = props.counts[props.kind] || 0;
@@ -74,4 +104,6 @@ export default function ReactionIcon(props: Props) {
       ) : null}
     </TouchableOpacity>
   );
-}
+});
+
+export default ReactionIcon;
