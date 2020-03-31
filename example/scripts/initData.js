@@ -25,18 +25,10 @@ async function main() {
     return;
   }
 
-  const serverClient = stream.connect(
-    apiKey,
-    apiSecret,
-    appId,
-  );
+  const serverClient = stream.connect(apiKey, apiSecret, appId);
 
   function createUserClient(userId) {
-    return stream.connect(
-      apiKey,
-      serverClient.createUserToken(userId),
-      appId,
-    );
+    return stream.connect(apiKey, serverClient.createUserToken(userId), appId);
   }
 
   const batman = createUserClient('batman');
