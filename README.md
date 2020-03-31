@@ -29,6 +29,8 @@ building scalable newsfeeds and activity streams.
 
 [Component reference docs](https://getstream.github.io/react-native-activity-feed/)
 
+[Internationalisation (i18n)](https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n)
+
 ## Installation
 
 The components provided by this package are available for apps built with Expo

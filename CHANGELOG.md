@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing yet
 
+## 0.9.0 - 2020-03-31
+
+- Adding i18n support. Please read the docs here: https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n
+
 ## 0.8.19 - 2020-02-27
 
 - Adding style customization support for text of Activity component - [97130d8](https://github.com/GetStream/react-native-activity-feed/commit/97130d8fa7584ac53fefbe93c818a1587634f49f)
