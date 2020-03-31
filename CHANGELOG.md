@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing yet
 
+## 0.9.1 - 2020-03-31
+
+- Fixing the build, by adding translation json files to distributed package [issue](https://github.com/GetStream/react-native-activity-feed/issues/123) [commit](https://github.com/GetStream/react-native-activity-feed/commit/e1526703bd52ad35b3a948b6e6c7e2466bee2588)
+
 ## 0.9.0 - 2020-03-31
 
 - Adding i18n support. Please read the docs here: https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n
