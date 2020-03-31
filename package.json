@@ -55,7 +55,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "build": "rm -rf lib && babel src --out-dir lib --compact=false && cp -R src/images lib/ && flow-copy-source src lib",
+    "build": "yarn build-translations && rm -rf lib && babel src --out-dir lib --compact=false && cp -R src/images lib/ && flow-copy-source src lib",
     "eslint": "eslint '**/*.{js,md}' --max-warnings 0",
     "flow": "flow",
     "prettier": "prettier --list-different '**/*.{js,ts,md,json}' .eslintrc.json .prettierrc .babelrc",
