@@ -7,7 +7,9 @@ import Avatar from './Avatar';
 import { NativeSyntheticEvent } from 'react-native';
 import type { StyleSheetLike, ActivityData } from '../types';
 import type { Props as AvatarProps } from './Avatar';
+import type { Streami18Ctx } from '../Context/StreamApp';
 import { buildStylesheet } from '../styles';
+import { withTranslationContext } from '../Context';
 
 type Props = {|
   /** Callback function called when the text is submitted, by default it adds a
@@ -36,7 +38,7 @@ type Props = {|
   verticalOffset: number,
   /** Any props the React Native TextInput accepts */
   textInputProps?: {},
-|};
+|} & Streami18Ctx;
 
 type State = {|
   text: string,
@@ -47,7 +49,7 @@ type State = {|
  * All props are fulfilled automatically if used as a child element
  * of an activity.
  */
-export default class CommentBox extends React.Component<Props, State> {
+class CommentBox extends React.Component<Props, State> {
   static defaultProps = {
     styles: {},
     height: 80,
@@ -70,7 +72,7 @@ export default class CommentBox extends React.Component<Props, State> {
   }
 
   render() {
-    const { noKeyboardAccessory, textInputProps } = this.props;
+    const { noKeyboardAccessory, textInputProps, t } = this.props;
 
     const styles = buildStylesheet('commentBox', this.props.styles);
     const input = (
@@ -91,7 +93,7 @@ export default class CommentBox extends React.Component<Props, State> {
             this.setState({ text: '' });
             this.postComment(event);
           }}
-          placeholder="Your comment..."
+          placeholder={t('Start Typing...')}
           returnKeyType="send"
           {...textInputProps}
         />
@@ -111,3 +113,5 @@ export default class CommentBox extends React.Component<Props, State> {
     );
   }
 }
+
+export default withTranslationContext(CommentBox);

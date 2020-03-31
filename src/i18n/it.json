@@ -1,0 +1,17 @@
+{
+  "1 comment": "1 commento",
+  "1 like": "1 mi piace",
+  "1 repost": "1 condivisione",
+  "Follow": "Segui",
+  "Following": "Segui giá",
+  "Likes": "Mi piace",
+  "Load more": "Carica altro",
+  "Pick an image from camera roll": "Scegli un'immagine dal rullino",
+  "Start Typing...": "Inizia a scrivere...",
+  "Type your post...": "Scrivi il tuo post...",
+  "You have 1 new notification": "Hai una nuova notifica",
+  "You have {{ notificationCount }} new notifications": "Hai {{ notificationCount }} nuove notifiche",
+  "{{ countComments }} comments": "{{ countComments }} commenti",
+  "{{ countLikes }} likes": "{{ countLikes }} mi piace",
+  "{{ countReposts }} reposts": "{{ countReposts }} condivisioni"
+}

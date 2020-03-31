@@ -1,0 +1,17 @@
+{
+  "1 comment": "1 комментарий",
+  "1 like": "1 лайк",
+  "1 repost": "1 репост",
+  "Follow": "Подписаться",
+  "Following": "Подписаны",
+  "Likes": "Лайков",
+  "Load more": "Загрузить еще",
+  "Pick an image from camera roll": "Выбрать изображение снятое на камеру",
+  "Start Typing...": "Начните набирать...",
+  "Type your post...": "Напишите ваш пост...",
+  "You have 1 new notification": "У вас одно уведомление",
+  "You have {{ notificationCount }} new notifications": "У вас {{ notificationCount }} новых уведомлений",
+  "{{ countComments }} comments": "{{ countComments }} комментариев",
+  "{{ countLikes }} likes": "{{ countLikes }} лайков",
+  "{{ countReposts }} reposts": "{{ countReposts }} репостов"
+}

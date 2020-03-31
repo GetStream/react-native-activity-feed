@@ -1,0 +1,17 @@
+{
+  "1 comment": "1 yorum",
+  "1 like": "1 beğeni",
+  "1 repost": "1 paylaşım",
+  "Follow": "Takip",
+  "Following": "Takip ediliyor",
+  "Likes": "Beğeni",
+  "Load more": "Daha fazla yükle",
+  "Pick an image from camera roll": "Galeriden resim seç",
+  "Start Typing...": "Yazmaya Başla...",
+  "Type your post...": "İletini yaz...",
+  "You have 1 new notification": "1 yeni bildirimin var",
+  "You have {{ notificationCount }} new notifications": "{{ notificationCount }} yeni bildirimin var",
+  "{{ countComments }} comments": "{{ countComments }} yorum",
+  "{{ countLikes }} likes": "{{ countLikes }} beğeni",
+  "{{ countReposts }} reposts": "{{ countReposts }} paylaşım"
+}

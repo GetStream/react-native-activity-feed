@@ -73,8 +73,6 @@ export default class LikeButton extends React.Component<Props> {
         onPress={this._onPress}
         activeIcon={require('../images/icons/heart.png')}
         inactiveIcon={require('../images/icons/heart-outline.png')}
-        labelSingle="like"
-        labelPlural="likes"
       />
     );
   }

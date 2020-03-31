@@ -1,0 +1,17 @@
+{
+  "1 comment": "1 कमेंट",
+  "1 like": "1 लाइक",
+  "1 repost": "1 रिपोस्ट",
+  "Follow": "फॉलो करे",
+  "Following": "फॉलो कर रहे हो ",
+  "Likes": "लाइक्स",
+  "Load more": "एक्टिविटीज को लोड करें",
+  "Pick an image from camera roll": "इमेज चुनिए ",
+  "Start Typing...": "टाइप करना शुरू करें ...",
+  "Type your post...": "अपनी पोस्ट लिखें ...",
+  "You have 1 new notification": "आपके पास 1 नई नोटिफिकेशन है",
+  "You have {{ notificationCount }} new notifications": "आपके पास {{ notificationCount }} नई नोटिफिकेशन्स है",
+  "{{ countComments }} comments": "{{ countComments }} कमैंट्स",
+  "{{ countLikes }} likes": "{{ countLikes }} लाइक्स",
+  "{{ countReposts }} reposts": "{{ countReposts }} रेपोस्टस"
+}

@@ -9,7 +9,7 @@ import {
   Platform,
   Keyboard,
 } from 'react-native';
-import { StreamApp } from '../Context';
+import { StreamApp, withTranslationContext } from '../Context';
 import UrlPreview from './UrlPreview';
 import { pickImage, androidTranslucentStatusBar } from '../native';
 import mime from 'mime-types';
@@ -19,6 +19,7 @@ import _ from 'lodash';
 import Symbol from 'es6-symbol';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import type { Streami18Ctx } from '../Context';
 
 import type {
   BaseAppCtx,
@@ -86,7 +87,7 @@ type Props = {|
   verticalOffset: number,
   /** Any props the React Native TextInput accepts */
   textInputProps?: {},
-|};
+|} & Streami18Ctx;
 
 type State = {|
   image: ?string,
@@ -102,7 +103,7 @@ type State = {|
   dismissedUrls: Array<string>,
 |};
 
-export default class StatusUpdateForm extends React.Component<Props> {
+class StatusUpdateForm extends React.Component<Props> {
   static defaultProps = {
     feedGroup: 'user',
     activityVerb: 'post',
@@ -373,6 +374,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   };
 
   render() {
+    const { t } = this.props;
     const styles = buildStylesheet('statusUpdateForm', this.props.styles);
     return (
       <View style={[this.props.fullscreen ? { flex: 1 } : {}]}>
@@ -408,7 +410,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                 }}
                 value={this.state.textFromInput}
                 autocorrect={false}
-                placeholder="Share something..."
+                placeholder={t('Type your post...')}
                 underlineColorAndroid="transparent"
                 onBlur={() => this.setState({ focused: false })}
                 onFocus={() => this.setState({ focused: true })}
@@ -454,7 +456,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                   </React.Fragment>
                 ) : (
                   <TouchableOpacity
-                    title="Pick an image from camera roll"
+                    title={t('Pick an image from camera roll')}
                     onPress={this._pickImage}
                   >
                     <Image
@@ -465,7 +467,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                 )}
               </View>
               <TouchableOpacity
-                title="Pick an image from camera roll"
+                title={t('Pick an image from camera roll')}
                 onPress={this.onSubmitForm}
                 disabled={!this._canSubmit()}
               >
@@ -486,3 +488,5 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     );
   }
 }
+
+export default withTranslationContext(StatusUpdateForm);

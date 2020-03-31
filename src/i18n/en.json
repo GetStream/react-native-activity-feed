@@ -1,0 +1,17 @@
+{
+  "1 comment": "1 comment",
+  "1 like": "1 like",
+  "1 repost": "1 repost",
+  "Follow": "Follow",
+  "Following": "Following",
+  "Likes": "Likes",
+  "Load more": "Load more",
+  "Pick an image from camera roll": "Pick an image from camera roll",
+  "Start Typing...": "Start Typing...",
+  "Type your post...": "Type your post...",
+  "You have 1 new notification": "You have 1 new notification",
+  "You have {{ notificationCount }} new notifications": "You have {{ notificationCount }} new notifications",
+  "{{ countComments }} comments": "{{ countComments }} comments",
+  "{{ countLikes }} likes": "{{ countLikes }} likes",
+  "{{ countReposts }} reposts": "{{ countReposts }} reposts"
+}

@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - 10
-  - 8
+  - 12
 before_script:
   - cd example && yarn install
   - cd ../native-example && yarn install
@@ -12,3 +12,4 @@ script:
   - yarn lint
   - yarn flow
   - yarn docs
+  - yarn validate-translations

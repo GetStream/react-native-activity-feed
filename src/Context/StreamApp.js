@@ -7,10 +7,11 @@ import StreamAnalytics from 'stream-analytics';
 import type { StreamClient, StreamUser } from 'getstream';
 
 import type { ErrorHandler } from '../types';
-
+import Dayjs from 'dayjs';
 import { FeedManager } from './Feed';
 import type { FeedProps } from './Feed';
 import { handleError } from '../errors';
+import { Streami18n } from '../Streami18n';
 
 export const StreamContext = React.createContext({
   changedUserData: () => {},
@@ -31,7 +32,12 @@ export type AppCtx<UserData> = {|
   errorHandler: ErrorHandler,
 |};
 
-type StreamAppProps<UserData> = {|
+export type Streami18Ctx = {|
+  t: (msg: string, data?: Object) => string,
+  tDateTimeParser: (input?: string | number) => Function,
+|};
+
+type StreamAppProps<UserData> = {
   /** The ID of your app, can be found on the [Stream dashboard](https://getstream.io/dashboard) */
   appId: string | number,
   /** The API key for your app, can be found on the [Stream dashboard](https://getstream.io/dashboard) */
@@ -60,9 +66,16 @@ type StreamAppProps<UserData> = {|
    * probably hook into your own notification system. */
   errorHandler: ErrorHandler,
   children?: React.Node,
-|};
+  i18nInstance: Streami18n,
+};
 
-type StreamAppState<UserData> = AppCtx<UserData>;
+type StreamAppState<UserData> = {|
+  ...AppCtx<UserData>,
+  ...{|
+    t?: (msg: string, data?: Object) => string,
+    tDateTimeParser?: (input?: string | number) => Function,
+  |},
+|};
 
 /**
  * Manages the connection with Stream. Any components that should talk to
@@ -107,7 +120,6 @@ export class StreamApp extends React.Component<
 
   constructor(props: StreamAppProps<Object>) {
     super(props);
-
     const client: StreamClient<Object> = stream.connect(
       this.props.apiKey,
       this.props.token,
@@ -116,13 +128,7 @@ export class StreamApp extends React.Component<
     );
 
     let analyticsClient;
-    if (this.props.analyticsToken) {
-      analyticsClient = new StreamAnalytics({
-        apiKey: this.props.apiKey,
-        token: this.props.analyticsToken,
-      });
-      analyticsClient.setUser(client.userId);
-    }
+
     this.state = {
       client,
       user: client.currentUser,
@@ -134,10 +140,23 @@ export class StreamApp extends React.Component<
       sharedFeedManagers: {},
       errorHandler: this.props.errorHandler,
     };
+    if (this.props.analyticsToken) {
+      analyticsClient = new StreamAnalytics({
+        apiKey: this.props.apiKey,
+        token: this.props.analyticsToken,
+      });
+      analyticsClient.setUser(client.userId);
+    }
     for (const feedProps of this.props.sharedFeeds) {
       const manager = new FeedManager({
         ...feedProps,
-        ...this.state,
+        client: this.state.client,
+        user: this.state.user,
+        userData: this.state.userData,
+        changedUserData: this.state.changedUserData,
+        analyticsClient: this.state.analyticsClient,
+        sharedFeedManagers: this.state.sharedFeedManagers,
+        errorHandler: this.state.errorHandler,
       });
       this.state.sharedFeedManagers[manager.feed().id] = manager;
     }
@@ -150,7 +169,7 @@ export class StreamApp extends React.Component<
     }
   }
 
-  async componentDidMount() {
+  getUserInfo = async () => {
     try {
       await this.state.user.getOrCreate(this.props.defaultUserData);
     } catch (e) {
@@ -160,13 +179,72 @@ export class StreamApp extends React.Component<
       return;
     }
     this.state.changedUserData();
+  };
+
+  async componentDidMount() {
+    this.getUserInfo();
+    const { i18nInstance } = this.props;
+    let streami18n;
+
+    if (i18nInstance && i18nInstance instanceof Streami18n) {
+      streami18n = i18nInstance;
+    } else {
+      streami18n = new Streami18n({ language: 'en' });
+    }
+
+    streami18n.registerSetLanguageCallback((t) => {
+      this.setState({ t });
+    });
+
+    const { t, tDateTimeParser } = await streami18n.getTranslators();
+    this.setState({ t, tDateTimeParser });
   }
 
   render() {
+    if (!this.state.t) return null;
+
+    const { t, tDateTimeParser, ...streamContextValue } = this.state;
+
     return (
-      <StreamContext.Provider value={{ ...this.state }}>
-        {this.props.children}
+      <StreamContext.Provider value={{ ...streamContextValue }}>
+        <TranslationContext.Provider
+          value={{
+            t,
+            tDateTimeParser,
+          }}
+        >
+          {this.props.children}
+        </TranslationContext.Provider>
       </StreamContext.Provider>
     );
   }
+}
+
+export const TranslationContext = React.createContext({
+  t: (msg) => msg,
+  tDateTimeParser: (input) => Dayjs(input),
+});
+
+export function withTranslationContext(
+  OriginalComponent: React.ComponentType<any>,
+) {
+  const ContextAwareComponent = function ContextComponent(props: {}) {
+    return (
+      <TranslationContext.Consumer>
+        {(translationContext) =>
+          OriginalComponent && (
+            <OriginalComponent {...translationContext} {...props} />
+          )
+        }
+      </TranslationContext.Consumer>
+    );
+  };
+  ContextAwareComponent.displayName =
+    OriginalComponent.displayName || OriginalComponent.name || 'Component';
+  ContextAwareComponent.displayName = ContextAwareComponent.displayName.replace(
+    'Base',
+    '',
+  );
+
+  return ContextAwareComponent;
 }

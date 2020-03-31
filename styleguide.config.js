@@ -4,6 +4,11 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const notBabeledDeps = [
+  'react-native-safe-area-view',
+  'react-native-sticky-keyboard-accessory',
+  'react-native-keyboard-spacer',
+];
 
 module.exports = {
   title: 'React native activity feeds - Docs',
@@ -52,6 +57,10 @@ module.exports = {
       content: 'docs/cookbook.md',
     },
     {
+      name: 'Internationalisation (i18n)',
+      content: 'docs/Streami18n.md',
+    },
+    {
       name: 'Styles',
       content: 'docs/styles.md',
     },
@@ -70,14 +79,26 @@ module.exports = {
         {
           test: /\.js$/,
           loader: 'babel-loader',
+          include: [
+            path.join(__dirname, 'src'),
+            ...notBabeledDeps.map((dep) =>
+              path.join(__dirname, 'node_modules', dep),
+            ),
+          ],
           options: {
-            plugins: ['react-native-web'],
-            presets: ['react-native'],
+            plugins: [
+              'macros',
+              '@babel/plugin-transform-runtime',
+              '@babel/proposal-class-properties',
+              '@babel/proposal-object-rest-spread',
+              'react-native-web',
+            ],
+            presets: ['@babel/env', 'module:metro-react-native-babel-preset'],
             babelrc: false,
           },
         },
         {
-          test: /\.(jpe?g|png|gif)$/i,
+          test: /\.(jpe?g|png|gif|ttf)$/i,
           use: [
             {
               loader: 'file-loader',
@@ -85,13 +106,10 @@ module.exports = {
                 hash: 'sha512',
                 digest: 'hex',
                 name: '[hash].[ext]',
+                outputPath: 'build/images',
               },
             },
           ],
-        },
-        {
-          test: /\.ttf$/,
-          loader: 'file-loader',
         },
       ],
     },
