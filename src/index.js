@@ -1,5 +1,5 @@
 // @flow
-export { StreamApp } from './Context';
+export { StreamApp, StreamContext, Feed, FeedContext } from './Context';
 export type { AppCtx, FeedCtx } from './Context';
 
 export * from './types';
