@@ -13,13 +13,12 @@ import type {
 } from '../types';
 
 type Props = {|
-  activityId?: string,
   activity: BaseActivityResponse,
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
   analyticsLocation?: string,
-  Activity?: Renderable,
+  renderActivity?: Renderable,
   Footer?: any,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,
@@ -61,13 +60,13 @@ export default class SinglePost extends React.Component<Props> {
             withRecentReactions: true,
             ...this.props.options,
           }}
-          Activity={this.props.Activity}
+          Activity={this.props.renderActivity}
           styles={this.props.styles}
           navigation={this.props.navigation}
           doFeedRequest={(client, feedGroup, userId, options) => 
             client
               .feed(feedGroup, userId)
-              .getActivityDetail(this.props.activityId, options)
+              .getActivityDetail(this.props.activity.id, options)
           }
           doReactionAddRequest={this.props.doReactionAddRequest}
           doReactionDeleteRequest={this.props.doReactionDeleteRequest}
