@@ -13,6 +13,7 @@ import type {
 } from '../types';
 
 type Props = {|
+  activityId?: string,
   activity: BaseActivityResponse,
   feedGroup: string,
   userId?: string,
@@ -66,7 +67,7 @@ export default class SinglePost extends React.Component<Props> {
           doFeedRequest={(client, feedGroup, userId, options) =>
             client
               .feed(feedGroup, userId)
-              .getActivityDetail(this.props.activity.id, options)
+              .getActivityDetail(this.props.activityId ? this.props.activityId : this.props.activity.id, options)
           }
           doReactionAddRequest={this.props.doReactionAddRequest}
           doReactionDeleteRequest={this.props.doReactionDeleteRequest}
