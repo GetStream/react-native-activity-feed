@@ -65,9 +65,10 @@ export default class SinglePost extends React.Component<Props> {
           styles={this.props.styles}
           navigation={this.props.navigation}
           doFeedRequest={(client, feedGroup, userId, options) =>
+            const activityId = this.props.activityId ? this.props.activityId : this.props.activity.id;
             client
               .feed(feedGroup, userId)
-              .getActivityDetail(this.props.activityId ? this.props.activityId : this.props.activity.id, options)
+              .getActivityDetail(activityId, options)
           }
           doReactionAddRequest={this.props.doReactionAddRequest}
           doReactionDeleteRequest={this.props.doReactionDeleteRequest}
