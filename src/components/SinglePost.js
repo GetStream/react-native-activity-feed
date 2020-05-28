@@ -14,11 +14,12 @@ import type {
 
 type Props = {|
   activity: BaseActivityResponse,
+  activityId?: string,
   feedGroup: string,
   userId?: string,
   options?: FeedRequestOptions,
   analyticsLocation?: string,
-  renderActivity?: Renderable,
+  Activity?: Renderable,
   Footer?: any,
   styles?: StyleSheetLike,
   navigation?: NavigationScreen,
@@ -50,6 +51,7 @@ type Props = {|
  * @example ./examples/SinglePost.md
  */
 export default class SinglePost extends React.Component<Props> {
+  const activityId = this.props.activity.id ? this.props.activityId : this.props.activity.id;
   render() {
     return (
       <React.Fragment>
@@ -60,13 +62,13 @@ export default class SinglePost extends React.Component<Props> {
             withRecentReactions: true,
             ...this.props.options,
           }}
-          Activity={this.props.renderActivity}
+          Activity={this.props.Activity}
           styles={this.props.styles}
           navigation={this.props.navigation}
           doFeedRequest={(client, feedGroup, userId, options) => 
             client
               .feed(feedGroup, userId)
-              .getActivityDetail(this.props.activity.id, options)
+              .getActivityDetail(activityId, options)
           }
           doReactionAddRequest={this.props.doReactionAddRequest}
           doReactionDeleteRequest={this.props.doReactionDeleteRequest}
