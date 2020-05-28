@@ -51,7 +51,7 @@ type Props = {|
  * @example ./examples/SinglePost.md
  */
 export default class SinglePost extends React.Component<Props> {
-  const activityId = this.props.activity.id ? this.props.activityId : this.props.activity.id;
+  const activityId = this.props.activityId ? this.props.activityId : this.props.activity.id;
   render() {
     return (
       <React.Fragment>
