@@ -38,6 +38,8 @@ type Props = {|
   verticalOffset: number,
   /** Any props the React Native TextInput accepts */
   textInputProps?: {},
+  /** Aditional data to add to reaction */
+  data?: {}
 |} & Streami18Ctx;
 
 type State = {|
@@ -67,6 +69,7 @@ class CommentBox extends React.Component<Props, State> {
     } else {
       this.props.onAddReaction('comment', this.props.activity, {
         text: event.nativeEvent.text,
+        data: this.props.data,
       });
     }
   }
