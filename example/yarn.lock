@@ -511,6 +511,13 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.3.1":
+  version "7.10.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.10.2.tgz#d103f21f2602497d38348a32e008637d506db839"
+  integrity sha512-6sF3uQw2ivImfVIl62RZ7MXhO2tap69WeWK57vAaimT6AZbE4FbqjdEJIN1UqoD6wI6B+1n9UiagafH1sxjOtg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.44.tgz#f8832f4fdcee5d59bf515e595fc5106c529b394f"
@@ -2994,6 +3001,11 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+dayjs@^1.8.23:
+  version "1.8.28"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.28.tgz#37aa6201df483d089645cb6c8f6cef6f0c4dbc07"
+  integrity sha512-ccnYgKC0/hPSGXxj7Ju6AV/BP4HUkXC2u15mikXT5mX9YorEaoi1bEKOmAqdkJHN4EEkmAf97SpH66Try5Mbeg==
+
 debounce@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
@@ -3649,8 +3661,9 @@ expect@^22.4.0:
     jest-regex-util "^22.4.3"
 
 "expo-activity-feed@link:../expo-package":
-  version "0.0.0"
-  uid ""
+  version "0.9.1"
+  dependencies:
+    react-native-activity-feed-core v0.9.1
 
 expo@^27.0.1:
   version "27.1.1"
@@ -4593,6 +4606,13 @@ https-proxy-agent@^2.2.1:
   dependencies:
     agent-base "^4.3.0"
     debug "^3.1.0"
+
+i18next@^19.3.4:
+  version "19.4.5"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.4.5.tgz#f9ea8bbb48d1ec66bc3436f0bb74a16b11821e11"
+  integrity sha512-aLvSsURoupi3x9IndmV6+m3IGhzLzhYv7Gw+//K3ovdliyGcFRV0I1MuddI0Bk/zR7BG1U+kJOjeHFUcUIdEgg==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
 
 iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
@@ -7570,18 +7590,36 @@ react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.0, react-lifecycles-com
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
 "react-native-activity-feed-core@link:..":
-  version "0.0.0"
-  uid ""
-
-react-native-activity-feed-core@v0.8.9:
-  version "0.8.9"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.8.9.tgz#25bf4b5a867a618441ebca06d76262db6c836cad"
-  integrity sha512-sDZTddrZNqgBPrhJAP+iSqV4zp158UZXBs3fCjv47ZJWovKalayGA5aXbXfayCCwZ0CvCWiCkdIgANzz/xwIcw==
+  version "0.9.1"
   dependencies:
+    dayjs "^1.8.23"
     es6-symbol "^3.1.1"
     eslint-plugin-babel "^5.3.0"
     eslint-plugin-markdown "^1.0.0"
     getstream "^4.1.0"
+    i18next "^19.3.4"
+    immutable "^4.0.0-rc.9"
+    mime-types "^2.1.21"
+    moment "^2.22.2"
+    numeral "^2.0.6"
+    path "^0.12.7"
+    react-native-keyboard-spacer "^0.4.1"
+    react-native-safe-area-view "0.9.0"
+    react-native-sticky-keyboard-accessory "^0.1.3"
+    stream-analytics "^2.7.1"
+    url-parse "^1.4.3"
+
+react-native-activity-feed-core@v0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-0.9.1.tgz#ac6c6e878d88b34138b83260813371f72abd8b1b"
+  integrity sha512-US026IZrfsn7g+E8MhdBO6hQhvDj31YiSw/DJFRQbqHDB1ld3fqpr+ZHQ5lSah0c+6BAHIBDIzrWtX6ZxPp6yA==
+  dependencies:
+    dayjs "^1.8.23"
+    es6-symbol "^3.1.1"
+    eslint-plugin-babel "^5.3.0"
+    eslint-plugin-markdown "^1.0.0"
+    getstream "^4.1.0"
+    i18next "^19.3.4"
     immutable "^4.0.0-rc.9"
     mime-types "^2.1.21"
     moment "^2.22.2"
@@ -8086,6 +8124,11 @@ regenerator-runtime@^0.13.2:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.3.tgz#7cf6a77d8f5c6f60eb73c5fc1955b2ceb01e6bf5"
   integrity sha512-naKIZz2GQ8JWh///G7L3X6LaQUAMp2lvb1rvwwsURe/VXwD6VMfr+/1NuNw3ag8v2kY1aQ/go5SNn79O9JU7yw==
+
+regenerator-runtime@^0.13.4:
+  version "0.13.5"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz#d878a1d094b4306d10b9096484b33ebd55e26697"
+  integrity sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
 
 regenerator-runtime@^0.9.5:
   version "0.9.6"
@@ -9664,9 +9707,9 @@ websocket-driver@>=0.5.1:
     websocket-extensions ">=0.1.1"
 
 websocket-extensions@>=0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
-  integrity sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg==
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
+  integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   version "1.0.5"
