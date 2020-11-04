@@ -1,6 +1,7 @@
 // @flow
 import { registerNativeHandlers } from 'react-native-activity-feed-core';
-import { ImagePicker, Permissions } from 'expo';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
 registerNativeHandlers({
   pickImage: async () => {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
