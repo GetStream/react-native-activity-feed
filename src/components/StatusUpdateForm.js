@@ -79,6 +79,14 @@ type Props = {|
   /** Removes KeyboardAccessory. When disabling this keep in mind that the
    * input won't move with the keyboard anymore. */
   noKeyboardAccessory: boolean,
+  /**
+   * Compress image with quality (from 0 to 1, where 1 is best quality).
+   * On iOS, values larger than 0.8 don't produce a noticeable quality increase in most images,
+   * while a value of 0.8 will reduce the file size by about half or less compared to a value of 1.
+   * 
+   * default 1 (Android)/0.8 (iOS)
+   */
+  compressImageQuality?: number,
   /** Custom verticalOffset for the KeyboardAccessory if for some reason the
    * component is positioned wrongly when the keyboard opens. If the item is
    * positioned too high this should be a negative number, if it's positioned
@@ -191,7 +199,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   }
 
   _pickImage = async () => {
-    const result = await pickImage();
+    const result = await pickImage({ compressImageQuality: this.props.compressImageQuality });
     if (result.cancelled) {
       return;
     }

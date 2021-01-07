@@ -136,13 +136,11 @@ const FS = require('fs'),
   blacklist = require('metro-config/src/defaults/blacklist');
 
 const repoDir = PATH.dirname(PATH.dirname(__dirname));
-
 const moduleBlacklist = [
-    new RegExp(repoDir + '/native-example/.*'),
-    new RegExp(repoDir + '/example/.*'),
     new RegExp(repoDir + '/native-package/.*'),
     new RegExp(repoDir + '/expo-package/node_modules/.*'),
     new RegExp(repoDir + '/node_modules/.*'),
+    new RegExp(repoDir + '/examples/native/.*'),
   ],
   baseModulePath = resolvePath(__dirname, 'node_modules'),
   // watch alternate roots (outside of project root)

@@ -1,24 +1,31 @@
 import { registerNativeHandlers } from 'react-native-activity-feed-core';
-import { launchImageLibrary } from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
+
 import { Platform } from 'react-native';
 registerNativeHandlers({
-  pickImage: () =>
-    new Promise((resolve, reject) => {
-      launchImageLibrary(null, (response) => {
-        if (response.error) {
-          reject(Error(response.error));
-        }
-        let { uri } = response;
-        if (Platform.OS === 'android') {
-          uri = 'file://' + response.path;
-        }
-
-        resolve({
-          cancelled: response.didCancel,
-          uri,
+    pickImage: async ({ compressImageQuality }) => {
+      try {
+        const image = await ImagePicker.openPicker({
+          compressImageQuality,
+          forceJpg: true,
+          includeBase64: Platform.OS === 'ios',
+          mediaType: 'photo',
+          writeTempFile: false,
         });
-      });
-    }),
+  
+        return {
+          cancelled: false,
+          uri:
+            Platform.OS === 'ios'
+              ? image.sourceURL || `data:${image.mime};base64,${image.data}`
+              : image.path,
+        };
+      } catch (err) {
+        return {
+          cancelled: true,
+        };
+      }
+    },
 });
 
 export * from 'react-native-activity-feed-core';
