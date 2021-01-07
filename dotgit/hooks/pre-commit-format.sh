@@ -8,4 +8,3 @@ if ! yarn run lint; then
     echo "your changes are still staged, you can accept formatting changes with git add or ignore them by adding --no-verify to git commit"
     exit 1
 fi
-yarn run flow

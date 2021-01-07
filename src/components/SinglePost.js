@@ -1,55 +1,13 @@
-// @flow
+//
 import React from 'react';
 
 import FlatFeed from './FlatFeed';
-
-import type { FeedRequestOptions } from 'getstream';
-import type {
-  NavigationScreen,
-  BaseActivityResponse,
-  BaseReaction,
-  Renderable,
-  StyleSheetLike,
-} from '../types';
-
-type Props = {|
-  activity: BaseActivityResponse,
-  feedGroup: string,
-  userId?: string,
-  options?: FeedRequestOptions,
-  analyticsLocation?: string,
-  Activity?: Renderable,
-  Footer?: any,
-  styles?: StyleSheetLike,
-  navigation?: NavigationScreen,
-  /** Override reaction add request */
-  doReactionAddRequest?: (
-    kind: string,
-    activity: BaseActivityResponse,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override reaction delete request */
-  doReactionDeleteRequest?: (id: string) => mixed,
-  /** Override child reaction add request */
-  doChildReactionAddRequest?: (
-    kind: string,
-    activity: BaseReaction,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override child reaction delete request */
-  doChildReactionDeleteRequest?: (id: string) => mixed,
-  /** Override reactions filter request */
-  doReactionsFilterRequest?: (options: {}) => Promise<Object>,
-  setListRef?: (ref: any) => any,
-|};
 
 /**
  * Shows the detail of a single activity
  * @example ./examples/SinglePost.md
  */
-export default class SinglePost extends React.Component<Props> {
+export default class SinglePost extends React.Component {
   render() {
     return (
       <React.Fragment>

@@ -92,7 +92,7 @@ const App = () => {
       <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
         <StreamApp apiKey={apiKey} appId={appId} token={token}>
           <FlatFeed Activity={renderActivity} notify />
-          <StatusUpdateForm feedGroup="timeline" />
+          <StatusUpdateForm feedGroup='timeline' />
         </StreamApp>
       </SafeAreaView>
     );

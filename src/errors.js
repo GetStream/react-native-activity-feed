@@ -1,21 +1,10 @@
-// @flow
-
-import type { FlowRequestTypes } from './types';
 import stream from 'getstream';
-export const handleError = (
-  error: Error,
-  type: FlowRequestTypes,
-  detail: Object,
-) => {
+export const handleError = (error, type, detail) => {
   console.warn(error);
   alert(getErrorMessage(error, type, detail));
 };
 
-export const getErrorMessage = (
-  error: Error,
-  type: FlowRequestTypes,
-  detail: Object,
-): string => {
+export const getErrorMessage = (error, type, detail) => {
   console.warn(error);
   if (!(error instanceof stream.errors.StreamApiError)) {
     return fallbackErrorMessage(error, type, detail);
@@ -37,11 +26,7 @@ export const getErrorMessage = (
   return fallbackErrorMessage(error, type, detail);
 };
 
-export const fallbackErrorMessage = (
-  error: Error,
-  type: FlowRequestTypes,
-  detail: Object,
-): string => {
+export const fallbackErrorMessage = (error, type, detail) => {
   let text = 'Something went wrong';
   let suffix = '';
   switch (type) {

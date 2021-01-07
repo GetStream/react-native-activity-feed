@@ -1,4 +1,3 @@
-// @noflow
 /* globals __dirname */
 /* eslint-env commonjs*/
 
@@ -117,6 +116,7 @@ module.exports = {
     plugins: [
       // Add __DEV__ flag to browser example.
       new webpack.DefinePlugin({
+        // eslint-disable-next-line no-undef
         __DEV__: process.env,
       }),
     ],

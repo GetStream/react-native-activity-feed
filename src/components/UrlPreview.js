@@ -1,21 +1,14 @@
-// @flow
+//
 import React from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
-import type { OgData, StyleSheetLike } from '../types';
-
-export type Props = {|
-  og: OgData,
-  styles?: StyleSheetLike,
-  onPressDismiss: (string) => mixed,
-|};
 
 /**
  * URL preview block with dismiss button (using open-graph attributes)
  * @example ./examples/UrlPreview.md
  */
-export default class UrlPreview extends React.Component<Props> {
+export default class UrlPreview extends React.Component {
   render() {
     const styles = buildStylesheet('urlPreview', this.props.styles);
 

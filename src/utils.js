@@ -1,12 +1,9 @@
-// @flow
+//
 import * as React from 'react';
-import type { Renderable, RenderableButNotElement } from './types';
+
 import Dayjs from 'dayjs';
 
-export function humanizeTimestamp(
-  timestamp: string | number,
-  tDateTimeParser: (input?: string | number) => Function,
-): string {
+export function humanizeTimestamp(timestamp, tDateTimeParser) {
   let time;
   // Following calculation is based on assumption that tDateTimeParser()
   // either returns momentjs or dayjs object.
@@ -29,22 +26,18 @@ export function humanizeTimestamp(
   return time.from(now);
 }
 
-export const smartRender = (
-  ElementOrComponentOrLiteral: Renderable,
-  props?: {},
-  fallback?: Renderable,
-) => {
+export const smartRender = (ElementOrComponentOrLiteral, props, fallback) => {
   if (ElementOrComponentOrLiteral === undefined) {
     ElementOrComponentOrLiteral = fallback;
   }
   if (React.isValidElement(ElementOrComponentOrLiteral)) {
     // Flow cast through any, to make flow believe it's a React.Element
-    const element = ((ElementOrComponentOrLiteral: any): React.Element<any>);
+    const element = ElementOrComponentOrLiteral;
     return element;
   }
 
   // Flow cast through any to remove React.Element after previous check
-  const ComponentOrLiteral = ((ElementOrComponentOrLiteral: any): RenderableButNotElement);
+  const ComponentOrLiteral = ElementOrComponentOrLiteral;
   if (
     typeof ComponentOrLiteral === 'string' ||
     typeof ComponentOrLiteral === 'number' ||
@@ -56,7 +49,7 @@ export const smartRender = (
   return <ComponentOrLiteral {...props} />;
 };
 
-export function sleep(ms: number): Promise<void> {
+export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 

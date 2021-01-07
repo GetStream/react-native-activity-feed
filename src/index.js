@@ -1,8 +1,5 @@
-// @flow
+//
 export { StreamApp } from './Context';
-export type { AppCtx, FeedCtx } from './Context';
-
-export * from './types';
 
 export { default as FlatFeed } from './components/FlatFeed';
 export { default as NotificationFeed } from './components/NotificationFeed';
@@ -42,11 +39,3 @@ export {
   registerNativeHandlers,
   setAndroidTranslucentStatusBar,
 } from './native';
-
-import { setAndroidTranslucentStatusBar } from './native';
-
-if (global.Expo) {
-  setAndroidTranslucentStatusBar(true);
-} else {
-  setAndroidTranslucentStatusBar(false);
-}

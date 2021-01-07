@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react';
 import {
   View,
@@ -19,16 +19,6 @@ import _ from 'lodash';
 import Symbol from 'es6-symbol';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import type { Streami18Ctx } from '../Context';
-
-import type {
-  BaseAppCtx,
-  CustomActivityArgData,
-  StyleSheetLike,
-  OgData,
-} from '../types';
-
-import type { ActivityArgData } from 'getstream';
 
 const ImageState = Object.freeze({
   NO_IMAGE: Symbol('no_image'),
@@ -39,84 +29,12 @@ const ImageState = Object.freeze({
 
 const urlRegex = /(https?:\/\/[^\s]+)/gi;
 
-type Props = {|
-  /** The feed group part of the feed that the activity should be posted to */
-  feedGroup: string,
-  /** The user_id part of the feed that the activity should be posted to  */
-  userId?: string,
-  /** The verb that should be used to post the activity */
-  activityVerb: string,
-  /** Make the form full screen. This can be useful when you have a separate
-   * screen for posting. */
-  fullscreen: boolean,
-  styles: StyleSheetLike,
-  /** Height in pixels for the whole component, if this is not set correctly
-   * it will be displayed on top of other components.
-   * This is ignored when fullscreen is `true` */
-  height: number,
-  /** If you want to change something about the activity data that this form
-   * sends to stream you can do that with this function. This function gets the
-   * activity data that the form would send normally and should return the
-   * modified activity data that should be posted instead.
-   *
-   * For instance, this would add a target field to the activity:
-   *
-   * ```javascript
-   * &lt;StatusUpdateForm
-   *   modifyActivityData={(data) => ({...data, target: 'Group:1'})}
-   * />
-   * ```
-   * */
-  modifyActivityData: (
-    activityData: ActivityArgData<Object, Object>,
-  ) => ActivityArgData<{}, {}>,
-  /** Override Post request */
-  doRequest?: (activityData: {}) => mixed,
-  /** A callback to run after the activity is posted successfully */
-  onSuccess?: () => mixed,
-  /** A callback that receives a function that submits the form */
-  registerSubmit?: (() => mixed) => mixed,
-  /** Removes KeyboardAccessory. When disabling this keep in mind that the
-   * input won't move with the keyboard anymore. */
-  noKeyboardAccessory: boolean,
-  /**
-   * Compress image with quality (from 0 to 1, where 1 is best quality).
-   * On iOS, values larger than 0.8 don't produce a noticeable quality increase in most images,
-   * while a value of 0.8 will reduce the file size by about half or less compared to a value of 1.
-   * 
-   * default 1 (Android)/0.8 (iOS)
-   */
-  compressImageQuality?: number,
-  /** Custom verticalOffset for the KeyboardAccessory if for some reason the
-   * component is positioned wrongly when the keyboard opens. If the item is
-   * positioned too high this should be a negative number, if it's positioned
-   * too low it should be positive. One known case where this happens is when
-   * using react-navigation with `tabBarPosition: 'bottom'`.  */
-  verticalOffset: number,
-  /** Any props the React Native TextInput accepts */
-  textInputProps?: {},
-|} & Streami18Ctx;
-
-type State = {|
-  image: ?string,
-  imageUrl: ?string,
-  imageState: typeof ImageState,
-  og: ?OgData,
-  ogScraping: boolean,
-  ogLink: ?string,
-  textFromInput: string,
-  clearInput: boolean,
-  focused: boolean,
-  urls: Array<string>,
-  dismissedUrls: Array<string>,
-|};
-
-class StatusUpdateForm extends React.Component<Props> {
+class StatusUpdateForm extends React.Component {
   static defaultProps = {
     feedGroup: 'user',
     activityVerb: 'post',
     fullscreen: false,
-    modifyActivityData: (d: ActivityArgData<{}, {}>) => d,
+    modifyActivityData: (d) => d,
     height: 80,
     verticalOffset: 0,
     noKeyboardAccessory: false,
@@ -167,9 +85,8 @@ class StatusUpdateForm extends React.Component<Props> {
   }
 }
 
-type PropsInner = {| ...Props, ...BaseAppCtx |};
-class StatusUpdateFormInner extends React.Component<PropsInner, State> {
-  _handleOgDebounced: (string) => mixed;
+class StatusUpdateFormInner extends React.Component {
+  _handleOgDebounced;
 
   textInputRef = React.createRef();
 
@@ -199,7 +116,9 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   }
 
   _pickImage = async () => {
-    const result = await pickImage({ compressImageQuality: this.props.compressImageQuality });
+    const result = await pickImage({
+      compressImageQuality: this.props.compressImageQuality,
+    });
     if (result.cancelled) {
       return;
     }
@@ -261,7 +180,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   _canSubmit = () => Boolean(this._object());
 
   async addActivity() {
-    const activity: CustomActivityArgData = {
+    const activity = {
       actor: this.props.client.currentUser,
       verb: this.props.activityVerb,
       object: this._object(),
@@ -419,7 +338,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                 value={this.state.textFromInput}
                 autocorrect={false}
                 placeholder={t('Type your post...')}
-                underlineColorAndroid="transparent"
+                underlineColorAndroid='transparent'
                 onBlur={() => this.setState({ focused: false })}
                 onFocus={() => this.setState({ focused: true })}
                 {...this.props.textInputProps}
@@ -447,11 +366,11 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                           ? styles.image_loading
                           : styles.image
                       }
-                      resizeMethod="resize"
+                      resizeMethod='resize'
                     />
                     <View style={styles.imageOverlay}>
                       {this.state.imageState === ImageState.UPLOADING ? (
-                        <ActivityIndicator color="#ffffff" />
+                        <ActivityIndicator color='#ffffff' />
                       ) : (
                         <TouchableOpacity onPress={this._removeImage}>
                           <Image

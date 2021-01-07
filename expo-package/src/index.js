@@ -1,10 +1,9 @@
-// @flow
 import { registerNativeHandlers } from 'react-native-activity-feed-core';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-registerNativeHandlers({
 
-  pickImage: async ({ compressImageQuality = 0.2, maxNumberOfFiles }) => {
+registerNativeHandlers({
+  pickImage: async ({ compressImageQuality = 0.2 }) => {
     try {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status !== 'granted') {
@@ -34,7 +33,6 @@ registerNativeHandlers({
       };
     }
   },
-
 });
 
 export * from 'react-native-activity-feed-core';

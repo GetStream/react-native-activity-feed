@@ -1,35 +1,15 @@
-// @flow
+//
 import * as React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { buildStylesheet } from '../styles';
 
-import type { StyleSheetLike } from '../types';
-import type { Streami18Ctx } from '../Context';
 import { withTranslationContext } from '../Context';
-
-type Props = {|
-  adds: Array<{}>,
-  deletes: Array<{}>,
-  labelSingular: string,
-  labelPlural: string,
-  /** A function that returns either the string to display or null in case no
-   * notification should be displayed */
-  labelFunction?: ({
-    count: number,
-    deleteCount: number,
-    addCount: number,
-    labelPlural: string,
-    labelSingular: string,
-  }) => string | null,
-  styles?: StyleSheetLike,
-  onPress?: () => mixed,
-|} & Streami18Ctx;
 
 /**
  * Renders a notification message when new activities are received by a feed
  * @example ./examples/NewActivitiesNotification.md
  */
-class NewActivitiesNotification extends React.Component<Props> {
+class NewActivitiesNotification extends React.Component {
   static defaultProps = {
     labelSingular: 'activity',
     labelPlural: 'activities',

@@ -1,11 +1,8 @@
+// eslint-disable-next-line no-undef
 module.exports = function(api) {
   api.cache(true);
   return {
-    presets: [
-      'babel-preset-expo',
-      '@babel/preset-flow',
-      'module:metro-react-native-babel-preset',
-    ],
+    presets: ['babel-preset-expo', 'module:metro-react-native-babel-preset'],
     env: {
       development: {
         plugins: ['module:react-native-dotenv'],

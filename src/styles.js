@@ -1,4 +1,4 @@
-// @flow
+//
 import { StyleSheet } from 'react-native';
 import _ from 'lodash';
 
@@ -459,15 +459,15 @@ const depthOf = function(object) {
   return level;
 };
 
-export function getStyle(styleName: string): any {
+export function getStyle(styleName) {
   return styles[styleName] || {};
 }
 
-export function updateStyle(styleName: string, styleOverwrites: any): any {
+export function updateStyle(styleName, styleOverwrites) {
   styles[styleName] = buildStylesheet(styleName, styleOverwrites);
 }
 
-export function buildStylesheet(styleName: string, styleOverwrites: any): any {
+export function buildStylesheet(styleName, styleOverwrites) {
   const baseStyle = getStyle(styleName);
   if (!styleOverwrites || Object.keys(styleOverwrites).length === 0) {
     return baseStyle;

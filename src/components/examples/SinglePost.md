@@ -7,10 +7,10 @@ const activity = {
 };
 
 <StreamApp
-  apiKey="5rqsbgqvqphs"
+  apiKey='5rqsbgqvqphs'
   appId={40273}
-  userId="user-two"
-  token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlci10d28ifQ.1bHQRRYSW0SeTGz1ZnbvH-riClwiIMuUsJ68XK_9RUA"
+  userId='user-two'
+  token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlci10d28ifQ.1bHQRRYSW0SeTGz1ZnbvH-riClwiIMuUsJ68XK_9RUA'
 >
   <SinglePost
     activity={activity}

@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { FlatList } from 'react-native';
 
@@ -9,86 +9,11 @@ import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
 import { smartRender } from '../utils';
 
-import type {
-  BaseActivityResponse,
-  BaseReaction,
-  NavigationScreen,
-  StyleSheetLike,
-  BaseFeedCtx,
-  BaseClient,
-  Renderable,
-} from '../types';
-import type {
-  FeedRequestOptions,
-  FeedResponse,
-  ActivityResponse,
-} from 'getstream';
-
-type Props = {|
-  feedGroup: string,
-  userId?: string,
-  /** read options for the API client (eg. limit, ranking, ...) */
-  options?: FeedRequestOptions,
-  Activity: Renderable,
-  /** the component to use to render new activities notification */
-  Notifier: Renderable,
-  /** if true, feed shows the Notifier component when new activities are added */
-  notify: boolean,
-  //** the element that renders the feed footer */
-  Footer?: Renderable,
-  //** the feed read hander (change only for advanced/complex use-cases) */
-  doFeedRequest?: (
-    client: BaseClient,
-    feedGroup: string,
-    userId?: string,
-    options?: FeedRequestOptions,
-  ) => Promise<FeedResponse<{}, {}>>,
-  /** Override reaction add request */
-  doReactionAddRequest?: (
-    kind: string,
-    activity: BaseActivityResponse,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override reaction delete request */
-  doReactionDeleteRequest?: (id: string) => mixed,
-  /** Override child reaction add request */
-  doChildReactionAddRequest?: (
-    kind: string,
-    activity: BaseReaction,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override child reaction delete request */
-  doChildReactionDeleteRequest?: (id: string) => mixed,
-  /** Override reactions filter request */
-  doReactionsFilterRequest?: (options: {}) => Promise<Object>,
-  //** turns off pagination */
-  noPagination?: boolean,
-  analyticsLocation?: string,
-  onRefresh?: () => mixed,
-  children?: React.Node,
-  styles?: StyleSheetLike,
-  navigation?: NavigationScreen,
-  /** Any props the react native FlatList accepts */
-  flatListProps?: {},
-  /**
-   Using `setListRef` you can set your own reference to the FlatList that's being used inside the FlatFeed. This works as follows:
-
-   `setListRef={(ref) => this.yourRef = ref}`
-
-   One example where this might be needed is when you want to refresh the feed when something happens. Then you can run:
-
-   `this.yourRef.onRefresh(true)`
-   */
-  setListRef?: (ref: any) => any,
-|};
-
 /**
  * Renders a feed of activities, this component is a StreamApp consumer
  * and must always be a child of the <StreamApp> element
  */
-export default class FlatFeed extends React.Component<Props> {
+export default class FlatFeed extends React.Component {
   static defaultProps = {
     styles: {},
     feedGroup: 'timeline',
@@ -119,8 +44,7 @@ export default class FlatFeed extends React.Component<Props> {
   }
 }
 
-type PropsInner = {| ...Props, ...BaseFeedCtx |};
-class FlatFeedInner extends React.Component<PropsInner> {
+class FlatFeedInner extends React.Component {
   _refresh = async () => {
     this._scrollToTop();
     await this.props.refresh(this.props.options);
@@ -138,7 +62,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
     await this._refresh();
   }
 
-  _renderWrappedActivity = ({ item }: { item: any }) => (
+  _renderWrappedActivity = ({ item }) => (
     <ImmutableItemWrapper
       renderItem={this._renderActivity}
       item={item}
@@ -161,7 +85,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
     userId: this.props.userId,
   });
 
-  _renderActivity = (item: ActivityResponse<Object, Object>) => {
+  _renderActivity = (item) => {
     const args = {
       activity: item,
       // $FlowFixMe
@@ -210,12 +134,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
   }
 }
 
-type ImmutableItemWrapperProps = {
-  renderItem: (item: any) => any,
-  item: any,
-};
-
-class ImmutableItemWrapper extends React.PureComponent<ImmutableItemWrapperProps> {
+class ImmutableItemWrapper extends React.PureComponent {
   render() {
     return this.props.renderItem(this.props.item.toJS());
   }

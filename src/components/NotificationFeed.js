@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 
@@ -7,61 +7,7 @@ import { buildStylesheet } from '../styles';
 import NewActivitiesNotification from './NewActivitiesNotification';
 import { smartRender } from '../utils';
 
-import type {
-  NavigationScreen,
-  StyleSheetLike,
-  BaseActivityResponse,
-  BaseReaction,
-  BaseFeedCtx,
-  BaseClient,
-  Renderable,
-} from '../types';
-import type { FeedRequestOptions, FeedResponse } from 'getstream';
-
-type Props = {|
-  feedGroup: string,
-  userId?: string,
-  options?: FeedRequestOptions,
-  Group: Renderable,
-  /** if true, feed shows the NewActivitiesNotification component when new activities are added */
-  notify?: boolean,
-  /** the component to use to render new activities notification */
-  Notifier: Renderable,
-  doFeedRequest?: (
-    client: BaseClient,
-    feedGroup: string,
-    userId?: string,
-    options?: FeedRequestOptions,
-  ) => Promise<FeedResponse<{}, {}>>,
-  /** Override reaction add request */
-  doReactionAddRequest?: (
-    kind: string,
-    activity: BaseActivityResponse,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override reaction delete request */
-  doReactionDeleteRequest?: (id: string) => mixed,
-  /** Override child reaction add request */
-  doChildReactionAddRequest?: (
-    kind: string,
-    activity: BaseReaction,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override child reaction delete request */
-  doChildReactionDeleteRequest?: (id: string) => mixed,
-  analyticsLocation?: string,
-  noPagination?: boolean,
-  children?: React.Node,
-  styles: StyleSheetLike,
-  navigation?: NavigationScreen,
-  /** Any props the react native FlatList accepts */
-  flatListProps?: {},
-  setListRef?: (ref: any) => any,
-|};
-
-export default class NotificationFeed extends React.Component<Props> {
+export default class NotificationFeed extends React.Component {
   static defaultProps = {
     feedGroup: 'notification',
     styles: {},
@@ -97,8 +43,7 @@ const makeDefaultOptions = (options) => {
   return copy;
 };
 
-type PropsInner = {| ...Props, ...BaseFeedCtx |};
-class NotificationFeedInner extends React.Component<PropsInner> {
+class NotificationFeedInner extends React.Component {
   _refresh = async () => {
     await this.props.refresh(makeDefaultOptions(this.props.options));
     // $FlowFixMe
@@ -111,7 +56,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
     await this._refresh();
   }
 
-  _renderWrappedGroup = ({ item }: { item: BaseActivityResponse }) => (
+  _renderWrappedGroup = ({ item }) => (
     <ImmutableItemWrapper
       renderItem={this._renderGroup}
       item={item}
@@ -136,7 +81,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
     userId: this.props.userId,
   });
 
-  _renderGroup = (item: BaseActivityResponse) => {
+  _renderGroup = (item) => {
     const args = {
       activityGroup: item,
       styles: this.props.styles.activity,
@@ -186,12 +131,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
   }
 }
 
-type ImmutableItemWrapperProps = {
-  renderItem: (item: any) => any,
-  item: any,
-};
-
-class ImmutableItemWrapper extends React.PureComponent<ImmutableItemWrapperProps> {
+class ImmutableItemWrapper extends React.PureComponent {
   render() {
     return this.props.renderItem(this.props.item.toJS());
   }

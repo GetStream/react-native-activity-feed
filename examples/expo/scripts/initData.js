@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // @flow
 
 import stream from 'getstream';

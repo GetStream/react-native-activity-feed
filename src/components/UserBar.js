@@ -1,27 +1,13 @@
-// @flow
+//
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { humanizeTimestamp } from '../utils';
 
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
-import type { StyleSheetLike } from '../types';
+
 import { buildStylesheet } from '../styles';
 import { withTranslationContext } from '../Context';
-import type { Streami18Ctx } from '../Context';
-
-type Props = {|
-  username: ?string,
-  avatar?: string,
-  subtitle?: string,
-  time?: string, // text that should be displayed as the time
-  timestamp?: string | number, // a timestamp that should be humanized
-  icon?: string,
-
-  onPressAvatar?: () => mixed,
-  follow?: boolean,
-  styles?: StyleSheetLike,
-|} & Streami18Ctx;
 
 /**
  * A compact horizontal user information box (it is used as activities' header)
@@ -37,7 +23,7 @@ const UserBar = withTranslationContext(
     icon,
     tDateTimeParser,
     ...props
-  }: Props) => {
+  }) => {
     username = username || 'Unknown';
     let time = props.time;
     if (time === undefined && props.timestamp != null) {

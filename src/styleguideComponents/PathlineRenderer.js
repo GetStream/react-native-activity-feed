@@ -1,4 +1,4 @@
-// @noflow
+//
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-styleguidist/lib/rsg-components/Link';
@@ -26,8 +26,8 @@ export function PathlineRenderer({ classes, children }) {
           'https://github.com/GetStream/react-native-activity-feed/blob/master/' +
           source
         }
-        target="blank"
-        rel="noopener"
+        target='blank'
+        rel='noopener'
       >
         {source}
       </Link>

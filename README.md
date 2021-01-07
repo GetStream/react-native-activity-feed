@@ -103,11 +103,11 @@ In order to use Stream React Components in your application, you first need to i
 
 ```jsx
 <StreamApp
-  apiKey="{API_KEY}"
-  appId="{APP_ID}"
-  userId="{USER_ID}"
-  token="{TOKEN}"
-  analyticsToken="{ANALYTICS_TOKEN}"
+  apiKey='{API_KEY}'
+  appId='{APP_ID}'
+  userId='{USER_ID}'
+  token='{TOKEN}'
+  analyticsToken='{ANALYTICS_TOKEN}'
 >
   {/* everything from your application interacting with Stream should be nested here */}
 </StreamApp>

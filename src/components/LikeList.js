@@ -1,4 +1,4 @@
-// @flow
+//
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 
@@ -6,22 +6,13 @@ import Avatar from './Avatar';
 import ReactionList from './ReactionList';
 import SectionHeader from './SectionHeader';
 import { withTranslationContext } from '../Context';
-import type { Streami18Ctx } from '../Context';
-
-export type Props = {|
-  /** The ID of the activity for which these comments are */
-  activityId: string,
-  reactionKind: string,
-  /** Only needed for reposted activities where you want to show the likes of the original activity, not of the repost */
-  activityPath?: ?Array<string>,
-|} & Streami18Ctx;
 
 /**
  * LikeList uses ReactionList under the hood to render a list of likes.
  *
  * @example ./examples/LikeList.md
  */
-class LikeList extends React.PureComponent<Props> {
+class LikeList extends React.PureComponent {
   static defaultProps = {
     reactionKind: 'like',
   };
