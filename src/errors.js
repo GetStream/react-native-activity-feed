@@ -1,4 +1,4 @@
-import stream from 'getstream';
+import { StreamApiError } from 'getstream';
 export const handleError = (error, type, detail) => {
   console.warn(error);
   alert(getErrorMessage(error, type, detail));
@@ -6,7 +6,7 @@ export const handleError = (error, type, detail) => {
 
 export const getErrorMessage = (error, type, detail) => {
   console.warn(error);
-  if (!(error instanceof stream.errors.StreamApiError)) {
+  if (!(error instanceof StreamApiError)) {
     return fallbackErrorMessage(error, type, detail);
   }
   const response = error.response;

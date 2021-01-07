@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 // @flow
-import stream from 'getstream';
+import { connect } from 'getstream';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -25,10 +25,10 @@ async function main() {
   }
 
   console.log(apiKey, apiSecret);
-  const serverClient = stream.connect(apiKey, apiSecret, appId);
+  const serverClient = connect(apiKey, apiSecret, appId);
 
   function createUserClient(userId) {
-    return stream.connect(apiKey, serverClient.createUserToken(userId), appId);
+    return connect(apiKey, serverClient.createUserToken(userId), appId);
   }
 
   const batman = createUserClient('batman');

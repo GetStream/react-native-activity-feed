@@ -1,7 +1,7 @@
 //
 
 import * as React from 'react';
-import stream from 'getstream';
+import { connect } from 'getstream';
 
 import StreamAnalytics from 'stream-analytics';
 
@@ -54,7 +54,7 @@ export class StreamApp extends React.Component {
 
   constructor(props) {
     super(props);
-    const client = stream.connect(
+    const client = connect(
       this.props.apiKey,
       this.props.token,
       this.props.appId,

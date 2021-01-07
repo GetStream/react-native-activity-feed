@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 // @flow
 
-import stream from 'getstream';
+import { connect, StreamApiError } from 'getstream';
 import faker from 'faker';
 
 import dotenv from 'dotenv';
@@ -26,10 +26,10 @@ async function main() {
     return;
   }
 
-  const serverClient = stream.connect(apiKey, apiSecret, appId);
+  const serverClient = connect(apiKey, apiSecret, appId);
 
   function createUserClient(userId) {
-    return stream.connect(apiKey, serverClient.createUserToken(userId), appId);
+    return connect(apiKey, serverClient.createUserToken(userId), appId);
   }
 
   const batman = createUserClient('batman');
@@ -283,10 +283,7 @@ async function ignore409(asyncfn) {
   try {
     await asyncfn();
   } catch (e) {
-    if (
-      !(e instanceof stream.errors.StreamApiError) ||
-      e.response.statusCode !== 409
-    ) {
+    if (!(e instanceof StreamApiError) || e.response.statusCode !== 409) {
       throw e;
     }
   }
