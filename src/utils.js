@@ -5,14 +5,26 @@ import Dayjs from 'dayjs';
 
 export function humanizeTimestamp(
   timestamp: string | number,
-  tDateTimeParser: (input?: string | number) => Function = Dayjs,
+  tDateTimeParser: (input?: string | number) => Function,
 ): string {
+  let time;
   // Following calculation is based on assumption that tDateTimeParser()
   // either returns momentjs or dayjs object.
-  const time = tDateTimeParser(timestamp).add(
-    Dayjs(timestamp).utcOffset(),
-    'minute',
-  ); // parse time as UTC
+
+  // When timestamp doesn't have z at the end, we are supposed to take it as UTC time.
+  // Ideally we need to adhere to RFC3339. Unfortunately this needs to be fixed on backend.
+  if (
+    typeof timestamp === 'string' &&
+    timestamp[timestamp.length - 1].toLowerCase() === 'z'
+  ) {
+    time = tDateTimeParser(timestamp);
+  } else {
+    time = tDateTimeParser(timestamp).add(
+      Dayjs(timestamp).utcOffset(),
+      'minute',
+    ); // parse time as UTC
+  }
+
   const now = tDateTimeParser();
   return time.from(now);
 }
