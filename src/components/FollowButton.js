@@ -24,7 +24,7 @@ class FollowButton extends React.Component {
     const styles = buildStylesheet('followButton', this.props.styles);
 
     return (
-      <TouchableOpacity onClick={clicked}>
+      <TouchableOpacity onPress={clicked}>
         <View
           colors={
             this.state.followed ? ['#ccc', '#ccc'] : ['#008DFF', '#0079FF']
