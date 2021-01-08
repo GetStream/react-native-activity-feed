@@ -1,6 +1,8 @@
 //
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 
 /**
@@ -8,6 +10,12 @@ import { buildStylesheet } from '../styles';
  * @example ./examples/BackButton.md
  */
 export default class BackButton extends React.Component {
+  static propTypes = {
+    styles: PropTypes.object,
+    blue: PropTypes.bool,
+    pressed: PropTypes.func,
+  };
+
   render() {
     const styles = buildStylesheet('backButton', this.props.styles);
     const { blue, pressed } = this.props;

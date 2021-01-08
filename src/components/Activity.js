@@ -1,5 +1,7 @@
 //
 import * as React from 'react';
+import PropTypes from 'prop-types';
+
 import {
   View,
   Text,
@@ -23,6 +25,46 @@ import { smartRender } from '../utils';
  * @example ./examples/Activity.md
  */
 export default class Activity extends React.Component {
+  static propTypes = {
+    Header: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+    Content: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+    Footer: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+    // The component that displays the url preview
+    Card: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+    onPress: PropTypes.func,
+    onPressAvatar: PropTypes.func,
+    /**
+     *
+     * @param {*} text
+     * @param {*} activity
+     */
+    onPressMention: PropTypes.func,
+    /**
+     *
+     * @param {*} text
+     * @param {*} activity
+     */
+    onPressHashtag: PropTypes.func,
+    sub: PropTypes.string,
+    icon: PropTypes.string,
+    // @todo: Fix it
+    activity: PropTypes.object,
+    /** Width of an image that's displayed, by default this is
+     * the width of the screen */
+    imageWidth: PropTypes.number,
+    /** Styling of the component */
+    styles: PropTypes.object,
+    /**
+     * Handle errors in the render method in a custom way, by
+     * default this component logs the error in the console
+     *
+     * @param {*} error
+     * @param {*} info
+     * @param {*} props
+     */
+    componentDidCatch: PropTypes.func,
+  };
+
   static defaultProps = {
     Card,
   };

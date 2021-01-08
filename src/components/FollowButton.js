@@ -1,6 +1,8 @@
 //
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 
 import { withTranslationContext } from '../Context';
@@ -39,5 +41,13 @@ class FollowButton extends React.Component {
     );
   }
 }
+
+FollowButton.propTypes = {
+  /** callback function used on click */
+  clicked: PropTypes.func,
+  /** initial follow state */
+  followed: PropTypes.bool,
+  styles: PropTypes.object,
+};
 
 export default withTranslationContext(FollowButton);

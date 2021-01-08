@@ -1,6 +1,8 @@
 //
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 
 import _ from 'lodash';
@@ -33,6 +35,15 @@ const Card = (props) => {
       </View>
     </TouchableOpacity>
   );
+};
+
+Card.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
+  url: PropTypes.string,
+  styles: PropTypes.object,
+  pressed: PropTypes.func,
 };
 
 export default Card;

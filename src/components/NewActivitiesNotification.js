@@ -1,6 +1,8 @@
 //
 import * as React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 
 import { withTranslationContext } from '../Context';
@@ -61,10 +63,6 @@ class NewActivitiesNotification extends React.Component {
     }
 
     return addCount > 1 ? pluralNotificationText : singleNotificationText;
-
-    // return `You have ${addCount} new ${
-    //   addCount > 1 ? labelPlural : labelSingular
-    // }`;
   };
 
   render() {
@@ -77,5 +75,27 @@ class NewActivitiesNotification extends React.Component {
     ) : null;
   }
 }
+
+NewActivitiesNotification.propTypes = {
+  adds: PropTypes.arrayOf(PropTypes.object),
+  deletes: PropTypes.arrayOf(PropTypes.object),
+  labelSingular: PropTypes.string,
+  labelPlural: PropTypes.string,
+  /**
+   * A function that returns either the string to display or null in case no
+   * notification should be displayed
+   * @param {object} param0 e.g.,
+   * {
+   *    count: number,
+   *    deleteCount: number,
+   *    addCount: number,
+   *    labelPlural: string,
+   *    labelSingular: string,
+   *  }
+   */
+  labelFunction: PropTypes.func,
+  styles: PropTypes.object,
+  onPress: PropTypes.func,
+};
 
 export default withTranslationContext(NewActivitiesNotification);

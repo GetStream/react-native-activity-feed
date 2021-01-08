@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Platform } from 'react-native';
+
 import immutable from 'immutable';
 import URL from 'url-parse';
 import _ from 'lodash';

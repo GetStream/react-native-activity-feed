@@ -1,7 +1,9 @@
 ```js
-<FollowButton styles={{ button: { width: 80 } }} />
+import FollowButton from '../FollowButton';
+<FollowButton styles={{ button: { width: 80 } }} />;
 ```
 
 ```js
-<FollowButton styles={{ button: { width: 90 } }} followed />
+import FollowButton from '../FollowButton';
+<FollowButton styles={{ button: { width: 90 } }} followed />;
 ```

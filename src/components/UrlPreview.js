@@ -1,6 +1,8 @@
 //
 import React from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 import _ from 'lodash';
 
@@ -45,3 +47,21 @@ export default class UrlPreview extends React.Component {
     );
   }
 }
+
+UrlPreview.propTypes = {
+  og: PropTypes.shape({
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        image: PropTypes.string,
+      }),
+    ),
+    title: PropTypes.string,
+    url: PropTypes.string,
+  }),
+  styles: PropTypes.object,
+  /**
+   * Dismiss handler function.
+   * @param {*} url
+   */
+  onPressDismiss: PropTypes.func,
+};

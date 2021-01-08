@@ -1,6 +1,7 @@
 //
 import * as React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
@@ -34,6 +35,85 @@ export default class NotificationFeed extends React.Component {
     );
   }
 }
+
+// We have duplicated FeedRequestOptionsPropTypeShape at multiple places in codebase
+// We can't abstract it out since stylegudist doesn't work with imported types.
+const FeedRequestOptionsPropTypeShape = {
+  withReactionCounts: PropTypes.bool,
+  withRecentReactions: PropTypes.bool,
+  withOwnReactions: PropTypes.bool,
+  reactions: PropTypes.shape({
+    recent: PropTypes.bool,
+    own: PropTypes.bool,
+    counts: PropTypes.bool,
+  }),
+  limit: PropTypes.number,
+  offset: PropTypes.number,
+  id_lt: PropTypes.string,
+  id_lte: PropTypes.string,
+  id_gt: PropTypes.string,
+  id_gte: PropTypes.string,
+  ranking: PropTypes.string,
+  mark_seen: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  mark_read: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  refresh: PropTypes.bool,
+};
+
+NotificationFeed.propTypes = {
+  feedGroup: PropTypes.string,
+  userId: PropTypes.string,
+  options: PropTypes.shape(FeedRequestOptionsPropTypeShape),
+  Group: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** if true, feed shows the NewActivitiesNotification component when new activities are added */
+  notify: PropTypes.bool,
+  /** the component to use to render new activities notification */
+  Notifier: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /**
+   * @param {*} client
+   * @param {*} feedGroup
+   * @param {*} userId
+   * @param {*} options
+   */
+  doFeedRequest: PropTypes.func,
+  /** Override reaction add request */
+  /**
+   *
+   * @param {*} kind
+   * @param {*} activity
+   * @param {*} data
+   * @param {*} options
+   */
+  doReactionAddRequest: PropTypes.func,
+  /**
+   * Override reaction delete request
+   * @param {string} id
+   */
+  doReactionDeleteRequest: PropTypes.func,
+  /**
+   * Override child reaction add request
+   * @param {*} kind
+   * @param {*} activity
+   * @param {*} data
+   * @param {*} options
+   */
+  doChildReactionAddRequest: PropTypes.func,
+  /**
+   * Override child reaction delete request
+   * @param {string} id
+   */
+  doChildReactionDeleteRequest: PropTypes.func,
+  analyticsLocation: PropTypes.string,
+  noPagination: PropTypes.bool,
+  styles: PropTypes.object,
+  // Navigation props
+  navigation: PropTypes.object,
+  /** Any props the react native FlatList accepts */
+  flatListProps: PropTypes.object,
+  /**
+   * @param {*} ref
+   */
+  setListRef: PropTypes.func,
+};
 
 const makeDefaultOptions = (options) => {
   const copy = { ...options };

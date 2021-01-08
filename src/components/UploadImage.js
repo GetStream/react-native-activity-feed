@@ -1,6 +1,7 @@
 //
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 
 import PickPhotoIcon from '../images/icons/pickphoto.png';
 import { buildStylesheet } from '../styles';
@@ -15,6 +16,11 @@ const UploadImage = ({ onUploadButtonPress, ...props }) => {
       </TouchableOpacity>
     </View>
   );
+};
+
+UploadImage.propTypes = {
+  onUploadButtonPress: PropTypes.func,
+  styles: PropTypes.object,
 };
 
 export default UploadImage;

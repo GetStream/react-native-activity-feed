@@ -1,5 +1,6 @@
-//
 import * as React from 'react';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 import ReactionToggleIcon from './ReactionToggleIcon';
 
@@ -51,3 +52,25 @@ export default class LikeButton extends React.Component {
     );
   }
 }
+
+LikeButton.propTypes = {
+  /**
+   * The activity received from Stream that should be liked when pressing the LikeButton.
+   **/
+  activity: PropTypes.object.isRequired,
+  /**
+   * The reaction received from Stream that should be liked when pressing the
+   * LikeButton. Liking a reaction requires to pass both this field and
+   * the `onToggleChildReaction` as well.
+   */
+  reaction: PropTypes.object,
+  /** The reactionKind that is used to like, you can for instance set this to
+   * `heart`. */
+  reactionKind: PropTypes.string,
+  /** The function that toggles reactions on activities. */
+  onToggleReaction: PropTypes.func,
+  /** The function that toggles reactions on reactions. */
+  onToggleChildReaction: PropTypes.func,
+  /** Styling of the button */
+  styles: PropTypes.object,
+};

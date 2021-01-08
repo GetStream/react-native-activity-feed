@@ -1,5 +1,6 @@
 //
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SectionHeader from './SectionHeader';
 import CommentItem from './CommentItem';
@@ -55,3 +56,29 @@ export default class CommentList extends React.PureComponent {
     );
   }
 }
+
+CommentList.propTypes = {
+  /** The ID of the activity for which these comments are */
+  activityId: PropTypes.string,
+  /** The component that should render the comment */
+  CommentItem: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** Only needed for reposted activities where you want to show the comments
+   * of the original activity, not of the repost */
+  activityPath: PropTypes.arrayOf(PropTypes.string),
+  /** UI The component that should render the reaction */
+  LoadMoreButton: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** If the CommentList should paginate when scrolling, by default it shows a
+   * "Load more" button  */
+  infiniteScroll: PropTypes.bool,
+  /** Show and load reactions starting with the oldest reaction first, instead
+   * of the default where reactions are displayed and loaded most recent first.
+   * */
+  /** Any props the react native FlatList accepts */
+  flatListProps: PropTypes.object,
+  /** Show and load reactions starting with the oldest reaction first, instead
+   * of the default where reactions are displayed and loaded most recent first.
+   * */
+  oldestToNewest: PropTypes.bool,
+  /** Reverse the order the reactions are displayed in. */
+  reverseOrder: PropTypes.bool,
+};

@@ -1,6 +1,8 @@
 //
 import * as React from 'react';
 import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
 
@@ -25,6 +27,13 @@ export default class IconBadge extends React.Component {
   }
 }
 
+IconBadge.propTypes = {
+  feedGroup: PropTypes.string.isRequired,
+  userId: PropTypes.string,
+  styles: PropTypes.object,
+  showNumber: PropTypes.number,
+  hidden: PropTypes.bool,
+};
 class IconBadgeInner extends React.Component {
   async componentDidMount() {
     await this.props.refreshUnreadUnseen();

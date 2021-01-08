@@ -1,6 +1,9 @@
 ```js
-const Image = require('react-native').Image;
+import { Image } from 'react-native';
 const NotificationIcon = require('./resources/notifications.png');
+
+import { StreamApp } from '../../Context/StreamApp';
+import IconBadge from '../IconBadge';
 
 <StreamApp
   apiKey='5rqsbgqvqphs'
@@ -10,9 +13,9 @@ const NotificationIcon = require('./resources/notifications.png');
 >
   <IconBadge
     showNumber
-    mainElement={
+    mainElement={() => (
       <Image source={NotificationIcon} style={{ width: 25, height: 25 }} />
-    }
+    )}
   />
 </StreamApp>;
 ```

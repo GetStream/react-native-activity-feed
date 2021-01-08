@@ -1,6 +1,8 @@
 //
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { humanizeTimestamp } from '../utils';
 
 import Avatar from './Avatar';
@@ -73,5 +75,17 @@ const UserBar = withTranslationContext(
     );
   },
 );
+
+UserBar.propTypes = {
+  username: PropTypes.string,
+  avatar: PropTypes.string,
+  subtitle: PropTypes.string,
+  time: PropTypes.string, // text that should be displayed as the time
+  timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // a timestamp that should be humanized
+  icon: PropTypes.string,
+  onPressAvatar: PropTypes.func,
+  follow: PropTypes.bool,
+  styles: PropTypes.object,
+};
 
 export default UserBar;

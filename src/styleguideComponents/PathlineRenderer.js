@@ -1,43 +1,43 @@
-//
 import React from 'react';
-import PropTypes from 'prop-types';
-import Link from 'react-styleguidist/lib/rsg-components/Link';
-import Styled from 'react-styleguidist/lib/rsg-components/Styled';
+import copy from 'clipboard-copy';
+import { MdContentCopy } from 'react-icons/md';
+import Link from 'react-styleguidist/lib/client/rsg-components/Link';
+import ToolbarButton from 'react-styleguidist/lib/client/rsg-components/ToolbarButton';
+import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 
-export const styles = ({ space, fontFamily, fontSize, color }) => ({
-  pathline: {
-    fontFamily: fontFamily.monospace,
-    fontSize: fontSize.small,
-    color: color.light,
-    wordBreak: 'break-all',
-  },
+export const styles = ({ color, fontFamily, fontSize, space }) => ({
   copyButton: {
     marginLeft: space[0],
   },
+  pathline: {
+    color: color.light,
+    fontFamily: fontFamily.monospace,
+    fontSize: fontSize.small,
+    wordBreak: 'break-all',
+  },
 });
 
-export function PathlineRenderer({ classes, children }) {
-  const source = children;
-
-  return (
-    <div className={classes.pathline}>
-      <Link
-        href={
-          'https://github.com/GetStream/react-native-activity-feed/blob/master/' +
-          source
-        }
-        target='blank'
-        rel='noopener'
-      >
-        {source}
-      </Link>
-    </div>
-  );
-}
-
-PathlineRenderer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  children: PropTypes.string,
-};
+export const PathlineRenderer = ({ children, classes }) => (
+  <div className={classes.pathline}>
+    <Link
+      href={
+        'https://github.com/GetStream/react-native-activity-feed/blob/master/' +
+        children
+      }
+      rel='noopener'
+      target='blank'
+    >
+      {children}
+    </Link>
+    <ToolbarButton
+      className={classes.copyButton}
+      onClick={() => children && copy(children.toString())}
+      small
+      title='Copy to clipboard'
+    >
+      <MdContentCopy />
+    </ToolbarButton>
+  </div>
+);
 
 export default Styled(styles)(PathlineRenderer);

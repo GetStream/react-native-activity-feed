@@ -1,7 +1,6 @@
-//
-
 import * as React from 'react';
 import { connect } from 'getstream';
+import PropTypes from 'prop-types';
 
 import StreamAnalytics from 'stream-analytics';
 
@@ -180,3 +179,16 @@ export function withTranslationContext(OriginalComponent) {
 
   return ContextAwareComponent;
 }
+
+export const TranslationContextPropTypes = {
+  /**
+   * Translator function
+   * @ref https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n
+   */
+  t: PropTypes.func,
+  /**
+   * Date time parser for date stamps.
+   * @ref https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n
+   */
+  tDateTimeParser: PropTypes.func,
+};

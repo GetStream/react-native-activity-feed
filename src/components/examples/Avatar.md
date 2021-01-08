@@ -1,4 +1,6 @@
 ```js
+import Avatar from '../Avatar';
+
 <div>
   <Avatar
     source='https://randomuser.me/api/portraits/women/17.jpg'
@@ -20,5 +22,5 @@
     editButton
     styles={{ container: { marginTop: 10 } }}
   />
-</div>
+</div>;
 ```

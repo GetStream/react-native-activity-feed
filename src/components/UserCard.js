@@ -1,6 +1,8 @@
 //
 import React from 'react';
 import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
 import { buildStylesheet } from '../styles';
@@ -20,3 +22,11 @@ export default class UserCard extends React.Component {
     );
   }
 }
+
+UserCard.propTypes = {
+  user: PropTypes.shape({
+    profileImage: PropTypes.string,
+    name: PropTypes.string,
+  }),
+  styles: PropTypes.object,
+};

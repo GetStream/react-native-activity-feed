@@ -9,6 +9,8 @@ import {
   Platform,
   Keyboard,
 } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { StreamApp, withTranslationContext } from '../Context';
 import UrlPreview from './UrlPreview';
 import { pickImage, androidTranslucentStatusBar } from '../native';
@@ -84,6 +86,60 @@ class StatusUpdateForm extends React.Component {
     );
   }
 }
+
+StatusUpdateForm.propTypes = {
+  /** The feed group part of the feed that the activity should be posted to */
+  feedGroup: PropTypes.string,
+  /** The user_id part of the feed that the activity should be posted to  */
+  userId: PropTypes.string,
+  /** The verb that should be used to post the activity */
+  activityVerb: PropTypes.string,
+  /** Make the form full screen. This can be useful when you have a separate
+   * screen for posting. */
+  fullscreen: PropTypes.bool,
+  styles: PropTypes.object,
+  /** Height in pixels for the whole component, if this is not set correctly
+   * it will be displayed on top of other components.
+   * This is ignored when fullscreen is `true` */
+  height: PropTypes.number,
+  /** If you want to change something about the activity data that this form
+   * sends to stream you can do that with this function. This function gets the
+   * activity data that the form would send normally and should return the
+   * modified activity data that should be posted instead.
+   *
+   * For instance, this would add a target field to the activity:
+   *
+   * ```javascript
+   * &lt;StatusUpdateForm
+   *   modifyActivityData={(data) => ({...data, target: 'Group:1'})}
+   * />
+   * ```
+   * */
+  modifyActivityData: PropTypes.func,
+  /**
+   * Override Post request
+   * @param {*} activityData
+   */
+  doRequest: PropTypes.func,
+  /** A callback to run after the activity is posted successfully */
+  onSuccess: PropTypes.func,
+  /** A callback that receives a function that submits the form */
+  /**
+   * @param {function} submitFunction
+   */
+  registerSubmit: PropTypes.func,
+  /** Removes KeyboardAccessory. When disabling this keep in mind that the
+   * input won't move with the keyboard anymore. */
+  noKeyboardAccessory: PropTypes.bool,
+  /** Custom verticalOffset for the KeyboardAccessory if for some reason the
+   * component is positioned wrongly when the keyboard opens. If the item is
+   * positioned too high this should be a negative number, if it's positioned
+   * too low it should be positive. One known case where this happens is when
+   * using react-navigation with `tabBarPosition: 'bottom'`.  */
+  verticalOffset: PropTypes.number,
+  /** Any props the React Native TextInput accepts */
+  textInputProps: PropTypes.object,
+};
 
 class StatusUpdateFormInner extends React.Component {
   _handleOgDebounced;

@@ -1,6 +1,7 @@
 //
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 
 import Avatar from './Avatar';
 import ReactionList from './ReactionList';
@@ -43,5 +44,13 @@ class LikeList extends React.PureComponent {
     );
   }
 }
+
+LikeList.propTypes = {
+  /** The ID of the activity for which these comments are */
+  activityId: PropTypes.string.isRequired,
+  reactionKind: PropTypes.string.isRequired,
+  /** Only needed for reposted activities where you want to show the likes of the original activity, not of the repost */
+  activityPath: PropTypes.arrayOf(PropTypes.string),
+};
 
 export default withTranslationContext(LikeList);

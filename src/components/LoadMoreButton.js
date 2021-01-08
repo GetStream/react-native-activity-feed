@@ -1,6 +1,7 @@
 //
 import * as React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { buildStylesheet } from '../styles';
 import { withTranslationContext } from '../Context';
@@ -25,5 +26,11 @@ class LoadMoreButton extends React.Component {
     );
   }
 }
+
+LoadMoreButton.propTypes = {
+  onPress: PropTypes.func,
+  refreshing: PropTypes.bool,
+  styles: PropTypes.object,
+};
 
 export default withTranslationContext(LoadMoreButton);

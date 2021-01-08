@@ -1,5 +1,11 @@
 ```js
-const View = require('react-native').View;
+import { View } from 'react-native';
+import { StreamApp } from '../../Context/StreamApp';
+import SinglePost from '../SinglePost';
+import Activity from '../Activity';
+import LikeButton from '../LikeButton';
+import CommentList from '../CommentList';
+import LikeList from '../LikeList';
 
 // this is just an example, you get this from a feed
 const activity = {
@@ -27,7 +33,7 @@ const activity = {
         <CommentList reactions={props.activity.latest_reactions} />
         <View style={styles.sectionHeader} />
         <View style={styles.likesContainer}>
-          <LikesList reactions={props.activity.latest_reactions} />
+          <LikeList reactions={props.activity.latest_reactions} />
         </View>
       </>
     )}
