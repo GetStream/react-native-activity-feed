@@ -33,8 +33,8 @@ building scalable newsfeeds and activity streams.
 
 ## 🔮 Example Apps
 
-- [Expo example]()
-- [Native example]()
+- [Expo example](https://github.com/GetStream/react-native-activity-feed/tree/master/examples/expo#expo-example)
+- [Native example](https://github.com/GetStream/react-native-activity-feed/tree/master/examples/expo#native-example)
 
 ## 🛠 Installation
 

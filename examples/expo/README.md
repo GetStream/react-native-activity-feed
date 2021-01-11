@@ -28,7 +28,7 @@ Get your Stream API credentials from the [user dashboard](https://getstream.io/d
 _If you followed the [React Native tutorial](https://getstream.io/react-native-activity-feed/tutorial/), you already have a pre-configured app on your account that you can use for this project._
 
 ```sh
-cp .env.example .env
+mv .env.example .env
 ```
 
 Open the `.env` file in your favorite editor. And fill in the credentials.
