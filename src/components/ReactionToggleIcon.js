@@ -27,9 +27,9 @@ export default function ReactionToggleIcon({
 
 ReactionToggleIcon.propTypes = {
   /** The icon to show when the user has done this reaction (e.g. a filled in heart) */
-  activeIcon: PropTypes.string,
+  activeIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** The icon to show when the user has not done this reaction yet (e.g. an empty in heart) */
-  inactiveIcon: PropTypes.string,
+  inactiveIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** The kind of reaction that this toggles */
   kind: PropTypes.string,
   /** The height of the icon */
