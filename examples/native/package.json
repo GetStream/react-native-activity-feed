@@ -16,7 +16,8 @@
     "react-native-activity-feed": "link:../../native-package",
     "react-native-activity-feed-core": "link:../..",
     "react-native-dotenv": "^2.4.3",
-    "react-native-image-crop-picker": "^0.35.2"
+    "react-native-image-crop-picker": "^0.35.2",
+    "faker": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
