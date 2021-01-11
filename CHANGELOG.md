@@ -5,9 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 1.0.0-rc.1 - 2021-01-11
 
-Nothing yet
+- Added support for Expo 40 and react-native 0.63
+- Removed [flow types](https://flow.org/) and added traditional [`PropTypes`](https://reactjs.org/docs/typechecking-with-proptypes.html)
+- Upgrade to `getstream@7.1.0`
+- Cleanup around examples
+
+  Removed following existing examples:
+
+  - example
+  - examples/one
+  - native-example
+
+  Added new examples:
+
+  - examples/expo (Expo 40)
+  - examples/native (RN 0.63.x)
+
+- Replace `react-native-image-picker` with [`react-native-image-crop-picker`](https://github.com/ivpusic/react-native-image-crop-picker) to allow compression.
+
+- Fixed pending issues:
+  - https://github.com/GetStream/react-native-activity-feed/issues/156
+  - https://github.com/GetStream/react-native-activity-feed/issues/154
+  - https://github.com/GetStream/react-native-activity-feed/issues/152
+  - https://github.com/GetStream/react-native-activity-feed/issues/126
+  - https://github.com/GetStream/react-native-activity-feed/issues/99
+  - https://github.com/GetStream/react-native-activity-feed/issues/160
+  - https://github.com/GetStream/react-native-activity-feed/issues/165
 
 ## 0.9.1 - 2020-03-31
 
