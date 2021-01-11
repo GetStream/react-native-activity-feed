@@ -1,5 +1,12 @@
 //
-export { StreamApp, StreamContext, Feed, FeedContext } from './Context';
+export {
+  StreamApp,
+  withTranslationContext,
+  TranslationContext,
+  StreamContext,
+  Feed,
+  FeedContext,
+} from './Context';
 
 export { default as FlatFeed } from './components/FlatFeed';
 export { default as NotificationFeed } from './components/NotificationFeed';
