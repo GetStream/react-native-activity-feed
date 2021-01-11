@@ -1,4 +1,4 @@
-# Expo example
+# Native example
 
 Make sure node version is >= v10.13.0
 
