@@ -31,69 +31,33 @@ building scalable newsfeeds and activity streams.
 
 [Internationalisation (i18n)](https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n)
 
-## Installation
+## 🔮 Example Apps
 
-The components provided by this package are available for apps built with Expo
-(created with `create-react-native-app`), but also for apps with native code
-(created with `react-native init`). You should install the package that matches
-your situation:
+- [Expo example]()
+- [Native example]()
 
-```bash
+## 🛠 Installation
+
+### expo package
+
+#### Install the dependency
+
+```sh
 # For Expo apps
-npm i expo-activity-feed --save
+expo install expo-activity-feed expo-permissions expo-image-picker
 
+```
+
+### Native package
+
+```sh
 # For apps with native code
-npm i react-native-activity-feed --save
+yarn add react-native-activity-feed react-native-image-crop-picker
+npx pod-install
 ```
 
-Both packages export the same components (which they re-export from the
-underlying `react-native-activity-feed-core` package).
-
-### Final setup steps for the `react-native-activity-feed` package
-
-If you use the package for apps with native code you need to do some more steps
-to get the image upload functionality working. If you don't need that feel free
-to skip these steps.
-
-1. Run the following command:
-
-```bash
-react-native link react-native-image-picker
-```
-
-2.
-Add the following permissions to `android/app/src/main/AndroidManifest.xml`:
-
-```xml
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-```
-
-3.
-Add the following key/value pairs to `ios/{app-name-here}/Info.plist`:
-
-```xml
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
-	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your camera</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to your microphone (for videos)</string>
-```
-
-4. Make sure that the gradle version inside `android/build.gradle` is 2.2.0 or
-   higher:
-
-```
-buildscript {
-    // ....
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-    }
-}
-```
+**Note** If you are planning to use the image picker functionality, there are some additional steps to be done.
+You can find them here - https://github.com/ivpusic/react-native-image-crop-picker/blob/v0.25.0/README.md#install
 
 ## Usage & Activity Feed setup
 

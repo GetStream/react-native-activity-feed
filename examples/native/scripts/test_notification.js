@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 // @flow
-const { connect } = require('getstream');
+const {connect} = require('getstream');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -33,7 +33,7 @@ async function main() {
 
   const batman = createUserClient('batman');
   const content = 'test2';
-  console.log(await batman.feed('notification').get({ limit: 1 }));
+  console.log(await batman.feed('notification').get({limit: 1}));
   await batman.feed('notification').addActivity({
     actor: batman.currentUser,
     verb: 'post',
@@ -41,6 +41,6 @@ async function main() {
 
     content,
   });
-  console.log(await batman.feed('notification').get({ limit: 1 }));
+  console.log(await batman.feed('notification').get({limit: 1}));
 }
 main();

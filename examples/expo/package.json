@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "init-data": "node scripts/initData.js"
   },
   "dependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@babel/node": "^7.12.10",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.5",
     "babel-plugin-root-import": "^6.1.0",

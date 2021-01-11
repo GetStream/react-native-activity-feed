@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-const { connect, StreamApiError } = require('getstream');
+const {connect, StreamApiError} = require('getstream');
 const faker = require('faker');
 const dotenv = require('dotenv');
 
@@ -36,41 +36,55 @@ async function main() {
   const league = createUserClient('justiceleague');
   const bowie = createUserClient('davidbowie');
 
-  console.log('================================================= \n');
   console.log('Add the following line to your .env file');
   console.log('STREAM_API_TOKEN=' + batman.userToken);
-  console.log('\n=================================================');
 
-  await batman.currentUser.getOrCreate({
-    name: 'Batman',
-    url: 'batsignal.com',
-    desc: 'Smart, violent and brutally tough solutions to crime.',
-    profileImage:
-      'https://i.kinja-img.com/gawker-media/image/upload/s--PUQWGzrn--/c_scale,f_auto,fl_progressive,q_80,w_800/yktaqmkm7ninzswgkirs.jpg',
-    coverImage:
-      'https://i0.wp.com/photos.smugmug.com/Portfolio/Full/i-mwrhZK2/0/ea7f1268/X2/GothamCity-X2.jpg?resize=1280%2C743&ssl=1',
-  });
+  try {
+    await batman.currentUser.getOrCreate({
+      name: 'Batman',
+      url: 'batsignal.com',
+      desc: 'Smart, violent and brutally tough solutions to crime.',
+      profileImage:
+        'https://i.kinja-img.com/gawker-media/image/upload/s--PUQWGzrn--/c_scale,f_auto,fl_progressive,q_80,w_800/yktaqmkm7ninzswgkirs.jpg',
+      coverImage:
+        'https://i0.wp.com/photos.smugmug.com/Portfolio/Full/i-mwrhZK2/0/ea7f1268/X2/GothamCity-X2.jpg?resize=1280%2C743&ssl=1',
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
-  await fluff.currentUser.getOrCreate({
-    name: 'Fluff',
-    url: 'fluff.com',
-    desc: 'Sweet I think',
-    profileImage:
-      'https://mylittleamerica.com/988-large_default/durkee-marshmallow-fluff-strawberry.jpg',
-    coverImage: '',
-  });
+  try {
+    await fluff.currentUser.getOrCreate({
+      name: 'Fluff',
+      url: 'fluff.com',
+      desc: 'Sweet I think',
+      profileImage:
+        'https://mylittleamerica.com/988-large_default/durkee-marshmallow-fluff-strawberry.jpg',
+      coverImage: '',
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
-  await league.currentUser.getOrCreate({
-    name: 'Justice League',
-    profileImage:
-      'http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg',
-  });
+  try {
+    await league.currentUser.getOrCreate({
+      name: 'Justice League',
+      profileImage:
+        'http://www.comingsoon.net/assets/uploads/2018/01/justice_league_2017___diana_hq___v2_by_duck_of_satan-db3kq6k.jpg',
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
-  await bowie.currentUser.getOrCreate({
-    name: 'David Bowie',
-    profileImage:
-      'http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?',
-  });
+  try {
+    await bowie.currentUser.getOrCreate({
+      name: 'David Bowie',
+      profileImage:
+        'http://www.officialcharts.com/media/649820/david-bowie-1100.jpg?',
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   const randomUsers = [];
   const randomUsersPromises = [];
