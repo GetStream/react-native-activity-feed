@@ -1,38 +1,12 @@
-//@flow
+//
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SectionHeader from './SectionHeader';
 import CommentItem from './CommentItem';
 import ReactionList from './ReactionList';
 import LoadMoreButton from './LoadMoreButton';
 import { smartRender } from '../utils';
-import type { Renderable, Comment } from '../types';
-
-export type Props = {|
-  /** The ID of the activity for which these comments are */
-  activityId: string,
-  /** The component that should render the comment */
-  CommentItem: Renderable,
-  /** Only needed for reposted activities where you want to show the comments
-   * of the original activity, not of the repost */
-  activityPath?: ?Array<string>,
-  /** The component that should render the reaction */
-  LoadMoreButton: Renderable,
-  /** If the CommentList should paginate when scrolling, by default it shows a
-   * "Load more" button  */
-  infiniteScroll: boolean,
-  /** Show and load reactions starting with the oldest reaction first, instead
-   * of the default where reactions are displayed and loaded most recent first.
-   * */
-  /** Any props the react native FlatList accepts */
-  flatListProps?: {},
-  /** Show and load reactions starting with the oldest reaction first, instead
-   * of the default where reactions are displayed and loaded most recent first.
-   * */
-  oldestToNewest: boolean,
-  /** Reverse the order the reactions are displayed in. */
-  reverseOrder: boolean,
-|};
 
 /**
  * CommentList uses ReactionList under the hood to render a list of comments.
@@ -44,7 +18,7 @@ export type Props = {|
  *
  * @example ./examples/CommentList.md
  */
-export default class CommentList extends React.PureComponent<Props> {
+export default class CommentList extends React.PureComponent {
   static defaultProps = {
     CommentItem,
     LoadMoreButton,
@@ -53,7 +27,7 @@ export default class CommentList extends React.PureComponent<Props> {
     reverseOrder: false,
   };
 
-  _Reaction = ({ reaction }: { reaction: Comment }) =>
+  _Reaction = ({ reaction }) =>
     smartRender(this.props.CommentItem, { comment: reaction });
   render() {
     const {
@@ -82,3 +56,29 @@ export default class CommentList extends React.PureComponent<Props> {
     );
   }
 }
+
+CommentList.propTypes = {
+  /** The ID of the activity for which these comments are */
+  activityId: PropTypes.string,
+  /** The component that should render the comment */
+  CommentItem: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** Only needed for reposted activities where you want to show the comments
+   * of the original activity, not of the repost */
+  activityPath: PropTypes.arrayOf(PropTypes.string),
+  /** UI The component that should render the reaction */
+  LoadMoreButton: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** If the CommentList should paginate when scrolling, by default it shows a
+   * "Load more" button  */
+  infiniteScroll: PropTypes.bool,
+  /** Show and load reactions starting with the oldest reaction first, instead
+   * of the default where reactions are displayed and loaded most recent first.
+   * */
+  /** Any props the react native FlatList accepts */
+  flatListProps: PropTypes.object,
+  /** Show and load reactions starting with the oldest reaction first, instead
+   * of the default where reactions are displayed and loaded most recent first.
+   * */
+  oldestToNewest: PropTypes.bool,
+  /** Reverse the order the reactions are displayed in. */
+  reverseOrder: PropTypes.bool,
+};

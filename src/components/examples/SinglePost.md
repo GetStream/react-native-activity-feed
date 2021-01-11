@@ -1,5 +1,11 @@
 ```js
-const View = require('react-native').View;
+import { View } from 'react-native';
+import { StreamApp } from '../../Context/StreamApp';
+import SinglePost from '../SinglePost';
+import Activity from '../Activity';
+import LikeButton from '../LikeButton';
+import CommentList from '../CommentList';
+import LikeList from '../LikeList';
 
 // this is just an example, you get this from a feed
 const activity = {
@@ -7,10 +13,10 @@ const activity = {
 };
 
 <StreamApp
-  apiKey="5rqsbgqvqphs"
+  apiKey='5rqsbgqvqphs'
   appId={40273}
-  userId="user-two"
-  token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlci10d28ifQ.1bHQRRYSW0SeTGz1ZnbvH-riClwiIMuUsJ68XK_9RUA"
+  userId='user-two'
+  token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidXNlci10d28ifQ.1bHQRRYSW0SeTGz1ZnbvH-riClwiIMuUsJ68XK_9RUA'
 >
   <SinglePost
     activity={activity}
@@ -27,7 +33,7 @@ const activity = {
         <CommentList reactions={props.activity.latest_reactions} />
         <View style={styles.sectionHeader} />
         <View style={styles.likesContainer}>
-          <LikesList reactions={props.activity.latest_reactions} />
+          <LikeList reactions={props.activity.latest_reactions} />
         </View>
       </>
     )}

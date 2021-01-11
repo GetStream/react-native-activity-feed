@@ -1,6 +1,6 @@
 {
   "name": "expo-activity-feed",
-  "version": "0.9.1",
+  "version": "1.0.0-rc.1",
   "license": "BSD-3-Clause",
   "author": {
     "company": "Stream.io Inc"
@@ -21,14 +21,10 @@
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-flow": "^6.23.0",
     "eslint": "^5.1.0",
-    "eslint-plugin-flowtype": "^2.29.1",
     "eslint-plugin-jest": "^21.17.0",
     "eslint-plugin-react": "^7.10.0",
     "expo": "^29.0.0",
-    "flow-bin": "^0.78.0",
-    "flow-copy-source": "^2.0.2",
     "prettier": "^1.13.7",
     "react-native": "~0.55.2",
     "react-native-scripts": "1.14.0",
@@ -36,9 +32,7 @@
   },
   "main": "./src/index.js",
   "scripts": {
-    "build": "rm -rf lib && babel src --out-dir lib --compact=false && flow-copy-source src lib",
     "eslint": "eslint '**/*.js' --max-warnings 0",
-    "flow": "flow",
     "prettier": "prettier --list-different '**/*.{js,ts}'",
     "lint": "yarn prettier && yarn eslint",
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
@@ -48,10 +42,13 @@
     "postpack": "../bin/postpack.sh && rm README.md"
   },
   "dependencies": {
-    "react-native-activity-feed-core": "v0.9.1"
+    "react-native-activity-feed-core": "v1.0.0-rc.1"
   },
   "peerDependencies": {
-    "expo": "^29.0.0 || ^28.0.0 || ^27.0.0"
+    "expo": "^29.0.0 || ^28.0.0 || ^27.0.0",
+    "expo-image-picker": "^9.2.0",
+    "expo-media-library": "^10.0.0",
+    "expo-permissions": "^10.0.0"
   },
   "files": [
     "lib"

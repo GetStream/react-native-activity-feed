@@ -1,3 +1,5 @@
 ```js
-<SectionHeader>Comments</SectionHeader>
+import SectionHeader from '../SectionHeader';
+
+<SectionHeader>Comments</SectionHeader>;
 ```

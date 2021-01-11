@@ -1,25 +1,17 @@
-//@flow
+//
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
-import type { StyleSheetLike } from '../types';
 
 import _ from 'lodash';
-
-export type Props = {|
-  title: ?string,
-  description: ?string,
-  image?: ?string,
-  url?: ?string,
-  styles?: StyleSheetLike,
-  pressed?: () => mixed,
-|};
 
 /**
  * Card element
  * @example ./examples/Card.md
  */
-const Card = (props: Props): any => {
+const Card = (props) => {
   const { title, description, image, url } = props;
   const styles = buildStylesheet('card', props.styles);
 
@@ -33,7 +25,7 @@ const Card = (props: Props): any => {
       <Image
         style={styles.image}
         source={image ? { uri: image } : require('../images/placeholder.png')}
-        resizeMethod="resize"
+        resizeMethod='resize'
       />
       <View style={styles.content}>
         <Text style={styles.title}>{_.truncate(title, { length: 60 })}</Text>
@@ -43,6 +35,15 @@ const Card = (props: Props): any => {
       </View>
     </TouchableOpacity>
   );
+};
+
+Card.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
+  url: PropTypes.string,
+  styles: PropTypes.object,
+  pressed: PropTypes.func,
 };
 
 export default Card;

@@ -1,67 +1,14 @@
-// @flow
+//
 import * as React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
 import NewActivitiesNotification from './NewActivitiesNotification';
 import { smartRender } from '../utils';
 
-import type {
-  NavigationScreen,
-  StyleSheetLike,
-  BaseActivityResponse,
-  BaseReaction,
-  BaseFeedCtx,
-  BaseClient,
-  Renderable,
-} from '../types';
-import type { FeedRequestOptions, FeedResponse } from 'getstream';
-
-type Props = {|
-  feedGroup: string,
-  userId?: string,
-  options?: FeedRequestOptions,
-  Group: Renderable,
-  /** if true, feed shows the NewActivitiesNotification component when new activities are added */
-  notify?: boolean,
-  /** the component to use to render new activities notification */
-  Notifier: Renderable,
-  doFeedRequest?: (
-    client: BaseClient,
-    feedGroup: string,
-    userId?: string,
-    options?: FeedRequestOptions,
-  ) => Promise<FeedResponse<{}, {}>>,
-  /** Override reaction add request */
-  doReactionAddRequest?: (
-    kind: string,
-    activity: BaseActivityResponse,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override reaction delete request */
-  doReactionDeleteRequest?: (id: string) => mixed,
-  /** Override child reaction add request */
-  doChildReactionAddRequest?: (
-    kind: string,
-    activity: BaseReaction,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override child reaction delete request */
-  doChildReactionDeleteRequest?: (id: string) => mixed,
-  analyticsLocation?: string,
-  noPagination?: boolean,
-  children?: React.Node,
-  styles: StyleSheetLike,
-  navigation?: NavigationScreen,
-  /** Any props the react native FlatList accepts */
-  flatListProps?: {},
-  setListRef?: (ref: any) => any,
-|};
-
-export default class NotificationFeed extends React.Component<Props> {
+export default class NotificationFeed extends React.Component {
   static defaultProps = {
     feedGroup: 'notification',
     styles: {},
@@ -89,6 +36,85 @@ export default class NotificationFeed extends React.Component<Props> {
   }
 }
 
+// We have duplicated FeedRequestOptionsPropTypeShape at multiple places in codebase
+// We can't abstract it out since stylegudist doesn't work with imported types.
+const FeedRequestOptionsPropTypeShape = {
+  withReactionCounts: PropTypes.bool,
+  withRecentReactions: PropTypes.bool,
+  withOwnReactions: PropTypes.bool,
+  reactions: PropTypes.shape({
+    recent: PropTypes.bool,
+    own: PropTypes.bool,
+    counts: PropTypes.bool,
+  }),
+  limit: PropTypes.number,
+  offset: PropTypes.number,
+  id_lt: PropTypes.string,
+  id_lte: PropTypes.string,
+  id_gt: PropTypes.string,
+  id_gte: PropTypes.string,
+  ranking: PropTypes.string,
+  mark_seen: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  mark_read: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  refresh: PropTypes.bool,
+};
+
+NotificationFeed.propTypes = {
+  feedGroup: PropTypes.string,
+  userId: PropTypes.string,
+  options: PropTypes.shape(FeedRequestOptionsPropTypeShape),
+  Group: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** if true, feed shows the NewActivitiesNotification component when new activities are added */
+  notify: PropTypes.bool,
+  /** the component to use to render new activities notification */
+  Notifier: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /**
+   * @param {*} client
+   * @param {*} feedGroup
+   * @param {*} userId
+   * @param {*} options
+   */
+  doFeedRequest: PropTypes.func,
+  /** Override reaction add request */
+  /**
+   *
+   * @param {*} kind
+   * @param {*} activity
+   * @param {*} data
+   * @param {*} options
+   */
+  doReactionAddRequest: PropTypes.func,
+  /**
+   * Override reaction delete request
+   * @param {string} id
+   */
+  doReactionDeleteRequest: PropTypes.func,
+  /**
+   * Override child reaction add request
+   * @param {*} kind
+   * @param {*} activity
+   * @param {*} data
+   * @param {*} options
+   */
+  doChildReactionAddRequest: PropTypes.func,
+  /**
+   * Override child reaction delete request
+   * @param {string} id
+   */
+  doChildReactionDeleteRequest: PropTypes.func,
+  analyticsLocation: PropTypes.string,
+  noPagination: PropTypes.bool,
+  styles: PropTypes.object,
+  // Navigation props
+  navigation: PropTypes.object,
+  /** Any props the react native FlatList accepts */
+  flatListProps: PropTypes.object,
+  /**
+   * @param {*} ref
+   */
+  setListRef: PropTypes.func,
+};
+
 const makeDefaultOptions = (options) => {
   const copy = { ...options };
   if (copy.mark_seen === undefined) {
@@ -97,8 +123,7 @@ const makeDefaultOptions = (options) => {
   return copy;
 };
 
-type PropsInner = {| ...Props, ...BaseFeedCtx |};
-class NotificationFeedInner extends React.Component<PropsInner> {
+class NotificationFeedInner extends React.Component {
   _refresh = async () => {
     await this.props.refresh(makeDefaultOptions(this.props.options));
     // $FlowFixMe
@@ -111,7 +136,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
     await this._refresh();
   }
 
-  _renderWrappedGroup = ({ item }: { item: BaseActivityResponse }) => (
+  _renderWrappedGroup = ({ item }) => (
     <ImmutableItemWrapper
       renderItem={this._renderGroup}
       item={item}
@@ -136,7 +161,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
     userId: this.props.userId,
   });
 
-  _renderGroup = (item: BaseActivityResponse) => {
+  _renderGroup = (item) => {
     const args = {
       activityGroup: item,
       styles: this.props.styles.activity,
@@ -186,12 +211,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
   }
 }
 
-type ImmutableItemWrapperProps = {
-  renderItem: (item: any) => any,
-  item: any,
-};
-
-class ImmutableItemWrapper extends React.PureComponent<ImmutableItemWrapperProps> {
+class ImmutableItemWrapper extends React.PureComponent {
   render() {
     return this.props.renderItem(this.props.item.toJS());
   }

@@ -1,35 +1,17 @@
-// @flow
+//
 import * as React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 
-import type { StyleSheetLike } from '../types';
-import type { Streami18Ctx } from '../Context';
 import { withTranslationContext } from '../Context';
-
-type Props = {|
-  adds: Array<{}>,
-  deletes: Array<{}>,
-  labelSingular: string,
-  labelPlural: string,
-  /** A function that returns either the string to display or null in case no
-   * notification should be displayed */
-  labelFunction?: ({
-    count: number,
-    deleteCount: number,
-    addCount: number,
-    labelPlural: string,
-    labelSingular: string,
-  }) => string | null,
-  styles?: StyleSheetLike,
-  onPress?: () => mixed,
-|} & Streami18Ctx;
 
 /**
  * Renders a notification message when new activities are received by a feed
  * @example ./examples/NewActivitiesNotification.md
  */
-class NewActivitiesNotification extends React.Component<Props> {
+class NewActivitiesNotification extends React.Component {
   static defaultProps = {
     labelSingular: 'activity',
     labelPlural: 'activities',
@@ -81,10 +63,6 @@ class NewActivitiesNotification extends React.Component<Props> {
     }
 
     return addCount > 1 ? pluralNotificationText : singleNotificationText;
-
-    // return `You have ${addCount} new ${
-    //   addCount > 1 ? labelPlural : labelSingular
-    // }`;
   };
 
   render() {
@@ -97,5 +75,27 @@ class NewActivitiesNotification extends React.Component<Props> {
     ) : null;
   }
 }
+
+NewActivitiesNotification.propTypes = {
+  adds: PropTypes.arrayOf(PropTypes.object),
+  deletes: PropTypes.arrayOf(PropTypes.object),
+  labelSingular: PropTypes.string,
+  labelPlural: PropTypes.string,
+  /**
+   * A function that returns either the string to display or null in case no
+   * notification should be displayed
+   * @param {object} param0 e.g.,
+   * {
+   *    count: number,
+   *    deleteCount: number,
+   *    addCount: number,
+   *    labelPlural: string,
+   *    labelSingular: string,
+   *  }
+   */
+  labelFunction: PropTypes.func,
+  styles: PropTypes.object,
+  onPress: PropTypes.func,
+};
 
 export default withTranslationContext(NewActivitiesNotification);

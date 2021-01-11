@@ -1,55 +1,14 @@
-// @flow
+//
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FlatFeed from './FlatFeed';
-
-import type { FeedRequestOptions } from 'getstream';
-import type {
-  NavigationScreen,
-  BaseActivityResponse,
-  BaseReaction,
-  Renderable,
-  StyleSheetLike,
-} from '../types';
-
-type Props = {|
-  activity: BaseActivityResponse,
-  feedGroup: string,
-  userId?: string,
-  options?: FeedRequestOptions,
-  analyticsLocation?: string,
-  Activity?: Renderable,
-  Footer?: any,
-  styles?: StyleSheetLike,
-  navigation?: NavigationScreen,
-  /** Override reaction add request */
-  doReactionAddRequest?: (
-    kind: string,
-    activity: BaseActivityResponse,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override reaction delete request */
-  doReactionDeleteRequest?: (id: string) => mixed,
-  /** Override child reaction add request */
-  doChildReactionAddRequest?: (
-    kind: string,
-    activity: BaseReaction,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override child reaction delete request */
-  doChildReactionDeleteRequest?: (id: string) => mixed,
-  /** Override reactions filter request */
-  doReactionsFilterRequest?: (options: {}) => Promise<Object>,
-  setListRef?: (ref: any) => any,
-|};
 
 /**
  * Shows the detail of a single activity
  * @example ./examples/SinglePost.md
  */
-export default class SinglePost extends React.Component<Props> {
+export default class SinglePost extends React.Component {
   render() {
     return (
       <React.Fragment>
@@ -81,3 +40,73 @@ export default class SinglePost extends React.Component<Props> {
     );
   }
 }
+
+// We have duplicated FeedRequestOptionsPropTypeShape at multiple places in codebase
+// We can't abstract it out since stylegudist doesn't work with imported types.
+const FeedRequestOptionsPropTypeShape = {
+  withReactionCounts: PropTypes.bool,
+  withRecentReactions: PropTypes.bool,
+  withOwnReactions: PropTypes.bool,
+  reactions: PropTypes.shape({
+    recent: PropTypes.bool,
+    own: PropTypes.bool,
+    counts: PropTypes.bool,
+  }),
+  limit: PropTypes.number,
+  offset: PropTypes.number,
+  id_lt: PropTypes.string,
+  id_lte: PropTypes.string,
+  id_gt: PropTypes.string,
+  id_gte: PropTypes.string,
+  ranking: PropTypes.string,
+  mark_seen: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  mark_read: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  refresh: PropTypes.bool,
+};
+
+SinglePost.propTypes = {
+  activity: PropTypes.object,
+  feedGroup: PropTypes.string,
+  userId: PropTypes.string,
+  options: PropTypes.shape(FeedRequestOptionsPropTypeShape),
+  analyticsLocation: PropTypes.string,
+  Activity: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  Footer: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  styles: PropTypes.object,
+  navigation: PropTypes.object,
+  /**
+   * Override reaction add request
+   * @param {*} kind
+   * @param {*} activity
+   * @param {*} data
+   * @param {*} options
+   */
+  doReactionAddRequest: PropTypes.func,
+  /**
+   * Override reaction delete request
+   * @param {*} id
+   */
+  doReactionDeleteRequest: PropTypes.func,
+  /**
+   * Override child reaction add request
+   * @param {*} kind
+   * @param {*} activity
+   * @param {*} data
+   * @param {*} options
+   */
+  doChildReactionAddRequest: PropTypes.func,
+  /**
+   * Override child reaction delete request
+   * @param {*} id
+   */
+  doChildReactionDeleteRequest: PropTypes.func,
+  /**
+   * Override reactions filter request
+   * @param {*} options
+   */
+  doReactionsFilterRequest: PropTypes.func,
+  /**
+   * @param {*} ref
+   */
+  setListRef: PropTypes.func,
+};

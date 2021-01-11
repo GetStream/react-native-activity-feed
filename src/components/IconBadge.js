@@ -1,32 +1,16 @@
-// @flow
+//
 import * as React from 'react';
 import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { Feed, FeedContext } from '../Context';
 import { buildStylesheet } from '../styles';
-
-import type { BaseFeedCtx, StyleSheetLike } from '../types';
-
-export type Props = {|
-  feedGroup: string,
-  userId?: string,
-  styles?: StyleSheetLike,
-  showNumber?: boolean,
-  hidden?: boolean,
-  children: React.Node,
-|};
-
-type PropsInner = {| ...Props, ...BaseFeedCtx |};
-
-export type State = {
-  unread: number,
-  subscription: any,
-};
 
 /**
  * A badge icon that notifies the user if a feed has new activities
  * @example ./examples/IconBadge.md
  */
-export default class IconBadge extends React.Component<Props> {
+export default class IconBadge extends React.Component {
   static defaultProps = {
     feedGroup: 'notification',
     showNumber: false,
@@ -43,7 +27,14 @@ export default class IconBadge extends React.Component<Props> {
   }
 }
 
-class IconBadgeInner extends React.Component<PropsInner, State> {
+IconBadge.propTypes = {
+  feedGroup: PropTypes.string.isRequired,
+  userId: PropTypes.string,
+  styles: PropTypes.object,
+  showNumber: PropTypes.number,
+  hidden: PropTypes.bool,
+};
+class IconBadgeInner extends React.Component {
   async componentDidMount() {
     await this.props.refreshUnreadUnseen();
   }

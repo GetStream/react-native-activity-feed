@@ -1,5 +1,7 @@
-//@flow
+//
 import * as React from 'react';
+import PropTypes from 'prop-types';
+
 import {
   View,
   Text,
@@ -15,46 +17,58 @@ import _ from 'lodash';
 
 import UserBar from './UserBar';
 import Card from './Card';
-import type {
-  ActivityData,
-  StyleSheetLike,
-  Renderable,
-  BaseUserResponse,
-} from '../types';
-import { smartRender } from '../utils';
 
-type Props = {|
-  Header?: Renderable,
-  Content?: Renderable,
-  Footer?: Renderable,
-  // The component that displays the url preview
-  Card: Renderable,
-  onPress?: () => mixed,
-  onPressAvatar?: () => mixed,
-  onPressMention?: (text: string, activity: {}) => mixed,
-  onPressHashtag?: (text: string, activity: {}) => mixed,
-  sub?: string,
-  icon?: string,
-  activity: ActivityData,
-  /** Width of an image that's displayed, by default this is
-   * the width of the screen */
-  imageWidth?: number,
-  /** Styling of the component */
-  styles?: StyleSheetLike,
-  /** Handle errors in the render method in a custom way, by
-   * default this component logs the error in the console **/
-  componentDidCatch?: (error: Error, info: {}, props: Props) => mixed,
-|};
+import { smartRender } from '../utils';
 
 /**
  * Renders feed activities
  * @example ./examples/Activity.md
  */
-export default class Activity extends React.Component<Props> {
+export default class Activity extends React.Component {
+  static propTypes = {
+    Header: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+    Content: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+    Footer: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+    // The component that displays the url preview
+    Card: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+    onPress: PropTypes.func,
+    onPressAvatar: PropTypes.func,
+    /**
+     *
+     * @param {*} text
+     * @param {*} activity
+     */
+    onPressMention: PropTypes.func,
+    /**
+     *
+     * @param {*} text
+     * @param {*} activity
+     */
+    onPressHashtag: PropTypes.func,
+    sub: PropTypes.string,
+    icon: PropTypes.string,
+    // @todo: Fix it
+    activity: PropTypes.object,
+    /** Width of an image that's displayed, by default this is
+     * the width of the screen */
+    imageWidth: PropTypes.number,
+    /** Styling of the component */
+    styles: PropTypes.object,
+    /**
+     * Handle errors in the render method in a custom way, by
+     * default this component logs the error in the console
+     *
+     * @param {*} error
+     * @param {*} info
+     * @param {*} props
+     */
+    componentDidCatch: PropTypes.func,
+  };
+
   static defaultProps = {
     Card,
   };
-  componentDidCatch(error: Error, info: {}) {
+  componentDidCatch(error, info) {
     if (this.props.componentDidCatch) {
       this.props.componentDidCatch(error, info, this.props);
     } else {
@@ -84,7 +98,7 @@ export default class Activity extends React.Component<Props> {
       updated_at: '',
       data: { name: 'Unknown', profileImage: '' },
     };
-    let actor: BaseUserResponse;
+    let actor;
     if (
       typeof activityActor === 'string' ||
       typeof activityActor.error === 'string'
@@ -92,7 +106,7 @@ export default class Activity extends React.Component<Props> {
       actor = notFound;
     } else {
       //$FlowBug
-      actor = (activityActor: any);
+      actor = activityActor;
     }
 
     const styles = buildStylesheet('activity', this.props.styles);
@@ -111,21 +125,21 @@ export default class Activity extends React.Component<Props> {
     );
   };
 
-  onPressMention = (text: string, activity: ActivityData) => {
+  onPressMention = (text, activity) => {
     if (this.props.onPressMention !== undefined) {
       this.props.onPressMention(text, activity);
       return;
     }
   };
 
-  onPressHashtag = (text: string, activity: ActivityData) => {
+  onPressHashtag = (text, activity) => {
     if (this.props.onPressHashtag !== undefined) {
       this.props.onPressHashtag(text, activity);
       return;
     }
   };
 
-  getAndTrimUrl = (text: string, activity: ActivityData) => {
+  getAndTrimUrl = (text, activity) => {
     if (
       activity.attachments &&
       activity.attachments.og &&
@@ -138,7 +152,7 @@ export default class Activity extends React.Component<Props> {
     }
   };
 
-  renderText = (text: string, activity: ActivityData) => {
+  renderText = (text, activity) => {
     const tokens = text.split(' ');
     const rendered = [];
     const styles = buildStylesheet('activity', this.props.styles);
@@ -182,7 +196,11 @@ export default class Activity extends React.Component<Props> {
           </Text>,
         );
       } else {
-        rendered.push(<Text style={styles.text}>{tokens[i] + ' '}</Text>);
+        rendered.push(
+          <Text key={i} style={styles.text}>
+            {tokens[i] + ' '}
+          </Text>,
+        );
       }
     }
     return rendered;
@@ -221,7 +239,7 @@ export default class Activity extends React.Component<Props> {
           <Image
             style={{ width, height: width }}
             source={{ uri: image }}
-            resizeMethod="resize"
+            resizeMethod='resize'
           />
         )}
 
@@ -229,7 +247,7 @@ export default class Activity extends React.Component<Props> {
           <Image
             style={{ width, height: width }}
             source={{ uri: attachments.images[0] }}
-            resizeMethod="resize"
+            resizeMethod='resize'
           />
         )}
         {attachments &&

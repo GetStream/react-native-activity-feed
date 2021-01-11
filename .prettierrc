@@ -1,14 +1,7 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all",
   "arrowParens": "always",
+  "jsxSingleQuote": true,
+  "singleQuote": true,
   "tabWidth": 2,
-  "overrides": [
-    {
-      "files": "*.ts",
-      "options": {
-        "trailingComma": "all"
-      }
-    }
-  ]
+  "trailingComma": "all"
 }

@@ -1,41 +1,11 @@
-// @flow
+//
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
-import type { ReactionCounts } from 'getstream';
-import type { Streami18Ctx } from '../Context';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 
-import type { StyleSheetLike } from '../types';
 import { withTranslationContext } from '../Context';
-
-type Props = {|
-  /** The icon to display */
-  icon: string | number,
-  /** The reaction counts for the activity */
-  counts?: ReactionCounts,
-  /** The kind of reaction that this displays */
-  kind: string,
-  /** The height of the icon */
-  height?: number,
-  /** The width of the icon */
-  width?: number,
-  /** Function to call when pressed, usually this should call `props.onToggleReaction` */
-  onPress?: (kind: string) => any,
-  /** The label to display if the count is one (e.g "like") */
-  labelSingle?: string,
-  /** The label to display if the count is more than one (e.g "likes") */
-  labelPlural?: string,
-  /** Styling of the icon */
-  styles?: StyleSheetLike,
-  /** A function that returns either the string to display next to the icon or
-   * null in case no string should be displayed. This can be used for
-   * internationalization. */
-  labelFunction?: ({
-    count: number,
-    labelPlural: ?string,
-    labelSingle: ?string,
-  }) => string | null,
-|} & Streami18Ctx;
 
 function defaultLabelFunction(count, props) {
   const { labelSingle, labelPlural, labelFunction, kind, t } = props;
@@ -81,7 +51,7 @@ function defaultLabelFunction(count, props) {
   return label;
 }
 
-const ReactionIcon = withTranslationContext((props: Props) => {
+const ReactionIcon = withTranslationContext((props) => {
   let count = null;
   if (props.counts && props.kind) {
     count = props.counts[props.kind] || 0;
@@ -105,5 +75,36 @@ const ReactionIcon = withTranslationContext((props: Props) => {
     </TouchableOpacity>
   );
 });
+
+ReactionIcon.propTypes = {
+  /** The icon to display */
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** The reaction counts for the activity */
+  counts: PropTypes.objectOf(PropTypes.number),
+  /** The kind of reaction that this displays */
+  kind: PropTypes.string,
+  /** The height of the icon */
+  height: PropTypes.number,
+  /** The width of the icon */
+  width: PropTypes.number,
+  /**
+   * Function to call when pressed, usually this should call `props.onToggleReaction`
+   * @param {string} kind
+   */
+  onPress: PropTypes.func,
+  /** The label to display if the count is one (e.g "like") */
+  labelSingle: PropTypes.string,
+  /** The label to display if the count is more than one (e.g "likes") */
+  labelPlural: PropTypes.string,
+  /** Styling of the icon */
+  styles: PropTypes.object,
+  /**
+   * A function that returns either the string to display next to the icon or
+   * null in case no string should be displayed. This can be used for
+   * internationalization.
+   * @param {object} param
+   */
+  labelFunction: PropTypes.func,
+};
 
 export default ReactionIcon;

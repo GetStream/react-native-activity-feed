@@ -1,6 +1,8 @@
 #### Simple message with mention
 
 ```js
+import Activity from '../Activity';
+
 const activity = {
   actor: {
     data: {
@@ -19,6 +21,7 @@ const activity = {
 #### Activity with enriched URL
 
 ```js
+import Activity from '../Activity';
 const activity = {
   actor: {
     data: {
@@ -53,6 +56,7 @@ const activity = {
 #### Activity with attached image and hashtag
 
 ```js
+import Activity from '../Activity';
 const activity = {
   actor: {
     data: {
@@ -73,6 +77,7 @@ const activity = {
 #### Activity with custom header
 
 ```js
+import Activity from '../Activity';
 const View = require('react-native').View;
 const RepostIcon = require('./resources/repost.png');
 const HeartIcon = require('./resources/heart.png');

@@ -1,16 +1,12 @@
-// @flow
+//
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import type { StyleSheetLike } from '../types';
+import PropTypes from 'prop-types';
+
 import PickPhotoIcon from '../images/icons/pickphoto.png';
 import { buildStylesheet } from '../styles';
 
-type Props = {|
-  onUploadButtonPress?: () => mixed,
-  styles?: StyleSheetLike,
-|};
-
-const UploadImage = ({ onUploadButtonPress, ...props }: Props) => {
+const UploadImage = ({ onUploadButtonPress, ...props }) => {
   const styles = buildStylesheet('uploadImage', props.styles || {});
 
   return (
@@ -20,6 +16,11 @@ const UploadImage = ({ onUploadButtonPress, ...props }: Props) => {
       </TouchableOpacity>
     </View>
   );
+};
+
+UploadImage.propTypes = {
+  onUploadButtonPress: PropTypes.func,
+  styles: PropTypes.object,
 };
 
 export default UploadImage;

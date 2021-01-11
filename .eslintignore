@@ -1,12 +1,7 @@
 **/*{.,-}min.js
 node_modules/
-/lib/
-/example/lib/
-/examples/one/
-/native-example/lib/
 /native-package/lib/
 /expo-package/lib/
-/flow-typed/
 build
 dist
 /docs/

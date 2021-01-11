@@ -1,59 +1,24 @@
-// @flow
+//
 import React from 'react';
 import { View, TextInput } from 'react-native';
 import KeyboardAccessory from 'react-native-sticky-keyboard-accessory';
+import PropTypes from 'prop-types';
 
 import Avatar from './Avatar';
-import { NativeSyntheticEvent } from 'react-native';
-import type { StyleSheetLike, ActivityData } from '../types';
-import type { Props as AvatarProps } from './Avatar';
-import type { Streami18Ctx } from '../Context/StreamApp';
+
 import { buildStylesheet } from '../styles';
 import { withTranslationContext } from '../Context';
-
-type Props = {|
-  /** Callback function called when the text is submitted, by default it adds a
-   * comment reaction to the provided activity */
-  onSubmit?: (string) => mixed,
-  /** Height in pixels for the whole component */
-  height?: number,
-  /** Props used to render the Avatar component */
-  avatarProps?: AvatarProps,
-  /** Skips the Avatar component when provided */
-  noAvatar?: boolean,
-  /** Style changes to default */
-  styles?: StyleSheetLike,
-  /** activity */
-  activity: ActivityData,
-  /** event callback handler fired when the enter button is pressed */
-  onAddReaction: (string, ActivityData, any) => void,
-  /** Removes KeyboardAccessory. When disabling this keep in mind that the
-   * input won't move with the keyboard anymore. */
-  noKeyboardAccessory: boolean,
-  /** Custom verticalOffset for the KeyboardAccessory if for some reason the
-   * component is positioned wrongly when the keyboard opens. If the item is
-   * positioned too high this should be a negative number, if it's positioned
-   * too low it should be positive. One known case where this happens is when
-   * using react-navigation with `tabBarPosition: 'bottom'`.  */
-  verticalOffset: number,
-  /** Any props the React Native TextInput accepts */
-  textInputProps?: {},
-|} & Streami18Ctx;
-
-type State = {|
-  text: string,
-|};
 
 /**
  * Comment box with keyboard control, avatar and text input
  * All props are fulfilled automatically if used as a child element
  * of an activity.
  */
-class CommentBox extends React.Component<Props, State> {
+class CommentBox extends React.Component {
   static defaultProps = {
     styles: {},
     height: 80,
-    verticalOffset: 0,
+    verticalOffset: 25,
     noKeyboardAccessory: false,
   };
 
@@ -61,7 +26,7 @@ class CommentBox extends React.Component<Props, State> {
     text: '',
   };
 
-  postComment(event: NativeSyntheticEvent<>) {
+  postComment(event) {
     if (this.props.onSubmit !== undefined) {
       this.props.onSubmit(event.nativeEvent.text);
     } else {
@@ -87,14 +52,14 @@ class CommentBox extends React.Component<Props, State> {
         <TextInput
           value={this.state.text}
           style={styles.textInput}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid='transparent'
           onChangeText={(text) => this.setState({ text })}
           onSubmitEditing={(event) => {
             this.setState({ text: '' });
             this.postComment(event);
           }}
           placeholder={t('Start Typing...')}
-          returnKeyType="send"
+          returnKeyType='send'
           {...textInputProps}
         />
       </View>
@@ -113,5 +78,40 @@ class CommentBox extends React.Component<Props, State> {
     );
   }
 }
+
+CommentBox.propTypes = {
+  /** Callback function called when the text is submitted, by default it adds a
+   * comment reaction to the provided activity */
+  onSubmit: PropTypes.func,
+  /** Height in pixels for the whole component */
+  height: PropTypes.number,
+  /** Props used to render the Avatar component */
+  avatarProps: PropTypes.object,
+  /** Skips the Avatar component when provided */
+  noAvatar: PropTypes.bool,
+  /** Style changes to default */
+  styles: PropTypes.object,
+  /** activity */
+  // @todo: Fix it
+  activity: PropTypes.object,
+  /**
+   * event callback handler fired when the enter button is pressed
+   * @param {*} string
+   * @param {*} ActivityData
+   * @param {*} any
+   */
+  onAddReaction: PropTypes.func,
+  /** Removes KeyboardAccessory. When disabling this keep in mind that the
+   * input won't move with the keyboard anymore. */
+  noKeyboardAccessory: PropTypes.bool,
+  /** Custom verticalOffset for the KeyboardAccessory if for some reason the
+   * component is positioned wrongly when the keyboard opens. If the item is
+   * positioned too high this should be a negative number, if it's positioned
+   * too low it should be positive. One known case where this happens is when
+   * using react-navigation with `tabBarPosition: 'bottom'`.  */
+  verticalOffset: PropTypes.number,
+  /** Any props the React Native TextInput accepts */
+  textInputProps: PropTypes.object,
+};
 
 export default withTranslationContext(CommentBox);

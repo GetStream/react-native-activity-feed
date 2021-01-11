@@ -1,4 +1,6 @@
 ```js
+import UrlPreview from '../UrlPreview';
+
 <UrlPreview
   // open graph data is retrieved using client.og('url') this is just an example with mock data
   og={{
@@ -11,5 +13,5 @@
     ],
   }}
   onPressDismiss={() => {}}
-/>
+/>;
 ```

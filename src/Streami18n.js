@@ -145,9 +145,12 @@ const en_locale = {
  *
  * ```
  * const i18n = new Streami18n({ language 'nl' });
- * <Chat client={chatClient} i18nInstance={i18n}>
+ * <StreamApp
+ *  i18nInstance={i18n}
  *  ...
- * </Chat>
+ * >
+ *  ...
+ * </StreamApp>
  * ```
  *
  * If you would like to override certain keys in in-built translation.
@@ -169,9 +172,12 @@ const en_locale = {
  *  '{{ firstUser }} and {{ secondUser }} are typing...': '{{ firstUser }} en {{ secondUser }} zijn aan het typen...',
  * });
  *
- * <Chat client={chatClient} i18nInstance={i18n}>
+ * <StreamApp
+ *  i18nInstance={i18n}
  *  ...
- * </Chat>
+ * >
+ *  ...
+ * </StreamApp>
  * ```
  *
  * You can use the same function to add whole new language as well.
@@ -186,9 +192,12 @@ const en_locale = {
  *
  * // Make sure to call setLanguage to reflect new language in UI.
  * i18n.setLanguage('it');
- * <Chat client={chatClient} i18nInstance={i18n}>
+ * <StreamApp
+ *  i18nInstance={i18n}
  *  ...
- * </Chat>
+ * >
+ *  ...
+ * </StreamApp>
  * ```
  *
  * ## Datetime translations

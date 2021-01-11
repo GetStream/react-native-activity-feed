@@ -1,4 +1,3 @@
-// @noflow
 /* globals __dirname */
 /* eslint-env commonjs*/
 
@@ -14,7 +13,15 @@ module.exports = {
   title: 'React native activity feeds - Docs',
   require: ['babel-polyfill'],
   styleguideDir: 'docs',
+  serverPort: 6068,
   sortProps: (props) => props,
+  resolver(ast, recast) {
+    return require('react-docgen').resolver.findAllExportedComponentDefinitions(
+      ast,
+      recast,
+    );
+  },
+
   styleguideComponents: {
     PathlineRenderer: path.join(
       __dirname,
@@ -69,15 +76,22 @@ module.exports = {
     favicon: 'https://getstream.imgix.net/images/favicons/favicon-96x96.png',
   },
   webpackConfig: {
+    devtool: 'source-map',
     resolve: {
       // auto resolves any react-native import as react-native-web
-      alias: { 'react-native': 'react-native-web' },
-      extensions: ['.web.js', '.js'],
+      alias: {
+        'react-native': 'react-native-web',
+        'react-native-gesture-handler': 'react-native-web',
+      },
+      extensions: ['.web.js', '.js', '.ts', '.tsx'],
+    },
+    devServer: {
+      clientLogLevel: 'warn',
     },
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.(js|jsx|ts|tsx)$/,
           loader: 'babel-loader',
           include: [
             path.join(__dirname, 'src'),
@@ -86,14 +100,9 @@ module.exports = {
             ),
           ],
           options: {
-            plugins: [
-              'macros',
-              '@babel/plugin-transform-runtime',
-              '@babel/proposal-class-properties',
-              '@babel/proposal-object-rest-spread',
-              'react-native-web',
-            ],
-            presets: ['@babel/env', 'module:metro-react-native-babel-preset'],
+            comments: true,
+            plugins: ['module-resolver', 'react-native-web'],
+            presets: ['module:metro-react-native-babel-preset'],
             babelrc: false,
           },
         },
@@ -117,6 +126,7 @@ module.exports = {
     plugins: [
       // Add __DEV__ flag to browser example.
       new webpack.DefinePlugin({
+        // eslint-disable-next-line no-undef
         __DEV__: process.env,
       }),
     ],

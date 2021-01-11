@@ -1,38 +1,43 @@
-// @flow
+//
 import * as React from 'react';
-import type { Renderable, RenderableButNotElement } from './types';
+
 import Dayjs from 'dayjs';
 
-export function humanizeTimestamp(
-  timestamp: string | number,
-  tDateTimeParser: (input?: string | number) => Function = Dayjs,
-): string {
+export function humanizeTimestamp(timestamp, tDateTimeParser) {
+  let time;
   // Following calculation is based on assumption that tDateTimeParser()
   // either returns momentjs or dayjs object.
-  const time = tDateTimeParser(timestamp).add(
-    Dayjs(timestamp).utcOffset(),
-    'minute',
-  ); // parse time as UTC
+
+  // When timestamp doesn't have z at the end, we are supposed to take it as UTC time.
+  // Ideally we need to adhere to RFC3339. Unfortunately this needs to be fixed on backend.
+  if (
+    typeof timestamp === 'string' &&
+    timestamp[timestamp.length - 1].toLowerCase() === 'z'
+  ) {
+    time = tDateTimeParser(timestamp);
+  } else {
+    time = tDateTimeParser(timestamp).add(
+      Dayjs(timestamp).utcOffset(),
+      'minute',
+    ); // parse time as UTC
+  }
+
   const now = tDateTimeParser();
   return time.from(now);
 }
 
-export const smartRender = (
-  ElementOrComponentOrLiteral: Renderable,
-  props?: {},
-  fallback?: Renderable,
-) => {
+export const smartRender = (ElementOrComponentOrLiteral, props, fallback) => {
   if (ElementOrComponentOrLiteral === undefined) {
     ElementOrComponentOrLiteral = fallback;
   }
   if (React.isValidElement(ElementOrComponentOrLiteral)) {
     // Flow cast through any, to make flow believe it's a React.Element
-    const element = ((ElementOrComponentOrLiteral: any): React.Element<any>);
+    const element = ElementOrComponentOrLiteral;
     return element;
   }
 
   // Flow cast through any to remove React.Element after previous check
-  const ComponentOrLiteral = ((ElementOrComponentOrLiteral: any): RenderableButNotElement);
+  const ComponentOrLiteral = ElementOrComponentOrLiteral;
   if (
     typeof ComponentOrLiteral === 'string' ||
     typeof ComponentOrLiteral === 'number' ||
@@ -44,7 +49,7 @@ export const smartRender = (
   return <ComponentOrLiteral {...props} />;
 };
 
-export function sleep(ms: number): Promise<void> {
+export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
