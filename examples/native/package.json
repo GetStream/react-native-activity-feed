@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "init-data": "babel-node scripts/initData.js"
+    "init-data": "node scripts/initData.js"
   },
   "dependencies": {
     "react": "16.13.1",
