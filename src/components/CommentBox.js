@@ -18,7 +18,7 @@ class CommentBox extends React.Component {
   static defaultProps = {
     styles: {},
     height: 80,
-    verticalOffset: 0,
+    verticalOffset: 25,
     noKeyboardAccessory: false,
   };
 

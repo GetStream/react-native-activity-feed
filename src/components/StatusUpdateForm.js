@@ -88,6 +88,14 @@ class StatusUpdateForm extends React.Component {
 }
 
 StatusUpdateForm.propTypes = {
+  /**
+   * Compress image with quality (from 0 to 1, where 1 is best quality).
+   * On iOS, values larger than 0.8 don't produce a noticeable quality increase in most images,
+   * while a value of 0.8 will reduce the file size by about half or less compared to a value of 1.
+   * Image picker defaults to 0.8 for iOS and 1 for Android
+   */
+  compressImageQuality: PropTypes.number,
+
   /** The feed group part of the feed that the activity should be posted to */
   feedGroup: PropTypes.string,
   /** The user_id part of the feed that the activity should be posted to  */
