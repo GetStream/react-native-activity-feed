@@ -80,7 +80,7 @@ UserBar.propTypes = {
   subtitle: PropTypes.string,
   time: PropTypes.string, // text that should be displayed as the time
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // a timestamp that should be humanized
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onPressAvatar: PropTypes.func,
   follow: PropTypes.bool,
   styles: PropTypes.object,
