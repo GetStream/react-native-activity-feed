@@ -21,26 +21,22 @@ building scalable newsfeeds and activity streams.
 - Activity detail view
 - Realtime notifications
 
-## Useful links
+## 🔗 Quick Links
 
-[Get Started](https://getstream.io/react-native-activity-feed/tutorial/)
-
-[Example app](https://github.com/GetStream/react-native-example)
-
-[Component reference docs](https://getstream.github.io/react-native-activity-feed/)
-
-[Internationalisation (i18n)](https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n)
+- [Get Started](https://getstream.io/react-native-activity-feed/tutorial/)
+- [Example app](https://github.com/GetStream/react-native-example#react-native-activity-feed-example)
+- [Component reference docs](https://getstream.github.io/react-native-activity-feed/)
+- [Internationalisation (i18n)](https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n)
 
 ## 🔮 Example Apps
 
 - [Expo example](https://github.com/GetStream/react-native-activity-feed/tree/master/examples/expo#expo-example)
 - [Native example](https://github.com/GetStream/react-native-activity-feed/tree/master/examples/expo#native-example)
+- [Complete social networking app](https://github.com/GetStream/react-native-example#react-native-activity-feed-example)
 
 ## 🛠 Installation
 
-### expo package
-
-#### Install the dependency
+### Expo package
 
 ```sh
 # For Expo apps
@@ -57,9 +53,9 @@ npx pod-install
 ```
 
 **Note** If you are planning to use the image picker functionality, there are some additional steps to be done.
-You can find them here - https://github.com/ivpusic/react-native-image-crop-picker/blob/v0.25.0/README.md#install
+You can find them here - https://github.com/ivpusic/react-native-image-crop-picker/blob/v0.25.0/README.md#post-install-steps
 
-## Usage & Activity Feed setup
+## 💻 Usage & Activity Feed setup
 
 ### Setup StreamApp component
 
