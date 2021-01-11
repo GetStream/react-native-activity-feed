@@ -31,79 +31,16 @@ const App = () => {
     return null;
   }
 
-  // eslint-disable-next-line no-unused-vars
-  function stepOne() {
-    return (
-      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
-        <StreamApp apiKey={apiKey} appId={appId} token={token} />
-      </SafeAreaView>
-    );
-  }
+  const renderActivity = (props) => (
+    <Activity {...props} Footer={<LikeButton {...props} />} />
+  );
 
-  // eslint-disable-next-line no-unused-vars
-  function stepTwo() {
-    return (
-      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
-        <StreamApp apiKey={apiKey} appId={appId} token={token}>
-          <FlatFeed />
-        </StreamApp>
-      </SafeAreaView>
-    );
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  function stepThree() {
-    const renderActivity = (props) => (
-      <Activity {...props} Footer={<LikeButton {...props} />} />
-    );
-
-    return (
-      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
-        <StreamApp apiKey={apiKey} appId={appId} token={token}>
-          <FlatFeed Activity={renderActivity} />
-        </StreamApp>
-      </SafeAreaView>
-    );
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  function stepFour() {
-    const renderActivity = (props) => (
-      <Activity {...props} Footer={<LikeButton {...props} />} />
-    );
-
-    return (
-      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
-        <StreamApp apiKey={apiKey} appId={appId} token={token}>
-          <FlatFeed Activity={renderActivity} />
-          <StatusUpdateForm />
-        </StreamApp>
-      </SafeAreaView>
-    );
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  function stepFive() {
-    const renderActivity = (props) => (
-      <Activity {...props} Footer={<LikeButton {...props} />} />
-    );
-
-    return (
-      <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
-        <StreamApp apiKey={apiKey} appId={appId} token={token}>
-          <FlatFeed Activity={renderActivity} notify />
-          <StatusUpdateForm feedGroup='timeline' />
-        </StreamApp>
-      </SafeAreaView>
-    );
-  }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {/* {stepOne()} */}
-      {/* {stepTwo()} */}
-      {/* {stepThree()} */}
-      {/* {stepFour()} */}
-      {stepFive()}
+    <SafeAreaView style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+      <StreamApp apiKey={apiKey} appId={appId} token={token}>
+        <FlatFeed Activity={renderActivity} notify />
+        <StatusUpdateForm feedGroup='timeline' />
+      </StreamApp>
     </SafeAreaView>
   );
 };
