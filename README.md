@@ -1,4 +1,4 @@
-# Stream React Native Activity Feed Components
+# Official React Native SDK for [Activity Feeds](https://getstream.io/activity-feeds/)
 
 > React Native components to create activity and notification feeds using Stream
 
