@@ -55,7 +55,7 @@ npx pod-install
 **Note** If you are planning to use the image picker functionality, there are some additional steps to be done.
 You can find them here - https://github.com/ivpusic/react-native-image-crop-picker/blob/v0.25.0/README.md#post-install-steps
 
-## 💻 Usage & Activity Feed setup
+## 🔌 Usage & Activity Feed setup
 
 ### Setup StreamApp component
 
