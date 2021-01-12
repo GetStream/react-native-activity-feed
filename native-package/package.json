@@ -42,14 +42,15 @@
     "lint-fix": "prettier --write '**/*.{js,ts}' && eslint --fix '**/*.js'",
     "test": "jest",
     "preversion": "yarn && yarn lint",
-    "prepack": "../bin/prepack.sh && cp ../README.md .",
-    "postpack": "../bin/postpack.sh && rm README.md"
+    "prepack": " cp ../README.md .",
+    "postpack": "rm README.md"
   },
   "dependencies": {
     "react-native-activity-feed-core": "v1.0.0",
     "react-native-image-crop-picker": ">=0.33.2"
   },
   "files": [
-    "lib"
+    "src",
+    "README.md"
   ]
 }

@@ -97,6 +97,7 @@
     "react-navigation": "^2.3.1"
   },
   "files": [
-    "lib"
+    "src",
+    "README.md"
   ]
 }
