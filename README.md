@@ -2,6 +2,8 @@
 
 > React Native components to create activity and notification feeds using Stream
 
+> 🎉 [v1.0.1](https://github.com/GetStream/react-native-activity-feed/blob/master/CHANGELOG.md#101---2021-01-11) supports Expo 40 and react-native 0.63 🎉
+
 [![NPM](https://img.shields.io/npm/v/react-native-activity-feed.svg)](https://www.npmjs.com/package/react-native-activity-feed)
 [![Build Status](https://travis-ci.org/GetStream/react-native-activity-feed.svg?branch=master)](https://travis-ci.org/GetStream/react-native-activity-feed)
 [![Component Reference](https://img.shields.io/badge/docs-component%20reference-blue.svg)](https://getstream.github.io/react-native-activity-feed/)
@@ -27,6 +29,15 @@ building scalable newsfeeds and activity streams.
 - [Example app](https://github.com/GetStream/react-native-example#react-native-activity-feed-example)
 - [Component reference docs](https://getstream.github.io/react-native-activity-feed/)
 - [Internationalisation (i18n)](https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n)
+
+## 🔐 React Native Compatibility
+
+To use this library you need to ensure you match up with the correct version of React Native you are using.
+
+| `react-native-activity-feed` version | [`getstream`](https://www.npmjs.com/package/getstream) | react-native |
+| ------------------------------------ | ------------------------------------------------------ | ------------ |
+| `1.x.x`                              | `>= 0.6.x`                                             | `>= 0.60.0`  |
+| `0.x.x`                              | `< 0.6.0`                                              | `< 0.60.0`   |
 
 ## 🔮 Example Apps
 
