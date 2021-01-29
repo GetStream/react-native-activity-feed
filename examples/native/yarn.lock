@@ -1257,7 +1257,7 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.1.6.tgz#f4b1efa784e8db479cdb8b14403e2144b1e9ff03"
   integrity sha512-6gOkRe7OIioWAXfnO/2lFiv+SJichKVSys1mSsgyrYHSEjk8Ctv4tSR/Odvnu+HWlH2C8j53dahU03XmQdd5fA==
 
-"@types/qs@^6.9.4":
+"@types/qs@^6.9.4", "@types/qs@^6.9.5":
   version "6.9.5"
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.5.tgz#434711bdd49eb5ee69d90c1d67c354a9a8ecb18b"
   integrity sha512-/JHkVHtx/REVG0VVToGRGH2+23hsYLHdyG+GrvoUGlGAd0ErauXDyvHtRI/7H7mzLm+tBCKA7pfcpkQ1lf58iQ==
@@ -1672,6 +1672,13 @@ axios@^0.20.0:
   version "0.20.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
   integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+  dependencies:
+    follow-redirects "^1.10.0"
+
+axios@^0.21.0:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
   dependencies:
     follow-redirects "^1.10.0"
 
@@ -3348,6 +3355,22 @@ getstream@^7.1.0:
     jwt-decode "^2.2.0"
     qs "^6.9.4"
 
+getstream@~7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/getstream/-/getstream-7.2.1.tgz#3788c9642f1ad49df801ae3bec6d283eae6dfe37"
+  integrity sha512-Vb2s7cWtzE/ZHLI4aPLXWWHtiJ+XiEXQuqxL07BlUcq0mN5bi+OSW3HmYCMKl5lxxlxXZwwEkerWYlh0yHTlEQ==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@types/jsonwebtoken" "^8.5.0"
+    "@types/jwt-decode" "^2.2.1"
+    "@types/qs" "^6.9.5"
+    axios "^0.21.0"
+    faye "^1.4.0"
+    form-data "^3.0.0"
+    jsonwebtoken "^8.5.1"
+    jwt-decode "^3.1.2"
+    qs "^6.9.4"
+
 glob-parent@^5.0.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.1.tgz#b6c1ef417c4e5663ea498f1c45afac6916bbc229"
@@ -4635,6 +4658,11 @@ jwt-decode@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
   integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
+
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 kind-of@^1.1.0:
   version "1.1.0"
@@ -6034,10 +6062,10 @@ react-is@^17.0.1:
   version "0.0.0"
   uid ""
 
-react-native-activity-feed-core@v1.0.0-dev.1:
-  version "1.0.0-dev.1"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.0.0-dev.1.tgz#f1e2e7f6ce83c50d76b4c6fea4eb099c727ee99a"
-  integrity sha512-tI0wAfhZT5g5nzuU4KceuI5Y7HJ/BD1ij9Toz0BJULdFTbq9NI3pFH9pkOdTzqxMp/+584N9+UDzEA0ryGQkzA==
+react-native-activity-feed-core@v1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.0.1.tgz#b618ded2d528fb3c3334345099d03187bb233bd2"
+  integrity sha512-E3XQP0gR/PnYSb3+2PuhjHpbQ7lSD2oFuz/MHk+phkO3v1dnN67aSAfAQt43H0oo8pvd00tQ01JCw3PACEfy0Q==
   dependencies:
     dayjs "^1.8.23"
     es6-symbol "^3.1.1"
