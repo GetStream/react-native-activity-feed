@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.3 - 2021-03-05
+
+**Fixes**
+
+- Ignore email address from generating og preview
+- sanitize the urls before using Linking module from react-native
+
+[#172](https://github.com/GetStream/react-native-activity-feed/pull/172)
+
+## 1.0.2 - 2021-01-29
+
+**Fixes**
+
+Image upload issues on android
+
+- issue https://github.com/GetStream/react-native-activity-feed/issues/170
+- commit [7d7e2ba](https://github.com/GetStream/react-native-activity-feed/commit/7d7e2bab957f4c4fd1b76284f333a0105c5486b6)
+
 ## 1.0.1 - 2021-01-11
 
 - Added support for Expo 40 and react-native 0.63
