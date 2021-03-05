@@ -1,6 +1,6 @@
 {
   "name": "react-native-activity-feed",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "BSD-3-Clause",
   "author": {
     "company": "Stream.io Inc"
@@ -46,7 +46,7 @@
     "postpack": "rm README.md"
   },
   "dependencies": {
-    "react-native-activity-feed-core": "v1.0.2",
+    "react-native-activity-feed-core": "v1.0.3",
     "react-native-image-crop-picker": ">=0.33.2"
   },
   "files": [
