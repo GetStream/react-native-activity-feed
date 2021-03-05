@@ -28,7 +28,7 @@ export function humanizeTimestamp(timestamp, tDateTimeParser) {
 
 // https://reactnative.dev/docs/linking
 export const sanitizeUrlForLinking = (url) => {
-  if (url.indexOf('http://') === -1 && url.indexOf('https://') === -1) {
+  if (!/^https?:\/\//.test(url)) {
     url = `https://${url}`;
   }
 

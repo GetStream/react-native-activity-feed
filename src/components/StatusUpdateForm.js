@@ -29,8 +29,7 @@ const ImageState = Object.freeze({
   UPLOAD_FAILED: Symbol('upload_failed'),
 });
 
-const urlRegex = /(?:[\w/:@-]+\.[\w/:@.-]*)+(?=\s|$)/g;
-const emailRegex = /.*@.*/ ;
+const urlRegex = /(?:\s|^)((?:https?:\/\/)?(?:[a-z0-9-]+(?:\.[a-z0-9-]+)+)(?::[0-9]+)?(?:\/(?:[^\s]+)?)?)/g;
 class StatusUpdateForm extends React.Component {
   static defaultProps = {
     feedGroup: 'user',
@@ -291,11 +290,6 @@ class StatusUpdateFormInner extends React.Component {
     }
 
     urls.forEach((url) => {
-      // Generally you only want to generate previews for proper urls, and not email addresses.
-      if (url.match(emailRegex)) {
-        return;
-      }
-
       if (
         url !== this.state.ogLink &&
         !(this.state.dismissedUrls.indexOf(url) > -1) &&
