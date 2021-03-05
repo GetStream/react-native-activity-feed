@@ -26,6 +26,15 @@ export function humanizeTimestamp(timestamp, tDateTimeParser) {
   return time.from(now);
 }
 
+// https://reactnative.dev/docs/linking
+export const sanitizeUrlForLinking = (url) => {
+  if (!/^https?:\/\//.test(url)) {
+    url = `https://${url}`;
+  }
+
+  return url.replace(/(www\.)/, '');
+};
+
 export const smartRender = (ElementOrComponentOrLiteral, props, fallback) => {
   if (ElementOrComponentOrLiteral === undefined) {
     ElementOrComponentOrLiteral = fallback;

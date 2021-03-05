@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { buildStylesheet } from '../styles';
 
 import _ from 'lodash';
+import { sanitizeUrlForLinking } from '../utils';
 
 /**
  * Card element
@@ -18,7 +19,7 @@ const Card = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        Linking.openURL(url);
+        Linking.openURL(sanitizeUrlForLinking(url));
       }}
       style={styles.container}
     >

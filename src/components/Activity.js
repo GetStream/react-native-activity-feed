@@ -18,7 +18,7 @@ import _ from 'lodash';
 import UserBar from './UserBar';
 import Card from './Card';
 
-import { smartRender } from '../utils';
+import { sanitizeUrlForLinking, smartRender } from '../utils';
 
 /**
  * Renders feed activities
@@ -188,7 +188,8 @@ export default class Activity extends React.Component {
         Object.keys(activity.attachments.og).length > 0 &&
         tokens[i] === activity.attachments.og.url
       ) {
-        const url = activity.attachments.og.url;
+        const url = sanitizeUrlForLinking(activity.attachments.og.url);
+
         rendered.push(
           <Text key={i} onPress={() => Linking.openURL(url)} style={styles.url}>
             {tokens[i].slice(0, 20)}
