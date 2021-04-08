@@ -133,6 +133,13 @@ export class StreamApp extends React.Component {
     this.setState({ t, tDateTimeParser });
   }
 
+  componentWillUnmount() {
+    const client = this.state.client;
+    if (client && client.fayeClient) {
+      client.fayeClient.disconnect();
+    }
+  }
+
   render() {
     if (!this.state.t) return null;
 
