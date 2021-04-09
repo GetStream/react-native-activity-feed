@@ -20,7 +20,7 @@ export const styles = {
     },
   }),
   backButton: StyleSheet.create({
-    backButton: {
+    container: {
       width: 50,
       paddingRight: 6,
       paddingTop: 6,
@@ -445,20 +445,6 @@ export const styles = {
   }),
 };
 
-const depthOf = function(object) {
-  let level = 1;
-  let key;
-  for (key in object) {
-    if (!object.hasOwnProperty(key)) continue;
-
-    if (typeof object[key] == 'object') {
-      const depth = depthOf(object[key]) + 1;
-      level = Math.max(depth, level);
-    }
-  }
-  return level;
-};
-
 export function getStyle(styleName) {
   return styles[styleName] || {};
 }
@@ -472,21 +458,23 @@ export function buildStylesheet(styleName, styleOverwrites) {
   if (!styleOverwrites || Object.keys(styleOverwrites).length === 0) {
     return baseStyle;
   }
-  const falseObj = {};
+
   const base = Object.keys(baseStyle)
     .map((k) => ({ [k]: StyleSheet.flatten(baseStyle[k]) }))
     .reduce((accumulated, v) => Object.assign(accumulated, v), {});
 
+  const styleKeysExceptStyleName = Object.keys(styles).filter(
+    (k) => k !== styleName,
+  );
   const topLevelOverwrites = Object.keys(styleOverwrites)
-    .map((k) => {
-      if (depthOf(styleOverwrites[k]) === 1) {
-        return { [k]: StyleSheet.flatten(styleOverwrites[k]) };
-      }
-      return falseObj;
-    })
-    .filter((v) => v !== falseObj)
+    /**
+     * Exclude styling around child components. For example, when you provide styles for
+     * urlPreview as part of styles for StatusUpdateForm. They will be handled separately
+     * in UrlPreview component.
+     */
+    .filter((k) => !styleKeysExceptStyleName.includes(k))
+    .map((k) => ({ [k]: StyleSheet.flatten(styleOverwrites[k]) }))
     .reduce((accumulated, v) => Object.assign(accumulated, v), {});
 
-  // console.log(_.defaultsDeep(topLevelOverwrites, base));
   return StyleSheet.create(_.defaultsDeep(topLevelOverwrites, base));
 }

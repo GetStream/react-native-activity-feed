@@ -381,10 +381,7 @@ class StatusUpdateFormInner extends React.Component {
             <UrlPreview
               onPressDismiss={this._onPressDismiss}
               og={this.state.og}
-              styles={
-                // $FlowFixMe
-                this.props.styles.urlPreview
-              }
+              styles={this.props.styles.urlPreview}
             />
           )}
 
