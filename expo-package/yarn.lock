@@ -6792,10 +6792,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.0.2.tgz#4ca9ac3f0abc4d23e8da17af18ee627eedb52b1a"
-  integrity sha512-yJt+ijUA3VXNubECb6Kfm5xyn0h+Yi8Q580CRTVgNCYNbWA1AxBUI2XrZ/uuD4TxzstJ33nQIBaOALbSzf29Sg==
+react-native-activity-feed-core@v1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.0.3.tgz#3b2e129e62d1bf6107d0758f518912e68ec76ac5"
+  integrity sha512-tZ/h4qQkpu74RiDC6RdGvPCunKatwwfwvYZSFhcZtoKL5ktPcxkmpxfs8Bjl0JywUJU4fStK7AdlHDlMxP4I3w==
   dependencies:
     dayjs "^1.8.23"
     es6-symbol "^3.1.1"
