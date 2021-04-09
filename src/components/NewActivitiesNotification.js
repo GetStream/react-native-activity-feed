@@ -78,7 +78,7 @@ class NewActivitiesNotification extends React.Component {
 
 NewActivitiesNotification.propTypes = {
   adds: PropTypes.arrayOf(PropTypes.object),
-  deletes: PropTypes.arrayOf(PropTypes.object),
+  deletes: PropTypes.arrayOf(PropTypes.string),
   labelSingular: PropTypes.string,
   labelPlural: PropTypes.string,
   /**
