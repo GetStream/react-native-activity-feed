@@ -21,7 +21,7 @@ export default class BackButton extends React.Component {
     const { blue, pressed } = this.props;
 
     return (
-      <TouchableOpacity style={styles.backButton} onPress={pressed}>
+      <TouchableOpacity style={styles.container} onPress={pressed}>
         <Image
           source={
             blue
