@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0 - 2021-04-09
+
+- Close faye connection, when StreamApp component is unmounted [b0c480a](https://github.com/GetStream/react-native-activity-feed/commit/b0c480ad3b73a39b86edbb2049024cbe33d8f473)
+- Fixed prop types for `deletes` prop on `NewActivitiesNotification` [7060571](https://github.com/GetStream/react-native-activity-feed/commit/706057192c2ea36835e27b07e722b35e7a3d2ba8)
+- Fixed theming logic for nested styles [b5e5080](https://github.com/GetStream/react-native-activity-feed/commit/b5e508063dfa0722eac97f71a8c205f3f5f1090f)
+
 ## 1.0.3 - 2021-03-05
 
 **Fixes**
