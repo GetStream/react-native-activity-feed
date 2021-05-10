@@ -4316,9 +4316,9 @@ homedir-polyfill@^1.0.1:
     parse-passwd "^1.0.0"
 
 hosted-git-info@^2.1.4:
-  version "2.8.8"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
-  integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
+  integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
 
 http-errors@1.7.2:
   version "1.7.2"
@@ -6792,10 +6792,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.0.3.tgz#3b2e129e62d1bf6107d0758f518912e68ec76ac5"
-  integrity sha512-tZ/h4qQkpu74RiDC6RdGvPCunKatwwfwvYZSFhcZtoKL5ktPcxkmpxfs8Bjl0JywUJU4fStK7AdlHDlMxP4I3w==
+react-native-activity-feed-core@v1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.1.0.tgz#5b99829c3e0aeba829a6f79e4f969f7754d09c6b"
+  integrity sha512-fM2E/tZU8o9qLkzWI7Fg1NEAMWqszPySgivcSgWIkRBqtZdcnfgkWGi5R1koUSZtDVEABZwu1LsGDHeiO36KcA==
   dependencies:
     dayjs "^1.8.23"
     es6-symbol "^3.1.1"
