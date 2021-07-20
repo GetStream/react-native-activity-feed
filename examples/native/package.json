@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.4",
+    "react-native": "0.64.1",
     "react-native-activity-feed": "link:../../native-package",
     "react-native-activity-feed-core": "link:../..",
     "react-native-dotenv": "^2.4.3",
