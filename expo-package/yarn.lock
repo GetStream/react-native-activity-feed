@@ -6422,9 +6422,9 @@ path-key@^2.0.0, path-key@^2.0.1:
   integrity sha1-QRyttXTFoUDTpLGRDUDYDMn0C0A=
 
 path-parse@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
-  integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
+  integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
 
 path-to-regexp@0.1.7:
   version "0.1.7"
@@ -6792,10 +6792,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.0.3.tgz#3b2e129e62d1bf6107d0758f518912e68ec76ac5"
-  integrity sha512-tZ/h4qQkpu74RiDC6RdGvPCunKatwwfwvYZSFhcZtoKL5ktPcxkmpxfs8Bjl0JywUJU4fStK7AdlHDlMxP4I3w==
+react-native-activity-feed-core@v1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.1.0.tgz#5b99829c3e0aeba829a6f79e4f969f7754d09c6b"
+  integrity sha512-fM2E/tZU8o9qLkzWI7Fg1NEAMWqszPySgivcSgWIkRBqtZdcnfgkWGi5R1koUSZtDVEABZwu1LsGDHeiO36KcA==
   dependencies:
     dayjs "^1.8.23"
     es6-symbol "^3.1.1"
