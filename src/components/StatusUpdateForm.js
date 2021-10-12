@@ -193,15 +193,18 @@ class StatusUpdateFormInner extends React.Component {
 
     let response;
     let contentType;
+    let type;
     if (Platform.OS === 'android') {
       const filename = result.uri.replace(/^(file:\/\/|content:\/\/)/, '');
       contentType = mime.lookup(filename) || 'application/octet-stream';
+      type = contentType;
     }
     try {
       response = await this.props.client.images.upload(
         result.uri,
         null,
         contentType,
+        type
       );
     } catch (e) {
       console.warn(e);
