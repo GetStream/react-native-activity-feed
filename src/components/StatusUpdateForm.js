@@ -204,7 +204,7 @@ class StatusUpdateFormInner extends React.Component {
         result.uri,
         null,
         contentType,
-        type
+        type,
       );
     } catch (e) {
       console.warn(e);
