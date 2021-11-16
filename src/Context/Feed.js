@@ -5,7 +5,9 @@ import { Platform } from 'react-native';
 
 import immutable from 'immutable';
 import URL from 'url-parse';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
+import remove from 'lodash/remove';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { generateRandomId } from '../utils';
 import isPlainObject from 'lodash/isPlainObject';
@@ -729,7 +731,7 @@ export class FeedManager {
           if (!map[obj.id]) {
             map[obj.id] = [];
           }
-          _.remove(map[obj.id], (path) => _.isEqual(path, currentPath));
+          remove(map[obj.id], (path) => isEqual(path, currentPath));
         }
         for (const k in obj) {
           currentPath.push(k);
@@ -758,7 +760,7 @@ export class FeedManager {
           if (!map[obj.id]) {
             map[obj.id] = [];
           }
-          _.remove(map[obj.id], (path) => _.isEqual(path, currentPath));
+          remove(map[obj.id], (path) => isEqual(path, currentPath));
         }
         for (const k in obj) {
           currentPath.push(k);
@@ -777,7 +779,7 @@ export class FeedManager {
     const currentPath = [...basePath];
     data.forEach((obj, i) => {
       currentPath.push(i);
-      if (_.isEqual(map[obj.id], currentPath)) {
+      if (isEqual(map[obj.id], currentPath)) {
         delete map[obj.id];
       }
       currentPath.pop();
@@ -1243,7 +1245,9 @@ class FeedInner extends React.Component {
     super(props);
 
     this.manager =
-      props.sharedFeedManagers[this.getFeedId()] ?? new FeedManager(props);
+      props.sharedFeedManagers[this.getFeedId()] ??
+      new FeedManager(cloneDeep(props));
+
     this.boundForceUpdate = this.forceUpdate.bind(this);
   }
 
@@ -1260,7 +1264,7 @@ class FeedInner extends React.Component {
       this.getFeedId(prevProps.feedGroup, prevProps.userId);
 
     const notifyDifferent = this.props.notify !== prevProps.notify;
-    const optionsDifferent = !_.isEqual(this.props.options, prevProps.options);
+    const optionsDifferent = !isEqual(this.props.options, prevProps.options);
 
     if (optionsDifferent) {
       this.manager.props.options = this.props.options;
