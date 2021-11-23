@@ -5,7 +5,9 @@ import { Platform } from 'react-native';
 
 import immutable from 'immutable';
 import URL from 'url-parse';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
+import remove from 'lodash/remove';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { generateRandomId } from '../utils';
 import isPlainObject from 'lodash/isPlainObject';
@@ -729,7 +731,7 @@ export class FeedManager {
           if (!map[obj.id]) {
             map[obj.id] = [];
           }
-          _.remove(map[obj.id], (path) => _.isEqual(path, currentPath));
+          remove(map[obj.id], (path) => isEqual(path, currentPath));
         }
         for (const k in obj) {
           currentPath.push(k);
@@ -758,7 +760,7 @@ export class FeedManager {
           if (!map[obj.id]) {
             map[obj.id] = [];
           }
-          _.remove(map[obj.id], (path) => _.isEqual(path, currentPath));
+          remove(map[obj.id], (path) => isEqual(path, currentPath));
         }
         for (const k in obj) {
           currentPath.push(k);
@@ -777,7 +779,7 @@ export class FeedManager {
     const currentPath = [...basePath];
     data.forEach((obj, i) => {
       currentPath.push(i);
-      if (_.isEqual(map[obj.id], currentPath)) {
+      if (isEqual(map[obj.id], currentPath)) {
         delete map[obj.id];
       }
       currentPath.pop();
@@ -1241,51 +1243,58 @@ export class Feed extends React.Component {
 class FeedInner extends React.Component {
   constructor(props) {
     super(props);
-    const feedId = props.client.feed(props.feedGroup, props.userId).id;
-    let manager = props.sharedFeedManagers[feedId];
-    if (!manager) {
-      manager = new FeedManager(props);
-    }
 
-    this.state = {
-      manager,
-    };
+    this.manager =
+      props.sharedFeedManagers[this.getFeedId()] ??
+      new FeedManager(cloneDeep(props));
+
+    this.boundForceUpdate = this.forceUpdate.bind(this);
   }
-  boundForceUpdate = () => this.forceUpdate();
 
   componentDidMount() {
-    return this.state.manager.register(this.boundForceUpdate);
+    return this.manager.register(this.boundForceUpdate);
   }
 
   componentDidUpdate(prevProps) {
     const clientDifferent = this.props.client !== prevProps.client;
-    const notifyDifferent = this.props.notify !== prevProps.notify;
-    const feedDifferent =
-      this.props.userId !== prevProps.userId ||
-      this.props.feedGroup !== prevProps.feedGroup;
-    const optionsDifferent = !_.isEqual(this.props.options, prevProps.options);
     const doFeedRequestDifferent =
       this.props.doFeedRequest !== prevProps.doFeedRequest;
+    const feedDifferent =
+      this.getFeedId() !==
+      this.getFeedId(prevProps.feedGroup, prevProps.userId);
 
-    if (
-      clientDifferent ||
-      feedDifferent ||
-      optionsDifferent ||
-      doFeedRequestDifferent
-    ) {
-      // TODO: Implement
+    const notifyDifferent = this.props.notify !== prevProps.notify;
+    const optionsDifferent = !isEqual(this.props.options, prevProps.options);
+
+    if (optionsDifferent) {
+      this.manager.props.options = this.props.options;
     }
-    if (clientDifferent || feedDifferent || notifyDifferent) {
+
+    if (notifyDifferent) {
+      this.manager.props.notify = this.props.notify;
+    }
+
+    if (optionsDifferent || notifyDifferent) {
+      this.manager.refresh();
+    }
+
+    if (clientDifferent || feedDifferent || doFeedRequestDifferent) {
       // TODO: Implement
     }
   }
 
   componentWillUnmount() {
-    return this.state.manager.unregister(this.boundForceUpdate);
+    return this.manager.unregister(this.boundForceUpdate);
+  }
+
+  getFeedId(feedGroup = this.props.feedGroup, userId = this.props.userId) {
+    const { client } = this.props;
+
+    return client.feed(feedGroup, userId).id;
   }
 
   getCtx = () => {
-    const { manager } = this.state;
+    const manager = this.manager;
     const state = manager.state;
     return {
       getActivityPath: manager.getActivityPath,
@@ -1298,7 +1307,7 @@ class FeedInner extends React.Component {
       onRemoveActivity: manager.onRemoveActivity,
       onMarkAsRead: manager.onMarkAsRead,
       onMarkAsSeen: manager.onMarkAsSeen,
-      hasDoneRequest: state.lastResponse != null,
+      hasDoneRequest: state.lastResponse !== null,
       refresh: manager.refresh,
       refreshUnreadUnseen: manager.refreshUnreadUnseen,
       loadNextReactions: manager.loadNextReactions,
