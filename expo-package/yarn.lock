@@ -3831,9 +3831,9 @@ flatted@^2.0.0:
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
 follow-redirects@^1.10.0, follow-redirects@^1.2.3:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
-  integrity sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
+  version "1.14.8"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.8.tgz#016996fb9a11a100566398b1c6839337d7bfa8fc"
+  integrity sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==
 
 for-each@^0.3.3:
   version "0.3.3"
@@ -6792,10 +6792,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.1.0.tgz#5b99829c3e0aeba829a6f79e4f969f7754d09c6b"
-  integrity sha512-fM2E/tZU8o9qLkzWI7Fg1NEAMWqszPySgivcSgWIkRBqtZdcnfgkWGi5R1koUSZtDVEABZwu1LsGDHeiO36KcA==
+react-native-activity-feed-core@v1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.1.1.tgz#17cb5d054998200b4844eb58669d96fcb58c7774"
+  integrity sha512-nbPBctmU4oh9366S3HvrDRAhiw2sooqBu5yHqipbQwpan9/UoIn5heaECKjw5v/YuMV8Koc7M9CxT1dmqC0DMA==
   dependencies:
     dayjs "^1.8.23"
     es6-symbol "^3.1.1"
