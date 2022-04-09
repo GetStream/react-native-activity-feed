@@ -82,7 +82,7 @@
     "i18next": "^19.3.4",
     "immutable": "^4.0.0-rc.9",
     "mime-types": "^2.1.21",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "numeral": "^2.0.6",
     "path": "^0.12.7",
     "react-native-keyboard-spacer": "^0.4.1",
