@@ -1,42 +1,14 @@
-// @flow
+//
 import * as React from 'react';
 import { FlatList } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 import { FeedContext } from '../Context';
-import type { Renderable, BaseFeedCtx, StyleSheetLike } from '../types';
+
 import { smartRender } from '../utils';
 import immutable from 'immutable';
 import LoadMoreButton from './LoadMoreButton';
-
-type Props = {|
-  /** The ID of the activity for which these reactions are */
-  activityId: string,
-  /** The reaction kind that you want to display in this list, e.g `like` or
-   * `comment` */
-  reactionKind: string,
-  /** The component that should render the reaction */
-  Reaction: Renderable,
-  /** Only needed for reposted activities where you want to show the comments
-   * of the original activity, not of the repost */
-  activityPath?: ?Array<string>,
-  /** The component that should render the reaction */
-  LoadMoreButton: Renderable,
-  /** If the ReactionList should paginate when scrolling, by default it shows a
-   * "Load more" button  */
-  infiniteScroll: boolean,
-  /** Any props the react native FlatList accepts */
-  flatListProps?: {},
-  /** Set to true when the ReactionList shouldn't paginate at all */
-  noPagination: boolean,
-  /** Show and load reactions starting with the oldest reaction first, instead
-   * of the default where reactions are displayed and loaded most recent first.
-   * */
-  oldestToNewest: boolean,
-  /** Reverse the order the reactions are displayed in. */
-  reverseOrder: boolean,
-  children?: React.Node,
-  styles?: StyleSheetLike,
-|};
 
 /**
  * To use this component in a `FlatFeed` you have to provide the following
@@ -45,7 +17,7 @@ type Props = {|
  * options={{withOwnReactions: true}}
  * ```
  */
-export default class ReactionList extends React.PureComponent<Props> {
+export default class ReactionList extends React.PureComponent {
   static defaultProps = {
     LoadMoreButton,
     infiniteScroll: false,
@@ -63,8 +35,35 @@ export default class ReactionList extends React.PureComponent<Props> {
   }
 }
 
-type PropsInner = {| ...Props, ...BaseFeedCtx |};
-class ReactionListInner extends React.Component<PropsInner> {
+ReactionList.propTypes = {
+  /** The ID of the activity for which these reactions are */
+  activityId: PropTypes.string,
+  /** The reaction kind that you want to display in this list, e.g `like` or
+   * `comment` */
+  reactionKind: PropTypes.string,
+  /** The component that should render the reaction */
+  Reaction: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** Only needed for reposted activities where you want to show the comments
+   * of the original activity, not of the repost */
+  activityPath: PropTypes.arrayOf(PropTypes.string),
+  /** The component that should render the reaction */
+  LoadMoreButton: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** If the ReactionList should paginate when scrolling, by default it shows a
+   * "Load more" button  */
+  infiniteScroll: PropTypes.bool,
+  /** Any props the react native FlatList accepts */
+  flatListProps: PropTypes.object,
+  /** Set to true when the ReactionList shouldn't paginate at all */
+  noPagination: PropTypes.bool,
+  /** Show and load reactions starting with the oldest reaction first, instead
+   * of the default where reactions are displayed and loaded most recent first.
+   * */
+  oldestToNewest: PropTypes.bool,
+  /** Reverse the order the reactions are displayed in. */
+  reverseOrder: PropTypes.bool,
+  styles: PropTypes.object,
+};
+class ReactionListInner extends React.Component {
   initReactions() {
     const {
       activityId,
@@ -209,17 +208,12 @@ class ReactionListInner extends React.Component<PropsInner> {
     return smartRender(Reaction, { reaction });
   };
 
-  _renderWrappedReaction = ({ item }: { item: any }) => (
+  _renderWrappedReaction = ({ item }) => (
     <ImmutableItemWrapper renderItem={this._renderReaction} item={item} />
   );
 }
 
-type ImmutableItemWrapperProps = {
-  renderItem: (item: any) => any,
-  item: any,
-};
-
-class ImmutableItemWrapper extends React.PureComponent<ImmutableItemWrapperProps> {
+class ImmutableItemWrapper extends React.PureComponent {
   render() {
     return this.props.renderItem(this.props.item.toJS());
   }

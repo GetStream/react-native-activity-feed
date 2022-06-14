@@ -1,31 +1,36 @@
-// @flow
+//
 import React from 'react';
 import { View, Image } from 'react-native';
+import PropTypes from 'prop-types';
 
 import UploadImage from './UploadImage';
 import { StreamApp } from '../Context';
 import { buildStylesheet } from '../styles';
 
-import type { StyleSheetLike } from '../types';
-import type { UserResponse } from 'getstream';
-
-export type Props = {|
-  /** The image source or a getter fn */
-  source: ?string | ((activeUser: UserResponse<Object>) => ?string),
-  size?: number,
-  editButton?: boolean,
-  noShadow?: boolean,
-  notRound?: boolean,
-
-  onUploadButtonPress?: () => mixed,
-  styles?: StyleSheetLike,
-|};
-
 /**
  * A users' profile picture
  * @example ./examples/Avatar.md
  */
-export default class Avatar extends React.Component<Props> {
+export default class Avatar extends React.Component {
+  static propTypes = {
+    /** The image source or a getter fn */
+    source: PropTypes.oneOfType([
+      PropTypes.string,
+      /**
+       * @param activeUser User object
+       * @return string
+       */
+      PropTypes.func,
+    ]),
+    size: PropTypes.number,
+    editButton: PropTypes.bool,
+    noShadow: PropTypes.bool,
+    notRound: PropTypes.bool,
+
+    onUploadButtonPress: PropTypes.func,
+    styles: PropTypes.object,
+  };
+
   render() {
     const { source, ...props } = this.props;
     if (typeof source === 'function') {
@@ -47,9 +52,7 @@ export default class Avatar extends React.Component<Props> {
   }
 }
 
-type InnerProps = {| ...Props, source: ?string |};
-
-const AvatarInner = (props: InnerProps) => {
+const AvatarInner = (props) => {
   const {
     source,
     size = 200,
@@ -81,7 +84,7 @@ const AvatarInner = (props: InnerProps) => {
           },
         ]}
         source={source ? { uri: source } : require('../images/placeholder.png')}
-        resizeMethod="resize"
+        resizeMethod='resize'
       />
       {editButton ? (
         <UploadImage onUploadButtonPress={onUploadButtonPress} />

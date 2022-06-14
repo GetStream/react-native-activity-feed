@@ -1,18 +1,13 @@
-// @flow
+//
 import React from 'react';
 import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+
 import Avatar from './Avatar';
 import FollowButton from './FollowButton';
 import { buildStylesheet } from '../styles';
 
-import type { StyleSheetLike, UserData } from '../types';
-
-export type Props = {
-  user: UserData,
-  styles?: StyleSheetLike,
-};
-
-export default class UserCard extends React.Component<Props> {
+export default class UserCard extends React.Component {
   static defaultProps = {};
   render() {
     const styles = buildStylesheet('userCard', this.props.styles);
@@ -27,3 +22,11 @@ export default class UserCard extends React.Component<Props> {
     );
   }
 }
+
+UserCard.propTypes = {
+  user: PropTypes.shape({
+    profileImage: PropTypes.string,
+    name: PropTypes.string,
+  }),
+  styles: PropTypes.object,
+};

@@ -1,34 +1,17 @@
-// @flow
+//
 
 import * as React from 'react';
 import { Platform } from 'react-native';
+
 import immutable from 'immutable';
 import URL from 'url-parse';
-import _ from 'lodash';
-import type {
-  FeedRequestOptions,
-  FeedResponse,
-  ReactionRequestOptions,
-  ReactionFilterResponse,
-  ReactionFilterOptions,
-} from 'getstream';
-import type {
-  BaseActivityResponse,
-  BaseActivityGroupResponse,
-  BaseAppCtx,
-  BaseClient,
-  BaseReaction,
-  ToggleReactionCallbackFunction,
-  AddReactionCallbackFunction,
-  RemoveReactionCallbackFunction,
-  ToggleChildReactionCallbackFunction,
-  AddChildReactionCallbackFunction,
-  RemoveChildReactionCallbackFunction,
-} from '../types';
+import isEqual from 'lodash/isEqual';
+import remove from 'lodash/remove';
+import cloneDeep from 'lodash/cloneDeep';
+
 import { generateRandomId } from '../utils';
 import isPlainObject from 'lodash/isPlainObject';
 
-import type { AppCtx } from './StreamApp';
 import { StreamApp } from './StreamApp';
 
 import { sleep } from '../utils';
@@ -36,127 +19,10 @@ import { sleep } from '../utils';
 export const FeedContext = React.createContext({});
 
 // type FR = FeedResponse<Object, Object>;
-type FR = FeedResponse<{}, {}>;
-type RR = ReactionFilterResponse<{}, {}>;
-export type FeedCtx = {|
-  feedGroup: string,
-  userId?: string,
-  activityOrder: Array<string>,
-  activities: any,
-  unread: number,
-  unseen: number,
-  refresh: (extraOptions?: FeedRequestOptions) => Promise<mixed>,
-  refreshUnreadUnseen: () => Promise<mixed>,
-  loadNextReactions: (
-    activityId: string,
-    kind: string,
-    activityPath?: ?Array<string>,
-    oldestToNewest?: boolean,
-  ) => Promise<mixed>,
-  loadNextPage: () => Promise<mixed>,
-  hasNextPage: boolean,
-  loadReverseNextPage: () => Promise<mixed>,
-  hasReverseNextPage: boolean,
-  refreshing: boolean,
-  hasDoneRequest: boolean,
-  realtimeAdds: Array<{}>,
-  realtimeDeletes: Array<{}>,
-  onToggleReaction: ToggleReactionCallbackFunction,
-  onAddReaction: AddReactionCallbackFunction,
-  onRemoveReaction: RemoveReactionCallbackFunction,
-  onToggleChildReaction: ToggleChildReactionCallbackFunction,
-  onAddChildReaction: AddChildReactionCallbackFunction,
-  onRemoveChildReaction: RemoveChildReactionCallbackFunction,
-  onRemoveActivity: (activityId: string) => Promise<mixed>,
-  onMarkAsRead: (
-    group:
-      | true
-      | BaseActivityGroupResponse
-      | $ReadOnlyArray<BaseActivityGroupResponse>,
-  ) => Promise<mixed>,
-  onMarkAsSeen: (
-    group:
-      | true
-      | BaseActivityGroupResponse
-      | $ReadOnlyArray<BaseActivityGroupResponse>,
-  ) => Promise<mixed>,
-  getActivityPath: (
-    activity: BaseActivityResponse | string,
-    ...Array<string>
-  ) => Array<string>,
-|};
-
-export type FeedProps = {|
-  /** The feed group part of the feed */
-  feedGroup: string,
-  /** The user_id part of the feed */
-  userId?: string,
-  /** Read options for the API client (eg. limit, ranking, ...) */
-  options?: FeedRequestOptions,
-  /** If true, feed shows the Notifier component when new activities are added */
-  notify?: boolean,
-  /** The feed read handler (change only for advanced/complex use-cases) */
-  doFeedRequest?: (
-    client: BaseClient,
-    feedGroup: string,
-    userId?: string,
-    options?: FeedRequestOptions,
-  ) => Promise<FeedResponse<{}, {}>>,
-  /* Components to display in the feed */
-  children?: React.Node,
-  /** Override reaction add request */
-  doReactionAddRequest?: (
-    kind: string,
-    activity: BaseActivityResponse,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override reaction delete request */
-  doReactionDeleteRequest?: (id: string) => mixed,
-  /** Override child reaction add request */
-  doChildReactionAddRequest?: (
-    kind: string,
-    activity: BaseReaction,
-    data?: {},
-    options: {},
-  ) => mixed,
-  /** Override child reaction delete request */
-  doChildReactionDeleteRequest?: (id: string) => mixed,
-  /** Override reactions filter request */
-  doReactionsFilterRequest?: (options: {}) => Promise<Object>,
-  /** The location that should be used for analytics when liking in the feed,
-   * this is only useful when you have analytics enabled for your app. */
-  analyticsLocation?: string,
-|};
-
-type FeedManagerState = {|
-  activityOrder: Array<string>,
-  activities: any,
-  refreshing: boolean,
-  lastResponse: ?FR,
-  lastReverseResponse: ?{ next: string },
-  realtimeAdds: Array<{}>,
-  realtimeDeletes: Array<{}>,
-  subscription: ?any,
-  activityIdToPath: { [string]: Array<string> },
-  // activities created by creating a reaction with targetFeeds. It's a mapping
-  // of a reaction id to an activity id.
-  reactionActivities: { [string]: string },
-  // Used for finding reposted activities
-  activityIdToPaths: { [string]: Array<Array<string>> },
-  reactionIdToPaths: { [string]: Array<Array<string>> },
-  unread: number,
-  unseen: number,
-  numSubscribers: number,
-  reactionsBeingToggled: { [kind: string]: { [activityId: string]: boolean } },
-  childReactionsBeingToggled: {
-    [kind: string]: { [reactionId: string]: boolean },
-  },
-|};
 
 export class FeedManager {
-  props: FeedInnerProps;
-  state: FeedManagerState = {
+  props;
+  state = {
     activityOrder: [],
     activities: immutable.Map(),
     activityIdToPath: {},
@@ -175,9 +41,9 @@ export class FeedManager {
     reactionsBeingToggled: {},
     childReactionsBeingToggled: {},
   };
-  registeredCallbacks: Array<() => mixed>;
+  registeredCallbacks;
 
-  constructor(props: FeedInnerProps) {
+  constructor(props) {
     this.props = props;
     const initialOptions = this.getOptions();
     this.registeredCallbacks = [];
@@ -194,11 +60,11 @@ export class FeedManager {
     this.state.lastReverseResponse = { next: previousUrl };
   }
 
-  register(callback: () => mixed) {
+  register(callback) {
     this.registeredCallbacks.push(callback);
     this.subscribe();
   }
-  unregister(callback: () => mixed) {
+  unregister(callback) {
     this.registeredCallbacks.splice(this.registeredCallbacks.indexOf(callback));
     this.unsubscribe();
   }
@@ -209,11 +75,7 @@ export class FeedManager {
     }
   }
 
-  setState = (
-    changed:
-      | $Shape<FeedManagerState>
-      | ((FeedManagerState) => $Shape<FeedManagerState>),
-  ) => {
+  setState = (changed) => {
     if (typeof changed === 'function') {
       changed = changed(this.state);
     }
@@ -221,11 +83,7 @@ export class FeedManager {
     this.triggerUpdate();
   };
 
-  trackAnalytics = (
-    label: string,
-    activity: BaseActivityResponse,
-    track: ?boolean,
-  ) => {
+  trackAnalytics = (label, activity, track) => {
     const analyticsClient = this.props.analyticsClient;
 
     if (!track) {
@@ -254,10 +112,7 @@ export class FeedManager {
     });
   };
 
-  getActivityPath = (
-    activity: BaseActivityResponse | string,
-    ...rest: Array<string>
-  ) => {
+  getActivityPath = (activity, ...rest) => {
     let activityId;
     if (typeof activity === 'string') {
       activityId = activity;
@@ -272,7 +127,7 @@ export class FeedManager {
     return [...activityPath, ...rest];
   };
 
-  getActivityPaths = (activity: BaseActivityResponse | string) => {
+  getActivityPaths = (activity) => {
     let activityId;
     if (typeof activity === 'string') {
       activityId = activity;
@@ -283,7 +138,7 @@ export class FeedManager {
     return this.state.activityIdToPaths[activityId];
   };
 
-  getReactionPaths = (reaction: BaseReaction | string) => {
+  getReactionPaths = (reaction) => {
     let reactionId;
     if (typeof reaction === 'string') {
       reactionId = reaction;
@@ -294,12 +149,7 @@ export class FeedManager {
     return this.state.reactionIdToPaths[reactionId];
   };
 
-  onAddReaction = async (
-    kind: string,
-    activity: BaseActivityResponse,
-    data?: {},
-    options: { trackAnalytics?: boolean } & ReactionRequestOptions = {},
-  ) => {
+  onAddReaction = async (kind, activity, data, options = {}) => {
     let reaction;
     try {
       if (this.props.doReactionAddRequest) {
@@ -363,12 +213,7 @@ export class FeedManager {
     });
   };
 
-  onRemoveReaction = async (
-    kind: string,
-    activity: BaseActivityResponse,
-    id: string,
-    options: { trackAnalytics?: boolean } = {},
-  ) => {
+  onRemoveReaction = async (kind, activity, id, options = {}) => {
     try {
       if (this.props.doReactionDeleteRequest) {
         await this.props.doReactionDeleteRequest(id);
@@ -421,12 +266,7 @@ export class FeedManager {
     });
   };
 
-  onToggleReaction = async (
-    kind: string,
-    activity: BaseActivityResponse,
-    data: {},
-    options: { trackAnalytics?: boolean } & ReactionRequestOptions = {},
-  ) => {
+  onToggleReaction = async (kind, activity, data, options = {}) => {
     const togglingReactions = this.state.reactionsBeingToggled[kind] || {};
     if (togglingReactions[activity.id]) {
       return;
@@ -448,12 +288,7 @@ export class FeedManager {
     delete togglingReactions[activity.id];
   };
 
-  onAddChildReaction = async (
-    kind: string,
-    reaction: BaseReaction,
-    data?: {},
-    options: { trackAnalytics?: boolean } & ReactionRequestOptions = {},
-  ) => {
+  onAddChildReaction = async (kind, reaction, data, options = {}) => {
     let childReaction;
     try {
       if (this.props.doChildReactionAddRequest) {
@@ -506,11 +341,11 @@ export class FeedManager {
   };
 
   onRemoveChildReaction = async (
-    kind: string,
-    reaction: BaseReaction,
-    id: string,
+    kind,
+    reaction,
+    id,
     /* eslint-disable-next-line no-unused-vars */
-    options: { trackAnalytics?: boolean } = {},
+    options = {},
   ) => {
     try {
       if (this.props.doChildReactionDeleteRequest) {
@@ -551,12 +386,7 @@ export class FeedManager {
     });
   };
 
-  onToggleChildReaction = async (
-    kind: string,
-    reaction: BaseReaction,
-    data: {},
-    options: { trackAnalytics?: boolean } & ReactionRequestOptions = {},
-  ) => {
+  onToggleChildReaction = async (kind, reaction, data, options = {}) => {
     const togglingReactions = this.state.childReactionsBeingToggled[kind] || {};
     if (togglingReactions[reaction.id]) {
       return;
@@ -578,7 +408,7 @@ export class FeedManager {
     delete togglingReactions[reaction.id];
   };
 
-  _removeActivityFromState = (activityId: string) =>
+  _removeActivityFromState = (activityId) =>
     this.setState(
       ({
         activities,
@@ -647,7 +477,7 @@ export class FeedManager {
       },
     );
 
-  onRemoveActivity = async (activityId: string) => {
+  onRemoveActivity = async (activityId) => {
     try {
       await this.feed().removeActivity(activityId);
     } catch (e) {
@@ -661,28 +491,12 @@ export class FeedManager {
     return this._removeActivityFromState(activityId);
   };
 
-  onMarkAsRead = (
-    group:
-      | true
-      | BaseActivityGroupResponse
-      | $ReadOnlyArray<BaseActivityGroupResponse>,
-  ) => this._onMarkAs('read', group);
+  onMarkAsRead = (group) => this._onMarkAs('read', group);
 
-  onMarkAsSeen = (
-    group:
-      | true
-      | BaseActivityGroupResponse
-      | $ReadOnlyArray<BaseActivityGroupResponse>,
-  ) => this._onMarkAs('seen', group);
+  onMarkAsSeen = (group) => this._onMarkAs('seen', group);
 
-  _onMarkAs = async (
-    type: 'seen' | 'read',
-    group:
-      | true
-      | BaseActivityGroupResponse
-      | $ReadOnlyArray<BaseActivityGroupResponse>,
-  ) => {
-    let groupArray: $ReadOnlyArray<string>;
+  _onMarkAs = async (type, group) => {
+    let groupArray;
     let markArg = group;
     if (group === true) {
       groupArray = this.state.activityOrder;
@@ -721,7 +535,7 @@ export class FeedManager {
     });
   };
 
-  getOptions = (extraOptions?: FeedRequestOptions = {}): FeedRequestOptions => {
+  getOptions = (extraOptions = {}) => {
     const propOpts = { ...this.props.options };
     const { id_gt, id_gte, id_lt, id_lte, offset } = extraOptions;
     if (id_gt || id_gte || id_lt || id_lte || offset != null) {
@@ -742,7 +556,7 @@ export class FeedManager {
     };
   };
 
-  doFeedRequest = async (options: FeedRequestOptions): Promise<FR> => {
+  doFeedRequest = async (options) => {
     const requestWasSentAt = Date.now();
     let response;
 
@@ -771,7 +585,7 @@ export class FeedManager {
 
   feed = () => this.props.client.feed(this.props.feedGroup, this.props.userId);
 
-  responseToActivityMap = (response: FR) =>
+  responseToActivityMap = (response) =>
     immutable.fromJS(
       response.results.reduce((map, a) => {
         map[a.id] = a;
@@ -779,14 +593,14 @@ export class FeedManager {
       }, {}),
     );
 
-  responseToActivityIdToPath = (response: FR) => {
+  responseToActivityIdToPath = (response) => {
     if (
       response.results.length === 0 ||
       response.results[0].activities === undefined
     ) {
       return {};
     }
-    const aggregatedResponse = (response: any);
+    const aggregatedResponse = response;
 
     const map = {};
     for (const group of aggregatedResponse.results) {
@@ -797,7 +611,7 @@ export class FeedManager {
     return map;
   };
 
-  responseToActivityIdToPaths = (response: FR, previous: {} = {}) => {
+  responseToActivityIdToPaths = (response, previous = {}) => {
     const map = previous;
     const currentPath = [];
     function addFoundActivities(obj) {
@@ -824,13 +638,13 @@ export class FeedManager {
 
     for (const a of response.results) {
       currentPath.push(a.id);
-      addFoundActivities((a: any));
+      addFoundActivities(a);
       currentPath.pop();
     }
     return map;
   };
 
-  feedResponseToReactionIdToPaths = (response: FR, previous: {} = {}) => {
+  feedResponseToReactionIdToPaths = (response, previous = {}) => {
     const map = previous;
     const currentPath = [];
     function addFoundReactions(obj) {
@@ -857,17 +671,17 @@ export class FeedManager {
 
     for (const a of response.results) {
       currentPath.push(a.id);
-      addFoundReactions((a: any));
+      addFoundReactions(a);
       currentPath.pop();
     }
     return map;
   };
 
   reactionResponseToReactionIdToPaths = (
-    response: RR,
-    previous: {},
-    basePath: $ReadOnlyArray<mixed>,
-    oldLength: number,
+    response,
+    previous,
+    basePath,
+    oldLength,
   ) => {
     const map = previous;
     const currentPath = [...basePath];
@@ -895,18 +709,14 @@ export class FeedManager {
 
     for (const a of response.results) {
       currentPath.push(oldLength);
-      addFoundReactions((a: any));
+      addFoundReactions(a);
       currentPath.pop();
       oldLength++;
     }
     return map;
   };
 
-  removeFoundReactionIdPaths = (
-    data: any,
-    previous: {},
-    basePath: $ReadOnlyArray<mixed>,
-  ) => {
+  removeFoundReactionIdPaths = (data, previous, basePath) => {
     const map = previous;
     const currentPath = [...basePath];
     function removeFoundReactions(obj) {
@@ -921,7 +731,7 @@ export class FeedManager {
           if (!map[obj.id]) {
             map[obj.id] = [];
           }
-          _.remove(map[obj.id], (path) => _.isEqual(path, currentPath));
+          remove(map[obj.id], (path) => isEqual(path, currentPath));
         }
         for (const k in obj) {
           currentPath.push(k);
@@ -935,11 +745,7 @@ export class FeedManager {
     return map;
   };
 
-  removeFoundActivityIdPaths = (
-    data: any,
-    previous: {},
-    basePath: $ReadOnlyArray<mixed>,
-  ) => {
+  removeFoundActivityIdPaths = (data, previous, basePath) => {
     const map = previous;
     const currentPath = [...basePath];
     function addFoundActivities(obj) {
@@ -954,7 +760,7 @@ export class FeedManager {
           if (!map[obj.id]) {
             map[obj.id] = [];
           }
-          _.remove(map[obj.id], (path) => _.isEqual(path, currentPath));
+          remove(map[obj.id], (path) => isEqual(path, currentPath));
         }
         for (const k in obj) {
           currentPath.push(k);
@@ -968,16 +774,12 @@ export class FeedManager {
     return map;
   };
 
-  removeFoundActivityIdPath = (
-    data: any[],
-    previous: {},
-    basePath: $ReadOnlyArray<mixed>,
-  ) => {
+  removeFoundActivityIdPath = (data, previous, basePath) => {
     const map = previous;
     const currentPath = [...basePath];
     data.forEach((obj, i) => {
       currentPath.push(i);
-      if (_.isEqual(map[obj.id], currentPath)) {
+      if (isEqual(map[obj.id], currentPath)) {
         delete map[obj.id];
       }
       currentPath.pop();
@@ -985,11 +787,7 @@ export class FeedManager {
     return map;
   };
 
-  addFoundReactionIdPaths = (
-    data: any,
-    previous: {},
-    basePath: $ReadOnlyArray<mixed>,
-  ) => {
+  addFoundReactionIdPaths = (data, previous, basePath) => {
     const map = previous;
     const currentPath = [...basePath];
     function addFoundReactions(obj) {
@@ -1018,11 +816,7 @@ export class FeedManager {
     return map;
   };
 
-  addFoundActivityIdPaths = (
-    data: any,
-    previous: {},
-    basePath: $ReadOnlyArray<mixed>,
-  ) => {
+  addFoundActivityIdPaths = (data, previous, basePath) => {
     const map = previous;
     const currentPath = [...basePath];
     function addFoundActivities(obj) {
@@ -1050,11 +844,7 @@ export class FeedManager {
     return map;
   };
 
-  addFoundActivityIdPath = (
-    data: Array<{ id: string }>,
-    previous: {},
-    basePath: $ReadOnlyArray<mixed>,
-  ) => {
+  addFoundActivityIdPath = (data, previous, basePath) => {
     const map = previous;
     data.forEach((obj, i) => {
       map[obj.id] = [...basePath, i];
@@ -1062,12 +852,12 @@ export class FeedManager {
     return map;
   };
 
-  responseToReactionActivities = (response: FR) => {
+  responseToReactionActivities = (response) => {
     if (response.results.length === 0) {
       return {};
     }
     const map = {};
-    function setReactionActivities(activities: any) {
+    function setReactionActivities(activities) {
       for (const a of activities) {
         if (a.reaction && a.reaction.id) {
           map[a.reaction.id] = a.id;
@@ -1078,7 +868,7 @@ export class FeedManager {
     if (response.results[0].activities === undefined) {
       setReactionActivities(response.results);
     } else {
-      const aggregatedResponse = (response: any);
+      const aggregatedResponse = response;
 
       for (const group of aggregatedResponse.results) {
         setReactionActivities(group.activities);
@@ -1087,7 +877,7 @@ export class FeedManager {
     return map;
   };
 
-  unseenUnreadFromResponse(response: FR) {
+  unseenUnreadFromResponse(response) {
     let unseen = 0;
     let unread = 0;
     if (typeof response.unseen === 'number') {
@@ -1099,11 +889,11 @@ export class FeedManager {
     return { unseen, unread };
   }
 
-  refresh = async (extraOptions: FeedRequestOptions) => {
+  refresh = async (extraOptions) => {
     const options = this.getOptions(extraOptions);
 
     await this.setState({ refreshing: true });
-    let response: FR;
+    let response;
     try {
       response = await this.doFeedRequest(options);
     } catch (e) {
@@ -1222,7 +1012,7 @@ export class FeedManager {
     const nextURL = new URL(lastResponse.next, true);
     const options = this.getOptions(nextURL.query);
 
-    let response: FR;
+    let response;
     try {
       response = await this.doFeedRequest(options);
     } catch (e) {
@@ -1286,7 +1076,7 @@ export class FeedManager {
     const nextURL = new URL(lastReverseResponse.next, true);
     const options = this.getOptions(nextURL.query);
 
-    let response: FR;
+    let response;
     try {
       response = await this.doFeedRequest(options);
     } catch (e) {
@@ -1330,12 +1120,12 @@ export class FeedManager {
   };
 
   loadNextReactions = async (
-    activityId: string,
-    kind: string,
-    activityPath?: ?Array<string>,
-    oldestToNewest?: boolean,
+    activityId,
+    kind,
+    activityPath,
+    oldestToNewest,
   ) => {
-    let options: ReactionFilterOptions = {
+    let options = {
       activity_id: activityId,
       kind,
     };
@@ -1426,7 +1216,7 @@ export class FeedManager {
   };
 
   refreshUnreadUnseen = async () => {
-    let response: FR;
+    let response;
     try {
       response = await this.doFeedRequest({ limit: 0 });
     } catch (e) {
@@ -1440,71 +1230,71 @@ export class FeedManager {
   };
 }
 
-type FeedState = {|
-  manager: FeedManager,
-|};
-
-export class Feed extends React.Component<FeedProps, FeedState> {
+export class Feed extends React.Component {
   // Used to avoid unmount-remount behaviour, which causes
   // unsubscribe-subscribe behaviour.
-  _appCtxWrapperFunc = (appCtx: AppCtx<any>) => (
-    <FeedInner {...this.props} {...appCtx} />
-  );
+  _appCtxWrapperFunc = (appCtx) => <FeedInner {...this.props} {...appCtx} />;
 
   render() {
     return <StreamApp.Consumer>{this._appCtxWrapperFunc}</StreamApp.Consumer>;
   }
 }
 
-type FeedInnerProps = {| ...FeedProps, ...BaseAppCtx |};
-class FeedInner extends React.Component<FeedInnerProps, FeedState> {
-  constructor(props: FeedInnerProps) {
+class FeedInner extends React.Component {
+  constructor(props) {
     super(props);
-    const feedId = props.client.feed(props.feedGroup, props.userId).id;
-    let manager = props.sharedFeedManagers[feedId];
-    if (!manager) {
-      manager = new FeedManager(props);
-    }
 
-    this.state = {
-      manager,
-    };
+    this.manager =
+      props.sharedFeedManagers[this.getFeedId()] ??
+      new FeedManager(cloneDeep(props));
+
+    this.boundForceUpdate = this.forceUpdate.bind(this);
   }
-  boundForceUpdate = () => this.forceUpdate();
 
   componentDidMount() {
-    return this.state.manager.register(this.boundForceUpdate);
+    return this.manager.register(this.boundForceUpdate);
   }
 
   componentDidUpdate(prevProps) {
     const clientDifferent = this.props.client !== prevProps.client;
-    const notifyDifferent = this.props.notify !== prevProps.notify;
-    const feedDifferent =
-      this.props.userId !== prevProps.userId ||
-      this.props.feedGroup !== prevProps.feedGroup;
-    const optionsDifferent = !_.isEqual(this.props.options, prevProps.options);
     const doFeedRequestDifferent =
       this.props.doFeedRequest !== prevProps.doFeedRequest;
+    const feedDifferent =
+      this.getFeedId() !==
+      this.getFeedId(prevProps.feedGroup, prevProps.userId);
 
-    if (
-      clientDifferent ||
-      feedDifferent ||
-      optionsDifferent ||
-      doFeedRequestDifferent
-    ) {
-      // TODO: Implement
+    const notifyDifferent = this.props.notify !== prevProps.notify;
+    const optionsDifferent = !isEqual(this.props.options, prevProps.options);
+
+    if (optionsDifferent) {
+      this.manager.props.options = this.props.options;
     }
-    if (clientDifferent || feedDifferent || notifyDifferent) {
+
+    if (notifyDifferent) {
+      this.manager.props.notify = this.props.notify;
+    }
+
+    if (optionsDifferent || notifyDifferent) {
+      this.manager.refresh();
+    }
+
+    if (clientDifferent || feedDifferent || doFeedRequestDifferent) {
       // TODO: Implement
     }
   }
 
   componentWillUnmount() {
-    return this.state.manager.unregister(this.boundForceUpdate);
+    return this.manager.unregister(this.boundForceUpdate);
+  }
+
+  getFeedId(feedGroup = this.props.feedGroup, userId = this.props.userId) {
+    const { client } = this.props;
+
+    return client.feed(feedGroup, userId).id;
   }
 
   getCtx = () => {
-    const { manager } = this.state;
+    const manager = this.manager;
     const state = manager.state;
     return {
       getActivityPath: manager.getActivityPath,
@@ -1517,7 +1307,7 @@ class FeedInner extends React.Component<FeedInnerProps, FeedState> {
       onRemoveActivity: manager.onRemoveActivity,
       onMarkAsRead: manager.onMarkAsRead,
       onMarkAsSeen: manager.onMarkAsSeen,
-      hasDoneRequest: state.lastResponse != null,
+      hasDoneRequest: state.lastResponse !== null,
       refresh: manager.refresh,
       refreshUnreadUnseen: manager.refreshUnreadUnseen,
       loadNextReactions: manager.loadNextReactions,

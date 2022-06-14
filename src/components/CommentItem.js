@@ -1,33 +1,20 @@
-// @flow
+//
 import React from 'react';
 import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { humanizeTimestamp, smartRender } from '../utils';
 import Avatar from './Avatar';
 import { buildStylesheet } from '../styles';
 
-import type { Comment, StyleSheetLike, Renderable } from '../types';
 import { withTranslationContext } from '../Context';
-import type { Streami18Ctx } from '../Context';
-
-type Props = {
-  /** The comment that should be displayed */
-  comment: Comment,
-  /** Something that should be displayed in the Footer of the component, such
-   * as a like button */
-  Footer?: Renderable,
-  /** Styling of the component */
-  styles?: StyleSheetLike,
-  /** Handle errors in the render method in a custom way, by default this
-   * component logs the error in the console **/
-  componentDidCatch?: (error: Error, info: {}, props: Props) => mixed,
-} & Streami18Ctx;
 
 /**
  * Renders a comment
  * @example ./examples/CommentItem.md
  */
-class CommentItem extends React.Component<Props> {
-  componentDidCatch(error: Error, info: {}) {
+class CommentItem extends React.Component {
+  componentDidCatch(error, info) {
     if (this.props.componentDidCatch) {
       this.props.componentDidCatch(error, info, this.props);
     } else {
@@ -58,4 +45,29 @@ class CommentItem extends React.Component<Props> {
   }
 }
 
+CommentItem.propTypes = {
+  /** The comment that should be displayed */
+  comment: PropTypes.shape({
+    user: PropTypes.object,
+    data: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    created_at: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.instanceOf(Date),
+    ]),
+  }),
+  /**
+   * UI component which should be displayed in the Footer of the component, such as a like button */
+  Footer: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
+  /** Styling of the component */
+  styles: PropTypes.object,
+  /**
+   * Handle errors in the render method in a custom way, by default this component logs the error in the console
+   * @param {*} error Error object
+   * @param {*} info object
+   * @param {*} props object
+   */
+  componentDidCatch: PropTypes.func,
+};
 export default withTranslationContext(CommentItem);

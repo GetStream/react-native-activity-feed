@@ -1,3 +1,5 @@
 ```js
-<BackButton blue />
+import BackButton from '../BackButton';
+
+<BackButton blue />;
 ```

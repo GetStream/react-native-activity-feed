@@ -1,4 +1,4 @@
-# Stream React Native Activity Feed Components
+# Official React Native SDK for [Activity Feeds](https://getstream.io/activity-feeds/)
 
 > React Native components to create activity and notification feeds using Stream
 
@@ -11,6 +11,8 @@
 The official React Native integration library for Stream, a web service for
 building scalable newsfeeds and activity streams.
 
+Note: The user interface for the activity feed can vary widely across different apps. Most of our activity feed customers integrate with Stream via their backend and build their own UI. This takes advantage of Stream’s scalability while keeping full control over the UI. This library is only updated and improved sporadically.
+
 ## TL;DR built-in components for social networks and regular apps
 
 - Flat feeds
@@ -21,81 +23,50 @@ building scalable newsfeeds and activity streams.
 - Activity detail view
 - Realtime notifications
 
-## Useful links
+## 🔗 Quick Links
 
-[Get Started](https://getstream.io/react-native-activity-feed/tutorial/)
+- [Get Started](https://getstream.io/react-native-activity-feed/tutorial/)
+- [Example app](https://github.com/GetStream/react-native-example#react-native-activity-feed-example)
+- [Component reference docs](https://getstream.github.io/react-native-activity-feed/)
+- [Internationalisation (i18n)](https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n)
 
-[Example app](https://github.com/GetStream/react-native-example)
+## 🔐 React Native Compatibility
 
-[Component reference docs](https://getstream.github.io/react-native-activity-feed/)
+To use this library you need to ensure you match up with the correct version of React Native you are using.
 
-[Internationalisation (i18n)](https://getstream.github.io/react-native-activity-feed/#internationalisation-i18n)
+| `react-native-activity-feed` version | [`getstream`](https://www.npmjs.com/package/getstream) | react-native |
+| ------------------------------------ | ------------------------------------------------------ | ------------ |
+| `1.x.x`                              | `>= 0.6.x`                                             | `>= 0.60.0`  |
+| `0.x.x`                              | `< 0.6.0`                                              | `< 0.60.0`   |
 
-## Installation
+## 🔮 Example Apps
 
-The components provided by this package are available for apps built with Expo
-(created with `create-react-native-app`), but also for apps with native code
-(created with `react-native init`). You should install the package that matches
-your situation:
+- [Expo example](https://github.com/GetStream/react-native-activity-feed/tree/master/examples/expo#expo-example)
+- [Native example](https://github.com/GetStream/react-native-activity-feed/tree/master/examples/native#native-example)
+- [Complete social networking app](https://github.com/GetStream/react-native-example#react-native-activity-feed-example)
 
-```bash
+## 🛠 Installation
+
+### Expo package
+
+```sh
 # For Expo apps
-npm i expo-activity-feed --save
+expo install expo-activity-feed expo-permissions expo-image-picker
 
+```
+
+### Native package
+
+```sh
 # For apps with native code
-npm i react-native-activity-feed --save
+yarn add react-native-activity-feed react-native-image-crop-picker
+npx pod-install
 ```
 
-Both packages export the same components (which they re-export from the
-underlying `react-native-activity-feed-core` package).
+**Note** If you are planning to use the image picker functionality, there are some additional steps to be done.
+You can find them here - https://github.com/ivpusic/react-native-image-crop-picker/blob/v0.25.0/README.md#post-install-steps
 
-### Final setup steps for the `react-native-activity-feed` package
-
-If you use the package for apps with native code you need to do some more steps
-to get the image upload functionality working. If you don't need that feel free
-to skip these steps.
-
-1. Run the following command:
-
-```bash
-react-native link react-native-image-picker
-```
-
-2.
-Add the following permissions to `android/app/src/main/AndroidManifest.xml`:
-
-```xml
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-```
-
-3.
-Add the following key/value pairs to `ios/{app-name-here}/Info.plist`:
-
-```xml
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
-	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your camera</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to your microphone (for videos)</string>
-```
-
-4. Make sure that the gradle version inside `android/build.gradle` is 2.2.0 or
-   higher:
-
-```
-buildscript {
-    // ....
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-    }
-}
-```
-
-## Usage & Activity Feed setup
+## 🔌 Usage & Activity Feed setup
 
 ### Setup StreamApp component
 
@@ -103,11 +74,11 @@ In order to use Stream React Components in your application, you first need to i
 
 ```jsx
 <StreamApp
-  apiKey="{API_KEY}"
-  appId="{APP_ID}"
-  userId="{USER_ID}"
-  token="{TOKEN}"
-  analyticsToken="{ANALYTICS_TOKEN}"
+  apiKey='{API_KEY}'
+  appId='{APP_ID}'
+  userId='{USER_ID}'
+  token='{TOKEN}'
+  analyticsToken='{ANALYTICS_TOKEN}'
 >
   {/* everything from your application interacting with Stream should be nested here */}
 </StreamApp>
@@ -146,3 +117,10 @@ console.log(analyticsToken);
 Copyright (c) 2015-2019 Stream.io Inc, and individual contributors. All rights reserved.
 
 See the file "LICENSE" for information on the history of this software, terms & conditions for usage, and a DISCLAIMER OF ALL WARRANTIES.
+
+## We are hiring
+
+We've recently closed a [\$38 million Series B funding round](https://techcrunch.com/2021/03/04/stream-raises-38m-as-its-chat-and-activity-feed-apis-power-communications-for-1b-users/) and we keep actively growing.
+Our APIs are used by more than a billion end-users, and you'll have a chance to make a huge impact on the product within a team of the strongest engineers all over the world.
+
+Check out our current openings and apply via [Stream's website](https://getstream.io/team/#jobs).

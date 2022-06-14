@@ -1,4 +1,6 @@
 ```js
+import CommentItem from '../CommentItem';
+
 <CommentItem
   // this is an example of the data coming from APIs
   comment={{
@@ -13,5 +15,5 @@
       text: 'Snowboarding is awesome!',
     },
   }}
-/>
+/>;
 ```

@@ -1,29 +1,18 @@
-// @flow
+//
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
-import type { StyleSheetLike } from '../types';
-import type { Streami18Ctx } from '../Context';
+
 import { withTranslationContext } from '../Context';
-
-export type Props = {|
-  /** callback function used on click */
-  clicked?: () => mixed,
-  /** initial follow state */
-  followed?: boolean,
-  styles?: StyleSheetLike,
-|} & Streami18Ctx;
-
-export type State = {
-  followed: boolean,
-};
 
 /**
  * Renders a toggle button to follow another user's feed
  * @example ./examples/FollowButton.md
  */
-class FollowButton extends React.Component<Props, State> {
-  constructor(props: Props) {
+class FollowButton extends React.Component {
+  constructor(props) {
     super(props);
     this.state = { followed: this.props.followed || false };
   }
@@ -37,7 +26,7 @@ class FollowButton extends React.Component<Props, State> {
     const styles = buildStylesheet('followButton', this.props.styles);
 
     return (
-      <TouchableOpacity onClick={clicked}>
+      <TouchableOpacity onPress={clicked}>
         <View
           colors={
             this.state.followed ? ['#ccc', '#ccc'] : ['#008DFF', '#0079FF']
@@ -52,5 +41,13 @@ class FollowButton extends React.Component<Props, State> {
     );
   }
 }
+
+FollowButton.propTypes = {
+  /** callback function used on click */
+  clicked: PropTypes.func,
+  /** initial follow state */
+  followed: PropTypes.bool,
+  styles: PropTypes.object,
+};
 
 export default withTranslationContext(FollowButton);

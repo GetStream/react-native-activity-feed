@@ -1,19 +1,12 @@
-//@flow
+//
 import * as React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import type { StyleSheetLike } from '../types';
+import PropTypes from 'prop-types';
+
 import { buildStylesheet } from '../styles';
 import { withTranslationContext } from '../Context';
-import type { Streami18Ctx } from '../Context';
 
-type Props = {|
-  onPress: () => mixed,
-  refreshing: boolean,
-  children: React.Node,
-  styles?: StyleSheetLike,
-|} & Streami18Ctx;
-
-class LoadMoreButton extends React.Component<Props> {
+class LoadMoreButton extends React.Component {
   static defaultProps = {
     children: 'Load more',
   };
@@ -33,5 +26,11 @@ class LoadMoreButton extends React.Component<Props> {
     );
   }
 }
+
+LoadMoreButton.propTypes = {
+  onPress: PropTypes.func,
+  refreshing: PropTypes.bool,
+  styles: PropTypes.object,
+};
 
 export default withTranslationContext(LoadMoreButton);
