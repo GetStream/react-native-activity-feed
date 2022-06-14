@@ -39,7 +39,7 @@ type Props = {|
   /** Any props the React Native TextInput accepts */
   textInputProps?: {},
   /** Aditional data to add to reaction */
-  data?: {}
+  data?: {},
 |} & Streami18Ctx;
 
 type State = {|
