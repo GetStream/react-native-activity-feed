@@ -66,11 +66,13 @@ const ReactionIcon = withTranslationContext((props) => {
     dimensions.width = props.width;
   }
 
+  const textProps = props.textProps ?? {}
+
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <Image source={props.icon} style={[styles.image, dimensions]} />
       {count != null ? (
-        <Text style={styles.text}>{defaultLabelFunction(count, props)}</Text>
+        <Text style={styles.text} {...textProps}>{defaultLabelFunction(count, props)}</Text>
       ) : null}
     </TouchableOpacity>
   );
@@ -105,6 +107,8 @@ ReactionIcon.propTypes = {
    * @param {object} param
    */
   labelFunction: PropTypes.func,
+  /** Additional props to the text component */
+  textProps: PropTypes.object,
 };
 
 export default ReactionIcon;
