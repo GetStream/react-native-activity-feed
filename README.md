@@ -11,6 +11,16 @@
 The official React Native integration library for Stream, a web service for
 building scalable newsfeeds and activity streams.
 
+## :warning: This SDK is no longer actively maintained by Stream
+
+A Feeds integration includes a combination of server-side and client-side code and the interface can vary widely which is why we are no longer focussing on supporting this SDK. If you are starting from scratch we recommend you only use the server-side SDKs. 
+
+This is by no means a reflection of our commitment to maintaining and improving the Feeds API which will always be a product that we support.
+
+We continue to welcome pull requests from community members in case you want to improve this SDK.
+
+---
+
 Note: The user interface for the activity feed can vary widely across different apps. Most of our activity feed customers integrate with Stream via their backend and build their own UI. This takes advantage of Stream’s scalability while keeping full control over the UI. This library is only updated and improved sporadically.
 
 ## TL;DR built-in components for social networks and regular apps
