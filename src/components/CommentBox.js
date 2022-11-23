@@ -32,6 +32,7 @@ class CommentBox extends React.Component {
     } else {
       this.props.onAddReaction('comment', this.props.activity, {
         text: event.nativeEvent.text,
+        data: this.props.data,
       });
     }
   }
@@ -112,6 +113,8 @@ CommentBox.propTypes = {
   verticalOffset: PropTypes.number,
   /** Any props the React Native TextInput accepts */
   textInputProps: PropTypes.object,
+  /** Aditional data to add to reaction */
+  data: PropTypes.object,
 };
 
 export default withTranslationContext(CommentBox);
