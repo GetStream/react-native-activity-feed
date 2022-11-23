@@ -38,6 +38,10 @@ class StatusUpdateForm extends React.Component {
     modifyActivityData: (d) => d,
     height: 80,
     verticalOffset: 0,
+    textInputProps: {
+  		padding: 0,
+		  margin: 0,
+    },
     noKeyboardAccessory: false,
     styles: {
       urlPreview: {
