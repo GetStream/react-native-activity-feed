@@ -1032,7 +1032,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.16"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.8.4":
   version "7.12.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
   integrity sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
@@ -1705,7 +1705,7 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.20.tgz#f7974863edd21d1f8a494a73e8e2b3658615c340"
   integrity sha512-Y93R97Ouif9JEOWPIUyU+eyIdyRqQR0I8Ez1dzku4hDx34NWh4HbtIc3WNzwB1Y9ULvNGeu5B8h8bVL5cAk4/A==
 
-"@types/qs@^6.9.4", "@types/qs@^6.9.5":
+"@types/qs@^6.9.5":
   version "6.9.5"
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.5.tgz#434711bdd49eb5ee69d90c1d67c354a9a8ecb18b"
   integrity sha512-/JHkVHtx/REVG0VVToGRGH2+23hsYLHdyG+GrvoUGlGAd0ErauXDyvHtRI/7H7mzLm+tBCKA7pfcpkQ1lf58iQ==
@@ -2270,13 +2270,6 @@ axios@0.16.2:
   dependencies:
     follow-redirects "^1.2.3"
     is-buffer "^1.1.5"
-
-axios@^0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
-  integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
-  dependencies:
-    follow-redirects "^1.10.0"
 
 axios@^0.21.0:
   version "0.21.1"
@@ -4584,8 +4577,9 @@ expect@^22.4.0:
     jest-regex-util "^22.4.3"
 
 "expo-activity-feed@link:../../expo-package":
-  version "0.0.0"
-  uid ""
+  version "1.1.1"
+  dependencies:
+    react-native-activity-feed-core v1.1.1
 
 expo-application@~2.4.1:
   version "2.4.1"
@@ -5376,22 +5370,6 @@ getpass@^0.1.1:
   integrity sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
   dependencies:
     assert-plus "^1.0.0"
-
-getstream@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/getstream/-/getstream-7.1.0.tgz#69e647496524b5da57db378f84ce85919ac0af2b"
-  integrity sha512-H/0TWRbTwx3TfMaTKf5VNVOEd7gOg6sp8KqywWZ7oT2dFfFF8zgVePeZ8KROyZi8hQ9crb+pPS96mgQhvT2Mlg==
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    "@types/jsonwebtoken" "^8.5.0"
-    "@types/jwt-decode" "^2.2.1"
-    "@types/qs" "^6.9.4"
-    axios "^0.20.0"
-    faye "^1.4.0"
-    form-data "^3.0.0"
-    jsonwebtoken "^8.5.1"
-    jwt-decode "^2.2.0"
-    qs "^6.9.4"
 
 getstream@~7.2.1:
   version "7.2.1"
@@ -7049,11 +7027,6 @@ jws@^3.1.4, jws@^3.2.2:
   dependencies:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
-
-jwt-decode@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
-  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
 
 jwt-decode@^3.1.2:
   version "3.1.2"
@@ -9011,19 +8984,35 @@ react-lifecycles-compat@^3.0.0:
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
 "react-native-activity-feed-core@link:../..":
-  version "0.0.0"
-  uid ""
-
-react-native-activity-feed-core@v1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.0.1.tgz#b618ded2d528fb3c3334345099d03187bb233bd2"
-  integrity sha512-E3XQP0gR/PnYSb3+2PuhjHpbQ7lSD2oFuz/MHk+phkO3v1dnN67aSAfAQt43H0oo8pvd00tQ01JCw3PACEfy0Q==
+  version "1.1.1"
   dependencies:
     dayjs "^1.8.23"
     es6-symbol "^3.1.1"
     eslint-plugin-babel "^5.3.0"
     eslint-plugin-markdown "^1.0.0"
-    getstream "^7.1.0"
+    getstream "~7.2.1"
+    i18next "^19.3.4"
+    immutable "^4.0.0-rc.9"
+    mime-types "^2.1.21"
+    moment "^2.22.2"
+    numeral "^2.0.6"
+    path "^0.12.7"
+    react-native-keyboard-spacer "^0.4.1"
+    react-native-safe-area-view "0.9.0"
+    react-native-sticky-keyboard-accessory "^0.1.3"
+    stream-analytics "^2.7.1"
+    url-parse "^1.4.3"
+
+react-native-activity-feed-core@v1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.1.1.tgz#17cb5d054998200b4844eb58669d96fcb58c7774"
+  integrity sha512-nbPBctmU4oh9366S3HvrDRAhiw2sooqBu5yHqipbQwpan9/UoIn5heaECKjw5v/YuMV8Koc7M9CxT1dmqC0DMA==
+  dependencies:
+    dayjs "^1.8.23"
+    es6-symbol "^3.1.1"
+    eslint-plugin-babel "^5.3.0"
+    eslint-plugin-markdown "^1.0.0"
+    getstream "~7.2.1"
     i18next "^19.3.4"
     immutable "^4.0.0-rc.9"
     mime-types "^2.1.21"
@@ -10797,9 +10786,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 ua-parser-js@^0.7.18:
-  version "0.7.23"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.23.tgz#704d67f951e13195fbcd3d78818577f5bc1d547b"
-  integrity sha512-m4hvMLxgGHXG3O3fQVAyyAQpZzDOvwnhOTjYz5Xmr7r/+LpkNy3vJXdVRWgd1TkAb7NGROZuSy96CrlNVjA7KA==
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.33.tgz#1d04acb4ccef9293df6f70f2c3d22f3030d8b532"
+  integrity sha512-s8ax/CeZdK9R/56Sui0WM6y9OFREJarMRHqLB2EwkovemBxNQ+Bqu8GAsUnVcXKgphb++ghr/B2BZx4mahujPw==
 
 uglify-es@^3.1.9:
   version "3.3.9"
