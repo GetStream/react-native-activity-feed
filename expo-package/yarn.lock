@@ -6792,10 +6792,10 @@ react-lifecycles-compat@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-native-activity-feed-core@v1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.1.0.tgz#5b99829c3e0aeba829a6f79e4f969f7754d09c6b"
-  integrity sha512-fM2E/tZU8o9qLkzWI7Fg1NEAMWqszPySgivcSgWIkRBqtZdcnfgkWGi5R1koUSZtDVEABZwu1LsGDHeiO36KcA==
+react-native-activity-feed-core@v1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-activity-feed-core/-/react-native-activity-feed-core-1.1.1.tgz#17cb5d054998200b4844eb58669d96fcb58c7774"
+  integrity sha512-nbPBctmU4oh9366S3HvrDRAhiw2sooqBu5yHqipbQwpan9/UoIn5heaECKjw5v/YuMV8Koc7M9CxT1dmqC0DMA==
   dependencies:
     dayjs "^1.8.23"
     es6-symbol "^3.1.1"
@@ -8383,9 +8383,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 ua-parser-js@^0.7.18:
-  version "0.7.23"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.23.tgz#704d67f951e13195fbcd3d78818577f5bc1d547b"
-  integrity sha512-m4hvMLxgGHXG3O3fQVAyyAQpZzDOvwnhOTjYz5Xmr7r/+LpkNy3vJXdVRWgd1TkAb7NGROZuSy96CrlNVjA7KA==
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.33.tgz#1d04acb4ccef9293df6f70f2c3d22f3030d8b532"
+  integrity sha512-s8ax/CeZdK9R/56Sui0WM6y9OFREJarMRHqLB2EwkovemBxNQ+Bqu8GAsUnVcXKgphb++ghr/B2BZx4mahujPw==
 
 uglify-es@^3.1.9:
   version "3.3.9"
